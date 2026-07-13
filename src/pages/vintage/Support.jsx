@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Ticket, Heart, Award, ArrowRight, ShieldCheck, Mail } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
+import { parallaxLayers } from '../../assets/parallax';
 
 export default function Support() {
   const [donateAmount, setDonateAmount] = useState('50');
@@ -64,14 +66,13 @@ export default function Support() {
 
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
-      <div style={styles.headerBlock}>
-        <div style={styles.container}>
-          <span className="ink-stamp rust" style={{ marginBottom: '0.5rem' }}>SUPPORT MISSION</span>
-          <h1 style={styles.pageTitle}>Support the Village</h1>
-          <p style={styles.pageSubtitle}>Help us preserve Oʻahu\'s plantation cottages and share immigration stories for future generations.</p>
-        </div>
-      </div>
+      <PageHeaderParallax
+        layers={parallaxLayers.support}
+        stamp="SUPPORT MISSION"
+        stampClass="ink-stamp rust"
+        title="Support the Village"
+        subtitle="Help us preserve Oʻahu's plantation cottages and share immigration stories for future generations."
+      />
 
       <div style={styles.container}>
         {/* Toggle Support Type */}
@@ -287,27 +288,10 @@ const styles = {
   pageContainer: {
     paddingBottom: '5rem'
   },
-  headerBlock: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
-    marginBottom: '3rem'
-  },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1.5rem'
-  },
-  pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
-  },
-  pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px'
   },
   supportToggle: {
     display: 'flex',

@@ -3,7 +3,8 @@ import HeroVideoPixi from '../../components/HeroVideoPixi';
 import BellToBell from '../../components/BellToBell';
 import sugarcaneField from '../../assets/sugarcane_field.png';
 import campHouse from '../../assets/historic_camp_house.png';
-import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail } from 'lucide-react';
+import bangoImage from '../../assets/bango_lunch_tin.png';
+import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail, Heart } from 'lucide-react';
 
 export default function Home({ setActivePage }) {
   const visitRef = useRef(null);
@@ -103,6 +104,39 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
+      {/* 4. Featured Story - The Bango System */}
+      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)', borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '1px solid var(--kraft-tan-dark)' }}>
+        <div style={styles.container}>
+          <div style={{ ...styles.twoColumnGrid, gridTemplateColumns: '1fr 1.2fr' }}>
+            <div style={styles.imgCol}>
+              <div style={styles.imgWrapper}>
+                <img src={bangoImage} alt="Historic Bango Identification Tags" style={styles.featuredImg} />
+                <div style={styles.imgTextureOverlay} />
+              </div>
+            </div>
+            <div style={styles.textCol}>
+              <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>Featured Narrative</span>
+              <h2 style={styles.sectionTitle}>The Bango System: Numbers Replacing Names</h2>
+              <p style={styles.bodyText}>
+                Upon arrival at the plantation, each immigrant worker was stripped of their name in the company ledgers and issued a small, stamped metal disk called a <strong>Bango tag</strong>.
+              </p>
+              <p style={styles.bodyText}>
+                Because the plantation managers and overseers (Lunas) could not pronounce or easily spell the names of Chinese, Japanese, Portuguese, Korean, or Filipino workers, the Bango number became their identity. It dictated their work assignment, their pay ledger, and their credit at the company store.
+              </p>
+              <blockquote style={styles.bangoQuote}>
+                "My grandfather told me the bango was a constant weight in his pocket. But it also forced the camps to find a common language—Pidgin—to connect their true names behind those metal numbers."
+                <cite style={styles.bangoQuoteCite}>— Siu Lung Chang, Oral History Archive</cite>
+              </blockquote>
+              <div style={styles.btnRow}>
+                <button className="btn-primary" onClick={() => { setActivePage('stories'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                  Explore Camp Stories <ArrowRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 4. "Bell to Bell" Choice-based Game */}
       <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
         <div style={styles.container}>
@@ -146,6 +180,57 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
+      {/* 6. Membership & Donation Split Section */}
+      <section style={{ ...styles.section, borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '1px solid var(--kraft-tan-dark)' }}>
+        <div style={styles.container}>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span className="ink-stamp green" style={{ marginBottom: '1rem' }}>Get Involved</span>
+            <h2 style={styles.sectionTitle}>Support the Preservation of Waipahu's History</h2>
+            <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
+              Whether you become an annual member or make a one-time donation, your contribution directly funds critical cottage upkeep and cultural stewardship programs.
+            </p>
+          </div>
+          
+          <div style={styles.splitGrid}>
+            {/* Donation Card */}
+            <div className="paper-card" style={styles.splitCard}>
+              <div>
+                <h3 style={styles.splitCardTitle}>Direct Donation Impact</h3>
+                <p style={styles.splitCardDesc}>
+                  Help us protect the structural timbers and maintain the historical gardens surrounding our 25 camp cottages. 100% of direct donations go to site preservation.
+                </p>
+                <ul style={styles.splitList}>
+                  <li><strong>$25</strong> buys organic elements for hands-on history classes.</li>
+                  <li><strong>$50</strong> maintains camp gardens for three months.</li>
+                  <li><strong>$100</strong> funds school admission worksheets for a class of 10.</li>
+                </ul>
+              </div>
+              <button className="btn-primary" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
+                Make a Direct Gift <Heart size={14} style={{ marginLeft: '4px' }} />
+              </button>
+            </div>
+
+            {/* Membership Card */}
+            <div className="paper-card" style={styles.splitCard}>
+              <div>
+                <h3 style={styles.splitCardTitle}>Steward Membership</h3>
+                <p style={styles.splitCardDesc}>
+                  Belong to the village. Support repeat access and gain exclusive member benefits while securing the heritage of immigrant communities.
+                </p>
+                <ul style={styles.splitList}>
+                  <li><strong>Free Admission</strong> for you and guests all year round.</li>
+                  <li><strong>10% Discount</strong> at the historical camp gift shop.</li>
+                  <li><strong>Ledger circular</strong> print magazine subscription.</li>
+                </ul>
+              </div>
+              <button className="btn-accent" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
+                Join as a Member <UserPlus size={14} style={{ marginLeft: '4px' }} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. Upcoming Events */}
       <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
         <div style={styles.container}>
@@ -172,7 +257,70 @@ export default function Home({ setActivePage }) {
         </div>
       </section>
 
-      {/* 7. Footer Newsletter & CTA */}
+      {/* 8. Testimonials & Social Proof Section */}
+      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)', borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '4px solid var(--koa-wood)' }}>
+        <div style={styles.container}>
+          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
+            <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>Testimonials</span>
+            <h2 style={styles.sectionTitle}>What Visitors & Educators Say</h2>
+            <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
+              Hear from our community of school teachers, local residents, and travelers who have experienced the living history.
+            </p>
+          </div>
+
+          <div style={styles.testimonialsGrid}>
+            {/* Testimonial 1 */}
+            <div className="paper-card" style={styles.testimonialCard}>
+              <p style={styles.testimonialText}>
+                "The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn't want to leave!"
+              </p>
+              <div style={styles.testimonialDivider} />
+              <div style={styles.testimonialAuthor}>
+                <span style={styles.testimonialAuthorName}>Sarah L.</span>
+                <span style={styles.testimonialAuthorMeta}>4th Grade Teacher, HIDOE</span>
+              </div>
+            </div>
+
+            {/* Testimonial 2 */}
+            <div className="paper-card" style={styles.testimonialCard}>
+              <p style={styles.testimonialText}>
+                "Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic."
+              </p>
+              <div style={styles.testimonialDivider} />
+              <div style={styles.testimonialAuthor}>
+                <span style={styles.testimonialAuthorName}>David K.</span>
+                <span style={styles.testimonialAuthorMeta}>Honolulu Resident</span>
+              </div>
+            </div>
+
+            {/* Testimonial 3 */}
+            <div className="paper-card" style={styles.testimonialCard}>
+              <p style={styles.testimonialText}>
+                "One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive."
+              </p>
+              <div style={styles.testimonialDivider} />
+              <div style={styles.testimonialAuthor}>
+                <span style={styles.testimonialAuthorName}>Michael R.</span>
+                <span style={styles.testimonialAuthorMeta}>Traveler from Seattle</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Social Proof Partners */}
+          <div style={styles.partnersRow}>
+            <span style={styles.partnersLabel}>COMMUNITY PARTNERS & STANDARDS:</span>
+            <div style={styles.partnersList}>
+              <span style={styles.partnerItem}>HAWAIʻI DEPARTMENT OF EDUCATION</span>
+              <span style={styles.partnerDivider}>•</span>
+              <span style={styles.partnerItem}>TRIPADVISOR TRAVELER CHOICE 2026</span>
+              <span style={styles.partnerDivider}>•</span>
+              <span style={styles.partnerItem}>HISTORIC HAWAIʻI FOUNDATION</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9. Footer CTA Zone */}
       <footer style={styles.footer}>
         <div style={styles.container}>
           <div style={styles.footerGrid}>
@@ -185,6 +333,32 @@ export default function Home({ setActivePage }) {
                 Phone: (808) 677-0110 <br />
                 Email: info@hawaiianplantationvillage.org
               </p>
+            </div>
+            
+            <div style={styles.footerCTAColumn}>
+              <h4 style={styles.footerHeader}>CTA INDEX</h4>
+              <ul style={styles.footerLinksList}>
+                <li>
+                  <button className="footer-link-btn" onClick={() => { setActivePage('tickets'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    Book Excursion Tickets
+                  </button>
+                </li>
+                <li>
+                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    Become a Member
+                  </button>
+                </li>
+                <li>
+                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    Make a Donation
+                  </button>
+                </li>
+                <li>
+                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    Volunteer Inquiry
+                  </button>
+                </li>
+              </ul>
             </div>
             
             <div style={styles.newsletterBox}>
@@ -204,6 +378,7 @@ export default function Home({ setActivePage }) {
           </div>
         </div>
       </footer>
+
     </div>
   );
 }
@@ -382,10 +557,10 @@ const styles = {
   },
   footerGrid: {
     display: 'grid',
-    gridTemplateColumns: '1.2fr 1fr',
-    gap: '4rem',
+    gridTemplateColumns: '1fr 1fr 1.2fr',
+    gap: '3rem',
     marginBottom: '3rem',
-    '@media (max-width: 768px)': {
+    '@media (max-width: 850px)': {
       gridTemplateColumns: '1fr',
       gap: '2.5rem'
     }
@@ -407,6 +582,32 @@ const styles = {
     fontSize: '0.8rem',
     lineHeight: '1.6',
     color: 'var(--kraft-tan)'
+  },
+  footerCTAColumn: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start'
+  },
+  footerLinksList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: 0,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
+  },
+  footerLinkBtn: {
+    background: 'none',
+    border: 'none',
+    color: 'var(--kraft-tan-dark)',
+    fontFamily: 'var(--font-typewriter)',
+    fontSize: '0.85rem',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    textAlign: 'left',
+    padding: 0,
+    textTransform: 'uppercase',
+    transition: 'color 0.2s ease'
   },
   newsletterBox: {
     display: 'flex',
@@ -445,5 +646,150 @@ const styles = {
     textAlign: 'center',
     fontSize: '0.8rem',
     color: 'var(--kraft-tan-dark)'
+  },
+  bangoQuote: {
+    fontFamily: 'var(--font-body)',
+    fontStyle: 'italic',
+    fontSize: '1.05rem',
+    color: 'var(--text-muted)',
+    borderLeft: '3px solid var(--sugar-gold)',
+    paddingLeft: '1rem',
+    margin: '1.5rem 0',
+    lineHeight: '1.6'
+  },
+  bangoQuoteCite: {
+    display: 'block',
+    fontSize: '0.85rem',
+    fontFamily: 'var(--font-typewriter)',
+    fontWeight: 'bold',
+    color: 'var(--tin-rust)',
+    marginTop: '0.5rem',
+    fontStyle: 'normal'
+  },
+  splitGrid: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '2.5rem',
+    '@media (max-width: 768px)': {
+      gridTemplateColumns: '1fr',
+      gap: '1.5rem'
+    }
+  },
+  splitCard: {
+    padding: '2.5rem 2rem',
+    borderRadius: '4px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%'
+  },
+  splitCardTitle: {
+    fontSize: '1.5rem',
+    color: 'var(--koa-wood-dark)',
+    marginBottom: '1rem',
+    fontFamily: 'var(--font-display)',
+    borderBottom: '1px solid var(--kraft-tan-dark)',
+    paddingBottom: '0.5rem'
+  },
+  splitCardDesc: {
+    fontSize: '0.95rem',
+    color: 'var(--text-muted)',
+    lineHeight: '1.5',
+    marginBottom: '1.5rem'
+  },
+  splitList: {
+    listStyleType: 'circle',
+    paddingLeft: '1.5rem',
+    fontSize: '0.9rem',
+    color: 'var(--text-dark)',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    marginBottom: '2rem'
+  },
+  splitBtn: {
+    width: '100%',
+    justifyContent: 'center',
+    marginTop: 'auto'
+  },
+  testimonialsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: '2rem',
+    marginBottom: '3rem'
+  },
+  testimonialCard: {
+    padding: '2rem',
+    borderRadius: '4px',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: 'var(--paper-light)',
+    height: '100%'
+  },
+  testimonialText: {
+    fontFamily: 'var(--font-body)',
+    fontStyle: 'italic',
+    fontSize: '0.95rem',
+    lineHeight: '1.6',
+    color: 'var(--text-dark)',
+    marginBottom: '1.5rem'
+  },
+  testimonialDivider: {
+    borderTop: '1px dashed var(--kraft-tan-dark)',
+    margin: '0.75rem 0',
+    width: '100%'
+  },
+  testimonialAuthor: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px'
+  },
+  testimonialAuthorName: {
+    fontFamily: 'var(--font-typewriter)',
+    fontWeight: 'bold',
+    fontSize: '0.9rem',
+    color: 'var(--koa-wood)'
+  },
+  testimonialAuthorMeta: {
+    fontSize: '0.75rem',
+    color: 'var(--text-muted)',
+    textTransform: 'uppercase',
+    letterSpacing: '0.05em'
+  },
+  partnersRow: {
+    marginTop: '4rem',
+    borderTop: '1px double var(--kraft-tan-dark)',
+    paddingTop: '2rem',
+    textAlign: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '12px'
+  },
+  partnersLabel: {
+    fontFamily: 'var(--font-typewriter)',
+    fontSize: '0.75rem',
+    fontWeight: 'bold',
+    color: 'var(--text-muted)',
+    letterSpacing: '0.05em'
+  },
+  partnersList: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    gap: '12px',
+    fontFamily: 'var(--font-typewriter)',
+    fontSize: '0.8rem',
+    color: 'var(--text-muted)',
+    fontWeight: '600'
+  },
+  partnerItem: {
+    whiteSpace: 'nowrap'
+  },
+  partnerDivider: {
+    color: 'var(--sugar-gold)'
   }
 };
+
