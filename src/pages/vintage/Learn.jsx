@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  FileText, 
   Compass, 
   GraduationCap, 
   ChevronRight, 
@@ -16,7 +15,7 @@ import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
 
-export default function Learn() {
+export default function Learn({ onOpenModule }) {
   const [activeTab, setActiveTab] = useState('school'); // 'school' | 'youth' | 'family'
 
   // School Booking Form State
@@ -44,16 +43,19 @@ export default function Learn() {
 
   const resources = [
     {
+      id: 'elementary',
       title: 'Elementary Curriculum Package: Waves of Immigration',
       type: 'PDF Worksheet Set (Grades 3-5)',
       desc: 'Aligned with HIDOE Social Studies Standard 3.1. Includes mapping activities, bango identification tags matching exercises, and vocabulary guides.'
     },
     {
+      id: 'middle',
       title: 'Middle School Research Guide: Life in the Camp Sectors',
       type: 'Primary Source Activity (Grades 6-8)',
       desc: 'Transcripts of oral histories and digital catalog links of period immigrant tools. Perfect pre-visit classroom preparation.'
     },
     {
+      id: 'high',
       title: 'High School Analytical Package: Sugar Economics & Labor Struggles',
       type: 'Documentary Resource Packet (Grades 9-12)',
       desc: 'Covers the economic forces behind the Masters and Servants Act (1850), the structural evolution of camps, and the 1920 labor strike.'
@@ -172,20 +174,25 @@ export default function Learn() {
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Curriculum Resources</h2>
               <p style={styles.bodyText}>
-                Download our HIDOE standard-aligned classroom resource packages. These materials contain vocabulary sheets, primary document copies, and post-visit activities:
+                Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:
               </p>
 
               <div style={styles.resourcesList}>
-                {resources.map((res, idx) => (
-                  <div key={idx} className="paper-card" style={styles.resCard}>
+                {resources.map((res) => (
+                  <div key={res.id} className="paper-card" style={styles.resCard}>
                     <div style={styles.resHeader}>
                       <GraduationCap size={20} color="var(--cane-green)" />
                       <span style={styles.resType}>{res.type}</span>
                     </div>
                     <h3 style={styles.resTitle}>{res.title}</h3>
                     <p style={styles.resDesc}>{res.desc}</p>
-                    <button className="btn-secondary" style={styles.downloadBtn}>
-                      <FileText size={16} /> Download Package
+                    <button
+                      type="button"
+                      className="btn-secondary"
+                      style={styles.downloadBtn}
+                      onClick={() => onOpenModule?.(res.id)}
+                    >
+                      <Compass size={16} /> Start Interactive Lesson
                     </button>
                   </div>
                 ))}
