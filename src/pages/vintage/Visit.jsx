@@ -1,8 +1,32 @@
 import React, { useState } from 'react';
-import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone } from 'lucide-react';
+import confetti from 'canvas-confetti';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
+import { parallaxLayers } from '../../assets/parallax';
 
 export default function Visit({ setActivePage }) {
   const [activeTab, setActiveTab] = useState('hours');
+
+  // Group booking form state
+  const [groupComplete, setGroupComplete] = useState(false);
+  const [groupName, setGroupName] = useState('');
+  const [contactName, setContactName] = useState('');
+  const [groupSize, setGroupSize] = useState('');
+  const [groupType, setGroupType] = useState('Private Group');
+  const [groupDate, setGroupDate] = useState('');
+  const [groupEmail, setGroupEmail] = useState('');
+  const [groupPhone, setGroupPhone] = useState('');
+
+  const handleGroupSubmit = (e) => {
+    e.preventDefault();
+    confetti({
+      particleCount: 80,
+      spread: 50,
+      origin: { y: 0.8 }
+    });
+    setGroupComplete(true);
+  };
+
 
   const faqs = [
     {
@@ -25,14 +49,13 @@ export default function Visit({ setActivePage }) {
 
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
-      <div style={styles.headerBlock}>
-        <div style={styles.container}>
-          <span className="ink-stamp green" style={{ marginBottom: '0.5rem' }}>VISITOR GUIDE</span>
-          <h1 style={styles.pageTitle}>Plan Your Visit</h1>
-          <p style={styles.pageSubtitle}>Everything you need to know to prepare for your journey into Waipahu’s history.</p>
-        </div>
-      </div>
+      <PageHeaderParallax
+        layers={parallaxLayers.visit}
+        stamp="VISITOR GUIDE"
+        stampClass="ink-stamp green"
+        title="Plan Your Visit"
+        subtitle="Everything you need to know to prepare for your journey into Waipahu's history."
+      />
 
       <div style={styles.container}>
         <div style={styles.contentGrid}>
@@ -58,7 +81,14 @@ export default function Visit({ setActivePage }) {
               >
                 Accessibility & Guidelines
               </button>
+              <button
+                onClick={() => setActiveTab('group')}
+                style={{ ...styles.tabButton, ...(activeTab === 'group' ? styles.tabButtonActive : {}) }}
+              >
+                Group Visits
+              </button>
             </div>
+
 
             {/* Tab: Hours & Tours */}
             {activeTab === 'hours' && (
@@ -146,6 +176,168 @@ export default function Visit({ setActivePage }) {
               </div>
             )}
 
+            {/* Tab: Group Visits */}
+            {activeTab === 'group' && (
+              <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
+                <h3 style={styles.tabTitle}>Group Visits & Private Tours</h3>
+                <p style={styles.bodyText}>
+                  We welcome groups of all sizes, including tour operators, family reunions, historical organizations, and corporate outings. Group admission discounts are available for pre-registered groups of 10 or more.
+                </p>
+
+                <div style={styles.infoRow}>
+                  <Users size={20} color="var(--cane-green)" />
+                  <div>
+                    <p style={styles.infoValue}>Group Admission Discount Rates</p>
+                    <div style={{ ...styles.priceList, marginTop: '8px', width: '100%', maxWidth: '380px' }}>
+                      <div style={styles.priceItem}><span>Group Adults (10+)</span><strong>$14.00</strong></div>
+                      <div style={styles.priceItem}><span>Group Seniors / Military</span><strong>$10.00</strong></div>
+                      <div style={styles.priceItem}><span>Group Youth (5-12)</span><strong>$6.00</strong></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div style={styles.ledgerDivider} className="ledger-divider" />
+
+                <h3 style={styles.tabTitle}>Commercial Tour Operators</h3>
+                <div style={styles.infoRow}>
+                  <Building size={20} color="var(--cane-green)" />
+                  <div>
+                    <p style={styles.infoValue}>Operator Scheduling & Access</p>
+                    <p style={styles.infoDesc}>
+                      We work closely with local and international tour operators. Commercial bus parking is available onsite. Bookings must be requested at least 14 days in advance to guarantee an exclusive docent guide.
+                    </p>
+                  </div>
+                </div>
+
+                <div style={styles.ledgerDivider} className="ledger-divider" />
+
+                {/* Inquiry Form */}
+                {!groupComplete ? (
+                  <form style={styles.groupInquiryForm} onSubmit={handleGroupSubmit}>
+                    <h3 style={styles.tabSubTitle}>Group Reservation Inquiry</h3>
+                    <p style={{ ...styles.infoDesc, marginBottom: '1.25rem' }}>
+                      Submit your details, and our group booking coordinator will follow up with scheduling options and payment instructions within 1 business day.
+                    </p>
+
+
+                    <div style={styles.formRow}>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Organization / Group Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={groupName}
+                          onChange={(e) => setGroupName(e.target.value)}
+                          style={styles.formInput}
+                          placeholder="e.g. Aloha Travel Club"
+                        />
+                      </div>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Contact Person</label>
+                        <input
+                          type="text"
+                          required
+                          value={contactName}
+                          onChange={(e) => setContactName(e.target.value)}
+                          style={styles.formInput}
+                          placeholder="First and Last Name"
+                        />
+                      </div>
+                    </div>
+
+                    <div style={styles.formRow}>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Estimated Group Size</label>
+                        <input
+                          type="number"
+                          required
+                          min="10"
+                          value={groupSize}
+                          onChange={(e) => setGroupSize(e.target.value)}
+                          style={styles.formInput}
+                          placeholder="Minimum 10"
+                        />
+                      </div>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Group Type</label>
+                        <select
+                          value={groupType}
+                          onChange={(e) => setGroupType(e.target.value)}
+                          style={styles.formInput}
+                        >
+                          <option value="Private Group">Private Group / Friends</option>
+                          <option value="Tour Operator">Tour Operator / Business</option>
+                          <option value="Corporate / Company">Corporate / Company</option>
+                          <option value="Historical Society">Historical / Cultural Club</option>
+                          <option value="Senior Center">Senior Citizen Center</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div style={styles.formRow}>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Preferred Date</label>
+                        <input
+                          type="date"
+                          required
+                          value={groupDate}
+                          onChange={(e) => setGroupDate(e.target.value)}
+                          style={styles.formInput}
+                        />
+                      </div>
+                      <div style={styles.formCol}>
+                        <label style={styles.formLabel}>Contact Email</label>
+                        <input
+                          type="email"
+                          required
+                          value={groupEmail}
+                          onChange={(e) => setGroupEmail(e.target.value)}
+                          style={styles.formInput}
+                          placeholder="name@example.com"
+                        />
+                      </div>
+                    </div>
+
+                    <div style={{ ...styles.formCol, marginBottom: '1.5rem' }}>
+                      <label style={styles.formLabel}>Contact Phone Number</label>
+
+                      <input
+                        type="tel"
+                        required
+                        value={groupPhone}
+                        onChange={(e) => setGroupPhone(e.target.value)}
+                        style={styles.formInput}
+                        placeholder="(808) 555-0100"
+                      />
+                    </div>
+
+                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
+                      Submit Group Inquiry <ArrowRight size={16} />
+                    </button>
+                  </form>
+                ) : (
+                  <div style={styles.groupSuccessBlock} className="animate-fade-in">
+                    <div style={styles.successIcon}>
+                      <Check size={28} color="white" />
+                    </div>
+                    <h4 style={styles.successTitle}>Inquiry Sent Successfully!</h4>
+                    <p style={{ ...styles.infoDesc, textAlign: 'center', marginBottom: '1.5rem' }}>
+                      Thank you for contacting us. We have received your request for <strong>{groupName}</strong> ({groupSize} visitors) for <strong>{groupDate}</strong>.
+                    </p>
+                    <div style={styles.receiptSummary}>
+                      <div className="ledger-header" style={{ marginBottom: '0.75rem' }}>INQUIRY RECEIPT</div>
+                      <div style={styles.receiptRow}><span>Type:</span><strong>{groupType}</strong></div>
+                      <div style={styles.receiptRow}><span>Contact:</span><strong>{contactName}</strong></div>
+                      <div style={styles.receiptRow}><span>Email/Phone:</span><strong>{groupEmail} / {groupPhone}</strong></div>
+                    </div>
+                    <button className="btn-secondary" onClick={() => setGroupComplete(false)} style={{ width: '100%', justifyContent: 'center' }}>
+                      Submit Another Inquiry
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* FAQs */}
             <div style={styles.faqSection}>
               <h3 style={styles.faqHeaderTitle}>Frequently Asked Questions</h3>
@@ -209,6 +401,18 @@ export default function Visit({ setActivePage }) {
                 School Field Trips
               </button>
             </div>
+
+            {/* General Group visits CTA */}
+            <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem', backgroundColor: '#fffdf9', border: '1px dashed var(--sugar-gold)' }}>
+              <h4 style={styles.schoolTitle}>Private & Commercial Groups</h4>
+              <p style={styles.schoolText}>
+                Are you organizing a tour operator, family reunion, or corporate event for 10+ people? Get special rates and a dedicated guide.
+              </p>
+              <button className="btn-secondary" onClick={() => setActiveTab('group')} style={styles.schoolBtn}>
+                Group Admission Rates
+              </button>
+            </div>
+
           </div>
         </div>
       </div>
@@ -220,27 +424,10 @@ const styles = {
   pageContainer: {
     paddingBottom: '5rem'
   },
-  headerBlock: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
-    marginBottom: '3rem'
-  },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1.5rem'
-  },
-  pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
-  },
-  pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px'
   },
   contentGrid: {
     display: 'grid',
@@ -401,5 +588,82 @@ const styles = {
   schoolBtn: {
     width: '100%',
     justifyContent: 'center'
+  },
+  groupInquiryForm: {
+    marginTop: '2rem',
+    padding: '2rem 1.5rem',
+    border: '1px dashed var(--kraft-tan-dark)',
+    backgroundColor: 'var(--paper-dark)',
+    borderRadius: '4px',
+    textAlign: 'left'
+  },
+  tabSubTitle: {
+    fontSize: '1.25rem',
+    color: 'var(--koa-wood)',
+    marginBottom: '0.5rem'
+  },
+  formRow: {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: '12px',
+    marginBottom: '1rem'
+  },
+  formCol: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    width: '100%',
+    marginBottom: '1rem'
+  },
+  formLabel: {
+    fontSize: '0.85rem',
+    fontWeight: 'bold',
+    color: 'var(--koa-wood)'
+  },
+  formInput: {
+    padding: '0.75rem',
+    border: '1px solid var(--kraft-tan-dark)',
+    borderRadius: '4px',
+    outline: 'none',
+    fontSize: '0.95rem',
+    backgroundColor: 'white'
+  },
+  groupSuccessBlock: {
+    marginTop: '2rem',
+    padding: '2.5rem 1.5rem',
+    textAlign: 'center',
+    borderRadius: '4px',
+    border: '1px solid var(--kraft-tan-dark)',
+    backgroundColor: 'var(--paper-dark)'
+  },
+  successIcon: {
+    width: '55px',
+    height: '55px',
+    borderRadius: '50%',
+    backgroundColor: 'var(--cane-green)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: '0 auto 1.25rem auto'
+  },
+  successTitle: {
+    fontSize: '1.5rem',
+    color: 'var(--cane-green)',
+    marginBottom: '0.5rem'
+  },
+  receiptSummary: {
+    border: '1px solid var(--kraft-tan-dark)',
+    padding: '1.25rem',
+    textAlign: 'left',
+    backgroundColor: 'white',
+    marginBottom: '1.5rem'
+  },
+  receiptRow: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    fontSize: '0.85rem',
+    borderBottom: '1px dotted var(--kraft-tan-dark)',
+    paddingBottom: '6px',
+    marginBottom: '6px'
   }
 };
