@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, X, BookOpen, Clock, FileText, ChevronRight } from 'lucide-react';
+import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight } from 'lucide-react';
 import campPhoto from '../../assets/historic_camp_house.png';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
+import { parallaxLayers } from '../../assets/parallax';
 
 const CAMPS_DATA = [
   {
@@ -87,13 +89,91 @@ const CAMPS_DATA = [
       audioSimText: 'Recording: Morales music archives, recorded 1990.',
       transcript: '“We brought the cuatro guitar and the güiro scraper. When we played music at the camp borders, the other workers would stand and listen. We blended our rhythms with Portuguese tunes and Hawaiian chants. That’s how Cachi Cachi music was born in Waipahu.”'
     }
+  },
+  {
+    id: 'okinawan',
+    culture: 'Okinawan',
+    title: 'The Okinawan Sanshin & Prefectural Club',
+    arrival: '1900',
+    shortDesc: 'Brought the traditional three-stringed sanshin, a unique Ryukyuan language, and deep mutual-aid networks.',
+    fullHistory: 'Okinawan contract laborers arrived in Hawaiʻi in 1900, bringing a distinct Ryukyuan language, culture, and musical heritage. Settling in camp clusters, they maintained strong prefectural networks called sonjinkai. They introduced agricultural practices, pig farming, and traditional foods like andagi. The three-stringed sanshin became a cornerstone of plantation community music.',
+    oralHistory: {
+      narrator: 'Kama Uyehara (Third-Generation Sanshin Instructor)',
+      length: '3m 40s',
+      audioSimText: 'Recording: Uyehara family tape archive, Waipahu, recorded 1992.',
+      transcript: '“My father made his first sanshin using an empty cigar box and a piece of eucalyptus wood. In the evenings, when the field dust settled, he would play the old Ryukyuan folk songs. The music was different from the Japanese songs—it was warmer, and the neighbors from all the other camps would lean over the fences to listen. It made this red dirt feel a little bit like Okinawa.”'
+    }
+  },
+  {
+    id: 'spanish',
+    culture: 'Spanish',
+    title: 'The Spanish Andalusian Casa',
+    arrival: '1907',
+    shortDesc: 'Arrived in 1907 from Andalusia, introducing the classical Spanish guitar, lace-making, and distinct culinary traditions.',
+    fullHistory: 'Spanish contract laborers arrived in Hawaiʻi starting in 1907, primarily recruited from the Andalusia region. Those who remained in Waipahu contributed rich cultural elements, including classical Spanish guitar techniques, traditional lace-making, and Mediterranean culinary traditions. Their guitars blended with Portuguese braguinhas and Okinawan sanshins during communal gatherings.',
+    oralHistory: {
+      narrator: 'Isabel Delgado (Andalusian Immigrant Descendant)',
+      length: '2m 55s',
+      audioSimText: 'Recording: Delgado oral archive, interviewed 1994.',
+      transcript: '“My grandmother brought her Andalusian guitar all the way across two oceans. She said the fields were exhausting, but music was how they kept their dignity. When she played, the other workers would gather around. The Portuguese brought their braguinha, the Okinawan workers brought their sanshin, and they would all play together on the lanai. We didn’t speak the same words, but the strings understood each other.”'
+    }
   }
 ];
+
+const parseLengthToSeconds = (lengthStr) => {
+  if (!lengthStr) return 120;
+  const match = lengthStr.match(/(\d+)m\s*(\d+)s/);
+  if (match) {
+    const minutes = parseInt(match[1], 10);
+    const seconds = parseInt(match[2], 10);
+    return minutes * 60 + seconds;
+  }
+  return 120;
+};
+
+const formatTime = (totalSeconds) => {
+  const m = Math.floor(totalSeconds / 60);
+  const s = Math.floor(totalSeconds % 60);
+  return `${m}:${s < 10 ? '0' : ''}${s}`;
+};
+
+const Visualizer = ({ isPlaying }) => {
+  const barsCount = 6;
+  const delays = ['0s', '0.15s', '0.3s', '0.05s', '0.2s', '0.1s'];
+  const heights = [8, 16, 12, 20, 10, 14];
+  
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'flex-end',
+      gap: '3px',
+      height: '24px',
+      width: '35px',
+      marginRight: '12px'
+    }}>
+      {Array.from({ length: barsCount }).map((_, i) => (
+        <div
+          key={i}
+          style={{
+            width: '3px',
+            backgroundColor: 'var(--sugar-gold)',
+            borderRadius: '1.5px',
+            transition: 'height 0.2s ease',
+            height: isPlaying ? undefined : `${heights[i]}px`,
+            animation: isPlaying ? `bouncing-bar 0.8s ease-in-out infinite alternate` : 'none',
+            animationDelay: delays[i],
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default function Stories() {
   const [selectedCamp, setSelectedCamp] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioProgress, setAudioProgress] = useState(30); // Simulated 30% progress
+  const [currentTime, setCurrentTime] = useState(0);
+  const [totalDuration, setTotalDuration] = useState(120);
   const [filter, setFilter] = useState('all');
 
   const filteredCamps = filter === 'all' 
@@ -107,26 +187,73 @@ export default function Stories() {
   const handleOpenCamp = (camp) => {
     setSelectedCamp(camp);
     setIsPlaying(false);
-    setAudioProgress(15); // Reset progress on open
+    setCurrentTime(0);
+    setTotalDuration(parseLengthToSeconds(camp.oralHistory?.length || ''));
   };
+
+  React.useEffect(() => {
+    let interval = null;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setCurrentTime((prev) => {
+          if (prev >= totalDuration) {
+            setIsPlaying(false);
+            return 0;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } else {
+      if (interval) clearInterval(interval);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isPlaying, totalDuration]);
+
+  const handleProgressBarClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const width = rect.width;
+    const clickPercent = Math.max(0, Math.min(1, clickX / width));
+    setCurrentTime(Math.floor(clickPercent * totalDuration));
+  };
+
+  const handleProgressBarKeyDown = (e) => {
+    if (e.key === 'ArrowRight') {
+      setCurrentTime((prev) => Math.min(totalDuration, prev + 5));
+    } else if (e.key === 'ArrowLeft') {
+      setCurrentTime((prev) => Math.max(0, prev - 5));
+    } else if (e.key === ' ' || e.key === 'Spacebar') {
+      e.preventDefault();
+      togglePlay();
+    }
+  };
+
+  const progressPercent = totalDuration > 0 ? (currentTime / totalDuration) * 100 : 0;
 
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
-      <div style={styles.headerBlock}>
-        <div style={styles.container}>
-          <span className="ink-stamp green" style={{ marginBottom: '0.5rem' }}>ORAL HISTORIES</span>
-          <h1 style={styles.pageTitle}>Plantation Stories</h1>
-          <p style={styles.pageSubtitle}>Explore the lives, struggles, and music of the eight immigrant communities that built Waipahu.</p>
-        </div>
-      </div>
+      <style>{`
+        @keyframes bouncing-bar {
+          0% { height: 4px; }
+          100% { height: 22px; }
+        }
+      `}</style>
+      <PageHeaderParallax
+        layers={parallaxLayers.stories}
+        stamp="ORAL HISTORIES"
+        stampClass="ink-stamp green"
+        title="Plantation Stories"
+        subtitle="Explore the lives, struggles, and music of the eight immigrant communities that built Waipahu."
+      />
 
       <div style={styles.container}>
         {/* Filters */}
         <div style={styles.filterBar}>
           <span style={styles.filterLabel}>FILTER BY CAMP SECTION:</span>
           <div style={styles.filterBtns}>
-            {['all', 'chinese', 'japanese', 'filipino', 'portuguese', 'korean', 'puerto rican'].map((item) => (
+            {['all', ...CAMPS_DATA.map((c) => c.culture.toLowerCase())].map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(item)}
@@ -209,23 +336,42 @@ export default function Stories() {
 
                   {/* Simulated Player Controls */}
                   <div style={styles.playerContainer}>
-                    <button onClick={togglePlay} style={styles.playBtn}>
+                    <button 
+                      onClick={togglePlay} 
+                      style={styles.playBtn}
+                      aria-label={isPlaying ? 'Pause oral history recording' : 'Play oral history recording'}
+                    >
                       {isPlaying ? <Pause size={18} fill="var(--paper-light)" /> : <Play size={18} fill="var(--paper-light)" />}
                     </button>
                     <div style={styles.playerTrack}>
                       <div style={styles.narratorInfo}>
-                        <span style={styles.narratorName}>{selectedCamp.oralHistory.narrator}</span>
-                        <span style={styles.trackLength}>{selectedCamp.oralHistory.length}</span>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                          <Visualizer isPlaying={isPlaying} />
+                          <span style={styles.narratorName}>{selectedCamp.oralHistory.narrator}</span>
+                        </div>
+                        <span style={styles.trackLength}>
+                          {formatTime(currentTime)} / {selectedCamp.oralHistory.length}
+                        </span>
                       </div>
                       
                       {/* Interactive Progress Bar */}
-                      <div style={styles.progressBarBg}>
-                        <div style={{ ...styles.progressBarFill, width: `${audioProgress}%` }} />
+                      <div 
+                        onClick={handleProgressBarClick}
+                        onKeyDown={handleProgressBarKeyDown}
+                        style={{ ...styles.progressBarBg, cursor: 'pointer', position: 'relative' }}
+                        role="slider"
+                        aria-valuemin={0}
+                        aria-valuemax={totalDuration}
+                        aria-valuenow={currentTime}
+                        aria-label="Audio playback progress. Use left and right arrows to seek, space to play or pause."
+                        tabIndex={0}
+                      >
+                        <div style={{ ...styles.progressBarFill, width: `${progressPercent}%` }} />
                       </div>
                       
                       <div style={styles.audioSubText}>
                         <Volume2 size={12} style={{ marginRight: '4px' }} />
-                        <span>{selectedCamp.oralHistory.audioSimText} {isPlaying ? '(Simulating audio playback...)' : '(Paused)'}</span>
+                        <span>{selectedCamp.oralHistory.audioSimText} {isPlaying ? '(Playing archive audio...)' : '(Paused)'}</span>
                       </div>
                     </div>
                   </div>
@@ -253,27 +399,10 @@ const styles = {
   pageContainer: {
     paddingBottom: '5rem'
   },
-  headerBlock: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
-    marginBottom: '3rem'
-  },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1.5rem'
-  },
-  pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
-  },
-  pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px'
   },
   filterBar: {
     display: 'flex',
