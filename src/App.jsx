@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
+import PasswordGate from './components/PasswordGate';
+import { useAuth } from './hooks/useAuth';
+import { useCaptureDetection } from './hooks/useCaptureDetection';
 
 // Vintage pages
 import VintageHome from './pages/vintage/Home';
@@ -15,6 +18,7 @@ import VintagePlay from './pages/vintage/Play';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export default function App() {
+  const { isAuthenticated, isLoading, isSubmitting, error, login } = useAuth();
   const [activePage, setActivePage] = useState('home');
   const [aboutTab, setAboutTab] = useState('history');
   const [learnModuleId, setLearnModuleId] = useState(null);
@@ -70,6 +74,26 @@ export default function App() {
     }
   };
 
+  useCaptureDetection(isAuthenticated);
+
+  if (isLoading) {
+    return (
+      <div style={styles.loadingShell}>
+        <p style={styles.loadingText}>Loading…</p>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <PasswordGate
+        onLogin={login}
+        isSubmitting={isSubmitting}
+        error={error}
+      />
+    );
+  }
+
   return (
     <div style={{ ...styles.appShell, backgroundColor: 'var(--paper-light)' }}>
       <Navbar activePage={activePage} setActivePage={handlePageChange} />
@@ -92,6 +116,20 @@ export default function App() {
 }
 
 const styles = {
+  loadingShell: {
+    minHeight: '100vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'var(--paper-light)',
+  },
+  loadingText: {
+    fontFamily: 'var(--font-typewriter)',
+    color: 'var(--text-muted)',
+    letterSpacing: '0.08em',
+    textTransform: 'uppercase',
+    fontSize: '0.875rem',
+  },
   appShell: {
     display: 'flex',
     flexDirection: 'column',
