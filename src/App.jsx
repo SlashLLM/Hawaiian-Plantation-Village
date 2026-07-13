@@ -6,6 +6,7 @@ import VintageHome from './pages/vintage/Home';
 import VintageVisit from './pages/vintage/Visit';
 import VintageStories from './pages/vintage/Stories';
 import VintageLearn from './pages/vintage/Learn';
+import CurriculumModule from './pages/vintage/CurriculumModule';
 import VintageSupport from './pages/vintage/Support';
 import VintageAbout from './pages/vintage/About';
 import VintageTickets from './pages/vintage/Tickets';
@@ -16,12 +17,26 @@ import { AnimatePresence, motion } from 'framer-motion';
 export default function App() {
   const [activePage, setActivePage] = useState('home');
   const [aboutTab, setAboutTab] = useState('history');
+  const [learnModuleId, setLearnModuleId] = useState(null);
 
   const handlePageChange = (pageId) => {
     if (pageId === 'about') {
       setAboutTab('history');
     }
+    if (pageId !== 'learn-module') {
+      setLearnModuleId(null);
+    }
     setActivePage(pageId);
+  };
+
+  const handleOpenLearnModule = (moduleId) => {
+    setLearnModuleId(moduleId);
+    setActivePage('learn-module');
+  };
+
+  const handleBackToLearn = () => {
+    setLearnModuleId(null);
+    setActivePage('learn');
   };
 
   // Render vintage pages
@@ -36,7 +51,14 @@ export default function App() {
       case 'play':
         return <VintagePlay />;
       case 'learn':
-        return <VintageLearn />;
+        return <VintageLearn onOpenModule={handleOpenLearnModule} />;
+      case 'learn-module':
+        return (
+          <CurriculumModule
+            moduleId={learnModuleId}
+            onBackToLearn={handleBackToLearn}
+          />
+        );
       case 'support':
         return <VintageSupport />;
       case 'about':
@@ -54,7 +76,7 @@ export default function App() {
       <main style={styles.mainCanvas}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={activePage}
+            key={activePage === 'learn-module' ? `learn-module-${learnModuleId}` : activePage}
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -15 }}
