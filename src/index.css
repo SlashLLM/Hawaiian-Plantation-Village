@@ -307,4 +307,28 @@ button, input, select, textarea {
   color: var(--paper-light);
 }
 
+/* Curriculum module sidebar layout */
+.curriculum-layout {
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) 1fr;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.curriculum-sidebar {
+  position: sticky;
+  top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .curriculum-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .curriculum-sidebar {
+    position: static;
+  }
+}
 
