@@ -4,121 +4,7 @@ import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight } from 'lucid
 import campPhoto from '../../assets/historic_camp_house.png';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
-
-const CAMPS_DATA = [
-  {
-    id: 'chinese',
-    culture: 'Chinese',
-    title: 'The Chinese Society Cookhouse',
-    arrival: '1852',
-    shortDesc: 'One of the earliest immigrant groups who completed contract terms and founded successful merchants and agricultural hubs.',
-    fullHistory: 'Chinese contract laborers arrived in 1852. They introduced rice cultivation techniques to the swampy lowlands of Waipahu. The cookhouse was the heart of the Chinese camp section, serving as a social gathering spot and a place to honor ancestors during festivals.',
-    oralHistory: {
-      narrator: 'Siu Lung Chang (Grandson of Cookhouse Manager)',
-      length: '2m 45s',
-      audioSimText: 'Recording: Chang family oral archive, interviewed 1994.',
-      transcript: '“My grandfather came in 1888. He told me the kitchen fires in the Chinese camp section never went out. They baked buns, boiled tea, and exchanged news. The bango system was tight, but workers pooled their credit slips to buy bulk ingredients directly from Honolulu merchants. That cookhouse kept our community alive.”'
-    }
-  },
-  {
-    id: 'japanese',
-    culture: 'Japanese',
-    title: 'The Japanese Furo & Cottage',
-    arrival: '1885',
-    shortDesc: 'Brought traditional bathing customs and established large camp structures, bringing rich family traditions and shrines.',
-    fullHistory: 'Japanese workers arrived under the Government-Contract system in 1885. They constructed traditional furo (hot water baths) which became cultural nodes where workers of different nations interacted. Many cottages represent the post-contract family settlements.',
-    oralHistory: {
-      narrator: 'Kiyoshi Tanaka (Retired Sugar Mill Stoker)',
-      length: '3m 12s',
-      audioSimText: 'Recording: Tanaka oral history, interviewed 1989.',
-      transcript: '“At the end of a 10-hour shift in the boiling sugar house, covered in black dust, the furo bath was heaven. We sat in the hot water and talked. Language didn\'t matter much. We shared cigarettes and laughed. It was where we stopped being contract numbers and became friends.”'
-    }
-  },
-  {
-    id: 'filipino',
-    culture: 'Filipino',
-    title: 'The Filipino Single-Men Barracks',
-    arrival: '1906',
-    shortDesc: 'Arrived under the HSPA recruiting system, forming the backbone of late-era plantation field operations.',
-    fullHistory: 'Filipino Sakadas arrived starting in 1906. Initially living in single-men barracks, they brought a rich history of labor organizing, music, and cuisine. They were the largest labor force during the final decades of the sugar era.',
-    oralHistory: {
-      narrator: 'Espiridion "Pedro" Ramos (Sakada Field Guide)',
-      length: '4m 05s',
-      audioSimText: 'Recording: Sakada oral archive, interviewed 1991.',
-      transcript: '“We lived six men to a room in the Waipahu barracks. We brought our guitars, and on Saturday nights, we sang kundiman (love songs) on the porch. The Luna was strict, but when the music started, the fields felt far away. We became brothers in those rooms.”'
-    }
-  },
-  {
-    id: 'portuguese',
-    culture: 'Portuguese',
-    title: 'The Portuguese Forno & Home',
-    arrival: '1878',
-    shortDesc: 'Introduced stone bread ovens (fornos) and the ukulele to the islands, moving into supervisory positions.',
-    fullHistory: 'Portuguese immigrants from Madeira and the Azores arrived in 1878. Often arriving as families, they built outdoor stone ovens (forno) to bake large batches of sweet bread, which they shared with neighbors, fostering the plantation-wide community spirit.',
-    oralHistory: {
-      narrator: 'Maria Da Silva (Cottage Resident descendant)',
-      length: '2m 15s',
-      audioSimText: 'Recording: Da Silva family history, recorded 1993.',
-      transcript: '“Every Saturday, my grandmother heated the forno brick oven with eucalyptus wood. The smell of baking sweet bread traveled through all the camps. Japanese, Filipino, and Chinese kids would wait near our yard. She never let a single child walk away without a warm crust.”'
-    }
-  },
-  {
-    id: 'korean',
-    culture: 'Korean',
-    title: 'The Korean Protestant Community Cottage',
-    arrival: '1903',
-    shortDesc: 'Formed tightly-knit communities centered around church gatherings, language schools, and independence movements.',
-    fullHistory: 'Korean immigrants arrived in 1903, seeking relief from political turmoil. They established active language schools and churches. Korean camp cottages often had small gardens for making fermented vegetables, introducing kimchi to the local diet.',
-    oralHistory: {
-      narrator: 'Young-Hee Park (Language School Educator)',
-      length: '3m 50s',
-      audioSimText: 'Recording: Park family archive, recorded 1995.',
-      transcript: '“We gathered at the camp chapel on Sundays. It wasn\'t just for church services; it was where we taught our children the Korean alphabet and gathered funds to support the independence movement in Seoul. The cottage garden always had chili pepper stalks growing in the red dirt.”'
-    }
-  },
-  {
-    id: 'puerto_rican',
-    culture: 'Puerto Rican',
-    title: 'The Puerto Rican Casita',
-    arrival: '1900',
-    shortDesc: 'Arrived after hurricanes devastated their home island, introducing rich música jibara and pasteles to Hawaiʻi.',
-    fullHistory: 'Following the devastation of Hurricane San Ciriaco in 1899, over 5,000 Puerto Ricans migrated to Hawaiʻi in 1900. They introduced dynamic rhythms, string ensembles, and food traditions like pasteles (similar to tamales, wrapped in banana leaves).',
-    oralHistory: {
-      narrator: 'Roberto Morales (Cane Hauler & Musician)',
-      length: '3m 30s',
-      audioSimText: 'Recording: Morales music archives, recorded 1990.',
-      transcript: '“We brought the cuatro guitar and the güiro scraper. When we played music at the camp borders, the other workers would stand and listen. We blended our rhythms with Portuguese tunes and Hawaiian chants. That’s how Cachi Cachi music was born in Waipahu.”'
-    }
-  },
-  {
-    id: 'okinawan',
-    culture: 'Okinawan',
-    title: 'The Okinawan Sanshin & Prefectural Club',
-    arrival: '1900',
-    shortDesc: 'Brought the traditional three-stringed sanshin, a unique Ryukyuan language, and deep mutual-aid networks.',
-    fullHistory: 'Okinawan contract laborers arrived in Hawaiʻi in 1900, bringing a distinct Ryukyuan language, culture, and musical heritage. Settling in camp clusters, they maintained strong prefectural networks called sonjinkai. They introduced agricultural practices, pig farming, and traditional foods like andagi. The three-stringed sanshin became a cornerstone of plantation community music.',
-    oralHistory: {
-      narrator: 'Kama Uyehara (Third-Generation Sanshin Instructor)',
-      length: '3m 40s',
-      audioSimText: 'Recording: Uyehara family tape archive, Waipahu, recorded 1992.',
-      transcript: '“My father made his first sanshin using an empty cigar box and a piece of eucalyptus wood. In the evenings, when the field dust settled, he would play the old Ryukyuan folk songs. The music was different from the Japanese songs—it was warmer, and the neighbors from all the other camps would lean over the fences to listen. It made this red dirt feel a little bit like Okinawa.”'
-    }
-  },
-  {
-    id: 'spanish',
-    culture: 'Spanish',
-    title: 'The Spanish Andalusian Casa',
-    arrival: '1907',
-    shortDesc: 'Arrived in 1907 from Andalusia, introducing the classical Spanish guitar, lace-making, and distinct culinary traditions.',
-    fullHistory: 'Spanish contract laborers arrived in Hawaiʻi starting in 1907, primarily recruited from the Andalusia region. Those who remained in Waipahu contributed rich cultural elements, including classical Spanish guitar techniques, traditional lace-making, and Mediterranean culinary traditions. Their guitars blended with Portuguese braguinhas and Okinawan sanshins during communal gatherings.',
-    oralHistory: {
-      narrator: 'Isabel Delgado (Andalusian Immigrant Descendant)',
-      length: '2m 55s',
-      audioSimText: 'Recording: Delgado oral archive, interviewed 1994.',
-      transcript: '“My grandmother brought her Andalusian guitar all the way across two oceans. She said the fields were exhausting, but music was how they kept their dignity. When she played, the other workers would gather around. The Portuguese brought their braguinha, the Okinawan workers brought their sanshin, and they would all play together on the lanai. We didn’t speak the same words, but the strings understood each other.”'
-    }
-  }
-];
+import { useImmigrationStories } from '../../hooks/usePayload';
 
 const parseLengthToSeconds = (lengthStr) => {
   if (!lengthStr) return 120;
@@ -170,6 +56,7 @@ const Visualizer = ({ isPlaying }) => {
 };
 
 export default function Stories() {
+  const { data: CAMPS_DATA } = useImmigrationStories();
   const [selectedCamp, setSelectedCamp] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);

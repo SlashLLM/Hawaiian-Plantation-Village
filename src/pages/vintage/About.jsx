@@ -5,46 +5,7 @@ import {
   ChevronRight, ChevronDown, Send, Printer, User
 } from 'lucide-react';
 import bangoImage from '../../assets/bango_lunch_tin.png';
-
-// Mock News Data
-const newsArticles = [
-  {
-    id: 1,
-    title: 'Historic Oahu Sugar Co. Smokestack Restoration Underway',
-    date: 'July 10, 2026',
-    category: 'Preservation',
-    summary: 'A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu’s skyline.',
-    content: 'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project. Standing as a beacon of Waipahu’s industrial sugar heritage, the 1917 concrete smokestack has faced severe weathering over the decades. Thanks to a generous grant from the Historic Hawaiʻi Foundation and community donations, local structural preservationists have begun scaffolding the column to repair micro-cracks and reinforce historical masonry joints. The project is expected to run through September, with no interruption to scheduled village tours.',
-    image: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 2,
-    title: 'Announcing the 34th Annual Plantation Heritage Festival',
-    date: 'June 28, 2026',
-    category: 'Community',
-    summary: 'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.',
-    content: 'Save the date! On Saturday, August 15, 2026, from 9:00 AM to 4:00 PM, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival. Celebrate the multi-ethnic legacy that formed modern Hawaiʻi. The event features live performances including Japanese Taiko drumming, Portuguese folk dancing, Filipino Kulintang music, and Hawaiian hula. Food booths will serve authentic plantation-era treats like fresh malasadas, Chinese manapua, and plantation-style plate lunches. Admission is free, with voluntary donations supporting our educational outreach programs.',
-    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 3,
-    title: 'New Permanent Exhibit: The Secret Language of Bango Tags',
-    date: 'May 15, 2026',
-    category: 'Exhibits',
-    summary: 'Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.',
-    content: 'We are proud to unveil our latest permanent installation: "The Secret Language of Bango Tags." Located inside the Japanese Camp Cottage, this exhibit showcases a collection of original brass, copper, and tin bango tags used by workers to receive wages and identify themselves to camp lunas (overseers). Visitors will learn about the numbering codes, racial categorizations, and how workers personalized these tags. The exhibit also features oral history recordings from descendants sharing what these tags meant to their families.',
-    image: 'https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 4,
-    title: 'Volunteers Needed: Native Botanical Garden Maintenance',
-    date: 'April 22, 2026',
-    category: 'Volunteer',
-    summary: 'Join our weekly Tuesday gardening cohort to help nurture and catalog traditional medicinal plants brought by immigrant workers.',
-    content: 'Our ethno-botanical gardens are in need of green thumbs! Hawaiian Plantation Village houses a collection of native plants and medicinal herbs brought by successive waves of immigrants—from Chinese ginger and Portuguese rosemary to Filipino moringa (unggay) and traditional Hawaiian kalo. We are recruiting volunteers for our Tuesday Morning Gardening Cohort (8:30 AM - 11:30 AM). No professional gardening experience required; training on native cultivation and plant history will be provided by our senior landscape docent.',
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80',
-  }
-];
+import { useNews } from '../../hooks/usePayload';
 
 // Mock Careers Data
 const careersList = [
@@ -64,7 +25,7 @@ const careersList = [
     ],
     requirements: [
       'Strong public speaking skills and enthusiasm for local history and multicultural storytelling.',
-      'Basic knowledge of Hawaiʻi\'s history and plantation era (additional training provided).',
+      'Basic knowledge of HawaiÊ»i\'s history and plantation era (additional training provided).',
       'Ability to walk and stand outdoors on gravel pathways for up to 2 hours.',
       'Prior experience in education, museum docentry, or hospitality is highly preferred.'
     ]
@@ -106,7 +67,7 @@ const careersList = [
     ],
     requirements: [
       'Experience in gardening, tropical horticulture, or organic farming.',
-      'Interest in ethno-botany and the history of crop introduction in Hawaiʻi.',
+      'Interest in ethno-botany and the history of crop introduction in HawaiÊ»i.',
       'Ability to perform physical outdoor labor in various weather conditions.',
       'Experience leading volunteers or working in community garden settings is a plus.'
     ]
@@ -117,6 +78,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const [localActiveTab, setLocalActiveTab] = useState('history');
   const activeTab = propActiveTab || localActiveTab;
   const setActiveTab = propSetActiveTab || setLocalActiveTab;
+  const { data: newsArticles } = useNews();
 
   // News State
   const [newsSearch, setNewsSearch] = useState('');
@@ -141,7 +103,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const timeline = [
     {
       year: '1852',
-      event: 'First waves of Chinese contract laborers arrive in Oʻahu aboard the Thetis, inaugurating the plantation era.'
+      event: 'First waves of Chinese contract laborers arrive in OÊ»ahu aboard the Thetis, inaugurating the plantation era.'
     },
     {
       year: '1878',
@@ -165,7 +127,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
     },
     {
       year: '1946',
-      event: 'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill’s eventual closure in 1995.'
+      event: 'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the millâ€™s eventual closure in 1995.'
     },
     {
       year: '1992',
@@ -255,7 +217,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
         <div style={styles.container}>
           <span className="ink-stamp green" style={{ marginBottom: '0.5rem' }}>Preservation</span>
           <h1 style={styles.pageTitle}>About the Village</h1>
-          <p style={styles.pageSubtitle}>A cultural sanctuary in Waipahu preserving stories and memories of Oʻahu’s plantation communities.</p>
+          <p style={styles.pageSubtitle}>A cultural sanctuary in Waipahu preserving stories and memories of OÊ»ahuâ€™s plantation communities.</p>
         </div>
       </div>
 
@@ -308,7 +270,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               <div style={styles.twoColumnGrid}>
                 <div style={styles.textCol}>
                   <span className="ledger-header" style={{ marginBottom: '0.5rem' }}>MISSION & VISION</span>
-                  <h2 style={styles.sectionTitle}>Preserving the Roots of Modern Hawaiʻi</h2>
+                  <h2 style={styles.sectionTitle}>Preserving the Roots of Modern HawaiÊ»i</h2>
                   <p style={styles.bodyText}>
                     Hawaiian Plantation Village is an outdoor museum cataloging the historical memories of the waves of immigration that arrived between 1852 and 1946. Our mission is to share the history, culture, and values of the communities that shaped modern Hawaii.
                   </p>
@@ -815,7 +777,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                       <h5 style={styles.infoLabel}>Location Address</h5>
                       <p style={styles.infoText}>
                         94-695 Waipahu Street<br />
-                        Waipahu, Oʻahu, Hawaiʻi 96797
+                        Waipahu, OÊ»ahu, HawaiÊ»i 96797
                       </p>
                     </div>
                   </div>
@@ -846,7 +808,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                       <h5 style={styles.infoLabel}>Hours of Operation</h5>
                       <p style={styles.infoText}>
                         Tuesday through Saturday<br />
-                        10:00 AM – 2:00 PM (HST)<br />
+                        10:00 AM â€“ 2:00 PM (HST)<br />
                         <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>*Closed Sundays, Mondays & Major Holidays</span>
                       </p>
                     </div>

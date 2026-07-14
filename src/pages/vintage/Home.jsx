@@ -5,9 +5,11 @@ import sugarcaneField from '../../assets/sugarcane_field.png';
 import campHouse from '../../assets/historic_camp_house.png';
 import bangoImage from '../../assets/bango_lunch_tin.png';
 import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail, Heart } from 'lucide-react';
+import { useEvents } from '../../hooks/usePayload';
 
 export default function Home({ setActivePage }) {
   const visitRef = useRef(null);
+  const { data: events } = useEvents();
 
   const handleExplore = () => {
     visitRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -17,21 +19,6 @@ export default function Home({ setActivePage }) {
     setActivePage('tickets');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
-  const events = [
-    {
-      date: 'AUG 15',
-      title: 'Obon Festival & Bon Dance',
-      time: '5:00 PM - 9:00 PM',
-      desc: 'Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.'
-    },
-    {
-      date: 'SEP 12',
-      title: 'Plantation Heritage Day',
-      time: '10:00 AM - 3:00 PM',
-      desc: 'Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.'
-    }
-  ];
 
   return (
     <div>
@@ -241,7 +228,7 @@ export default function Home({ setActivePage }) {
           
           <div style={styles.eventsGrid}>
             {events.map((ev, idx) => (
-              <div key={idx} className="paper-card" style={styles.eventCard}>
+              <div key={ev.id ?? idx} className="paper-card" style={styles.eventCard}>
                 <div style={styles.eventDateBlock}>
                   <Calendar size={18} color="var(--tin-rust)" />
                   <span style={styles.eventDateText}>{ev.date}</span>
