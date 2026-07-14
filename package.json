@@ -3,9 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "workspaces": [
+    "cms"
+  ],
   "scripts": {
     "dev": "vite",
+    "dev:cms": "npm run dev --workspace=hpv-cms",
+    "dev:all": "npx concurrently \"npm run dev\" \"npm run dev:cms\"",
     "build": "vite build",
+    "build:cms": "npm run build --workspace=hpv-cms",
+    "seed:cms": "npm run seed --workspace=hpv-cms",
+    "test:db": "node scripts/test-db-connection.mjs",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -21,7 +29,9 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "concurrently": "^9.1.2",
     "oxlint": "^1.71.0",
+    "playwright": "^1.61.1",
     "vite": "^8.1.1"
   }
 }

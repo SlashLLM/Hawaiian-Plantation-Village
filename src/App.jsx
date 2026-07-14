@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 
-// Vintage pages
 import VintageHome from './pages/vintage/Home';
 import VintageVisit from './pages/vintage/Visit';
 import VintageStories from './pages/vintage/Stories';
@@ -11,8 +10,6 @@ import VintageSupport from './pages/vintage/Support';
 import VintageAbout from './pages/vintage/About';
 import VintageTickets from './pages/vintage/Tickets';
 import VintagePlay from './pages/vintage/Play';
-
-import { AnimatePresence, motion } from 'framer-motion';
 
 export default function App() {
   const [activePage, setActivePage] = useState('home');
@@ -74,18 +71,9 @@ export default function App() {
     <div style={{ ...styles.appShell, backgroundColor: 'var(--paper-light)' }}>
       <Navbar activePage={activePage} setActivePage={handlePageChange} />
       <main style={styles.mainCanvas}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activePage === 'learn-module' ? `learn-module-${learnModuleId}` : activePage}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.25, ease: 'easeInOut' }}
-            style={styles.pageWrapper}
-          >
-            {renderVintagePage()}
-          </motion.div>
-        </AnimatePresence>
+        <div key={activePage === 'learn-module' ? `learn-module-${learnModuleId}` : activePage} style={styles.pageWrapper}>
+          {renderVintagePage()}
+        </div>
       </main>
     </div>
   );
