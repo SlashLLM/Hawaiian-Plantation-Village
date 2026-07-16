@@ -1,119 +1,39 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { 
   Compass, BookOpen, Users, Calendar, ArrowRight, Briefcase, Mail, 
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
   ChevronRight, ChevronDown, Send, Printer, User
 } from 'lucide-react';
 import bangoImage from '../../assets/bango_lunch_tin.png';
-
-// Mock News Data
-const newsArticles = [
-  {
-    id: 1,
-    title: 'Historic Oahu Sugar Co. Smokestack Restoration Underway',
-    date: 'July 10, 2026',
-    category: 'Preservation',
-    summary: 'A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu’s skyline.',
-    content: 'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project. Standing as a beacon of Waipahu’s industrial sugar heritage, the 1917 concrete smokestack has faced severe weathering over the decades. Thanks to a generous grant from the Historic Hawaiʻi Foundation and community donations, local structural preservationists have begun scaffolding the column to repair micro-cracks and reinforce historical masonry joints. The project is expected to run through September, with no interruption to scheduled village tours.',
-    image: 'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 2,
-    title: 'Announcing the 34th Annual Plantation Heritage Festival',
-    date: 'June 28, 2026',
-    category: 'Community',
-    summary: 'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.',
-    content: 'Save the date! On Saturday, August 15, 2026, from 9:00 AM to 4:00 PM, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival. Celebrate the multi-ethnic legacy that formed modern Hawaiʻi. The event features live performances including Japanese Taiko drumming, Portuguese folk dancing, Filipino Kulintang music, and Hawaiian hula. Food booths will serve authentic plantation-era treats like fresh malasadas, Chinese manapua, and plantation-style plate lunches. Admission is free, with voluntary donations supporting our educational outreach programs.',
-    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 3,
-    title: 'New Permanent Exhibit: The Secret Language of Bango Tags',
-    date: 'May 15, 2026',
-    category: 'Exhibits',
-    summary: 'Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.',
-    content: 'We are proud to unveil our latest permanent installation: "The Secret Language of Bango Tags." Located inside the Japanese Camp Cottage, this exhibit showcases a collection of original brass, copper, and tin bango tags used by workers to receive wages and identify themselves to camp lunas (overseers). Visitors will learn about the numbering codes, racial categorizations, and how workers personalized these tags. The exhibit also features oral history recordings from descendants sharing what these tags meant to their families.',
-    image: 'https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 4,
-    title: 'Volunteers Needed: Native Botanical Garden Maintenance',
-    date: 'April 22, 2026',
-    category: 'Volunteer',
-    summary: 'Join our weekly Tuesday gardening cohort to help nurture and catalog traditional medicinal plants brought by immigrant workers.',
-    content: 'Our ethno-botanical gardens are in need of green thumbs! Hawaiian Plantation Village houses a collection of native plants and medicinal herbs brought by successive waves of immigrants—from Chinese ginger and Portuguese rosemary to Filipino moringa (unggay) and traditional Hawaiian kalo. We are recruiting volunteers for our Tuesday Morning Gardening Cohort (8:30 AM - 11:30 AM). No professional gardening experience required; training on native cultivation and plant history will be provided by our senior landscape docent.',
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80',
-  }
-];
-
-// Mock Careers Data
-const careersList = [
-  {
-    id: 'docent',
-    title: 'Cultural Heritage Docent & Tour Guide',
-    type: 'Part-Time',
-    department: 'Education & Guest Services',
-    compensation: '$19.50 / hour',
-    hours: '15-20 hours / week (includes Saturdays)',
-    summary: 'Bring plantation history to life by leading educational group excursions and public tours through our 25 camp cottages.',
-    responsibilities: [
-      'Lead groups of 10-25 visitors (students, tourists, and locals) through the historic camp houses.',
-      'Explain the cultural history, lifestyles, and contributions of the various immigrant groups (1852-1946).',
-      'Ensure the safety of visitors and the protection of museum artifacts during tours.',
-      'Assist in setting up tour resources and answering guest questions at the visitor center.'
-    ],
-    requirements: [
-      'Strong public speaking skills and enthusiasm for local history and multicultural storytelling.',
-      'Basic knowledge of Hawaiʻi\'s history and plantation era (additional training provided).',
-      'Ability to walk and stand outdoors on gravel pathways for up to 2 hours.',
-      'Prior experience in education, museum docentry, or hospitality is highly preferred.'
-    ]
-  },
-  {
-    id: 'restoration',
-    title: 'Site Preservationist & Historical Carpenter',
-    type: 'Full-Time',
-    department: 'Maintenance & Preservation',
-    compensation: '$26.00 - $30.00 / hour (DOE)',
-    hours: '40 hours / week (Monday - Friday)',
-    summary: 'Maintain and restore the structural integrity of 25 authentic and reconstructed camp cottages using period-appropriate materials.',
-    responsibilities: [
-      'Inspect, repair, and maintain the wooden structures, roofs, and fences of the village cottage sites.',
-      'Source and use period-appropriate building materials (e.g. Douglas fir, redwood, corrugated iron).',
-      'Apply historic carpentry and joinery techniques to preserve the original architectural look and feel.',
-      'Ensure all structural repairs adhere to historic preservation guidelines and safety standards.'
-    ],
-    requirements: [
-      '3+ years of experience in carpentry, timber framing, or historic building preservation.',
-      'Proficiency with hand and power tools; ability to read structural plans.',
-      'Knowledge of local wood rot prevention and historical preservation standards.',
-      'Ability to lift up to 50 lbs and work comfortably on ladders/scaffolding.'
-    ]
-  },
-  {
-    id: 'gardener',
-    title: 'Ethno-Botanical Garden Coordinator',
-    type: 'Part-Time',
-    department: 'Horticulture & Landscape',
-    compensation: '$21.00 / hour',
-    hours: '20 hours / week',
-    summary: 'Oversee the cultivation, labelling, and care of our historical crop plots, native plants, and immigrant medicinal gardens.',
-    responsibilities: [
-      'Maintain, plant, and weed the plantation-era agricultural plots (sugar cane, taro, sweet potato).',
-      'Care for ethnic medicinal herb gardens representing Chinese, Japanese, Filipino, and Portuguese remedies.',
-      'Lead and coordinate weekly volunteer gardening cohorts.',
-      'Collaborate with the education team to update botanical signage and guide resources.'
-    ],
-    requirements: [
-      'Experience in gardening, tropical horticulture, or organic farming.',
-      'Interest in ethno-botany and the history of crop introduction in Hawaiʻi.',
-      'Ability to perform physical outdoor labor in various weather conditions.',
-      'Experience leading volunteers or working in community garden settings is a plus.'
-    ]
-  }
-];
+import { useSiteSettings, usePageSection, useContentCollection } from '../../context/ContentProvider.jsx';
 
 export default function About({ activeTab: propActiveTab, setActiveTab: propSetActiveTab }) {
+  const { settings } = useSiteSettings();
+  const { section: header } = usePageSection('about', 'header', {});
+  const { section: mission } = usePageSection('about', 'mission', {});
+  const { section: timelineIntro } = usePageSection('about', 'timelineIntro', {});
+  const { section: leadershipIntro } = usePageSection('about', 'leadershipIntro', {});
+  const { section: newsIntro } = usePageSection('about', 'newsIntro', {});
+  const { section: careersIntro } = usePageSection('about', 'careersIntro', {});
+  const { section: contactIntro } = usePageSection('about', 'contactIntro', {});
+  const { items: newsArticles } = useContentCollection('news');
+  const { items: careersList } = useContentCollection('career');
+  const { items: timeline } = useContentCollection('timeline');
+  const { items: leadership } = useContentCollection('leadership');
+
+  const contact = settings?.contact ?? {};
+  const hours = settings?.hours ?? {};
+  const subjectOptions = contactIntro?.subjectOptions ?? [
+    'General Inquiry',
+    'Educational Tours',
+    'Private Events',
+    'Donation/Sponsorship',
+    'Volunteering',
+  ];
+  const newsCategories = useMemo(
+    () => ['All', ...new Set(newsArticles.map((a) => a.category).filter(Boolean))],
+    [newsArticles],
+  );
   const [localActiveTab, setLocalActiveTab] = useState('history');
   const activeTab = propActiveTab || localActiveTab;
   const setActiveTab = propSetActiveTab || setLocalActiveTab;
@@ -132,46 +52,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const [appliedJobTitle, setAppliedJobTitle] = useState('');
 
   // Contact Form State
-  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: 'General Inquiry', message: '' });
+  const [contactForm, setContactForm] = useState({ name: '', email: '', subject: subjectOptions[0] ?? 'General Inquiry', message: '' });
   const [contactFormErrors, setContactFormErrors] = useState({});
   const [contactSubmitSuccess, setContactSubmitSuccess] = useState(false);
   const [contactReceipt, setContactReceipt] = useState(null);
-
-  // History timeline data (Original)
-  const timeline = [
-    {
-      year: '1852',
-      event: 'First waves of Chinese contract laborers arrive in Oʻahu aboard the Thetis, inaugurating the plantation era.'
-    },
-    {
-      year: '1878',
-      event: 'Portuguese workers arrive from Madeira and Azores, bringing stone ovens (forno) and the braguinha (ancestor of the ukulele).'
-    },
-    {
-      year: '1885',
-      event: 'The Kanyaku Imin government-contract Japanese workers arrive, establishing major camp communities and furo baths.'
-    },
-    {
-      year: '1897',
-      event: 'Oahu Sugar Company is incorporated in Waipahu, erecting the massive sugar mill smokestack that dominated the skyline.'
-    },
-    {
-      year: '1903',
-      event: 'First Korean immigrants land in Honolulu, setting up language schools, programs, and active community organizations.'
-    },
-    {
-      year: '1906',
-      event: 'The First Filipino Sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.'
-    },
-    {
-      year: '1946',
-      event: 'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill’s eventual closure in 1995.'
-    },
-    {
-      year: '1992',
-      event: 'Hawaiian Plantation Village opens in Waipahu as a living cultural museum to preserve history and honor worker roots.'
-    }
-  ];
 
   // News Filtering
   const filteredArticles = newsArticles.filter(art => {
@@ -245,7 +129,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const resetContactForm = () => {
     setContactSubmitSuccess(false);
     setContactReceipt(null);
-    setContactForm({ name: '', email: '', subject: 'General Inquiry', message: '' });
+    setContactForm({ name: '', email: '', subject: subjectOptions[0] ?? 'General Inquiry', message: '' });
   };
 
   return (
@@ -253,9 +137,9 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
       {/* Header */}
       <div style={styles.headerBlock}>
         <div style={styles.container}>
-          <span className="ink-stamp green" style={{ marginBottom: '0.5rem' }}>Preservation</span>
-          <h1 style={styles.pageTitle}>About the Village</h1>
-          <p style={styles.pageSubtitle}>A cultural sanctuary in Waipahu preserving stories and memories of Oʻahu’s plantation communities.</p>
+          <span className={`ink-stamp ${header?.stampClass ?? 'green'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'Preservation'}</span>
+          <h1 style={styles.pageTitle}>{header?.title ?? 'About the Village'}</h1>
+          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'A cultural sanctuary in Waipahu preserving stories and memories of Oʻahu\'s plantation communities.'}</p>
         </div>
       </div>
 
@@ -307,14 +191,11 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
             <section style={styles.aboutSection}>
               <div style={styles.twoColumnGrid}>
                 <div style={styles.textCol}>
-                  <span className="ledger-header" style={{ marginBottom: '0.5rem' }}>MISSION & VISION</span>
-                  <h2 style={styles.sectionTitle}>Preserving the Roots of Modern Hawaiʻi</h2>
-                  <p style={styles.bodyText}>
-                    Hawaiian Plantation Village is an outdoor museum cataloging the historical memories of the waves of immigration that arrived between 1852 and 1946. Our mission is to share the history, culture, and values of the communities that shaped modern Hawaii.
-                  </p>
-                  <p style={styles.bodyText}>
-                    We maintain 25 authentic or reconstructed camp homes representing the domestic lives of the Chinese, Japanese, Filipino, Portuguese, Korean, Puerto Rican, Okinawan, and Spanish workers. It is a testament to the resilience, solidarity, and cross-cultural unity that gave birth to Hawaii's unique local identity.
-                  </p>
+                  <span className="ledger-header" style={{ marginBottom: '0.5rem' }}>{mission?.stamp ?? 'MISSION & VISION'}</span>
+                  <h2 style={styles.sectionTitle}>{mission?.title ?? 'Preserving the Roots of Modern Hawaiʻi'}</h2>
+                  {(mission?.paragraphs ?? []).map((paragraph, idx) => (
+                    <p key={idx} style={styles.bodyText}>{paragraph}</p>
+                  ))}
                 </div>
                 <div style={styles.imgCol}>
                   <div style={styles.imgWrapper}>
@@ -328,10 +209,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
             {/* Timeline */}
             <section style={styles.timelineSection}>
               <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-                <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>CHRONICLES</span>
-                <h2 style={styles.sectionTitle}>Plantation Era Timeline</h2>
+                <span className={`ink-stamp ${timelineIntro?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{timelineIntro?.stamp ?? 'CHRONICLES'}</span>
+                <h2 style={styles.sectionTitle}>{timelineIntro?.title ?? 'Plantation Era Timeline'}</h2>
                 <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-                  Key historical milestones of immigration waves, industrial growth, and cultural synthesis in Hawaii.
+                  {timelineIntro?.description ?? 'Key historical milestones of immigration waves, industrial growth, and cultural synthesis in Hawaii.'}
                 </p>
               </div>
 
@@ -349,23 +230,15 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
 
             {/* Leadership */}
             <section style={styles.aboutSection}>
-              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>Leadership & Board</h2>
+              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Leadership & Board'}</h2>
               <div style={styles.boardGrid}>
-                <div className="paper-card" style={styles.boardCard}>
-                  <h4 style={styles.boardName}>Jeanne Ishikawa</h4>
-                  <span style={styles.boardRole}>Executive Director</span>
-                  <p style={styles.boardDesc}>Oversees daily operations, site preservation projects, and curates cultural programs.</p>
-                </div>
-                <div className="paper-card" style={styles.boardCard}>
-                  <h4 style={styles.boardName}>Dr. Glenn Kawatachi</h4>
-                  <span style={styles.boardRole}>Board President</span>
-                  <p style={styles.boardDesc}>Leads institutional fundraising, historical verification committees, and university partnerships.</p>
-                </div>
-                <div className="paper-card" style={styles.boardCard}>
-                  <h4 style={styles.boardName}>Alvin Ramos</h4>
-                  <span style={styles.boardRole}>Head Site Preservationist</span>
-                  <p style={styles.boardDesc}>Maintains structural integrity of the 25 camp homes using original wood-grain carpentry tools.</p>
-                </div>
+                {leadership.map((person) => (
+                  <div key={person.name} className="paper-card" style={styles.boardCard}>
+                    <h4 style={styles.boardName}>{person.name}</h4>
+                    <span style={styles.boardRole}>{person.role}</span>
+                    <p style={styles.boardDesc}>{person.desc}</p>
+                  </div>
+                ))}
               </div>
             </section>
           </div>
@@ -376,8 +249,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           <div style={styles.tabContentArea}>
             <div style={styles.ledgerHeaderRow}>
               <div>
-                <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>LEDGER REPORTS</span>
-                <h2 style={styles.sectionTitle}>News & Announcements</h2>
+                <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>{newsIntro?.stamp ?? 'LEDGER REPORTS'}</span>
+                <h2 style={styles.sectionTitle}>{newsIntro?.title ?? 'News & Announcements'}</h2>
               </div>
               
               {/* Category Filter and Search */}
@@ -393,7 +266,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                   />
                 </div>
                 <div style={styles.filterBtns}>
-                  {['All', 'Preservation', 'Community', 'Exhibits', 'Volunteer'].map(cat => (
+                  {newsCategories.map(cat => (
                     <button
                       key={cat}
                       onClick={() => setSelectedCategory(cat)}
@@ -469,10 +342,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
         {activeTab === 'careers' && (
           <div style={styles.tabContentArea}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>LABOR & STEWARDSHIP</span>
-              <h2 style={styles.sectionTitle}>Join the Preservation</h2>
+              <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>{careersIntro?.stamp ?? 'LABOR & STEWARDSHIP'}</span>
+              <h2 style={styles.sectionTitle}>{careersIntro?.title ?? 'Join the Preservation'}</h2>
               <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-                Help us keep the stories of Waipahu\'s immigrant communities alive. Discover our active career and volunteering opportunities below.
+                {careersIntro?.description ?? 'Help us keep the stories of Waipahu\'s immigrant communities alive. Discover our active career and volunteering opportunities below.'}
               </p>
             </div>
 
@@ -680,10 +553,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 {!contactSubmitSuccess ? (
                   <form onSubmit={handleContactSubmit}>
                     <div style={{ marginBottom: '1.5rem' }}>
-                      <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>INQUIRY REGISTRATION</span>
-                      <h3 style={{ ...styles.sectionTitle, fontSize: '1.75rem', marginBottom: '0.5rem' }}>Send a Message</h3>
+                      <span className="ledger-header" style={{ marginBottom: '0.25rem' }}>{contactIntro?.stamp ?? 'INQUIRY REGISTRATION'}</span>
+                      <h3 style={{ ...styles.sectionTitle, fontSize: '1.75rem', marginBottom: '0.5rem' }}>{contactIntro?.title ?? 'Send a Message'}</h3>
                       <p style={{ ...styles.bodyText, fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                        Have questions about cottage history, schedules, or support? Fill out the registration form.
+                        {contactIntro?.description ?? 'Have questions about cottage history, schedules, or support? Fill out the registration form.'}
                       </p>
                     </div>
 
@@ -718,11 +591,9 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                         onChange={(e) => setContactForm({ ...contactForm, subject: e.target.value })}
                         style={styles.formSelect}
                       >
-                        <option value="General Inquiry">General Inquiry</option>
-                        <option value="Educational Tours">Educational / Group Tours</option>
-                        <option value="Private Events">Private Events</option>
-                        <option value="Donation/Sponsorship">Donation & Sponsorship</option>
-                        <option value="Volunteering">Volunteering & Careers</option>
+                        {subjectOptions.map((option) => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
                       </select>
                     </div>
 
@@ -814,8 +685,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Location Address</h5>
                       <p style={styles.infoText}>
-                        94-695 Waipahu Street<br />
-                        Waipahu, Oʻahu, Hawaiʻi 96797
+                        {contact.address?.line1}<br />
+                        {contact.address?.line2}
                       </p>
                     </div>
                   </div>
@@ -825,7 +696,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Telephone Connection</h5>
                       <p style={styles.infoText}>
-                        <a href="tel:8086770110" style={styles.contactAnchor}>(808) 677-0110</a>
+                        <a href={contact.phoneHref ?? 'tel:8086770110'} style={styles.contactAnchor}>{contact.phone ?? '(808) 677-0110'}</a>
                       </p>
                     </div>
                   </div>
@@ -835,7 +706,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Electronic Mailing Address</h5>
                       <p style={styles.infoText}>
-                        <a href="mailto:info@hawaiianplantationvillage.org" style={styles.contactAnchor}>info@hawaiianplantationvillage.org</a>
+                        <a href={contact.emailHref ?? 'mailto:info@hawaiianplantationvillage.org'} style={styles.contactAnchor}>{contact.email ?? 'info@hawaiianplantationvillage.org'}</a>
                       </p>
                     </div>
                   </div>
@@ -845,9 +716,9 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Hours of Operation</h5>
                       <p style={styles.infoText}>
-                        Tuesday through Saturday<br />
-                        10:00 AM – 2:00 PM (HST)<br />
-                        <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>*Closed Sundays, Mondays & Major Holidays</span>
+                        {hours.schedule ?? 'Tuesday through Saturday'}<br />
+                        {hours.toursNote ?? 'Guided tours at 10:00 AM & 12:00 PM'}<br />
+                        <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>{hours.closedNote ?? '*Closed Sundays, Mondays & Major Holidays'}</span>
                       </p>
                     </div>
                   </div>
@@ -857,7 +728,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 <div className="paper-card" style={styles.mapCard}>
                   <div style={styles.mapFrameBorder}>
                     <iframe 
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaiian%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus" 
+                      src={contact.mapEmbed ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaiian%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus'} 
                       width="100%" 
                       height="260" 
                       style={{ border: 0, display: 'block' }} 

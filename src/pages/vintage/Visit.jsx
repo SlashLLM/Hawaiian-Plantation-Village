@@ -3,8 +3,23 @@ import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRig
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
+import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { usePageSection, useContent } from '../../context/ContentProvider.jsx';
+import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
 
-export default function Visit({ setActivePage }) {
+const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
+
+export default function Visit() {
+  const setActivePage = useAppNavigate();
+  const { section: header } = usePageSection('visit', 'header', {});
+  const { section: hoursSection } = usePageSection('visit', 'hours', {});
+  const { section: parkingSection } = usePageSection('visit', 'parking', {});
+  const { section: safetySection } = usePageSection('visit', 'safety', {});
+  const { section: groupSection } = usePageSection('visit', 'group', {});
+  const { section: admissionSection } = usePageSection('visit', 'admission', {});
+  const { section: faqSection } = usePageSection('visit', 'faq', {});
+  const { groupTickets, tourSlots } = useContent();
+  const faqs = faqSection?.items?.length ? faqSection.items : VISIT_FAQS;
   const [activeTab, setActiveTab] = useState('hours');
 
   // Group booking form state
@@ -12,7 +27,7 @@ export default function Visit({ setActivePage }) {
   const [groupName, setGroupName] = useState('');
   const [contactName, setContactName] = useState('');
   const [groupSize, setGroupSize] = useState('');
-  const [groupType, setGroupType] = useState('Private Group');
+  const [groupType, setGroupType] = useState('Private Group / Friends');
   const [groupDate, setGroupDate] = useState('');
   const [groupEmail, setGroupEmail] = useState('');
   const [groupPhone, setGroupPhone] = useState('');
@@ -27,34 +42,21 @@ export default function Visit({ setActivePage }) {
     setGroupComplete(true);
   };
 
-
-  const faqs = [
-    {
-      q: 'How long does a typical visit take?',
-      a: 'We recommend allocating at least 1.5 to 2 hours. A full guided tour takes approximately 90 minutes, and you can explore the gardens and exhibits afterward.'
-    },
-    {
-      q: 'Are the historic buildings accessible?',
-      a: 'As a historic preservation site, some cottages have elevated steps or narrow doorways that replicate original plantation-era conditions. However, many structures have ramps, and our central pathways are wheelchair-friendly. Please contact us for specialized accessibility support.'
-    },
-    {
-      q: 'Is photography permitted?',
-      a: 'Personal photography and filming are highly encouraged! For commercial photography or wedding sessions, please obtain a permit at the managers office.'
-    },
-    {
-      q: 'Is the village open in the rain?',
-      a: 'Yes, we are open rain or shine! Hawaii weather can be tropical; we suggest bringing an umbrella or light rain jacket as tours walk outdoors between buildings.'
-    }
-  ];
+  const tourSlotEntries = hoursSection?.tourSlots?.length
+    ? hoursSection.tourSlots
+    : (tourSlots ?? []).map((slot, idx) => ({
+        label: idx === 0 ? 'Morning Tour' : 'Midday Tour',
+        time: `${slotLabel(slot)} daily`,
+      }));
 
   return (
     <div style={styles.pageContainer}>
       <PageHeaderParallax
         layers={parallaxLayers.visit}
-        stamp="VISITOR GUIDE"
-        stampClass="ink-stamp green"
-        title="Plan Your Visit"
-        subtitle="Everything you need to know to prepare for your journey into Waipahu's history."
+        stamp={header?.stamp ?? 'VISITOR GUIDE'}
+        stampClass={`ink-stamp ${header?.stampClass ?? 'green'}`}
+        title={header?.title ?? 'Plan Your Visit'}
+        subtitle={header?.subtitle ?? "Everything you need to know to prepare for your journey into Waipahu's history."}
       />
 
       <div style={styles.container}>
@@ -93,12 +95,12 @@ export default function Visit({ setActivePage }) {
             {/* Tab: Hours & Tours */}
             {activeTab === 'hours' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>Opening Hours</h3>
+                <h3 style={styles.tabTitle}>{hoursSection?.title ?? 'Opening Hours'}</h3>
                 <div style={styles.infoRow}>
                   <Clock size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Tuesday – Saturday: 9:00 AM – 2:00 PM</p>
-                    <p style={styles.infoDesc}>Closed on Sundays, Mondays, and major state holidays.</p>
+                    <p style={styles.infoValue}>{hoursSection?.schedule ?? 'Tuesday – Saturday: 9:00 AM – 2:00 PM'}</p>
+                    <p style={styles.infoDesc}>{hoursSection?.closedNote ?? 'Closed on Sundays, Mondays, and major state holidays.'}</p>
                   </div>
                 </div>
 
@@ -106,14 +108,15 @@ export default function Visit({ setActivePage }) {
 
                 <h3 style={styles.tabTitle}>Guided Tour Schedule</h3>
                 <p style={styles.bodyText}>
-                  To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:
+                  {hoursSection?.toursIntro ?? 'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:'}
                 </p>
                 <ul style={styles.tourList}>
-                  <li><strong>Morning Tour:</strong> 10:00 AM daily</li>
-                  <li><strong>Midday Tour:</strong> 12:00 PM daily</li>
+                  {tourSlotEntries.map((slot) => (
+                    <li key={`${slot.label}-${slot.time}`}><strong>{slot.label}:</strong> {slot.time}</li>
+                  ))}
                 </ul>
                 <p style={styles.infoDesc}>
-                  *Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.
+                  {hoursSection?.walkInNote ?? '*Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.'}
                 </p>
               </div>
             )}
@@ -125,9 +128,9 @@ export default function Visit({ setActivePage }) {
                 <div style={styles.infoRow}>
                   <MapPin size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>94-695 Waipahu Street, Waipahu, HI 96797</p>
+                    <p style={styles.infoValue}>{parkingSection?.address ?? '94-695 Waipahu Street, Waipahu, HI 96797'}</p>
                     <p style={styles.infoDesc}>
-                      Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to Exit 8B (Farrington Hwy), then turn right onto Waipahu Depo Road and right onto Waipahu Street.
+                      {parkingSection?.directions ?? 'Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to Exit 8B (Farrington Hwy), then turn right onto Waipahu Depo Road and right onto Waipahu Street.'}
                     </p>
                   </div>
                 </div>
@@ -138,9 +141,9 @@ export default function Visit({ setActivePage }) {
                 <div style={styles.infoRow}>
                   <ParkingCircle size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Free Visitor Parking Onsite</p>
+                    <p style={styles.infoValue}>{parkingSection?.parkingTitle ?? 'Free Visitor Parking Onsite'}</p>
                     <p style={styles.infoDesc}>
-                      We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.
+                      {parkingSection?.parkingDesc ?? 'We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.'}
                     </p>
                   </div>
                 </div>
@@ -154,9 +157,9 @@ export default function Visit({ setActivePage }) {
                 <div style={styles.infoRow}>
                   <Footprints size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Terrain & Navigation</p>
+                    <p style={styles.infoValue}>{safetySection?.terrainTitle ?? 'Terrain & Navigation'}</p>
                     <p style={styles.infoDesc}>
-                      The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.
+                      {safetySection?.terrainDesc ?? 'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.'}
                     </p>
                   </div>
                 </div>
@@ -167,9 +170,9 @@ export default function Visit({ setActivePage }) {
                 <div style={styles.infoRow}>
                   <ShieldAlert size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Preserving Cultural Heritage</p>
+                    <p style={styles.infoValue}>{safetySection?.guidelinesTitle ?? 'Preserving Cultural Heritage'}</p>
                     <p style={styles.infoDesc}>
-                      Please do not climb on historical structures or touch displays marked with preservation tags. Hawaiian Plantation Village is a smoke-free facility.
+                      {safetySection?.guidelinesDesc ?? 'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaiian Plantation Village is a smoke-free facility.'}
                     </p>
                   </div>
                 </div>
@@ -179,9 +182,9 @@ export default function Visit({ setActivePage }) {
             {/* Tab: Group Visits */}
             {activeTab === 'group' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>Group Visits & Private Tours</h3>
+                <h3 style={styles.tabTitle}>{groupSection?.title ?? 'Group Visits & Private Tours'}</h3>
                 <p style={styles.bodyText}>
-                  We welcome groups of all sizes, including tour operators, family reunions, historical organizations, and corporate outings. Group admission discounts are available for pre-registered groups of 10 or more.
+                  {groupSection?.intro ?? 'We welcome groups of all sizes, including tour operators, family reunions, historical organizations, and corporate outings. Group admission discounts are available for pre-registered groups of 10 or more.'}
                 </p>
 
                 <div style={styles.infoRow}>
@@ -189,9 +192,9 @@ export default function Visit({ setActivePage }) {
                   <div>
                     <p style={styles.infoValue}>Group Admission Discount Rates</p>
                     <div style={{ ...styles.priceList, marginTop: '8px', width: '100%', maxWidth: '380px' }}>
-                      <div style={styles.priceItem}><span>Group Adults (10+)</span><strong>$14.00</strong></div>
-                      <div style={styles.priceItem}><span>Group Seniors / Military</span><strong>$10.00</strong></div>
-                      <div style={styles.priceItem}><span>Group Youth (5-12)</span><strong>$6.00</strong></div>
+                      {(groupTickets ?? []).map((ticket) => (
+                        <div key={ticket.slug} style={styles.priceItem}><span>{ticket.label}</span><strong>{ticket.priceDisplay ?? `$${(ticket.priceCents / 100).toFixed(2)}`}</strong></div>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -202,9 +205,9 @@ export default function Visit({ setActivePage }) {
                 <div style={styles.infoRow}>
                   <Building size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Operator Scheduling & Access</p>
+                    <p style={styles.infoValue}>{groupSection?.commercialTitle ?? 'Operator Scheduling & Access'}</p>
                     <p style={styles.infoDesc}>
-                      We work closely with local and international tour operators. Commercial bus parking is available onsite. Bookings must be requested at least 14 days in advance to guarantee an exclusive docent guide.
+                      {groupSection?.commercialDesc ?? 'We work closely with local and international tour operators. Commercial bus parking is available onsite. Bookings must be requested at least 14 days in advance to guarantee an exclusive docent guide.'}
                     </p>
                   </div>
                 </div>
@@ -265,11 +268,15 @@ export default function Visit({ setActivePage }) {
                           onChange={(e) => setGroupType(e.target.value)}
                           style={styles.formInput}
                         >
-                          <option value="Private Group">Private Group / Friends</option>
-                          <option value="Tour Operator">Tour Operator / Business</option>
-                          <option value="Corporate / Company">Corporate / Company</option>
-                          <option value="Historical Society">Historical / Cultural Club</option>
-                          <option value="Senior Center">Senior Citizen Center</option>
+                          {(groupSection?.groupTypes ?? [
+                            'Private Group / Friends',
+                            'Tour Operator / Business',
+                            'Corporate / Company',
+                            'Historical / Cultural Club',
+                            'Senior Citizen Center',
+                          ]).map((type) => (
+                            <option key={type} value={type}>{type}</option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -340,10 +347,10 @@ export default function Visit({ setActivePage }) {
 
             {/* FAQs */}
             <div style={styles.faqSection}>
-              <h3 style={styles.faqHeaderTitle}>Frequently Asked Questions</h3>
+              <h3 style={styles.faqHeaderTitle}>{faqSection?.title ?? 'Frequently Asked Questions'}</h3>
               <div style={styles.faqList}>
                 {faqs.map((faq, idx) => (
-                  <div key={idx} style={styles.faqItem}>
+                  <div key={faq.q ?? idx} style={styles.faqItem}>
                     <h4 style={styles.faqQuestion}>Q: {faq.q}</h4>
                     <p style={styles.faqAnswer}>{faq.a}</p>
                   </div>
@@ -357,59 +364,58 @@ export default function Visit({ setActivePage }) {
             <div className="paper-card" style={styles.ctaCard}>
               <div style={styles.priceHeader}>
                 <Ticket size={24} color="var(--sugar-gold)" />
-                <h3 style={styles.ctaCardTitle}>Admission Tickets</h3>
+                <h3 style={styles.ctaCardTitle}>{admissionSection?.title ?? 'Admission Tickets'}</h3>
               </div>
               <p style={styles.ctaCardText}>
-                Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.
+                {admissionSection?.description ?? 'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.'}
               </p>
               
               <div style={styles.priceList}>
-                <div style={styles.priceItem}>
-                  <span>Adults (13+)</span>
-                  <strong>$17.00</strong>
-                </div>
-                <div style={styles.priceItem}>
-                  <span>Kamaʻāina / Military (with ID)</span>
-                  <strong>$12.00</strong>
-                </div>
-                <div style={styles.priceItem}>
-                  <span>Seniors (62+)</span>
-                  <strong>$12.00</strong>
-                </div>
-                <div style={styles.priceItem}>
-                  <span>Youth (5 - 12)</span>
-                  <strong>$8.00</strong>
-                </div>
-                <div style={styles.priceItem}>
-                  <span>Child (Under 5)</span>
-                  <strong>Free</strong>
-                </div>
+                {(admissionSection?.rates?.length
+                  ? admissionSection.rates
+                  : [
+                      { label: 'Adults (13+)', price: '$17.00' },
+                      { label: 'Kamaʻāina / Military (with ID)', price: '$12.00' },
+                      { label: 'Seniors (62+)', price: '$12.00' },
+                      { label: 'Youth (5 - 12)', price: '$8.00' },
+                      { label: 'Child (Under 5)', price: 'Free' },
+                    ]
+                ).map((rate) => (
+                  <div key={rate.label} style={styles.priceItem}>
+                    <span>{rate.label}</span>
+                    <strong>{rate.price}</strong>
+                  </div>
+                ))}
               </div>
 
-              <button className="btn-primary" onClick={() => setActivePage('tickets')} style={styles.bookBtn}>
-                Book Tickets Online <ArrowRight size={16} />
+              <button
+                className="btn-primary"
+                onClick={() => setActivePage(admissionSection?.buttonPage ?? 'tickets')}
+                style={styles.bookBtn}
+              >
+                {admissionSection?.buttonLabel ?? 'Book Tickets Online'} <ArrowRight size={16} />
               </button>
             </div>
 
             {/* School tours CTA */}
             <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem', backgroundColor: '#fffcf7' }}>
-              <h4 style={styles.schoolTitle}>Bringing a School Group?</h4>
+              <h4 style={styles.schoolTitle}>{admissionSection?.schoolCta?.title ?? 'Bringing a School Group?'}</h4>
               <p style={styles.schoolText}>
-                We host educational class visits Tuesday through Friday. Learn about specialized curriculum programs and discounted school group pricing.
+                {admissionSection?.schoolCta?.description ?? 'We host educational class visits Tuesday through Friday. Learn about specialized curriculum programs and discounted school group pricing.'}
               </p>
-              <button className="btn-secondary" onClick={() => setActivePage('learn')} style={styles.schoolBtn}>
-                School Field Trips
+              <button className="btn-secondary" onClick={() => setActivePage(admissionSection?.schoolCta?.page ?? 'learn')} style={styles.schoolBtn}>
+                {admissionSection?.schoolCta?.buttonLabel ?? 'School Field Trips'}
               </button>
             </div>
 
             {/* General Group visits CTA */}
             <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem', backgroundColor: '#fffdf9', border: '1px dashed var(--sugar-gold)' }}>
-              <h4 style={styles.schoolTitle}>Private & Commercial Groups</h4>
+              <h4 style={styles.schoolTitle}>{admissionSection?.groupCta?.title ?? 'Private & Commercial Groups'}</h4>
               <p style={styles.schoolText}>
-                Are you organizing a tour operator, family reunion, or corporate event for 10+ people? Get special rates and a dedicated guide.
+                {admissionSection?.groupCta?.description ?? 'Are you organizing a tour operator, family reunion, or corporate event for 10+ people? Get special rates and a dedicated guide.'}
               </p>
               <button className="btn-secondary" onClick={() => setActiveTab('group')} style={styles.schoolBtn}>
-                Group Admission Rates
+                {admissionSection?.groupCta?.buttonLabel ?? 'Group Admission Rates'}
               </button>
             </div>
 

@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import { ArrowLeft, ChevronRight, Award } from 'lucide-react';
-import { getCurriculumModule } from '../../data/curriculumModules';
+import { useCurriculumModules } from '../../context/ContentProvider.jsx';
 import CheckpointProgressBar from '../../components/curriculum/CheckpointProgressBar';
 import CurriculumVideo from '../../components/curriculum/CurriculumVideo';
 import CurriculumQuiz from '../../components/curriculum/CurriculumQuiz';
 import BangoMatchPixi from '../../components/curriculum/BangoMatchPixi';
 
-export default function CurriculumModule({ moduleId, onBackToLearn }) {
-  const module = getCurriculumModule(moduleId);
+export default function CurriculumModule() {
+  const { moduleId } = useParams();
+  const navigate = useNavigate();
+  const onBackToLearn = () => navigate('/learn');
+  const { modules } = useCurriculumModules();
+  const moduleList = useMemo(
+    () => (Array.isArray(modules) ? modules : Object.values(modules ?? {})),
+    [modules],
+  );
+  const module = moduleList.find((m) => m.id === moduleId);
 
   const [activeCheckpoint, setActiveCheckpoint] = useState(0);
   const [phase, setPhase] = useState('watch'); // 'watch' | 'challenge' | 'done'

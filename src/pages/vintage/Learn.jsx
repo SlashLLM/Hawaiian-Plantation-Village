@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { 
   Compass, 
   GraduationCap, 
@@ -14,8 +14,19 @@ import {
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
+import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { useContentCollection, usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
 
-export default function Learn({ onOpenModule }) {
+const FAMILY_WORKSHOP_SLUGS = ['talk-story-saturdays', 'ohana-heritage-gardening', 'village-scavenger-hunt'];
+const YOUTH_WORKSHOP_SLUGS = ['docent-internship', 'youth-volunteer-guild'];
+
+export default function Learn() {
+  const setActivePage = useAppNavigate();
+  const { section: schoolSection } = usePageSection('learn', 'school', {});
+  const { section: youthSection } = usePageSection('learn', 'youth', {});
+  const { section: familySection } = usePageSection('learn', 'family', {});
+  const { modules } = useCurriculumModules();
+  const { items: workshops } = useContentCollection('workshop');
   const [activeTab, setActiveTab] = useState('school'); // 'school' | 'youth' | 'family'
 
   // School Booking Form State
@@ -41,26 +52,27 @@ export default function Learn({ onOpenModule }) {
   const [familyWorkshop, setFamilyWorkshop] = useState('Talk Story Saturdays');
   const [familyCount, setFamilyCount] = useState('2');
 
-  const resources = [
-    {
-      id: 'elementary',
-      title: 'Elementary Curriculum Package: Waves of Immigration',
-      type: 'PDF Worksheet Set (Grades 3-5)',
-      desc: 'Aligned with HIDOE Social Studies Standard 3.1. Includes mapping activities, bango identification tags matching exercises, and vocabulary guides.'
-    },
-    {
-      id: 'middle',
-      title: 'Middle School Research Guide: Life in the Camp Sectors',
-      type: 'Primary Source Activity (Grades 6-8)',
-      desc: 'Transcripts of oral histories and digital catalog links of period immigrant tools. Perfect pre-visit classroom preparation.'
-    },
-    {
-      id: 'high',
-      title: 'High School Analytical Package: Sugar Economics & Labor Struggles',
-      type: 'Documentary Resource Packet (Grades 9-12)',
-      desc: 'Covers the economic forces behind the Masters and Servants Act (1850), the structural evolution of camps, and the 1920 labor strike.'
-    }
-  ];
+  const moduleList = useMemo(
+    () => (Array.isArray(modules) ? modules : Object.values(modules ?? {})),
+    [modules],
+  );
+  const resources = useMemo(
+    () => moduleList.map((m) => ({
+      id: m.id,
+      title: m.title,
+      type: m.grades ?? 'Curriculum Package',
+      desc: m.checkpoints?.[0]?.text ?? '',
+    })),
+    [moduleList],
+  );
+  const familyWorkshops = useMemo(
+    () => workshops.filter((w) => FAMILY_WORKSHOP_SLUGS.includes(w.slug)),
+    [workshops],
+  );
+  const youthWorkshops = useMemo(
+    () => workshops.filter((w) => YOUTH_WORKSHOP_SLUGS.includes(w.slug)),
+    [workshops],
+  );
 
   const handleBookingSubmit = (e) => {
     e.preventDefault();
@@ -92,34 +104,13 @@ export default function Learn({ onOpenModule }) {
     setFamilyComplete(true);
   };
 
-  const getHeaderDetails = () => {
-    switch (activeTab) {
-      case 'youth':
-        return {
-          stampText: 'Youth Paths & Service',
-          stampColorClass: 'ink-stamp rust',
-          title: 'Student & Youth Programs',
-          subtitle: 'Grow your skills, discover community history, and shape Waipahu\'s future through internships and volunteer guilds.'
-        };
-      case 'family':
-        return {
-          stampText: 'Ohana Learning',
-          stampColorClass: 'ink-stamp teal',
-          title: 'Family Learning & Workshops',
-          subtitle: 'Discover plantation heritage together. Hands-on weekend workshops, storytelling, and self-guided exploration for all ages.'
-        };
-      case 'school':
-      default:
-        return {
-          stampText: 'Educator Experience',
-          stampColorClass: 'ink-stamp green',
-          title: 'Education & Field Trips',
-          subtitle: 'Bring history to life. Explore educational packages and request school visits below.'
-        };
-    }
+  const tabSections = { school: schoolSection, youth: youthSection, family: familySection };
+  const headerDetails = {
+    stampText: tabSections[activeTab]?.stamp ?? 'Educator Experience',
+    stampColorClass: `ink-stamp ${tabSections[activeTab]?.stampClass ?? 'green'}`,
+    title: tabSections[activeTab]?.title ?? 'Education & Field Trips',
+    subtitle: tabSections[activeTab]?.subtitle ?? 'Bring history to life. Explore educational packages and request school visits below.',
   };
-
-  const headerDetails = getHeaderDetails();
 
   return (
     <div style={styles.pageContainer}>
@@ -174,7 +165,7 @@ export default function Learn({ onOpenModule }) {
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Curriculum Resources</h2>
               <p style={styles.bodyText}>
-                Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:
+                {schoolSection?.resourcesIntro ?? 'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:'}
               </p>
 
               <div style={styles.resourcesList}>
@@ -190,7 +181,7 @@ export default function Learn({ onOpenModule }) {
                       type="button"
                       className="btn-secondary"
                       style={styles.downloadBtn}
-                      onClick={() => onOpenModule?.(res.id)}
+                      onClick={() => setActivePage('learn-module', { moduleId: res.id })}
                     >
                       <Compass size={16} /> Start Interactive Lesson
                     </button>
@@ -261,7 +252,7 @@ export default function Learn({ onOpenModule }) {
                   <div style={styles.helpfulAlert}>
                     <Compass size={18} color="var(--tin-rust)" />
                     <p style={styles.alertText}>
-                      Field trips require a minimum of 10 students and at least one adult chaperone per 10 children.
+                      {schoolSection?.fieldTripNote ?? 'Field trips require a minimum of 10 students and at least one adult chaperone per 10 children.'}
                     </p>
                   </div>
 
@@ -307,33 +298,25 @@ export default function Learn({ onOpenModule }) {
               </p>
 
               <div style={styles.resourcesList}>
-                <div className="paper-card" style={styles.resCard}>
-                  <div style={styles.resHeader}>
-                    <Award size={20} color="var(--tin-rust)" />
-                    <span style={{ ...styles.resType, color: 'var(--tin-rust)' }}>Paid Internship</span>
+                {youthWorkshops.map((program) => (
+                  <div key={program.slug} className="paper-card" style={styles.resCard}>
+                    <div style={styles.resHeader}>
+                      {program.slug === 'docent-internship' ? (
+                        <Award size={20} color="var(--tin-rust)" />
+                      ) : (
+                        <HeartHandshake size={20} color="var(--tin-rust)" />
+                      )}
+                      <span style={{ ...styles.resType, color: 'var(--tin-rust)' }}>{program.type}</span>
+                    </div>
+                    <h3 style={styles.resTitle}>{program.title}</h3>
+                    <p style={styles.resDesc}>{program.desc}</p>
+                    {program.schedule && (
+                      <div style={styles.highlightBadge}>
+                        <strong>Schedule:</strong> {program.schedule}
+                      </div>
+                    )}
                   </div>
-                  <h3 style={styles.resTitle}>"Preserving Our Roots" Docent Internship</h3>
-                  <p style={styles.resDesc}>
-                    A semester-long or summer program designed for high school juniors and seniors. Interns study Waipahu's multi-ethnic history, train in archival document preservation, and lead educational tours for visiting groups.
-                  </p>
-                  <div style={styles.highlightBadge}>
-                    <strong>Duration:</strong> 10 weeks &bull; <strong>Eligibility:</strong> Grades 11-12 &bull; <strong>Benefits:</strong> $500 stipend + school credit
-                  </div>
-                </div>
-
-                <div className="paper-card" style={styles.resCard}>
-                  <div style={styles.resHeader}>
-                    <HeartHandshake size={20} color="var(--tin-rust)" />
-                    <span style={{ ...styles.resType, color: 'var(--tin-rust)' }}>Community Service</span>
-                  </div>
-                  <h3 style={styles.resTitle}>Youth Volunteer Guild</h3>
-                  <p style={styles.resDesc}>
-                    Connect with peers and plantation heritage during weekend volunteer days. Guild members participate in historic cottage restoration, maintain our traditional gardens, and host seasonal heritage festivals.
-                  </p>
-                  <div style={styles.highlightBadge}>
-                    <strong>Schedule:</strong> Saturday mornings &bull; <strong>Eligibility:</strong> Grades 9-12 &bull; <strong>Benefits:</strong> Service hour certification
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -462,48 +445,33 @@ export default function Learn({ onOpenModule }) {
               </p>
 
               <div style={styles.resourcesList}>
-                <div className="paper-card" style={styles.resCard}>
-                  <div style={styles.resHeader}>
-                    <Users size={20} color="var(--ocean-teal)" />
-                    <span style={{ ...styles.resType, color: 'var(--ocean-teal)' }}>Oral History Sessions</span>
+                {familyWorkshops.map((workshop) => (
+                  <div
+                    key={workshop.slug}
+                    className="paper-card"
+                    style={workshop.slug === 'village-scavenger-hunt'
+                      ? { ...styles.resCard, border: '2.5px dashed var(--ocean-teal)', backgroundColor: 'rgba(34, 100, 109, 0.02)' }
+                      : styles.resCard}
+                  >
+                    <div style={styles.resHeader}>
+                      {workshop.slug === 'talk-story-saturdays' && <Users size={20} color="var(--ocean-teal)" />}
+                      {workshop.slug === 'ohana-heritage-gardening' && <Sprout size={20} color="var(--ocean-teal)" />}
+                      {workshop.slug === 'village-scavenger-hunt' && <Map size={20} color="var(--ocean-teal)" />}
+                      <span style={{ ...styles.resType, color: 'var(--ocean-teal)' }}>{workshop.type}</span>
+                    </div>
+                    <h3 style={styles.resTitle}>{workshop.title}</h3>
+                    <p style={styles.resDesc}>{workshop.desc}</p>
+                    {workshop.slug === 'village-scavenger-hunt' ? (
+                      <button className="btn-secondary" style={{ ...styles.downloadBtn, borderColor: 'var(--ocean-teal)', color: 'var(--ocean-teal)' }}>
+                        <Download size={16} /> Download Scavenger Hunt (PDF)
+                      </button>
+                    ) : workshop.schedule ? (
+                      <div style={styles.highlightBadge}>
+                        <strong>Schedule:</strong> {workshop.schedule}
+                      </div>
+                    ) : null}
                   </div>
-                  <h3 style={styles.resTitle}>Talk Story Saturdays</h3>
-                  <p style={styles.resDesc}>
-                    Join us on the second Saturday of each month for family-friendly oral history circles. Plantation kupuna and local storytellers share memories of Waipahu camp life, plantation folklore, and community traditions.
-                  </p>
-                  <div style={styles.highlightBadge}>
-                    <strong>Schedule:</strong> 2nd Saturday of the Month &bull; <strong>Time:</strong> 10:00 AM - 11:30 AM &bull; <strong>Cost:</strong> Free
-                  </div>
-                </div>
-
-                <div className="paper-card" style={styles.resCard}>
-                  <div style={styles.resHeader}>
-                    <Sprout size={20} color="var(--ocean-teal)" />
-                    <span style={{ ...styles.resType, color: 'var(--ocean-teal)' }}>Hands-On Agriculture</span>
-                  </div>
-                  <h3 style={styles.resTitle}>Ohana Heritage Gardening</h3>
-                  <p style={styles.resDesc}>
-                    Discover the crops that sustained generations of plantation families. Learn how traditional Hawaiian canoe plants (Kalo, Uala) and immigrant kitchen crops were grown. Kids will plant their own heritage seed or cutting to take home.
-                  </p>
-                  <div style={styles.highlightBadge}>
-                    <strong>Schedule:</strong> Last Saturday of the Month &bull; <strong>Time:</strong> 9:00 AM - 11:00 AM &bull; <strong>Included:</strong> Live cuttings & seeds
-                  </div>
-                </div>
-
-                {/* Scavenger Hunt card */}
-                <div className="paper-card" style={{ ...styles.resCard, border: '2.5px dashed var(--ocean-teal)', backgroundColor: 'rgba(34, 100, 109, 0.02)' }}>
-                  <div style={styles.resHeader}>
-                    <Map size={20} color="var(--ocean-teal)" />
-                    <span style={{ ...styles.resType, color: 'var(--ocean-teal)' }}>Interactive Quest</span>
-                  </div>
-                  <h3 style={styles.resTitle}>Village Scavenger Hunt & Bingo</h3>
-                  <p style={styles.resDesc}>
-                    Make your walk through our 30+ historic structures an active quest! Search for immigrant bango tags, spot traditional toys, and match camp kitchen items. Show your completed sheet at the Gift Shop for a prize.
-                  </p>
-                  <button className="btn-secondary" style={{ ...styles.downloadBtn, borderColor: 'var(--ocean-teal)', color: 'var(--ocean-teal)' }}>
-                    <Download size={16} /> Download Scavenger Hunt (PDF)
-                  </button>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -545,8 +513,9 @@ export default function Learn({ onOpenModule }) {
                       onChange={(e) => setFamilyWorkshop(e.target.value)}
                       style={styles.formInput}
                     >
-                      <option value="Talk Story Saturdays">Talk Story Saturdays (Oral Histories)</option>
-                      <option value="Ohana Heritage Gardening">Ohana Heritage Gardening (Agriculture)</option>
+                      {familyWorkshops.filter((w) => w.slug !== 'village-scavenger-hunt').map((w) => (
+                        <option key={w.slug} value={w.title}>{w.title}</option>
+                      ))}
                     </select>
                   </div>
 
