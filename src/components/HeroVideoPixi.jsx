@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Application, Container, Graphics, Sprite, Text, Assets } from 'pixi.js';
 
-export default function HeroVideoPixi({ onExploreClick }) {
+export default function HeroVideoPixi({ onExploreClick, hero = {} }) {
   const containerRef = useRef(null);
   const appRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
@@ -39,7 +39,7 @@ export default function HeroVideoPixi({ onExploreClick }) {
       // 3. Load the video background texture
       try {
         videoTex = await Assets.load({
-          src: '/Plantation_life_documentary_video_202607131034.mp4',
+          src: hero.videoSrc ?? '/Plantation_life_documentary_video_202607131034.mp4',
           data: {
             autoPlay: true,
             loop: true,
@@ -75,7 +75,7 @@ export default function HeroVideoPixi({ onExploreClick }) {
 
       // 7. Add text display objects inside the text container
       const badgeText = new Text({
-        text: "EST. 1992",
+        text: hero.badge ?? "EST. 1992",
         style: {
           fontFamily: "'Courier Prime', Monaco, monospace",
           fontSize: 14,
@@ -89,7 +89,7 @@ export default function HeroVideoPixi({ onExploreClick }) {
       textContainer.addChild(badgeText);
 
       const titleText = new Text({
-        text: "Experience a Living History",
+        text: hero.title ?? "Experience a Living History",
         style: {
           fontFamily: "'Playfair Display', Georgia, serif",
           fontSize: 52,
@@ -105,7 +105,7 @@ export default function HeroVideoPixi({ onExploreClick }) {
       textContainer.addChild(titleText);
 
       const subText = new Text({
-        text: "Walk in the footsteps of the immigrant communities that built modern Hawaiʻi.",
+        text: hero.subtitle ?? "Walk in the footsteps of the immigrant communities that built modern Hawaiʻi.",
         style: {
           fontFamily: "'Lora', Garamond, serif",
           fontSize: 19,
