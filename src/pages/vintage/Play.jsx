@@ -3,35 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Award, HelpCircle, ArrowRight, RefreshCw } from 'lucide-react';
 import SugarMakerPixi from '../../components/SugarMakerPixi';
-
-const GAME_STEPS = [
-  {
-    step: 1,
-    title: 'Stage 1: Harvesting the Cane',
-    instruction: 'Drag or swipe your mouse/pointer across the dotted lines near the base of the stalks to cut them down!',
-    history: 'In the plantation days, workers used heavy steel cutlasses to cut sugarcane stalks at ground level. This was tough work done under the hot Hawaiian sun.'
-  },
-  {
-    step: 2,
-    title: 'Stage 2: Crushing & Extraction',
-    instruction: 'Click and drag the large wooden crank handle in a circle to rotate the iron rollers and squeeze out the juice!',
-    history: 'Mills used massive steam-driven iron rollers. They crushed sugarcane stalks under thousands of pounds of pressure to squeeze out every drop of juice.'
-  },
-  {
-    step: 3,
-    title: 'Stage 3: Boiling & Skimming',
-    instruction: 'Select a Heat Burner level to boil the juice, then click on the green floating foam impurities to skim them off!',
-    history: 'Cane juice was boiled in huge clarifiers. Impurities floated to the top as foam, which workers skimmed off by hand to ensure the sugar ended up pure and white.'
-  },
-  {
-    step: 4,
-    title: 'Stage 4: Spinning the Sugar',
-    instruction: 'Click the blue "SPIN" button in the center of the drum rapidly to separate molasses from raw crystals!',
-    history: 'Centrifuges spun the boiled sugar syrup at high speeds. Centrifugal force pushed the liquid molasses out through tiny holes, leaving dry raw sugar crystals behind.'
-  }
-];
+import { usePageSection } from '../../context/ContentProvider.jsx';
+import { GAME_STEPS as DEFAULT_GAME_STEPS } from '../../lib/content/fallbacks.js';
 
 export default function Play() {
+  const { section: header } = usePageSection('play', 'header', {});
+  const { section: gameStepsSection } = usePageSection('play', 'gameSteps', { steps: DEFAULT_GAME_STEPS });
+  const GAME_STEPS = gameStepsSection?.steps ?? DEFAULT_GAME_STEPS;
   const [activeStep, setActiveStep] = useState(0); // 0 to 3, 4 is victory
   const [gameScore, setGameScore] = useState(0);
 
@@ -113,9 +91,9 @@ export default function Play() {
       {/* Header */}
       <div style={styles.headerBlock}>
         <div style={styles.container}>
-          <span className="ink-stamp green" style={{ marginBottom: '0.5rem' }}>KIDS PLAYGROUND</span>
-          <h1 style={styles.pageTitle}>Sugar Mill Tycoon</h1>
-          <p style={styles.pageSubtitle}>Experience the historical process of manufacturing sugar from raw crop in our PixiJS 2D Mill simulator!</p>
+          <span className={`ink-stamp ${header?.stampClass ?? 'green'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'KIDS PLAYGROUND'}</span>
+          <h1 style={styles.pageTitle}>{header?.title ?? 'Sugar Mill Tycoon'}</h1>
+          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Experience the historical process of manufacturing sugar from raw crop in our PixiJS 2D Mill simulator!'}</p>
         </div>
       </div>
 

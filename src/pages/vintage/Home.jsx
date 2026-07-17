@@ -5,9 +5,27 @@ import sugarcaneField from '../../assets/sugarcane_field.png';
 import campHouse from '../../assets/historic_camp_house.png';
 import bangoImage from '../../assets/bango_lunch_tin.png';
 import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail, Heart } from 'lucide-react';
+import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 
-export default function Home({ setActivePage }) {
+export default function Home() {
+  const setActivePage = useAppNavigate();
   const visitRef = useRef(null);
+  const { settings } = useSiteSettings();
+  const { section: quickVisit } = usePageSection('home', 'quickVisit', {});
+  const { section: whyVisit } = usePageSection('home', 'whyVisit', {});
+  const { section: featuredBango } = usePageSection('home', 'featuredBango', {});
+  const { section: bellToBell } = usePageSection('home', 'bellToBell', {});
+  const { section: educators } = usePageSection('home', 'educators', {});
+  const { section: getInvolved } = usePageSection('home', 'getInvolved', {});
+  const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
+  const { section: testimonialsHeader } = usePageSection('home', 'testimonialsHeader', {});
+  const { items: events } = usePageListSection('home', 'events');
+  const { items: testimonials } = usePageListSection('home', 'testimonials');
+  const { items: partners } = usePageListSection('home', 'partners');
+  const footer = settings?.footer ?? {};
+  const contact = settings?.contact ?? {};
+  const donationPresets = settings?.donationPresets ?? [];
 
   const handleExplore = () => {
     visitRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -18,25 +36,10 @@ export default function Home({ setActivePage }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const events = [
-    {
-      date: 'AUG 15',
-      title: 'Obon Festival & Bon Dance',
-      time: '5:00 PM - 9:00 PM',
-      desc: 'Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.'
-    },
-    {
-      date: 'SEP 12',
-      title: 'Plantation Heritage Day',
-      time: '10:00 AM - 3:00 PM',
-      desc: 'Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.'
-    }
-  ];
-
   return (
     <div>
       {/* 1. Hero Video Pixi */}
-      <HeroVideoPixi onExploreClick={handleExplore} />
+      <HeroVideoPixi hero={settings?.hero} onExploreClick={handleExplore} />
 
       {/* 2. Quick Visit-Planning Module */}
       <div ref={visitRef} style={styles.quickVisitSection}>
@@ -45,27 +48,27 @@ export default function Home({ setActivePage }) {
             <div style={styles.quickItem}>
               <Clock size={20} color="var(--tin-rust)" />
               <div>
-                <h4 style={styles.quickTitle}>HOURS OF OPERATION</h4>
-                <p style={styles.quickText}>Tuesday – Saturday: 9:00 AM – 2:00 PM</p>
-                <p style={styles.quickSubtext}>Guided tours at 10:00 AM & 12:00 PM</p>
+                <h4 style={styles.quickTitle}>{quickVisit?.hours?.title ?? 'HOURS OF OPERATION'}</h4>
+                <p style={styles.quickText}>{quickVisit?.hours?.primary ?? settings?.hours?.schedule}</p>
+                <p style={styles.quickSubtext}>{quickVisit?.hours?.secondary ?? settings?.hours?.toursNote}</p>
               </div>
             </div>
 
             <div style={styles.quickItem}>
               <MapPin size={20} color="var(--tin-rust)" />
               <div>
-                <h4 style={styles.quickTitle}>LOCATION</h4>
-                <p style={styles.quickText}>94-695 Waipahu Street</p>
-                <p style={styles.quickSubtext}>Waipahu, Oʻahu (Free parking onsite)</p>
+                <h4 style={styles.quickTitle}>{quickVisit?.location?.title ?? 'LOCATION'}</h4>
+                <p style={styles.quickText}>{quickVisit?.location?.primary ?? contact?.address?.line1}</p>
+                <p style={styles.quickSubtext}>{quickVisit?.location?.secondary ?? contact?.address?.line2}</p>
               </div>
             </div>
 
             <div style={styles.quickItem}>
               <Info size={20} color="var(--tin-rust)" />
               <div>
-                <h4 style={styles.quickTitle}>ADMISSION</h4>
-                <p style={styles.quickText}>Adults: $17 | Kamaʻāina/Military: $12</p>
-                <p style={styles.quickSubtext}>Children (5-12): $8 | Under 5: Free</p>
+                <h4 style={styles.quickTitle}>{quickVisit?.admission?.title ?? 'ADMISSION'}</h4>
+                <p style={styles.quickText}>{quickVisit?.admission?.primary}</p>
+                <p style={styles.quickSubtext}>{quickVisit?.admission?.secondary}</p>
               </div>
             </div>
           </div>
@@ -77,20 +80,17 @@ export default function Home({ setActivePage }) {
         <div style={styles.container}>
           <div style={styles.twoColumnGrid}>
             <div style={styles.textCol}>
-              <span className="ink-stamp green" style={{ marginBottom: '1rem' }}>Living Museum</span>
-              <h2 style={styles.sectionTitle}>Where Hawaiʻi’s Roots Run Deep</h2>
-              <p style={styles.bodyText}>
-                Hawaiian Plantation Village is an outdoor, living history museum located in Waipahu. It tells the story of the immigrants who arrived in Hawaiʻi from China, Portugal, Japan, Puerto Rico, Korea, the Philippines, Okinawa, and other nations during the sugar plantation era (1852–1946).
-              </p>
-              <p style={styles.bodyText}>
-                Explore 25 authentic, fully restored camp houses, complete with period furniture, personal artifacts, and lush heritage gardens. Walk the same paths as the workers, feel the heat of the stone ovens, and hear the stories of the community that shaped Hawaii\'s unique multicultural society.
-              </p>
+              <span className={`ink-stamp ${whyVisit?.stampClass ?? 'green'}`} style={{ marginBottom: '1rem' }}>{whyVisit?.stamp ?? 'Living Museum'}</span>
+              <h2 style={styles.sectionTitle}>{whyVisit?.title ?? 'Where Hawaiʻi\'s Roots Run Deep'}</h2>
+              {(whyVisit?.paragraphs ?? []).map((p, i) => (
+                <p key={i} style={styles.bodyText}>{p}</p>
+              ))}
               <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => setActivePage('about')}>
-                  Discover Our History
+                <button className="btn-primary" onClick={() => setActivePage(whyVisit?.primaryCta?.page ?? 'about')}>
+                  {whyVisit?.primaryCta?.label ?? 'Discover Our History'}
                 </button>
-                <button className="btn-secondary" onClick={() => setActivePage('visit')}>
-                  Plan Your Visit
+                <button className="btn-secondary" onClick={() => setActivePage(whyVisit?.secondaryCta?.page ?? 'visit')}>
+                  {whyVisit?.secondaryCta?.label ?? 'Plan Your Visit'}
                 </button>
               </div>
             </div>
@@ -115,21 +115,22 @@ export default function Home({ setActivePage }) {
               </div>
             </div>
             <div style={styles.textCol}>
-              <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>Featured Narrative</span>
-              <h2 style={styles.sectionTitle}>The Bango System: Numbers Replacing Names</h2>
-              <p style={styles.bodyText}>
-                Upon arrival at the plantation, each immigrant worker was stripped of their name in the company ledgers and issued a small, stamped metal disk called a <strong>Bango tag</strong>.
-              </p>
-              <p style={styles.bodyText}>
-                Because the plantation managers and overseers (Lunas) could not pronounce or easily spell the names of Chinese, Japanese, Portuguese, Korean, or Filipino workers, the Bango number became their identity. It dictated their work assignment, their pay ledger, and their credit at the company store.
-              </p>
-              <blockquote style={styles.bangoQuote}>
-                "My grandfather told me the bango was a constant weight in his pocket. But it also forced the camps to find a common language—Pidgin—to connect their true names behind those metal numbers."
-                <cite style={styles.bangoQuoteCite}>— Siu Lung Chang, Oral History Archive</cite>
-              </blockquote>
+              <span className={`ink-stamp ${featuredBango?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{featuredBango?.stamp ?? 'Featured Narrative'}</span>
+              <h2 style={styles.sectionTitle}>{featuredBango?.title ?? 'The Bango System: Numbers Replacing Names'}</h2>
+              {(featuredBango?.paragraphs ?? []).map((p, i) => (
+                <p key={i} style={styles.bodyText} dangerouslySetInnerHTML={{ __html: p }} />
+              ))}
+              {featuredBango?.quote && (
+                <blockquote style={styles.bangoQuote}>
+                  {typeof featuredBango.quote === 'string' ? featuredBango.quote : featuredBango.quote.text}
+                  <cite style={styles.bangoQuoteCite}>
+                    {typeof featuredBango.quote === 'string' ? featuredBango.quoteCite : featuredBango.quote.cite}
+                  </cite>
+                </blockquote>
+              )}
               <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => { setActivePage('stories'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                  Explore Camp Stories <ArrowRight size={16} />
+                <button className="btn-primary" onClick={() => { setActivePage(featuredBango?.cta?.page ?? 'stories'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                  {featuredBango?.cta?.label ?? 'Explore Camp Stories'} <ArrowRight size={16} />
                 </button>
               </div>
             </div>
@@ -141,10 +142,10 @@ export default function Home({ setActivePage }) {
       <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
         <div style={styles.container}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>Interactive Log</span>
-            <h2 style={styles.sectionTitle}>Step Into Their Shoes</h2>
+            <span className={`ink-stamp ${bellToBell?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{bellToBell?.stamp ?? 'Interactive Log'}</span>
+            <h2 style={styles.sectionTitle}>{bellToBell?.title ?? 'Step Into Their Shoes'}</h2>
             <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              Simulate one day on the plantation. Hear the morning whistle, complete tasks in the cane rows, and gather in the community camp at sunset.
+              {bellToBell?.description ?? 'Simulate one day on the plantation. Hear the morning whistle, complete tasks in the cane rows, and gather in the community camp at sunset.'}
             </p>
           </div>
           <BellToBell onVisitClick={handleBookTickets} />
@@ -162,17 +163,14 @@ export default function Home({ setActivePage }) {
               </div>
             </div>
             <div style={styles.textCol}>
-              <span className="ink-stamp teal" style={{ marginBottom: '1rem' }}>For Educators</span>
-              <h2 style={styles.sectionTitle}>Curriculum & Field Trips</h2>
-              <p style={styles.bodyText}>
-                Bring history to life for your students. We offer structured field trips and curriculum-linked educational packages that cover the waves of plantation immigration, camp structures, cultural preservation, and the economic history of Oʻahu.
-              </p>
-              <p style={styles.bodyText}>
-                Our resources align directly with Hawaii Department of Education social studies and history standards, making field trips educational, engaging, and memorable.
-              </p>
+              <span className={`ink-stamp ${educators?.stampClass ?? 'teal'}`} style={{ marginBottom: '1rem' }}>{educators?.stamp ?? 'For Educators'}</span>
+              <h2 style={styles.sectionTitle}>{educators?.title ?? 'Curriculum & Field Trips'}</h2>
+              {(educators?.paragraphs ?? []).map((p, i) => (
+                <p key={i} style={styles.bodyText}>{p}</p>
+              ))}
               <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => setActivePage('learn')}>
-                  Schedule a Field Trip <ArrowRight size={16} />
+                <button className="btn-primary" onClick={() => setActivePage(educators?.cta?.page ?? 'learn')}>
+                  {educators?.cta?.label ?? 'Schedule a Field Trip'} <ArrowRight size={16} />
                 </button>
               </div>
             </div>
@@ -184,10 +182,10 @@ export default function Home({ setActivePage }) {
       <section style={{ ...styles.section, borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '1px solid var(--kraft-tan-dark)' }}>
         <div style={styles.container}>
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className="ink-stamp green" style={{ marginBottom: '1rem' }}>Get Involved</span>
-            <h2 style={styles.sectionTitle}>Support the Preservation of Waipahu's History</h2>
+            <span className={`ink-stamp ${getInvolved?.stampClass ?? 'green'}`} style={{ marginBottom: '1rem' }}>{getInvolved?.stamp ?? 'Get Involved'}</span>
+            <h2 style={styles.sectionTitle}>{getInvolved?.title ?? 'Support the Preservation of Waipahu\'s History'}</h2>
             <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              Whether you become an annual member or make a one-time donation, your contribution directly funds critical cottage upkeep and cultural stewardship programs.
+              {getInvolved?.intro ?? getInvolved?.description}
             </p>
           </div>
           
@@ -195,14 +193,12 @@ export default function Home({ setActivePage }) {
             {/* Donation Card */}
             <div className="paper-card" style={styles.splitCard}>
               <div>
-                <h3 style={styles.splitCardTitle}>Direct Donation Impact</h3>
-                <p style={styles.splitCardDesc}>
-                  Help us protect the structural timbers and maintain the historical gardens surrounding our 25 camp cottages. 100% of direct donations go to site preservation.
-                </p>
+                <h3 style={styles.splitCardTitle}>{getInvolved?.donation?.title ?? 'Direct Donation Impact'}</h3>
+                <p style={styles.splitCardDesc}>{getInvolved?.donation?.description}</p>
                 <ul style={styles.splitList}>
-                  <li><strong>$25</strong> buys organic elements for hands-on history classes.</li>
-                  <li><strong>$50</strong> maintains camp gardens for three months.</li>
-                  <li><strong>$100</strong> funds school admission worksheets for a class of 10.</li>
+                  {donationPresets.map((d) => (
+                    <li key={d.amount}><strong>${d.amount}</strong> {d.label.replace(/^\$\d+\s*/, '')}</li>
+                  ))}
                 </ul>
               </div>
               <button className="btn-primary" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
@@ -213,14 +209,12 @@ export default function Home({ setActivePage }) {
             {/* Membership Card */}
             <div className="paper-card" style={styles.splitCard}>
               <div>
-                <h3 style={styles.splitCardTitle}>Steward Membership</h3>
-                <p style={styles.splitCardDesc}>
-                  Belong to the village. Support repeat access and gain exclusive member benefits while securing the heritage of immigrant communities.
-                </p>
+                <h3 style={styles.splitCardTitle}>{getInvolved?.membership?.title ?? 'Steward Membership'}</h3>
+                <p style={styles.splitCardDesc}>{getInvolved?.membership?.description}</p>
                 <ul style={styles.splitList}>
-                  <li><strong>Free Admission</strong> for you and guests all year round.</li>
-                  <li><strong>10% Discount</strong> at the historical camp gift shop.</li>
-                  <li><strong>Ledger circular</strong> print magazine subscription.</li>
+                  {(getInvolved?.membership?.benefits ?? getInvolved?.membership?.items ?? []).map((b, i) => (
+                    <li key={i}><strong>{b.label}</strong> {b.text}</li>
+                  ))}
                 </ul>
               </div>
               <button className="btn-accent" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
@@ -235,8 +229,8 @@ export default function Home({ setActivePage }) {
       <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
         <div style={styles.container}>
           <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <span className="ink-stamp gold" style={{ marginBottom: '1rem' }}>Calendar</span>
-            <h2 style={styles.sectionTitle}>Upcoming Community Programs</h2>
+            <span className={`ink-stamp ${eventsHeader?.stampClass ?? 'gold'}`} style={{ marginBottom: '1rem' }}>{eventsHeader?.stamp ?? 'Calendar'}</span>
+            <h2 style={styles.sectionTitle}>{eventsHeader?.title ?? 'Upcoming Community Programs'}</h2>
           </div>
           
           <div style={styles.eventsGrid}>
@@ -261,60 +255,35 @@ export default function Home({ setActivePage }) {
       <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)', borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '4px solid var(--koa-wood)' }}>
         <div style={styles.container}>
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className="ink-stamp rust" style={{ marginBottom: '1rem' }}>Testimonials</span>
-            <h2 style={styles.sectionTitle}>What Visitors & Educators Say</h2>
+            <span className={`ink-stamp ${testimonialsHeader?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{testimonialsHeader?.stamp ?? 'Testimonials'}</span>
+            <h2 style={styles.sectionTitle}>{testimonialsHeader?.title ?? 'What Visitors & Educators Say'}</h2>
             <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              Hear from our community of school teachers, local residents, and travelers who have experienced the living history.
+              {testimonialsHeader?.description ?? 'Hear from our community of school teachers, local residents, and travelers who have experienced the living history.'}
             </p>
           </div>
 
           <div style={styles.testimonialsGrid}>
-            {/* Testimonial 1 */}
-            <div className="paper-card" style={styles.testimonialCard}>
-              <p style={styles.testimonialText}>
-                "The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn't want to leave!"
-              </p>
-              <div style={styles.testimonialDivider} />
-              <div style={styles.testimonialAuthor}>
-                <span style={styles.testimonialAuthorName}>Sarah L.</span>
-                <span style={styles.testimonialAuthorMeta}>4th Grade Teacher, HIDOE</span>
+            {testimonials.map((t, idx) => (
+              <div key={idx} className="paper-card" style={styles.testimonialCard}>
+                <p style={styles.testimonialText}>"{t.quote}"</p>
+                <div style={styles.testimonialDivider} />
+                <div style={styles.testimonialAuthor}>
+                  <span style={styles.testimonialAuthorName}>{t.authorName}</span>
+                  <span style={styles.testimonialAuthorMeta}>{t.authorMeta}</span>
+                </div>
               </div>
-            </div>
-
-            {/* Testimonial 2 */}
-            <div className="paper-card" style={styles.testimonialCard}>
-              <p style={styles.testimonialText}>
-                "Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic."
-              </p>
-              <div style={styles.testimonialDivider} />
-              <div style={styles.testimonialAuthor}>
-                <span style={styles.testimonialAuthorName}>David K.</span>
-                <span style={styles.testimonialAuthorMeta}>Honolulu Resident</span>
-              </div>
-            </div>
-
-            {/* Testimonial 3 */}
-            <div className="paper-card" style={styles.testimonialCard}>
-              <p style={styles.testimonialText}>
-                "One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive."
-              </p>
-              <div style={styles.testimonialDivider} />
-              <div style={styles.testimonialAuthor}>
-                <span style={styles.testimonialAuthorName}>Michael R.</span>
-                <span style={styles.testimonialAuthorMeta}>Traveler from Seattle</span>
-              </div>
-            </div>
+            ))}
           </div>
 
-          {/* Social Proof Partners */}
           <div style={styles.partnersRow}>
             <span style={styles.partnersLabel}>COMMUNITY PARTNERS & STANDARDS:</span>
             <div style={styles.partnersList}>
-              <span style={styles.partnerItem}>HAWAIʻI DEPARTMENT OF EDUCATION</span>
-              <span style={styles.partnerDivider}>•</span>
-              <span style={styles.partnerItem}>TRIPADVISOR TRAVELER CHOICE 2026</span>
-              <span style={styles.partnerDivider}>•</span>
-              <span style={styles.partnerItem}>HISTORIC HAWAIʻI FOUNDATION</span>
+              {partners.map((p, i) => (
+                <React.Fragment key={p.slug ?? p.name ?? i}>
+                  {i > 0 && <span style={styles.partnerDivider}>•</span>}
+                  <span style={styles.partnerItem}>{typeof p === 'string' ? p : (p.name ?? p.title)}</span>
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </div>
@@ -325,56 +294,41 @@ export default function Home({ setActivePage }) {
         <div style={styles.container}>
           <div style={styles.footerGrid}>
             <div>
-              <h3 style={styles.footerBrand}>Hawaiian Plantation Village</h3>
-              <p style={styles.footerText}>
-                A non-profit cultural heritage destination dedicated to preserving the history of Hawaii\'s plantation workers and immigrant roots.
-              </p>
+              <h3 style={styles.footerBrand}>{footer.brand ?? settings?.brand?.title}</h3>
+              <p style={styles.footerText}>{footer.text}</p>
               <p style={styles.footerContact}>
-                Phone: (808) 677-0110 <br />
-                Email: info@hawaiianplantationvillage.org
+                Phone: {contact.phone} <br />
+                Email: {contact.email}
               </p>
             </div>
             
             <div style={styles.footerCTAColumn}>
               <h4 style={styles.footerHeader}>CTA INDEX</h4>
               <ul style={styles.footerLinksList}>
-                <li>
-                  <button className="footer-link-btn" onClick={() => { setActivePage('tickets'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                    Book Excursion Tickets
-                  </button>
-                </li>
-                <li>
-                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                    Become a Member
-                  </button>
-                </li>
-                <li>
-                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                    Make a Donation
-                  </button>
-                </li>
-                <li>
-                  <button className="footer-link-btn" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                    Volunteer Inquiry
-                  </button>
-                </li>
+                {(footer.ctaLinks ?? []).map((link) => (
+                  <li key={link.label}>
+                    <button className="footer-link-btn" onClick={() => { setActivePage(link.page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
             
             <div style={styles.newsletterBox}>
-              <h4 style={styles.footerHeader}>JOIN THE LEDGER NEWSLETTER</h4>
-              <p style={styles.footerText}>Receive updates on seasonal festivals, lectures, and volunteer days.</p>
+              <h4 style={styles.footerHeader}>{footer.newsletter?.heading}</h4>
+              <p style={styles.footerText}>{footer.newsletter?.description}</p>
               <div style={styles.emailForm}>
-                <input type="email" placeholder="Your Email Address" style={styles.emailInput} />
+                <input type="email" placeholder={footer.newsletter?.placeholder} style={styles.emailInput} />
                 <button className="btn-primary" style={styles.emailBtn}>
-                  <Mail size={16} /> Join
+                  <Mail size={16} /> {footer.newsletter?.buttonLabel ?? 'Join'}
                 </button>
               </div>
             </div>
           </div>
           
           <div style={styles.footerBottom}>
-            <p>© 2026 Hawaiian Plantation Village. All rights reserved. Built for cultural stewardship.</p>
+            <p>{footer.copyright}</p>
           </div>
         </div>
       </footer>

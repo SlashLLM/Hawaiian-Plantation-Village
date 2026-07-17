@@ -1,14 +1,60 @@
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import confetti from 'canvas-confetti';
 import { ArrowLeft, ChevronRight, Award } from 'lucide-react';
-import { getCurriculumModule } from '../../data/curriculumModules';
+import { useCurriculumModules } from '../../context/ContentProvider.jsx';
 import CheckpointProgressBar from '../../components/curriculum/CheckpointProgressBar';
 import CurriculumVideo from '../../components/curriculum/CurriculumVideo';
 import CurriculumQuiz from '../../components/curriculum/CurriculumQuiz';
 import BangoMatchPixi from '../../components/curriculum/BangoMatchPixi';
+import BellToBell from '../../components/BellToBell';
+import {
+  DEFAULT_BANGO_PAIRS,
+  DEFAULT_BANGO_TITLE,
+  DEFAULT_BELL_SHIFTS,
+} from '../../lib/content/gameChallengeDefaults.js';
 
-export default function CurriculumModule({ moduleId, onBackToLearn }) {
-  const module = getCurriculumModule(moduleId);
+function GameChallenge({ challenge, onComplete }) {
+  const gameId = challenge?.gameId;
+
+  if (gameId === 'bango-match') {
+    return (
+      <BangoMatchPixi
+        onComplete={onComplete}
+        pairs={challenge.pairs?.length ? challenge.pairs : DEFAULT_BANGO_PAIRS}
+        title={challenge.title || DEFAULT_BANGO_TITLE}
+      />
+    );
+  }
+
+  if (gameId === 'bell-to-bell') {
+    return (
+      <BellToBell
+        onComplete={onComplete}
+        shifts={challenge.shifts?.length ? challenge.shifts : DEFAULT_BELL_SHIFTS}
+      />
+    );
+  }
+
+  return (
+    <div style={{ padding: '1rem', border: '1px dashed var(--kraft-tan-dark)' }}>
+      <p style={{ fontFamily: 'var(--font-body)', margin: 0 }}>
+        This game ({gameId || 'unknown'}) is not available in the lesson player yet.
+      </p>
+    </div>
+  );
+}
+
+export default function CurriculumModule() {
+  const { moduleId } = useParams();
+  const navigate = useNavigate();
+  const onBackToLearn = () => navigate('/learn');
+  const { modules } = useCurriculumModules();
+  const moduleList = useMemo(
+    () => (Array.isArray(modules) ? modules : Object.values(modules ?? {})),
+    [modules],
+  );
+  const module = moduleList.find((m) => m.id === moduleId);
 
   const [activeCheckpoint, setActiveCheckpoint] = useState(0);
   const [phase, setPhase] = useState('watch'); // 'watch' | 'challenge' | 'done'
@@ -56,7 +102,7 @@ export default function CurriculumModule({ moduleId, onBackToLearn }) {
         particleCount: 120,
         spread: 70,
         origin: { y: 0.65 },
-        colors: ['#1b3823', '#d4981e', '#b24e2c', '#ebd7bc', '#22646d']
+        colors: ['#1b3823', '#d4981e', '#b24e2c', '#ebd7bc', '#22646d'],
       });
       setPhase('done');
     } else {
@@ -68,6 +114,10 @@ export default function CurriculumModule({ moduleId, onBackToLearn }) {
   const handleGameComplete = () => {
     setGameComplete(true);
   };
+
+  const gameCompleteCopy = checkpoint.challenge?.gameId === 'bell-to-bell'
+    ? 'You finished the day log and collected passport stamps.'
+    : 'You matched every worker to their bango tag. Plantation stores used these numbers to track purchases!';
 
   return (
     <div style={styles.pageContainer}>
@@ -129,13 +179,14 @@ export default function CurriculumModule({ moduleId, onBackToLearn }) {
 
               {phase === 'challenge' && checkpoint.challenge.type === 'game' && (
                 <>
-                  <BangoMatchPixi onComplete={handleGameComplete} />
+                  <GameChallenge
+                    challenge={checkpoint.challenge}
+                    onComplete={handleGameComplete}
+                  />
                   {gameComplete && (
                     <div style={styles.gameCompleteBox} className="animate-fade-in">
-                      <div className="ink-stamp green" style={styles.correctBadge}>ALL MATCHED</div>
-                      <p style={styles.bodyText}>
-                        You matched every worker to their bango tag. Plantation stores used these numbers to track purchases!
-                      </p>
+                      <div className="ink-stamp green" style={styles.correctBadge}>COMPLETE</div>
+                      <p style={styles.bodyText}>{gameCompleteCopy}</p>
                       <button type="button" className="btn-primary" onClick={handlePassChallenge} style={styles.continueBtn}>
                         Next Checkpoint <ChevronRight size={16} />
                       </button>

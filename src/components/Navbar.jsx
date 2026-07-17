@@ -1,11 +1,17 @@
 import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.png';
-import { Menu, X, Calendar, Ticket, Heart } from 'lucide-react';
+import { Menu, X, Ticket, Heart } from 'lucide-react';
+import { pathFromPageId } from '../lib/navigation.js';
+import { useSiteSettings } from '../context/ContentProvider.jsx';
 
-export default function Navbar({ activePage, setActivePage }) {
+export default function Navbar({ activePage }) {
+  const { settings } = useSiteSettings();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const navLinks = [
+  const navLinks = settings?.nav ?? [
     { id: 'home', label: 'Home' },
     { id: 'visit', label: 'Visit' },
     { id: 'stories', label: 'Stories' },
@@ -15,25 +21,30 @@ export default function Navbar({ activePage, setActivePage }) {
     { id: 'about', label: 'About' }
   ];
 
+  const brand = settings?.brand ?? {};
+
   const handleNavClick = (pageId) => {
-    setActivePage(pageId);
+    navigate(pathFromPageId(pageId));
     setIsOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const isActive = (linkId) => {
+    if (linkId === 'learn' && location.pathname.startsWith('/learn')) return true;
+    return activePage === linkId;
   };
 
   return (
     <nav style={styles.navContainer}>
       <div style={styles.navWrapper}>
-        {/* Brand Logo & Title */}
         <div style={styles.logoGroup} onClick={() => handleNavClick('home')}>
           <img src={logo} alt="Hawaiian Plantation Village Logo" style={styles.logoImg} />
           <div style={styles.logoText}>
-            <span style={styles.brandTitle}>Hawaiian Plantation Village</span>
-            <span style={styles.brandSubtitle}>Waipahu, Oʻahu, Hawaiʻi</span>
+            <span style={styles.brandTitle}>{brand.title ?? 'Hawaiian Plantation Village'}</span>
+            <span style={styles.brandSubtitle}>{brand.subtitle ?? 'Waipahu, Oʻahu, Hawaiʻi'}</span>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
         <ul className="nav-desktop-links" style={styles.navLinksList}>
           {navLinks.map((link) => (
             <li key={link.id} style={styles.navLinkItem}>
@@ -41,17 +52,16 @@ export default function Navbar({ activePage, setActivePage }) {
                 onClick={() => handleNavClick(link.id)}
                 style={{
                   ...styles.navButton,
-                  ...(activePage === link.id ? styles.navButtonActive : {})
+                  ...(isActive(link.id) ? styles.navButtonActive : {})
                 }}
               >
                 {link.label}
-                {activePage === link.id && <span style={styles.activeDot} />}
+                {isActive(link.id) && <span style={styles.activeDot} />}
               </button>
             </li>
           ))}
         </ul>
 
-        {/* Action CTAs */}
         <div className="nav-desktop-ctas" style={styles.ctaGroup}>
           <button onClick={() => handleNavClick('support')} style={styles.donateLink}>
             <Heart size={16} /> Donate
@@ -61,13 +71,11 @@ export default function Navbar({ activePage, setActivePage }) {
           </button>
         </div>
 
-        {/* Mobile Toggle Menu */}
         <button className="nav-mobile-toggle" style={styles.mobileToggle} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      {/* Mobile Drawer Menu */}
       {isOpen && (
         <div style={styles.mobileMenu}>
           <ul style={styles.mobileLinksList}>
@@ -77,7 +85,7 @@ export default function Navbar({ activePage, setActivePage }) {
                   onClick={() => handleNavClick(link.id)}
                   style={{
                     ...styles.mobileNavButton,
-                    ...(activePage === link.id ? styles.mobileNavButtonActive : {})
+                    ...(isActive(link.id) ? styles.mobileNavButtonActive : {})
                   }}
                 >
                   {link.label}
@@ -85,19 +93,12 @@ export default function Navbar({ activePage, setActivePage }) {
               </li>
             ))}
             <li style={styles.mobileLinkItem}>
-              <button
-                onClick={() => handleNavClick('support')}
-                style={{ ...styles.mobileNavButton, color: 'var(--tin-rust)' }}
-              >
+              <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--tin-rust)' }}>
                 Donate Now
               </button>
             </li>
             <li style={styles.mobileLinkItem}>
-              <button
-                onClick={() => handleNavClick('tickets')}
-                className="btn-accent"
-                style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}
-              >
+              <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}>
                 <Ticket size={16} /> Buy Tickets
               </button>
             </li>
@@ -161,10 +162,7 @@ const styles = {
     gap: '24px',
     alignItems: 'center',
     margin: 0,
-    padding: 0,
-    '@media (max-width: 900px)': {
-      display: 'none'
-    }
+    padding: 0
   },
   navLinkItem: {
     display: 'inline-block'
