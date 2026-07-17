@@ -27,7 +27,17 @@ describe('content mappers', () => {
     });
     expect(mapped.slug).toBe('test-news');
     expect(mapped.title).toBe('Test');
+    expect(mapped.date).toBe('July 1, 2026');
     expect(mapped.image).toBe('https://example.com/img.jpg');
+  });
+
+  it('formats ISO news dates for display', () => {
+    const mapped = mapNewsArticle({
+      slug: 'iso-news',
+      title: 'Test',
+      event_date_label: '2026-07-10',
+    });
+    expect(mapped.date).toBe('July 10, 2026');
   });
 
   it('maps program events with metadata time', () => {

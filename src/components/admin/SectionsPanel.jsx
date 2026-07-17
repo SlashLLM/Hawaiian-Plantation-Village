@@ -23,19 +23,40 @@ import SectionPayloadForm from './SectionPayloadForm.jsx';
 
 const EMPTY = { page_key: 'home', section_key: '', status: 'draft', sort_order: 0, payload: {} };
 
-export default function SectionsPanel() {
+/**
+ * @param {{ pageKey?: string }} props
+ * When `pageKey` is set, the panel is scoped to that page (used by PageEditorPanel).
+ * When omitted, keeps a page filter for standalone use.
+ */
+export default function SectionsPanel({ pageKey: scopedPageKey } = {}) {
   const { isAdmin, isStaff } = useAuth();
   const formRef = useRef(null);
+  const isScoped = Boolean(scopedPageKey);
   const [rows, setRows] = useState([]);
-  const [form, setForm] = useState(EMPTY);
+  const [form, setForm] = useState(() => ({
+    ...EMPTY,
+    page_key: scopedPageKey ?? 'home',
+  }));
   const [editingId, setEditingId] = useState(null);
-  const [filterPage, setFilterPage] = useState('all');
+  const [filterPage, setFilterPage] = useState(scopedPageKey ?? 'all');
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [advanced, setAdvanced] = useState(false);
-  const [customKey, setCustomKey] = useState('');
+
+  useEffect(() => {
+    if (!isScoped) return;
+    setFilterPage(scopedPageKey);
+    setForm((prev) => ({
+      ...EMPTY,
+      page_key: scopedPageKey,
+      section_key: prev.page_key === scopedPageKey ? prev.section_key : '',
+      payload: prev.page_key === scopedPageKey ? prev.payload : {},
+    }));
+    setEditingId(null);
+    setAdvanced(false);
+  }, [scopedPageKey, isScoped]);
 
   const sectionChoices = getSectionChoices(form.page_key);
   const existingKeys = rows.filter((r) => r.page_key === form.page_key).map((r) => r.section_key);
@@ -46,10 +67,9 @@ export default function SectionsPanel() {
   const pickerChoices = [...sectionChoices, ...orphanSections];
   const pickerValue = form.section_key && pickerChoices.some((s) => s.key === form.section_key)
     ? form.section_key
-    : (form.section_key === '__custom__' || customKey ? '__custom__' : form.section_key);
-  const effectiveSectionKey = pickerValue === '__custom__' ? '' : form.section_key;
-  const hasSchema = hasSectionFormSchema(form.page_key, effectiveSectionKey);
-  const showGuided = !advanced && hasSchema;
+    : form.section_key;
+  const hasSchema = hasSectionFormSchema(form.page_key, form.section_key);
+  const showGuided = !advanced && hasSchema && Boolean(form.section_key);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -68,14 +88,8 @@ export default function SectionsPanel() {
 
   function resetForm() {
     setEditingId(null);
-    setForm(EMPTY);
+    setForm({ ...EMPTY, page_key: isScoped ? scopedPageKey : 'home' });
     setAdvanced(false);
-    setCustomKey('');
-  }
-
-  function handleAddNew() {
-    resetForm();
-    scrollIntoViewIfSupported(formRef.current, { behavior: 'smooth', block: 'start' });
   }
 
   function handlePageChange(pageKey) {
@@ -86,21 +100,12 @@ export default function SectionsPanel() {
       section_key: '',
       payload: {},
     }));
-    setCustomKey('');
     setAdvanced(false);
   }
 
   function handleSectionKeyChange(sectionKey) {
-    if (sectionKey === '__custom__') {
-      setEditingId(null);
-      setCustomKey('');
-      setForm((prev) => ({ ...prev, section_key: '__custom__', status: 'draft', sort_order: 0, payload: {} }));
-      setAdvanced(false);
-      return;
-    }
     if (!sectionKey) {
       setEditingId(null);
-      setCustomKey('');
       setForm((prev) => ({ ...prev, section_key: '', status: 'draft', sort_order: 0, payload: {} }));
       setAdvanced(false);
       return;
@@ -111,13 +116,11 @@ export default function SectionsPanel() {
     if (existing) {
       const starter = getStarterPayload(form.page_key, sectionKey);
       setEditingId(existing.id);
-      setCustomKey('');
       setForm({
         page_key: existing.page_key,
         section_key: existing.section_key,
         status: existing.status,
         sort_order: existing.sort_order,
-        // Fill missing fields (e.g. rates) from starter so guided form shows full structure
         payload: { ...starter, ...(existing.payload ?? {}) },
       });
       setAdvanced(false);
@@ -125,7 +128,6 @@ export default function SectionsPanel() {
     }
     const starter = getStarterPayload(form.page_key, sectionKey);
     setEditingId(null);
-    setCustomKey('');
     setForm((prev) => ({
       ...prev,
       section_key: sectionKey,
@@ -136,19 +138,32 @@ export default function SectionsPanel() {
     setAdvanced(false);
   }
 
+  function startEdit(row) {
+    const starter = getStarterPayload(row.page_key, row.section_key);
+    setEditingId(row.id);
+    setForm({
+      page_key: row.page_key,
+      section_key: row.section_key,
+      status: row.status,
+      sort_order: row.sort_order,
+      payload: { ...starter, ...(row.payload ?? {}) },
+    });
+    setAdvanced(false);
+    scrollIntoViewIfSupported(formRef.current, { behavior: 'smooth', block: 'start' });
+  }
+
   async function save(e) {
     e.preventDefault();
     if (!isAdmin) return;
-    const sectionKey = form.section_key === '__custom__' ? customKey.trim() : form.section_key;
-    if (!sectionKey) {
-      setError('Select or enter a section key');
+    if (!form.section_key) {
+      setError('Select a section to edit');
       return;
     }
     setSaving(true);
     setError('');
     try {
-      await savePageSection({ ...form, section_key: sectionKey }, editingId);
-      setMessage(editingId ? 'Section updated' : 'Section created');
+      await savePageSection({ ...form, section_key: form.section_key }, editingId);
+      setMessage(editingId ? 'Section updated' : 'Section saved');
       resetForm();
       await load();
     } catch (err) {
@@ -180,63 +195,78 @@ export default function SectionsPanel() {
     }
   }
 
-  const filtered = filterPage === 'all' ? rows : rows.filter((r) => r.page_key === filterPage);
-  const pageLabel = filterPage === 'all' ? 'page sections' : `${PAGE_LABELS[filterPage] ?? filterPage} sections`;
+  const effectiveFilter = isScoped ? scopedPageKey : filterPage;
+  const filtered = effectiveFilter === 'all' ? rows : rows.filter((r) => r.page_key === effectiveFilter);
+  const pageLabel = effectiveFilter === 'all'
+    ? 'page sections'
+    : `${PAGE_LABELS[effectiveFilter] ?? effectiveFilter} sections`;
 
   if (loading) return <p>Loading page sections…</p>;
 
   return (
     <div>
       <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-        Fixed-layout page sections keyed by page + section (hero blocks, quick visit, mission copy, etc.).
+        Edit fixed page sections for this page. Choose a section below or click Edit in the list.
       </p>
       <AdminReadOnlyNotice isAdmin={isAdmin} isStaff={isStaff} />
       <AdminMessage message={message} error={error} onDismiss={() => { setMessage(''); setError(''); }} />
 
-      <AdminToolbar>
-        <select className="admin-form-select" value={filterPage} onChange={(e) => setFilterPage(e.target.value)} aria-label="Filter by page">
-          <option value="all">All pages</option>
-          {PAGE_KEYS.map((p) => <option key={p} value={p}>{PAGE_LABELS[p] ?? p}</option>)}
-        </select>
-        {isAdmin && <button type="button" className="btn-primary" onClick={handleAddNew}>Add section</button>}
-      </AdminToolbar>
+      {!isScoped && (
+        <AdminToolbar>
+          <select
+            className="admin-form-select"
+            value={filterPage}
+            onChange={(e) => setFilterPage(e.target.value)}
+            aria-label="Filter by page"
+          >
+            <option value="all">All pages</option>
+            {PAGE_KEYS.map((p) => <option key={p} value={p}>{PAGE_LABELS[p] ?? p}</option>)}
+          </select>
+        </AdminToolbar>
+      )}
 
       {isAdmin && (
         <form ref={formRef} className="paper-card" onSubmit={save} style={{ padding: '1.25rem', marginBottom: '1.5rem' }}>
-          <h4>{editingId ? 'Edit section' : 'New page section'}</h4>
+          <h4>{editingId ? 'Edit section' : 'Select a section'}</h4>
           <div className="admin-form-grid">
-            <div className="admin-form-field">
-              <label className="admin-form-label">Page</label>
-              <select className="admin-form-select" aria-label="Page" value={form.page_key} onChange={(e) => handlePageChange(e.target.value)}>
-                {PAGE_KEYS.map((p) => <option key={p} value={p}>{PAGE_LABELS[p] ?? p}</option>)}
-              </select>
-            </div>
+            {!isScoped && (
+              <div className="admin-form-field">
+                <label className="admin-form-label">Page</label>
+                <select
+                  className="admin-form-select"
+                  aria-label="Page"
+                  value={form.page_key}
+                  onChange={(e) => handlePageChange(e.target.value)}
+                >
+                  {PAGE_KEYS.map((p) => <option key={p} value={p}>{PAGE_LABELS[p] ?? p}</option>)}
+                </select>
+              </div>
+            )}
             <div className="admin-form-field">
               <label className="admin-form-label">Section</label>
-              <select className="admin-form-select" aria-label="Section" required value={pickerValue} onChange={(e) => handleSectionKeyChange(e.target.value)}>
+              <select
+                className="admin-form-select"
+                aria-label="Section"
+                required
+                value={pickerValue}
+                onChange={(e) => handleSectionKeyChange(e.target.value)}
+              >
                 <option value="">Choose a section…</option>
                 {pickerChoices.map((s) => (
                   <option key={s.key} value={s.key}>
                     {s.label}{existingKeys.includes(s.key) ? ' (exists)' : ''}
                   </option>
                 ))}
-                <option value="__custom__">Custom section key…</option>
               </select>
             </div>
-            {!editingId && pickerValue === '__custom__' && (
-              <div className="admin-form-field">
-                <label className="admin-form-label">Custom section key</label>
-                <input
-                  className="admin-form-input"
-                  placeholder="mySectionKey"
-                  value={customKey}
-                  onChange={(e) => setCustomKey(e.target.value)}
-                />
-              </div>
-            )}
             <div className="admin-form-field">
               <label className="admin-form-label">Status</label>
-              <select className="admin-form-select" value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+              <select
+                className="admin-form-select"
+                value={form.status}
+                onChange={(e) => setForm({ ...form, status: e.target.value })}
+                disabled={!form.section_key}
+              >
                 <option value="draft">Draft</option>
                 <option value="published">Published</option>
                 <option value="archived">Archived</option>
@@ -244,56 +274,73 @@ export default function SectionsPanel() {
             </div>
             <div className="admin-form-field">
               <label className="admin-form-label">Sort order</label>
-              <input type="number" className="admin-form-input" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })} />
+              <input
+                type="number"
+                className="admin-form-input"
+                value={form.sort_order}
+                onChange={(e) => setForm({ ...form, sort_order: Number(e.target.value) })}
+                disabled={!form.section_key}
+              />
             </div>
           </div>
 
-          <div style={{ marginTop: '1.25rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
-              <label className="admin-form-label" style={{ margin: 0 }}>
-                {showGuided ? 'Section content' : 'Payload JSON'}
-              </label>
-              {hasSchema && (
-                <button type="button" className="btn-secondary" style={{ fontSize: '0.8rem' }} onClick={() => setAdvanced((v) => !v)}>
-                  {advanced ? 'Use guided fields' : 'Advanced JSON editor'}
-                </button>
+          {form.section_key && (
+            <div style={{ marginTop: '1.25rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', flexWrap: 'wrap', gap: '0.5rem' }}>
+                <label className="admin-form-label" style={{ margin: 0 }}>
+                  {showGuided ? 'Section content' : 'Payload JSON'}
+                </label>
+                {hasSchema && (
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    style={{ fontSize: '0.8rem' }}
+                    onClick={() => setAdvanced((v) => !v)}
+                  >
+                    {advanced ? 'Use guided fields' : 'Advanced JSON editor'}
+                  </button>
+                )}
+              </div>
+
+              {showGuided ? (
+                <SectionPayloadForm
+                  pageKey={form.page_key}
+                  sectionKey={form.section_key}
+                  payload={form.payload}
+                  onChange={(payload) => setForm((prev) => ({ ...prev, payload }))}
+                />
+              ) : (
+                <>
+                  <textarea
+                    className="admin-form-textarea"
+                    rows={10}
+                    value={JSON.stringify(form.payload, null, 2)}
+                    onChange={(e) => {
+                      try {
+                        setForm({ ...form, payload: JSON.parse(e.target.value || '{}') });
+                        setError('');
+                      } catch {
+                        setError('Payload must be valid JSON');
+                      }
+                    }}
+                  />
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
+                    {hasSchema
+                      ? 'Edit the raw JSON payload, or switch back to guided fields.'
+                      : 'Selecting a known section loads a starter template.'}
+                  </p>
+                </>
               )}
             </div>
-
-            {showGuided ? (
-              <SectionPayloadForm
-                pageKey={form.page_key}
-                sectionKey={effectiveSectionKey}
-                payload={form.payload}
-                onChange={(payload) => setForm((prev) => ({ ...prev, payload }))}
-              />
-            ) : (
-              <>
-                <textarea
-                  className="admin-form-textarea"
-                  rows={10}
-                  value={JSON.stringify(form.payload, null, 2)}
-                  onChange={(e) => {
-                    try {
-                      setForm({ ...form, payload: JSON.parse(e.target.value || '{}') });
-                      setError('');
-                    } catch {
-                      setError('Payload must be valid JSON');
-                    }
-                  }}
-                />
-                <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.35rem' }}>
-                  {hasSchema
-                    ? 'Edit the raw JSON payload, or switch back to guided fields.'
-                    : 'Selecting a known section loads a starter template. Custom sections use JSON only.'}
-                </p>
-              </>
-            )}
-          </div>
+          )}
 
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
-            <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Saving…' : 'Save section'}</button>
-            {editingId && <button type="button" className="btn-secondary" onClick={resetForm}>Cancel</button>}
+            <button type="submit" className="btn-primary" disabled={saving || !form.section_key}>
+              {saving ? 'Saving…' : 'Save section'}
+            </button>
+            {form.section_key && (
+              <button type="button" className="btn-secondary" onClick={resetForm}>Cancel</button>
+            )}
           </div>
         </form>
       )}
@@ -301,25 +348,47 @@ export default function SectionsPanel() {
       {filtered.length === 0 ? (
         <AdminEmptyState
           title={`No ${pageLabel} yet`}
-          message={isAdmin ? 'Add a section using the form above. Starter templates are provided for each page.' : 'No sections configured for this page.'}
-          action={isAdmin && <button type="button" className="btn-primary" onClick={handleAddNew}>Add section</button>}
+          message="No sections are saved for this page yet. Choose a section above and save to create it from the starter template."
         />
       ) : (
         <div className="admin-table-wrap">
           <table className="admin-table">
-            <thead><tr><th>Page</th><th>Section</th><th>Status</th><th>Order</th><th /></tr></thead>
+            <thead>
+              <tr>
+                {!isScoped && <th>Page</th>}
+                <th>Section</th>
+                <th>Status</th>
+                <th>Order</th>
+                <th />
+              </tr>
+            </thead>
             <tbody>
               {filtered.map((row) => (
                 <tr key={row.id}>
-                  <td>{PAGE_LABELS[row.page_key] ?? row.page_key}</td>
+                  {!isScoped && <td>{PAGE_LABELS[row.page_key] ?? row.page_key}</td>}
                   <td>{row.section_key}</td>
                   <td><StatusBadge value={row.status} /></td>
                   <td>{row.sort_order}</td>
                   <td style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                     {isAdmin && (
                       <>
+                        <button
+                          type="button"
+                          className="btn-secondary"
+                          style={{ fontSize: '0.75rem' }}
+                          onClick={() => startEdit(row)}
+                        >
+                          Edit
+                        </button>
                         {row.status !== 'published' && (
-                          <button type="button" className="btn-primary" style={{ fontSize: '0.75rem' }} onClick={() => publish(row)}>Publish</button>
+                          <button
+                            type="button"
+                            className="btn-primary"
+                            style={{ fontSize: '0.75rem' }}
+                            onClick={() => publish(row)}
+                          >
+                            Publish
+                          </button>
                         )}
                         {row.status === 'published' && (
                           <AdminConfirmButton

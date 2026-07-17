@@ -95,6 +95,7 @@ export {
   fetchCurriculumModule,
   uploadCmsImage,
   uploadCmsAudio,
+  uploadCmsVideo,
   uploadCmsMedia,
   getPublicMediaUrl,
 } from './content/cmsApi.js';

@@ -8,6 +8,7 @@ vi.mock('../lib/supabase.js', () => {
     select: vi.fn(() => chain),
     order: vi.fn(() => chain),
     eq: vi.fn(() => chain),
+    or: vi.fn(() => chain),
     then: (resolve) => Promise.resolve({ data: [], error: null }).then(resolve),
   };
   return {
@@ -24,8 +25,23 @@ vi.mock('../lib/content/cmsAdminApi.js', () => ({
   fetchAllContentEntries: vi.fn(() => Promise.resolve([])),
   fetchAllPageSections: vi.fn(() => Promise.resolve([])),
   saveSiteSettings: vi.fn(),
+  saveContentEntry: vi.fn(),
+  setContentEntryStatus: vi.fn(),
+  deleteContentEntry: vi.fn(),
   fetchCatalogData: vi.fn(() => Promise.resolve({ events: [], tiers: [], groupTickets: [], tourSlots: [] })),
   fetchCurriculumModulesAdmin: vi.fn(() => Promise.resolve([])),
+}));
+
+vi.mock('../components/admin/MediaUploadField.jsx', () => ({
+  default: () => <div data-testid="media-upload" />,
+}));
+
+vi.mock('../components/admin/AudioUploadField.jsx', () => ({
+  default: () => <div data-testid="audio-upload" />,
+}));
+
+vi.mock('../components/admin/VideoUploadField.jsx', () => ({
+  default: () => <div data-testid="video-upload" />,
 }));
 
 describe('CmsAdminPanel', () => {
@@ -33,24 +49,33 @@ describe('CmsAdminPanel', () => {
     vi.clearAllMocks();
   });
 
-  it('renders all five CMS tabs', () => {
+  it('renders item CMS tabs without Pages or Collections', () => {
     render(<CmsAdminPanel />);
-    expect(screen.getByRole('button', { name: 'Collections' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Page sections' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Site settings' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Catalog' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Stories' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'News & Announcements' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Careers' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Curriculum' })).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Site settings' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Pages' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Collections' })).not.toBeInTheDocument();
   });
 
-  it('shows collections panel by default', async () => {
+  it('shows stories panel by default', async () => {
     render(<CmsAdminPanel />);
-    expect(await screen.findByText(/Repeatable lists/)).toBeInTheDocument();
+    expect(await screen.findByText(/plantation camp stories/i)).toBeInTheDocument();
   });
 
-  it('switches tabs when clicked', async () => {
+  it('switches to news, careers, and curriculum tabs', async () => {
     const user = userEvent.setup();
     render(<CmsAdminPanel />);
-    await user.click(screen.getByRole('button', { name: 'Catalog' }));
-    expect(screen.getByText(/Operational catalog/)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'News & Announcements' }));
+    expect(await screen.findByText(/news and announcements/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Careers' }));
+    expect(await screen.findByText(/career openings/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Curriculum' }));
+    expect(screen.getByText('No modules yet')).toBeInTheDocument();
   });
 });

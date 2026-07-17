@@ -29,12 +29,15 @@ export async function saveSiteSettings(payload) {
   notifyCmsUpdated('settings');
 }
 
-export async function fetchAllContentEntries() {
-  const { data, error } = await supabase
+export async function fetchAllContentEntries({ pageKey, contentType } = {}) {
+  let query = supabase
     .from('content_entries')
     .select('*')
     .order('sort_order')
     .order('updated_at', { ascending: false });
+  if (pageKey) query = query.eq('page_key', pageKey);
+  if (contentType) query = query.eq('content_type', contentType);
+  const { data, error } = await query;
   assertNoError(error, 'Failed to load entries');
   return data ?? [];
 }
@@ -44,6 +47,9 @@ export async function saveContentEntry(record, editingId = null) {
     ...record,
     published_at: record.status === 'published' ? new Date().toISOString() : null,
   };
+  if (payload.content_type === 'camp_story' && !payload.page_key) {
+    payload.page_key = 'stories';
+  }
   const query = editingId
     ? supabase.from('content_entries').update(payload).eq('id', editingId)
     : supabase.from('content_entries').insert(payload);
@@ -59,6 +65,13 @@ export async function setContentEntryStatus(id, status) {
     published_at: status === 'published' ? new Date().toISOString() : null,
   }).eq('id', id);
   assertNoError(error, 'Failed to update entry status');
+  invalidateCmsCache('collections');
+  notifyCmsUpdated('collections');
+}
+
+export async function deleteContentEntry(id) {
+  const { error } = await supabase.from('content_entries').delete().eq('id', id);
+  assertNoError(error, 'Failed to delete entry');
   invalidateCmsCache('collections');
   notifyCmsUpdated('collections');
 }

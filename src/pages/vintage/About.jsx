@@ -5,7 +5,7 @@ import {
   ChevronRight, ChevronDown, Send, Printer, User
 } from 'lucide-react';
 import bangoImage from '../../assets/bango_lunch_tin.png';
-import { useSiteSettings, usePageSection, useContentCollection } from '../../context/ContentProvider.jsx';
+import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
 
 export default function About({ activeTab: propActiveTab, setActiveTab: propSetActiveTab }) {
   const { settings } = useSiteSettings();
@@ -18,8 +18,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const { section: contactIntro } = usePageSection('about', 'contactIntro', {});
   const { items: newsArticles } = useContentCollection('news');
   const { items: careersList } = useContentCollection('career');
-  const { items: timeline } = useContentCollection('timeline');
-  const { items: leadership } = useContentCollection('leadership');
+  const { items: timeline } = usePageListSection('about', 'timeline');
+  const { items: leadership } = usePageListSection('about', 'leadership');
 
   const contact = settings?.contact ?? {};
   const hours = settings?.hours ?? {};
@@ -1046,7 +1046,7 @@ const styles = {
   },
   newsGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
     gap: '2.5rem'
   },
   newsCard: {

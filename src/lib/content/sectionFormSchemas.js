@@ -155,6 +155,69 @@ const SECTION_FORM_SCHEMAS = {
       },
     ],
   },
+  'home.events': {
+    groups: [
+      {
+        title: 'Programs & events',
+        fields: [
+          objectList(
+            'items',
+            'Events',
+            { slug: '', date: '', title: '', time: '', desc: '', image: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'date', label: 'Date label', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'time', label: 'Time', type: 'text' },
+              { key: 'desc', label: 'Description', type: 'textarea' },
+              { key: 'image', label: 'Image URL', type: 'text' },
+            ],
+            'Event',
+          ),
+        ],
+      },
+    ],
+  },
+  'home.testimonials': {
+    groups: [
+      {
+        title: 'Testimonials',
+        fields: [
+          objectList(
+            'items',
+            'Testimonials',
+            { slug: '', quote: '', authorName: '', authorMeta: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'quote', label: 'Quote', type: 'textarea' },
+              { key: 'authorName', label: 'Author name', type: 'text' },
+              { key: 'authorMeta', label: 'Author meta', type: 'text' },
+            ],
+            'Testimonial',
+          ),
+        ],
+      },
+    ],
+  },
+  'home.partners': {
+    groups: [
+      {
+        title: 'Partners',
+        fields: [
+          objectList(
+            'items',
+            'Partners',
+            { slug: '', name: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'name', label: 'Name', type: 'text' },
+            ],
+            'Partner',
+          ),
+        ],
+      },
+    ],
+  },
 
   // --- Visit ---
   'visit.header': {
@@ -356,6 +419,106 @@ const SECTION_FORM_SCHEMAS = {
       },
     ],
   },
+  'about.news': {
+    groups: [
+      {
+        title: 'News articles',
+        fields: [
+          objectList(
+            'items',
+            'Articles',
+            { slug: '', title: '', date: '', category: '', summary: '', content: '', image: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'date', label: 'Date', type: 'text' },
+              { key: 'category', label: 'Category', type: 'text' },
+              { key: 'summary', label: 'Summary', type: 'textarea' },
+              { key: 'content', label: 'Content', type: 'textarea' },
+              { key: 'image', label: 'Image URL', type: 'text' },
+            ],
+            'Article',
+          ),
+        ],
+      },
+    ],
+  },
+  'about.careers': {
+    groups: [
+      {
+        title: 'Careers',
+        fields: [
+          objectList(
+            'items',
+            'Jobs',
+            {
+              slug: '',
+              title: '',
+              type: '',
+              department: '',
+              compensation: '',
+              hours: '',
+              summary: '',
+              responsibilities: [],
+              requirements: [],
+            },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'type', label: 'Type', type: 'text' },
+              { key: 'department', label: 'Department', type: 'text' },
+              { key: 'compensation', label: 'Compensation', type: 'text' },
+              { key: 'hours', label: 'Hours', type: 'text' },
+              { key: 'summary', label: 'Summary', type: 'textarea' },
+              { key: 'responsibilities', label: 'Responsibilities', type: 'stringList', itemLabel: 'Responsibility' },
+              { key: 'requirements', label: 'Requirements', type: 'stringList', itemLabel: 'Requirement' },
+            ],
+            'Job',
+          ),
+        ],
+      },
+    ],
+  },
+  'about.timeline': {
+    groups: [
+      {
+        title: 'Timeline',
+        fields: [
+          objectList(
+            'items',
+            'Milestones',
+            { year: '', event: '' },
+            [
+              { key: 'year', label: 'Year', type: 'text' },
+              { key: 'event', label: 'Event', type: 'textarea' },
+            ],
+            'Milestone',
+          ),
+        ],
+      },
+    ],
+  },
+  'about.leadership': {
+    groups: [
+      {
+        title: 'Leadership',
+        fields: [
+          objectList(
+            'items',
+            'Leaders',
+            { slug: '', name: '', role: '', desc: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'name', label: 'Name', type: 'text' },
+              { key: 'role', label: 'Role', type: 'text' },
+              { key: 'desc', label: 'Bio', type: 'textarea' },
+            ],
+            'Leader',
+          ),
+        ],
+      },
+    ],
+  },
 
   // --- Stories ---
   'stories.header': {
@@ -376,10 +539,50 @@ const SECTION_FORM_SCHEMAS = {
     ],
   },
   'learn.youth': {
-    groups: [{ title: 'Youth programs', fields: [STAMP_HEADER] }],
+    groups: [
+      {
+        title: 'Youth programs',
+        fields: [
+          STAMP_HEADER,
+          objectList(
+            'programs',
+            'Programs',
+            { slug: '', type: '', title: '', desc: '', schedule: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'type', label: 'Type', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'desc', label: 'Description', type: 'textarea' },
+              { key: 'schedule', label: 'Schedule', type: 'text' },
+            ],
+            'Program',
+          ),
+        ],
+      },
+    ],
   },
   'learn.family': {
-    groups: [{ title: 'Family programs', fields: [STAMP_HEADER] }],
+    groups: [
+      {
+        title: 'Family programs',
+        fields: [
+          STAMP_HEADER,
+          objectList(
+            'workshops',
+            'Workshops',
+            { slug: '', type: '', title: '', desc: '', schedule: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'type', label: 'Type', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'desc', label: 'Description', type: 'textarea' },
+              { key: 'schedule', label: 'Schedule', type: 'text' },
+            ],
+            'Workshop',
+          ),
+        ],
+      },
+    ],
   },
 
   // --- Play ---

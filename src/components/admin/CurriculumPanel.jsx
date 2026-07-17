@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth.js';
-import { isValidSlug } from '../../lib/content/validators.js';
+import { isValidSlug, normalizeSlug } from '../../lib/content/validators.js';
 import {
   fetchCurriculumModulesAdmin,
   fetchCurriculumCheckpoints,
@@ -14,13 +14,19 @@ import AdminEmptyState from './AdminEmptyState.jsx';
 import AdminMessage from './AdminMessage.jsx';
 import AdminToolbar from './AdminToolbar.jsx';
 import AdminConfirmButton from './AdminConfirmButton.jsx';
+import ChallengeFields, { challengeForSave, normalizeChallenge } from './ChallengeFields.jsx';
+import VideoUploadField from './VideoUploadField.jsx';
 
 const LOCKED_GAME_IDS = ['bell-to-bell', 'bango-match', 'camp-map', 'pidgin-bridge'];
 
 const EMPTY_MODULE = { slug: '', title: '', grades: '', sort_order: 0, is_active: true };
 const EMPTY_CHECKPOINT = {
-  slug: '', label: '', video_url: '', body_text: '', sort_order: 0,
-  challenge: { type: 'quiz', question: '', choices: [], correctIndex: 0, feedback: { correct: '', incorrect: '' } },
+  slug: '',
+  label: '',
+  video_url: '',
+  body_text: '',
+  sort_order: 0,
+  challenge: normalizeChallenge({ type: 'quiz' }, LOCKED_GAME_IDS),
 };
 
 export default function CurriculumPanel() {
@@ -105,12 +111,15 @@ export default function CurriculumPanel() {
 
   async function handleSaveModule(e) {
     e.preventDefault();
-    if (!isValidSlug(moduleForm.slug)) {
-      setError('Module slug must be lowercase letters, numbers, and hyphens only');
+    const slug = editingModuleId
+      ? moduleForm.slug
+      : (normalizeSlug(moduleForm.title) || `module-${Date.now()}`);
+    if (!isValidSlug(slug)) {
+      setError('Could not generate a valid slug from the title. Add letters or numbers to the title.');
       return;
     }
     await runSave(
-      () => saveCurriculumModule(moduleForm, editingModuleId),
+      () => saveCurriculumModule({ ...moduleForm, slug }, editingModuleId),
       editingModuleId ? 'Module updated' : 'Module created',
     );
     if (!editingModuleId) resetModuleForm();
@@ -124,7 +133,7 @@ export default function CurriculumPanel() {
       video_url: cp.video_url ?? '',
       body_text: cp.body_text ?? '',
       sort_order: cp.sort_order ?? 0,
-      challenge: cp.challenge ?? EMPTY_CHECKPOINT.challenge,
+      challenge: normalizeChallenge(cp.challenge, LOCKED_GAME_IDS),
       module_id: cp.module_id,
     });
     setShowCheckpointForm(true);
@@ -133,16 +142,31 @@ export default function CurriculumPanel() {
   async function handleSaveCheckpoint(e) {
     e.preventDefault();
     if (!selected) return;
-    if (!isValidSlug(checkpointForm.slug)) {
-      setError('Checkpoint slug must be lowercase letters, numbers, and hyphens only');
+    const slug = editingCheckpointId
+      ? checkpointForm.slug
+      : (normalizeSlug(checkpointForm.label) || `checkpoint-${Date.now()}`);
+    if (!isValidSlug(slug)) {
+      setError('Could not generate a valid slug from the label. Add letters or numbers to the label.');
       return;
     }
-    const gameId = checkpointForm.challenge?.gameId;
-    if (gameId && !LOCKED_GAME_IDS.includes(gameId) && checkpointForm.challenge?.type === 'game') {
-      setError(`Game ID must be one of: ${LOCKED_GAME_IDS.join(', ')}`);
-      return;
+    const challenge = challengeForSave(checkpointForm.challenge);
+    if (challenge.type === 'quiz') {
+      if (!challenge.question) {
+        setError('Quiz question is required');
+        return;
+      }
+      if (challenge.choices.length < 2) {
+        setError('Add at least two quiz options');
+        return;
+      }
     }
-    const record = { ...checkpointForm, module_id: selected.id };
+    if (challenge.type === 'game') {
+      if (!LOCKED_GAME_IDS.includes(challenge.gameId)) {
+        setError(`Game ID must be one of: ${LOCKED_GAME_IDS.join(', ')}`);
+        return;
+      }
+    }
+    const record = { ...checkpointForm, slug, challenge, module_id: selected.id };
     await runSave(
       () => saveCurriculumCheckpoint(record, editingCheckpointId),
       editingCheckpointId ? 'Checkpoint updated' : 'Checkpoint created',
@@ -195,7 +219,6 @@ export default function CurriculumPanel() {
             <form className="paper-card admin-inline-form" onSubmit={handleSaveModule}>
               <h5>{editingModuleId ? 'Edit module' : 'New module'}</h5>
               <div className="admin-form-grid">
-                <div className="admin-form-field"><label className="admin-form-label">Slug</label><input className="admin-form-input" required value={moduleForm.slug} onChange={(e) => setModuleForm({ ...moduleForm, slug: e.target.value })} disabled={!!editingModuleId} /></div>
                 <div className="admin-form-field"><label className="admin-form-label">Title</label><input className="admin-form-input" required value={moduleForm.title} onChange={(e) => setModuleForm({ ...moduleForm, title: e.target.value })} /></div>
                 <div className="admin-form-field"><label className="admin-form-label">Grades</label><input className="admin-form-input" required value={moduleForm.grades} onChange={(e) => setModuleForm({ ...moduleForm, grades: e.target.value })} /></div>
                 <div className="admin-form-field"><label className="admin-form-label">Sort order</label><input type="number" className="admin-form-input" value={moduleForm.sort_order} onChange={(e) => setModuleForm({ ...moduleForm, sort_order: Number(e.target.value) })} /></div>
@@ -212,7 +235,7 @@ export default function CurriculumPanel() {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '1rem', flexWrap: 'wrap' }}>
                 <div>
                   <h4>{selected.title}</h4>
-                  <p style={{ color: 'var(--text-muted)' }}>{selected.grades} · {selected.slug}</p>
+                  <p style={{ color: 'var(--text-muted)' }}>{selected.grades}</p>
                   <StatusBadge value={selected.is_active ? 'published' : 'archived'} />
                 </div>
                 {isAdmin && (
@@ -242,7 +265,7 @@ export default function CurriculumPanel() {
                         <button type="button" className="btn-secondary" style={{ fontSize: '0.75rem' }} onClick={() => startEditCheckpoint(cp)}>Edit</button>
                       )}
                     </div>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{cp.slug} · order {cp.sort_order}</p>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>order {cp.sort_order}</p>
                     {cp.body_text && <p style={{ marginTop: '0.5rem' }}>{cp.body_text.slice(0, 120)}{cp.body_text.length > 120 ? '…' : ''}</p>}
                   </div>
                 ))
@@ -252,22 +275,22 @@ export default function CurriculumPanel() {
                 <form className="admin-inline-form" style={{ marginTop: '1rem' }} onSubmit={handleSaveCheckpoint}>
                   <h5>{editingCheckpointId ? 'Edit checkpoint' : 'New checkpoint'}</h5>
                   <div className="admin-form-grid">
-                    <div className="admin-form-field"><label className="admin-form-label">Slug</label><input className="admin-form-input" required value={checkpointForm.slug} onChange={(e) => setCheckpointForm({ ...checkpointForm, slug: e.target.value })} disabled={!!editingCheckpointId} /></div>
                     <div className="admin-form-field"><label className="admin-form-label">Label</label><input className="admin-form-input" required value={checkpointForm.label} onChange={(e) => setCheckpointForm({ ...checkpointForm, label: e.target.value })} /></div>
                     <div className="admin-form-field"><label className="admin-form-label">Sort order</label><input type="number" className="admin-form-input" value={checkpointForm.sort_order} onChange={(e) => setCheckpointForm({ ...checkpointForm, sort_order: Number(e.target.value) })} /></div>
-                    <div className="admin-form-field full"><label className="admin-form-label">Video URL</label><input className="admin-form-input" value={checkpointForm.video_url} onChange={(e) => setCheckpointForm({ ...checkpointForm, video_url: e.target.value })} /></div>
+                    <VideoUploadField
+                      label="Video"
+                      value={checkpointForm.video_url ? { url: checkpointForm.video_url } : null}
+                      onChange={(media) => setCheckpointForm({ ...checkpointForm, video_url: media?.url ?? '' })}
+                    />
                     <div className="admin-form-field full"><label className="admin-form-label">Body text</label><textarea className="admin-form-textarea" rows={4} value={checkpointForm.body_text} onChange={(e) => setCheckpointForm({ ...checkpointForm, body_text: e.target.value })} /></div>
-                    <div className="admin-form-field full">
-                      <label className="admin-form-label">Challenge (JSON)</label>
-                      <textarea
-                        className="admin-form-textarea"
-                        rows={6}
-                        value={JSON.stringify(checkpointForm.challenge, null, 2)}
-                        onChange={(e) => {
-                          try { setCheckpointForm({ ...checkpointForm, challenge: JSON.parse(e.target.value || '{}') }); setError(''); } catch { setError('Challenge must be valid JSON'); }
-                        }}
-                      />
-                    </div>
+                    <ChallengeFields
+                      challenge={checkpointForm.challenge}
+                      lockedGameIds={LOCKED_GAME_IDS}
+                      onChange={(challenge) => {
+                        setCheckpointForm({ ...checkpointForm, challenge });
+                        setError('');
+                      }}
+                    />
                   </div>
                   <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
                     <button type="submit" className="btn-primary" disabled={saving}>{saving ? 'Saving…' : 'Save checkpoint'}</button>

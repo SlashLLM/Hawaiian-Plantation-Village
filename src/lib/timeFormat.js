@@ -1,8 +1,29 @@
 const TIME_LABEL_RE = /^(\d{1,2}):(\d{2})\s*(AM|PM)$/i;
 const INPUT_TIME_RE = /^(\d{1,2}):(\d{2})$/;
+const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
 function pad2(n) {
   return String(n).padStart(2, '0');
+}
+
+/** Convert stored date label ("July 10, 2026" or "2026-07-10") to HTML date input value. */
+export function dateLabelToInputValue(label) {
+  if (!label || typeof label !== 'string') return '';
+  const trimmed = label.trim();
+  if (ISO_DATE_RE.test(trimmed)) return trimmed;
+  const parsed = new Date(trimmed);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return `${parsed.getFullYear()}-${pad2(parsed.getMonth() + 1)}-${pad2(parsed.getDate())}`;
+}
+
+/** Format ISO date ("2026-07-10") for display; leave free-text labels unchanged. */
+export function formatDateLabel(value) {
+  if (!value || typeof value !== 'string') return '';
+  const trimmed = value.trim();
+  if (!ISO_DATE_RE.test(trimmed)) return trimmed;
+  const parsed = new Date(`${trimmed}T12:00:00`);
+  if (Number.isNaN(parsed.getTime())) return trimmed;
+  return parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
 /** Convert stored label ("10:00 AM") to HTML time input value ("10:00"). */

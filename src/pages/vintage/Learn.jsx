@@ -15,10 +15,7 @@ import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { useContentCollection, usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
-
-const FAMILY_WORKSHOP_SLUGS = ['talk-story-saturdays', 'ohana-heritage-gardening', 'village-scavenger-hunt'];
-const YOUTH_WORKSHOP_SLUGS = ['docent-internship', 'youth-volunteer-guild'];
+import { usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
 
 export default function Learn() {
   const setActivePage = useAppNavigate();
@@ -26,7 +23,6 @@ export default function Learn() {
   const { section: youthSection } = usePageSection('learn', 'youth', {});
   const { section: familySection } = usePageSection('learn', 'family', {});
   const { modules } = useCurriculumModules();
-  const { items: workshops } = useContentCollection('workshop');
   const [activeTab, setActiveTab] = useState('school'); // 'school' | 'youth' | 'family'
 
   // School Booking Form State
@@ -66,12 +62,12 @@ export default function Learn() {
     [moduleList],
   );
   const familyWorkshops = useMemo(
-    () => workshops.filter((w) => FAMILY_WORKSHOP_SLUGS.includes(w.slug)),
-    [workshops],
+    () => (Array.isArray(familySection?.workshops) ? familySection.workshops : []),
+    [familySection],
   );
   const youthWorkshops = useMemo(
-    () => workshops.filter((w) => YOUTH_WORKSHOP_SLUGS.includes(w.slug)),
-    [workshops],
+    () => (Array.isArray(youthSection?.programs) ? youthSection.programs : []),
+    [youthSection],
   );
 
   const handleBookingSubmit = (e) => {

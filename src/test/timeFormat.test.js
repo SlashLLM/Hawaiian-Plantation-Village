@@ -1,7 +1,8 @@
-import { describe, it, expect } from 'vitest';
 import {
   timeLabelToInputValue,
   inputValueToTimeLabel,
+  dateLabelToInputValue,
+  formatDateLabel,
   formatEventSchedule,
   truncateText,
 } from '../lib/timeFormat.js';
@@ -22,6 +23,18 @@ describe('timeFormat', () => {
     expect(inputValueToTimeLabel('17:00')).toBe('5:00 PM');
     expect(inputValueToTimeLabel('00:00')).toBe('12:00 AM');
     expect(inputValueToTimeLabel('12:00')).toBe('12:00 PM');
+  });
+
+  it('converts date labels to date input values', () => {
+    expect(dateLabelToInputValue('2026-07-10')).toBe('2026-07-10');
+    expect(dateLabelToInputValue('July 10, 2026')).toBe('2026-07-10');
+    expect(dateLabelToInputValue('')).toBe('');
+  });
+
+  it('formats ISO dates for display and leaves free-text alone', () => {
+    expect(formatDateLabel('2026-07-10')).toBe('July 10, 2026');
+    expect(formatDateLabel('July 10, 2026')).toBe('July 10, 2026');
+    expect(formatDateLabel('')).toBe('');
   });
 
   it('formats event schedules with date and time range', () => {

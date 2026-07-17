@@ -6,7 +6,7 @@ import campHouse from '../../assets/historic_camp_house.png';
 import bangoImage from '../../assets/bango_lunch_tin.png';
 import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail, Heart } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { useSiteSettings, usePageSection, useContentCollection } from '../../context/ContentProvider.jsx';
+import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 
 export default function Home() {
   const setActivePage = useAppNavigate();
@@ -20,9 +20,9 @@ export default function Home() {
   const { section: getInvolved } = usePageSection('home', 'getInvolved', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
   const { section: testimonialsHeader } = usePageSection('home', 'testimonialsHeader', {});
-  const { items: events } = useContentCollection('program');
-  const { items: testimonials } = useContentCollection('testimonial');
-  const { items: partners } = useContentCollection('partner');
+  const { items: events } = usePageListSection('home', 'events');
+  const { items: testimonials } = usePageListSection('home', 'testimonials');
+  const { items: partners } = usePageListSection('home', 'partners');
   const footer = settings?.footer ?? {};
   const contact = settings?.contact ?? {};
   const donationPresets = settings?.donationPresets ?? [];

@@ -1,9 +1,11 @@
+import { formatDateLabel } from '../timeFormat.js';
+
 export function mapNewsArticle(row) {
   return {
     id: row.slug ?? row.id,
     slug: row.slug,
     title: row.title,
-    date: row.event_date_label || (row.published_at ? new Date(row.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''),
+    date: formatDateLabel(row.event_date_label) || (row.published_at ? new Date(row.published_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''),
     category: row.category ?? 'Community',
     summary: row.summary ?? '',
     content: row.body ?? row.summary ?? '',

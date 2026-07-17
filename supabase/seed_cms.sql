@@ -141,6 +141,26 @@ values
     "title": "What Visitors & Educators Say",
     "description": "Hear from our community of school teachers, local residents, and travelers who have experienced the living history."
   }'::jsonb, now()),
+  ('home', 'events', 'published', 9, '{
+    "items": [
+      {"slug": "obon-festival-event", "date": "AUG 15", "title": "Obon Festival & Bon Dance", "time": "5:00 PM - 9:00 PM", "desc": "Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.", "image": ""},
+      {"slug": "heritage-day-event", "date": "SEP 12", "title": "Plantation Heritage Day", "time": "10:00 AM - 3:00 PM", "desc": "Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.", "image": ""}
+    ]
+  }'::jsonb, now()),
+  ('home', 'testimonials', 'published', 10, '{
+    "items": [
+      {"slug": "testimonial-sarah-l", "quote": "The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn''t want to leave!", "authorName": "Sarah L.", "authorMeta": "4th Grade Teacher, HIDOE"},
+      {"slug": "testimonial-david-k", "quote": "Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic.", "authorName": "David K.", "authorMeta": "Honolulu Resident"},
+      {"slug": "testimonial-michael-r", "quote": "One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive.", "authorName": "Michael R.", "authorMeta": "Traveler from Seattle"}
+    ]
+  }'::jsonb, now()),
+  ('home', 'partners', 'published', 11, '{
+    "items": [
+      {"slug": "partner-hidoe", "name": "HAWAIʻI DEPARTMENT OF EDUCATION"},
+      {"slug": "partner-tripadvisor", "name": "TRIPADVISOR TRAVELER CHOICE 2026"},
+      {"slug": "partner-hhf", "name": "HISTORIC HAWAIʻI FOUNDATION"}
+    ]
+  }'::jsonb, now()),
   ('visit', 'header', 'published', 1, '{
     "stamp": "VISITOR GUIDE", "stampClass": "green",
     "title": "Plan Your Visit",
@@ -242,6 +262,45 @@ values
   }'::jsonb, now())
 on conflict (page_key, section_key) do nothing;
 
+-- About list sections (page-wise CMS)
+insert into public.page_sections (page_key, section_key, status, sort_order, payload, published_at)
+values
+  ('about', 'news', 'published', 8, '{
+    "items": [
+      {"slug": "smokestack-restoration", "title": "Historic Oahu Sugar Co. Smokestack Restoration Underway", "date": "July 10, 2026", "category": "Preservation", "summary": "A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu''s skyline.", "content": "We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project.", "image": "https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80"},
+      {"slug": "heritage-festival", "title": "Announcing the 34th Annual Plantation Heritage Festival", "date": "June 28, 2026", "category": "Community", "summary": "Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.", "content": "Save the date! On Saturday, August 15, 2026, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival.", "image": "https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80"},
+      {"slug": "bango-exhibit", "title": "New Permanent Exhibit: The Secret Language of Bango Tags", "date": "May 15, 2026", "category": "Exhibits", "summary": "Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.", "content": "We are proud to unveil our latest permanent installation: The Secret Language of Bango Tags.", "image": "https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80"},
+      {"slug": "garden-volunteers", "title": "Volunteers Needed: Native Botanical Garden Maintenance", "date": "April 22, 2026", "category": "Volunteer", "summary": "Join our weekly Tuesday gardening cohort to help nurture and catalog traditional medicinal plants brought by immigrant workers.", "content": "Our ethno-botanical gardens are in need of green thumbs!", "image": "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80"}
+    ]
+  }'::jsonb, now()),
+  ('about', 'careers', 'published', 9, '{
+    "items": [
+      {"slug": "docent", "title": "Cultural Heritage Docent & Tour Guide", "type": "Part-Time", "department": "Education & Guest Services", "compensation": "$19.50 / hour", "hours": "15-20 hours / week (includes Saturdays)", "summary": "Bring plantation history to life by leading educational group excursions and public tours through our 25 camp cottages.", "responsibilities": ["Lead groups of 10-25 visitors through the historic camp houses.", "Explain the cultural history of immigrant groups (1852-1946).", "Ensure visitor safety and artifact protection.", "Assist at the visitor center."], "requirements": ["Strong public speaking skills.", "Basic knowledge of Hawaiʻi plantation history.", "Ability to walk outdoors for up to 2 hours.", "Prior education or hospitality experience preferred."]},
+      {"slug": "restoration", "title": "Site Preservationist & Historical Carpenter", "type": "Full-Time", "department": "Maintenance & Preservation", "compensation": "$26.00 - $30.00 / hour (DOE)", "hours": "40 hours / week (Monday - Friday)", "summary": "Maintain and restore the structural integrity of 25 authentic and reconstructed camp cottages using period-appropriate materials.", "responsibilities": ["Inspect and repair wooden structures, roofs, and fences.", "Source period-appropriate building materials.", "Apply historic carpentry techniques.", "Follow historic preservation guidelines."], "requirements": ["3+ years carpentry or historic preservation experience.", "Proficiency with hand and power tools.", "Knowledge of wood rot prevention.", "Ability to lift 50 lbs and work on ladders."]},
+      {"slug": "gardener", "title": "Ethno-Botanical Garden Coordinator", "type": "Part-Time", "department": "Horticulture & Landscape", "compensation": "$21.00 / hour", "hours": "20 hours / week", "summary": "Oversee the cultivation, labelling, and care of our historical crop plots, native plants, and immigrant medicinal gardens.", "responsibilities": ["Maintain plantation-era agricultural plots.", "Care for ethnic medicinal herb gardens.", "Coordinate weekly volunteer gardening cohorts.", "Update botanical signage."], "requirements": ["Experience in gardening or tropical horticulture.", "Interest in ethno-botany.", "Ability to perform outdoor labor.", "Experience leading volunteers is a plus."]}
+    ]
+  }'::jsonb, now()),
+  ('about', 'timeline', 'published', 10, '{
+    "items": [
+      {"year": "1852", "event": "First waves of Chinese contract laborers arrive in Oʻahu aboard the Thetis, inaugurating the plantation era."},
+      {"year": "1878", "event": "Portuguese workers arrive from Madeira and Azores, bringing stone ovens (forno) and the braguinha (ancestor of the ukulele)."},
+      {"year": "1885", "event": "The Kanyaku Imin government-contract Japanese workers arrive, establishing major camp communities and furo baths."},
+      {"year": "1897", "event": "Oahu Sugar Company is incorporated in Waipahu, erecting the massive sugar mill smokestack that dominated the skyline."},
+      {"year": "1903", "event": "First Korean immigrants land in Honolulu, setting up language schools, programs, and active community organizations."},
+      {"year": "1906", "event": "The First Filipino Sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment."},
+      {"year": "1946", "event": "The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill''s eventual closure in 1995."},
+      {"year": "1992", "event": "Hawaiian Plantation Village opens in Waipahu as a living cultural museum to preserve history and honor worker roots."}
+    ]
+  }'::jsonb, now()),
+  ('about', 'leadership', 'published', 11, '{
+    "items": [
+      {"slug": "jeanne-ishikawa", "name": "Jeanne Ishikawa", "role": "Executive Director", "desc": "Oversees daily operations, site preservation projects, and curates cultural programs."},
+      {"slug": "glenn-kawatachi", "name": "Dr. Glenn Kawatachi", "role": "Board President", "desc": "Leads institutional fundraising, historical verification committees, and university partnerships."},
+      {"slug": "alvin-ramos", "name": "Alvin Ramos", "role": "Head Site Preservationist", "desc": "Maintains structural integrity of the 25 camp homes using original wood-grain carpentry tools."}
+    ]
+  }'::jsonb, now())
+on conflict (page_key, section_key) do nothing;
+
 -- Additional page sections (learn, play, stories, support, tickets)
 insert into public.page_sections (page_key, section_key, status, sort_order, payload, published_at)
 values
@@ -255,12 +314,21 @@ values
   ('learn', 'youth', 'published', 2, '{
     "stamp": "Youth Paths & Service", "stampClass": "rust",
     "title": "Student & Youth Programs",
-    "subtitle": "Grow your skills, discover community history, and shape Waipahu''s future through internships and volunteer guilds."
+    "subtitle": "Grow your skills, discover community history, and shape Waipahu''s future through internships and volunteer guilds.",
+    "programs": [
+      {"slug": "docent-internship", "type": "Paid Internship", "title": "\"Preserving Our Roots\" Docent Internship", "desc": "A semester-long or summer program designed for high school juniors and seniors. Interns study Waipahu''s multi-ethnic history, train in archival document preservation, and lead educational tours for visiting groups.", "schedule": "10 weeks • Grades 11-12 • $500 stipend + school credit"},
+      {"slug": "youth-volunteer-guild", "type": "Community Service", "title": "Youth Volunteer Guild", "desc": "Connect with peers and plantation heritage during weekend volunteer days. Guild members participate in historic cottage restoration, maintain our traditional gardens, and host seasonal heritage festivals.", "schedule": "Saturday mornings • Grades 9-12 • Service hour certification"}
+    ]
   }'::jsonb, now()),
   ('learn', 'family', 'published', 3, '{
     "stamp": "Ohana Learning", "stampClass": "teal",
     "title": "Family Learning & Workshops",
-    "subtitle": "Discover plantation heritage together. Hands-on weekend workshops, storytelling, and self-guided exploration for all ages."
+    "subtitle": "Discover plantation heritage together. Hands-on weekend workshops, storytelling, and self-guided exploration for all ages.",
+    "workshops": [
+      {"slug": "talk-story-saturdays", "type": "Oral History Sessions", "title": "Talk Story Saturdays", "desc": "Join us on the second Saturday of each month for family-friendly oral history circles. Plantation kupuna and local storytellers share memories of Waipahu camp life, plantation folklore, and community traditions.", "schedule": "2nd Saturday of the Month • 10:00 AM - 11:30 AM • Free"},
+      {"slug": "ohana-heritage-gardening", "type": "Hands-On Agriculture", "title": "Ohana Heritage Gardening", "desc": "Discover the crops that sustained generations of plantation families. Learn how traditional Hawaiian canoe plants (Kalo, Uala) and immigrant kitchen crops were grown. Kids will plant their own heritage seed or cutting to take home.", "schedule": "Last Saturday of the Month • 9:00 AM - 11:00 AM • Live cuttings & seeds"},
+      {"slug": "village-scavenger-hunt", "type": "Interactive Quest", "title": "Village Scavenger Hunt & Bingo", "desc": "Make your walk through our 30+ historic structures an active quest! Search for immigrant bango tags, spot traditional toys, and match camp kitchen items. Show your completed sheet at the Gift Shop for a prize.", "schedule": "Self-guided • Available during open hours"}
+    ]
   }'::jsonb, now()),
   ('play', 'header', 'published', 1, '{
     "stamp": "KIDS PLAYGROUND", "stampClass": "green",
@@ -804,7 +872,7 @@ cross join (
       'Bango Tags',
       '/Plantation_life_documentary_video_202607131034.mp4',
       'Every plantation worker received a metal bango tag with a unique number. The company store used this number to track purchases and deduct wages. Tags were worn daily and became a symbol of plantation life. Match each worker to their correct bango number in the activity below!',
-      '{"type": "game", "gameId": "bango-match"}',
+      '{"type": "game", "gameId": "bango-match", "title": "Match each worker to their bango tag number", "pairs": [{"id": "tag-142", "number": "142", "name": "Tanaka", "origin": "Japan"}, {"id": "tag-087", "number": "087", "name": "Santos", "origin": "Philippines"}, {"id": "tag-203", "number": "203", "name": "Silva", "origin": "Portugal"}, {"id": "tag-056", "number": "056", "name": "Wong", "origin": "China"}]}',
       3
     ),
     (
@@ -903,3 +971,9 @@ where m.slug = 'high'
     select 1 from public.curriculum_checkpoints cp
     where cp.module_id = m.id and cp.slug = c.slug
   );
+
+-- Scope camp stories to the Stories page (page-wise CMS)
+update public.content_entries
+set page_key = 'stories'
+where content_type = 'camp_story'
+  and (page_key is null or page_key = '');
