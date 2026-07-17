@@ -33,3 +33,21 @@ export function mergeWithFallback(remote, fallback) {
   }
   return remote ?? fallback;
 }
+
+/** Merge CMS section payloads without letting empty list fields wipe defaults. */
+export function mergeSectionPayload(fallback = {}, remote = {}) {
+  if (!remote || typeof remote !== 'object') return fallback ?? {};
+  if (!fallback || typeof fallback !== 'object') return remote;
+  const merged = { ...fallback, ...remote };
+  for (const key of Object.keys(fallback)) {
+    if (
+      Array.isArray(fallback[key]) &&
+      Array.isArray(merged[key]) &&
+      merged[key].length === 0 &&
+      fallback[key].length > 0
+    ) {
+      merged[key] = fallback[key];
+    }
+  }
+  return merged;
+}

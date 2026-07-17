@@ -24,7 +24,7 @@ import {
   sectionsToMap,
   getSection,
 } from '../lib/content/mappers.js';
-import { mergeWithFallback } from '../lib/content/validators.js';
+import { mergeWithFallback, mergeSectionPayload } from '../lib/content/validators.js';
 import { cachedFetch } from '../lib/content/cache.js';
 import { useAuth } from '../hooks/useAuth.js';
 import { supabase } from '../lib/supabase.js';
@@ -82,10 +82,15 @@ export function ContentProvider({ children }) {
       const remoteSections = sectionsToMap(sectionRows);
       const mergedSections = { ...DEFAULT_PAGE_SECTIONS };
       Object.keys(remoteSections).forEach((pageKey) => {
-        mergedSections[pageKey] = {
-          ...(DEFAULT_PAGE_SECTIONS[pageKey] ?? {}),
-          ...remoteSections[pageKey],
-        };
+        const defaultPage = DEFAULT_PAGE_SECTIONS[pageKey] ?? {};
+        const remotePage = remoteSections[pageKey] ?? {};
+        mergedSections[pageKey] = { ...defaultPage };
+        Object.keys(remotePage).forEach((sectionKey) => {
+          mergedSections[pageKey][sectionKey] = mergeSectionPayload(
+            defaultPage[sectionKey] ?? {},
+            remotePage[sectionKey] ?? {},
+          );
+        });
       });
       setSectionsMap(mergedSections);
 
@@ -184,11 +189,13 @@ export function usePageSection(pageKey, sectionKey, fallback = {}) {
 }
 
 /** Items from a page section payload list field (default path: `items`). */
-export function usePageListSection(pageKey, sectionKey, listPath = 'items', fallbackItems = []) {
+export function usePageListSection(pageKey, sectionKey, listPath = 'items', fallbackItems) {
   const { section, loading } = usePageSection(pageKey, sectionKey, {});
+  const defaultItems = DEFAULT_PAGE_SECTIONS[pageKey]?.[sectionKey]?.[listPath];
+  const resolvedFallback = fallbackItems ?? (Array.isArray(defaultItems) ? defaultItems : []);
   const items = Array.isArray(section?.[listPath]) && section[listPath].length
     ? section[listPath]
-    : fallbackItems;
+    : resolvedFallback;
   return { items, section, loading };
 }
 
