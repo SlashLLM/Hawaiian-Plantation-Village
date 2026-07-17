@@ -10,7 +10,7 @@ import {
   getSection,
 } from '../lib/content/mappers.js';
 import { getSectionChoices, PAGE_KEYS } from '../lib/content/sectionKeys.js';
-import { mergeWithFallback, isValidSlug, normalizeSlug } from '../lib/content/validators.js';
+import { mergeWithFallback, mergeSectionPayload, isValidSlug, normalizeSlug } from '../lib/content/validators.js';
 import { formatAudioLength, collectCampCultureOptions } from '../lib/content/collectionFormUtils.js';
 import { newsArticles, DEFAULT_PAGE_SECTIONS } from '../lib/content/fallbacks.js';
 
@@ -161,5 +161,12 @@ describe('validators', () => {
     expect(mergeWithFallback(['published'], ['fallback'])).toEqual(['published']);
     expect(mergeWithFallback([], newsArticles)).toEqual(newsArticles);
     expect(mergeWithFallback(null, { a: 1 })).toEqual({ a: 1 });
+  });
+
+  it('keeps default list items when CMS returns an empty array', () => {
+    const fallback = DEFAULT_PAGE_SECTIONS.about.timeline;
+    const merged = mergeSectionPayload(fallback, { items: [] });
+    expect(merged.items).toHaveLength(fallback.items.length);
+    expect(merged.items[0].year).toBe('1852');
   });
 });
