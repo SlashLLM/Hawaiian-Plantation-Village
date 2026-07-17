@@ -1,14 +1,12 @@
 ﻿# Hawaiian Plantation Village — CMS, Ticketing & Membership
 
-React + Vite public site with a Supabase-backed **full frontend CMS**: editable page copy, repeatable collections, operational catalogs, curriculum content, and Storage image uploads. Includes ticket registration, steward memberships, Resend email passes with QR codes, and staff camera verification.
+React + Vite public site with a Supabase-backed CMS focused on **item lists** (stories, news, careers, curriculum), plus site settings, ticketing, memberships, and Storage uploads.
 
 ## Setup
 
 1. `npm install`
 2. Copy `.env.example` to `.env` with `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`
-3. Apply migrations in order:
-   - `supabase/migrations/20260714000000_initial_schema.sql`
-   - `supabase/migrations/20260714100000_cms_full.sql`
+3. Apply migrations in order under `supabase/migrations/`
 4. Seed operational data: `supabase/seed.sql`
 5. Seed CMS content: `supabase/seed_cms.sql`
 6. Deploy edge functions and set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `SUPABASE_SERVICE_ROLE_KEY`
@@ -25,13 +23,13 @@ psql <connection-string> -f supabase/seed_cms.sql
 npx supabase functions deploy
 ```
 
-## Full frontend CMS
+## Frontend CMS
 
 ### Content precedence
 
 Public pages load content in this order:
 
-1. **Published Supabase rows** (site settings, page sections, collections, catalog, curriculum)
+1. **Published Supabase rows** (site settings, page sections, content entries, catalog, curriculum)
 2. **Local fallbacks** in `src/lib/content/fallbacks.js` (offline-safe defaults)
 3. **Intentional empty state** when both are absent
 
@@ -42,39 +40,38 @@ Staff signed into `/admin` can preview draft content via RLS (`is_staff()` polic
 | Table | Purpose |
 |-------|---------|
 | `site_settings` | Brand, nav, footer, contact, hours, hero, SEO, donation presets |
-| `page_sections` | Fixed-layout copy keyed by `page_key` + `section_key` |
-| `content_entries` | Repeatable lists: news, programs, careers, camp stories, FAQs, testimonials, partners, timeline, leadership, workshops |
+| `page_sections` | Fixed page copy (seeded / fallback; not edited in admin) |
+| `content_entries` | Admin-managed items: `camp_story`, `news`, `career` |
 | `events` / `ticket_types` | Ticket catalog (authoritative pricing) |
 | `group_ticket_types` / `tour_time_slots` | Group pricing and tour schedules |
 | `membership_tiers` | Steward membership catalog |
-| `curriculum_modules` / `curriculum_checkpoints` | Learn modules, videos, quizzes (game IDs locked in admin) |
-| `media_assets` + `cms-media` Storage bucket | Uploaded images with alt text |
+| `curriculum_modules` / `curriculum_checkpoints` | Learn modules, videos, quizzes |
+| `media_assets` + `cms-media` Storage bucket | Uploaded images/audio/video with alt text |
 
 ### Admin authoring (`/admin` → Content)
 
-- **Collections** — news, programs, careers, camp stories, FAQs, testimonials, partners, timeline, leadership, workshops
-- **Page sections** — per-route singleton blocks (home quick visit, visit tabs, about mission, etc.)
-- **Site settings** — global JSON for brand/nav/footer/contact/hero/SEO
-- **Catalog** — events, membership tiers, group tickets, tour slots
-- **Curriculum** — modules and checkpoints
-- **Media uploads** — `MediaUploadField` uploads to `cms-media` (max 5MB, images only, alt text required)
+- **Stories** — add / edit / delete camp stories (oral history audio)
+- **News & Announcements** — add / edit / delete About-page news
+- **Careers** — add / edit / delete job postings
+- **Curriculum** — modules and checkpoints (archive/deactivate to remove from public)
+- **Media uploads** — `MediaUploadField` / `AudioUploadField` / `VideoUploadField` upload to `cms-media`
 
-Publishing sets `status = 'published'` and `published_at`. Unpublish archives the row. Public pages refresh on next fetch (no rebuild required).
+Publishing sets `status = 'published'` and `published_at`. Delete permanently removes content entry rows. Public pages refresh on next fetch (no rebuild required).
 
 ### Public content layer
 
 - `src/context/ContentProvider.jsx` — global fetch + cache
 - `src/lib/content/cmsApi.js` — Supabase readers and Storage upload
 - `src/lib/content/mappers.js` — row → UI shape
-- `src/lib/content/fallbacks.js` — offline defaults extracted from original hardcoded pages
+- `src/lib/content/fallbacks.js` — offline defaults
 
-Hooks: `useSiteSettings`, `usePageSection`, `useContentCollection`, `useCurriculumModules`, `useContent`.
+Hooks: `useSiteSettings`, `usePageSection`, `usePageListSection`, `useContentCollection` (stories, news, careers), `useCurriculumModules`, `useContent`.
 
 ## Scripts
 
 - `npm run dev` — dev server
 - `npm run build` — production build
-- `npm run test` — Vitest (mappers, fallbacks, navigation, ContentProvider)
+- `npm run test` — Vitest
 - `npm run lint` — oxlint
 
 ## Recovery

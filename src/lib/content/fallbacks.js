@@ -187,6 +187,58 @@ export const DEFAULT_PAGE_SECTIONS = {
       description:
         'Hear from our community of school teachers, local residents, and travelers who have experienced the living history.',
     },
+    events: {
+      items: [
+        {
+          slug: 'obon-festival-event',
+          date: 'AUG 15',
+          title: 'Obon Festival & Bon Dance',
+          time: '5:00 PM - 9:00 PM',
+          desc: 'Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.',
+          image: '',
+        },
+        {
+          slug: 'heritage-day-event',
+          date: 'SEP 12',
+          title: 'Plantation Heritage Day',
+          time: '10:00 AM - 3:00 PM',
+          desc: 'Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.',
+          image: '',
+        },
+      ],
+    },
+    testimonials: {
+      items: [
+        {
+          slug: 'sarah-l',
+          quote:
+            'The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn\'t want to leave!',
+          authorName: 'Sarah L.',
+          authorMeta: '4th Grade Teacher, HIDOE',
+        },
+        {
+          slug: 'david-k',
+          quote:
+            'Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic.',
+          authorName: 'David K.',
+          authorMeta: 'Honolulu Resident',
+        },
+        {
+          slug: 'michael-r',
+          quote:
+            'One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive.',
+          authorName: 'Michael R.',
+          authorMeta: 'Traveler from Seattle',
+        },
+      ],
+    },
+    partners: {
+      items: [
+        { slug: 'hidoe', name: 'HAWAIʻI DEPARTMENT OF EDUCATION' },
+        { slug: 'tripadvisor-2026', name: 'TRIPADVISOR TRAVELER CHOICE 2026' },
+        { slug: 'historic-hawaii', name: 'HISTORIC HAWAIʻI FOUNDATION' },
+      ],
+    },
   },
   visit: {
     header: {
@@ -337,6 +389,158 @@ export const DEFAULT_PAGE_SECTIONS = {
         'Volunteering',
       ],
     },
+    news: {
+      items: [
+        {
+          slug: 'smokestack-restoration',
+          title: 'Historic Oahu Sugar Co. Smokestack Restoration Underway',
+          date: 'July 10, 2026',
+          category: 'Preservation',
+          summary:
+            'A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu\'s skyline.',
+          content:
+            'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project. Standing as a beacon of Waipahu\'s industrial sugar heritage, the 1917 concrete smokestack has faced severe weathering over the decades. Thanks to a generous grant from the Historic Hawaiʻi Foundation and community donations, local structural preservationists have begun scaffolding the column to repair micro-cracks and reinforce historical masonry joints. The project is expected to run through September, with no interruption to scheduled village tours.',
+          image:
+            'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
+        },
+        {
+          slug: 'heritage-festival',
+          title: 'Announcing the 34th Annual Plantation Heritage Festival',
+          date: 'June 28, 2026',
+          category: 'Community',
+          summary:
+            'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.',
+          content:
+            'Save the date! On Saturday, August 15, 2026, from 9:00 AM to 4:00 PM, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival. Celebrate the multi-ethnic legacy that formed modern Hawaiʻi. The event features live performances including Japanese Taiko drumming, Portuguese folk dancing, Filipino Kulintang music, and Hawaiian hula. Food booths will serve authentic plantation-era treats like fresh malasadas, Chinese manapua, and plantation-style plate lunches. Admission is free, with voluntary donations supporting our educational outreach programs.',
+          image:
+            'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
+        },
+        {
+          slug: 'bango-exhibit',
+          title: 'New Permanent Exhibit: The Secret Language of Bango Tags',
+          date: 'May 15, 2026',
+          category: 'Exhibits',
+          summary:
+            'Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.',
+          content:
+            'We are proud to unveil our latest permanent installation: "The Secret Language of Bango Tags." Located inside the Japanese Camp Cottage, this exhibit showcases a collection of original brass, copper, and tin bango tags used by workers to receive wages and identify themselves to camp lunas (overseers). Visitors will learn about the numbering codes, racial categorizations, and how workers personalized these tags. The exhibit also features oral history recordings from descendants sharing what these tags meant to their families.',
+          image:
+            'https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80',
+        },
+      ],
+    },
+    careers: {
+      items: [
+        {
+          slug: 'docent',
+          title: 'Cultural Heritage Docent & Tour Guide',
+          type: 'Part-Time',
+          department: 'Education & Guest Services',
+          compensation: '$19.50 / hour',
+          hours: '15-20 hours / week (includes Saturdays)',
+          summary:
+            'Bring plantation history to life by leading educational group excursions and public tours through our 25 camp cottages.',
+          responsibilities: [
+            'Lead groups of 10-25 visitors (students, tourists, and locals) through the historic camp houses.',
+            'Explain the cultural history, lifestyles, and contributions of the various immigrant groups (1852-1946).',
+            'Ensure the safety of visitors and the protection of museum artifacts during tours.',
+            'Assist in setting up tour resources and answering guest questions at the visitor center.',
+          ],
+          requirements: [
+            'Strong public speaking skills and enthusiasm for local history and multicultural storytelling.',
+            'Basic knowledge of Hawaiʻi\'s history and plantation era (additional training provided).',
+            'Ability to walk and stand outdoors on gravel pathways for up to 2 hours.',
+            'Prior experience in education, museum docentry, or hospitality is highly preferred.',
+          ],
+        },
+        {
+          slug: 'restoration',
+          title: 'Site Preservationist & Historical Carpenter',
+          type: 'Full-Time',
+          department: 'Maintenance & Preservation',
+          compensation: '$26.00 - $30.00 / hour (DOE)',
+          hours: '40 hours / week (Monday - Friday)',
+          summary:
+            'Maintain and restore the structural integrity of 25 authentic and reconstructed camp cottages using period-appropriate materials.',
+          responsibilities: [
+            'Inspect, repair, and maintain the wooden structures, roofs, and fences of the village cottage sites.',
+            'Source and use period-appropriate building materials (e.g. Douglas fir, redwood, corrugated iron).',
+            'Apply historic carpentry and joinery techniques to preserve the original architectural look and feel.',
+            'Ensure all structural repairs adhere to historic preservation guidelines and safety standards.',
+          ],
+          requirements: [
+            '3+ years of experience in carpentry, timber framing, or historic building preservation.',
+            'Proficiency with hand and power tools; ability to read structural plans.',
+          ],
+        },
+      ],
+    },
+    timeline: {
+      items: [
+        {
+          year: '1852',
+          event:
+            'First waves of Chinese contract laborers arrive in Oʻahu aboard the Thetis, inaugurating the plantation era.',
+        },
+        {
+          year: '1878',
+          event:
+            'Portuguese workers arrive from Madeira and Azores, bringing stone ovens (forno) and the braguinha (ancestor of the ukulele).',
+        },
+        {
+          year: '1885',
+          event:
+            'The Kanyaku Imin government-contract Japanese workers arrive, establishing major camp communities and furo baths.',
+        },
+        {
+          year: '1897',
+          event:
+            'Oahu Sugar Company is incorporated in Waipahu, erecting the massive sugar mill smokestack that dominated the skyline.',
+        },
+        {
+          year: '1903',
+          event:
+            'First Korean immigrants land in Honolulu, setting up language schools, programs, and active community organizations.',
+        },
+        {
+          year: '1906',
+          event:
+            'The First Filipino Sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.',
+        },
+        {
+          year: '1946',
+          event:
+            'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill\'s eventual closure in 1995.',
+        },
+        {
+          year: '1992',
+          event:
+            'Hawaiian Plantation Village opens in Waipahu as a living cultural museum to preserve history and honor worker roots.',
+        },
+      ],
+    },
+    leadership: {
+      items: [
+        {
+          slug: 'jeanne-ishikawa',
+          name: 'Jeanne Ishikawa',
+          role: 'Executive Director',
+          desc: 'Oversees daily operations, site preservation projects, and curates cultural programs.',
+        },
+        {
+          slug: 'glenn-kawatachi',
+          name: 'Dr. Glenn Kawatachi',
+          role: 'Board President',
+          desc: 'Leads institutional fundraising, historical verification committees, and university partnerships.',
+        },
+        {
+          slug: 'alvin-ramos',
+          name: 'Alvin Ramos',
+          role: 'Head Site Preservationist',
+          desc: 'Maintains structural integrity of the 25 camp homes using original wood-grain carpentry tools.',
+        },
+      ],
+    },
   },
   stories: {
     header: {
@@ -364,6 +568,22 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'Student & Youth Programs',
       subtitle:
         'Grow your skills, discover community history, and shape Waipahu\'s future through internships and volunteer guilds.',
+      programs: [
+        {
+          slug: 'docent-internship',
+          type: 'Paid Internship',
+          title: '"Preserving Our Roots" Docent Internship',
+          desc: 'A semester-long or summer program designed for high school juniors and seniors. Interns study Waipahu\'s multi-ethnic history, train in archival document preservation, and lead educational tours for visiting groups.',
+          schedule: '10 weeks • Grades 11-12 • $500 stipend + school credit',
+        },
+        {
+          slug: 'youth-volunteer-guild',
+          type: 'Community Service',
+          title: 'Youth Volunteer Guild',
+          desc: 'Connect with peers and plantation heritage during weekend volunteer days. Guild members participate in historic cottage restoration, maintain our traditional gardens, and host seasonal heritage festivals.',
+          schedule: 'Saturday mornings • Grades 9-12 • Service hour certification',
+        },
+      ],
     },
     family: {
       stamp: 'Ohana Learning',
@@ -371,6 +591,29 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'Family Learning & Workshops',
       subtitle:
         'Discover plantation heritage together. Hands-on weekend workshops, storytelling, and self-guided exploration for all ages.',
+      workshops: [
+        {
+          slug: 'talk-story-saturdays',
+          type: 'Oral History Sessions',
+          title: 'Talk Story Saturdays',
+          desc: 'Join us on the second Saturday of each month for family-friendly oral history circles. Plantation kupuna and local storytellers share memories of Waipahu camp life, plantation folklore, and community traditions.',
+          schedule: '2nd Saturday of the Month • 10:00 AM - 11:30 AM • Free',
+        },
+        {
+          slug: 'ohana-heritage-gardening',
+          type: 'Hands-On Agriculture',
+          title: 'Ohana Heritage Gardening',
+          desc: 'Discover the crops that sustained generations of plantation families. Learn how traditional Hawaiian canoe plants (Kalo, Uala) and immigrant kitchen crops were grown. Kids will plant their own heritage seed or cutting to take home.',
+          schedule: 'Last Saturday of the Month • 9:00 AM - 11:00 AM • Live cuttings & seeds',
+        },
+        {
+          slug: 'village-scavenger-hunt',
+          type: 'Interactive Quest',
+          title: 'Village Scavenger Hunt & Bingo',
+          desc: 'Make your walk through our 30+ historic structures an active quest! Search for immigrant bango tags, spot traditional toys, and match camp kitchen items. Show your completed sheet at the Gift Shop for a prize.',
+          schedule: 'Self-guided • Available during open hours',
+        },
+      ],
     },
   },
   play: {
@@ -907,6 +1150,71 @@ export const TOUR_TIME_SLOTS = [
   { label: '10:00 AM', description: 'Morning Tour', sortOrder: 1 },
   { label: '12:00 PM', description: 'Midday Tour', sortOrder: 2 },
 ];
+
+// Keep page-section list payloads in sync with legacy collection exports
+DEFAULT_PAGE_SECTIONS.home.events = {
+  items: HOME_EVENTS.map((e) => ({ ...e, image: e.image ?? '' })),
+};
+DEFAULT_PAGE_SECTIONS.home.testimonials = {
+  items: TESTIMONIALS.map((t, i) => ({
+    slug: t.slug ?? `testimonial-${i + 1}`,
+    quote: t.quote,
+    authorName: t.authorName,
+    authorMeta: t.authorMeta,
+  })),
+};
+DEFAULT_PAGE_SECTIONS.home.partners = {
+  items: PARTNERS.map((p, i) =>
+    typeof p === 'string'
+      ? { slug: `partner-${i + 1}`, name: p }
+      : { slug: p.slug ?? `partner-${i + 1}`, name: p.name ?? p.title },
+  ),
+};
+DEFAULT_PAGE_SECTIONS.about.news = {
+  items: newsArticles.map((a) => ({
+    slug: a.slug,
+    title: a.title,
+    date: a.date,
+    category: a.category,
+    summary: a.summary,
+    content: a.content,
+    image: a.image,
+  })),
+};
+DEFAULT_PAGE_SECTIONS.about.careers = {
+  items: careersList.map((c) => ({
+    slug: c.id ?? c.slug,
+    title: c.title,
+    type: c.type,
+    department: c.department,
+    compensation: c.compensation,
+    hours: c.hours,
+    summary: c.summary,
+    responsibilities: c.responsibilities ?? [],
+    requirements: c.requirements ?? [],
+  })),
+};
+DEFAULT_PAGE_SECTIONS.about.timeline = { items: [...TIMELINE] };
+DEFAULT_PAGE_SECTIONS.about.leadership = {
+  items: LEADERSHIP.map((l, i) => ({
+    slug: l.slug ?? l.name?.toLowerCase().replace(/\s+/g, '-') ?? `leader-${i + 1}`,
+    name: l.name,
+    role: l.role,
+    desc: l.desc,
+  })),
+};
+DEFAULT_PAGE_SECTIONS.learn.youth = {
+  ...DEFAULT_PAGE_SECTIONS.learn.youth,
+  programs: WORKSHOPS.filter((w) =>
+    ['docent-internship', 'youth-volunteer-guild'].includes(w.slug),
+  ),
+};
+DEFAULT_PAGE_SECTIONS.learn.family = {
+  ...DEFAULT_PAGE_SECTIONS.learn.family,
+  workshops: WORKSHOPS.filter((w) =>
+    ['talk-story-saturdays', 'ohana-heritage-gardening', 'village-scavenger-hunt'].includes(w.slug),
+  ),
+};
 
 // ---------------------------------------------------------------------------
 // Play page game steps (Play.jsx)

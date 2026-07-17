@@ -55,8 +55,15 @@ export const CURRICULUM_MODULES = {
         text: 'Every plantation worker received a metal bango tag with a unique number. The company store used this number to track purchases and deduct wages. Tags were worn daily and became a symbol of plantation life. Match each worker to their correct bango number in the activity below!',
         challenge: {
           type: 'game',
-          gameId: 'bango-match'
-        }
+          gameId: 'bango-match',
+          title: 'Match each worker to their bango tag number',
+          pairs: [
+            { id: 'tag-142', number: '142', name: 'Tanaka', origin: 'Japan' },
+            { id: 'tag-087', number: '087', name: 'Santos', origin: 'Philippines' },
+            { id: 'tag-203', number: '203', name: 'Silva', origin: 'Portugal' },
+            { id: 'tag-056', number: '056', name: 'Wong', origin: 'China' },
+          ],
+        },
       },
       {
         id: 'vocabulary',

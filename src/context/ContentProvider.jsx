@@ -1,8 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import {
   fetchSiteSettings,
-  fetchAllPageSections,
-  fetchPublishedContent,
   fetchGroupTicketTypes,
   fetchTourTimeSlots,
   fetchCurriculumModules,
@@ -10,30 +8,17 @@ import {
 import {
   DEFAULT_SITE_SETTINGS,
   DEFAULT_PAGE_SECTIONS,
+  CAMPS_DATA,
   newsArticles,
   careersList,
-  CAMPS_DATA,
-  HOME_EVENTS,
-  TESTIMONIALS,
-  PARTNERS,
-  VISIT_FAQS,
-  TIMELINE,
-  LEADERSHIP,
-  WORKSHOPS,
   CURRICULUM_MODULES,
   GROUP_TICKET_TYPES,
   TOUR_TIME_SLOTS,
 } from '../lib/content/fallbacks.js';
 import {
-  mapNewsArticle,
-  mapProgramEvent,
   mapCampStory,
+  mapNewsArticle,
   mapCareer,
-  mapFaq,
-  mapTestimonial,
-  mapTimeline,
-  mapLeadership,
-  mapWorkshop,
   mapCurriculumModule,
   mapGroupTicketType,
   sectionsToMap,
@@ -46,30 +31,17 @@ import { supabase } from '../lib/supabase.js';
 
 const ContentContext = createContext(null);
 
+/** Admin-managed item lists live in content_entries; page copy stays in page_sections. */
 const COLLECTION_FALLBACKS = {
-  news: newsArticles,
-  program: HOME_EVENTS,
-  career: careersList,
   camp_story: CAMPS_DATA,
-  faq: VISIT_FAQS,
-  testimonial: TESTIMONIALS,
-  partner: PARTNERS,
-  timeline: TIMELINE,
-  leadership: LEADERSHIP,
-  workshop: WORKSHOPS,
+  news: newsArticles,
+  career: careersList,
 };
 
 const COLLECTION_MAPPERS = {
-  news: mapNewsArticle,
-  program: mapProgramEvent,
-  career: mapCareer,
   camp_story: mapCampStory,
-  faq: mapFaq,
-  testimonial: mapTestimonial,
-  partner: (row) => ({ name: row.title, slug: row.slug, ...row.metadata }),
-  timeline: mapTimeline,
-  leadership: mapLeadership,
-  workshop: mapWorkshop,
+  news: mapNewsArticle,
+  career: mapCareer,
 };
 
 export function ContentProvider({ children }) {
@@ -131,7 +103,14 @@ export function ContentProvider({ children }) {
         types.map(async (type) => {
           const rows = await cachedFetch(`collection:${type}${previewKey}`, async () => {
             if (!supabase) return [];
-            let query = supabase.from('content_entries').select('*').eq('content_type', type).order('sort_order');
+            let query = supabase
+              .from('content_entries')
+              .select('*')
+              .eq('content_type', type)
+              .order('sort_order');
+            if (type === 'camp_story') {
+              query = query.or('page_key.eq.stories,page_key.is.null');
+            }
             if (!preview) query = query.eq('status', 'published');
             const { data, error: cErr } = await query;
             if (cErr) throw cErr;
@@ -202,6 +181,15 @@ export function useSiteSettings() {
 export function usePageSection(pageKey, sectionKey, fallback = {}) {
   const { getSection, loading } = useContent();
   return { section: getSection(pageKey, sectionKey, fallback), loading };
+}
+
+/** Items from a page section payload list field (default path: `items`). */
+export function usePageListSection(pageKey, sectionKey, listPath = 'items', fallbackItems = []) {
+  const { section, loading } = usePageSection(pageKey, sectionKey, {});
+  const items = Array.isArray(section?.[listPath]) && section[listPath].length
+    ? section[listPath]
+    : fallbackItems;
+  return { items, section, loading };
 }
 
 export function useContentCollection(type) {

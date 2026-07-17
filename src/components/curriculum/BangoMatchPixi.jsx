@@ -1,40 +1,48 @@
 import React, { useEffect, useRef } from 'react';
 import { Application, Container, Graphics, Text } from 'pixi.js';
-
-const PAIRS = [
-  { id: 'tag-142', number: '142', name: 'Tanaka', origin: 'Japan' },
-  { id: 'tag-087', number: '087', name: 'Santos', origin: 'Philippines' },
-  { id: 'tag-203', number: '203', name: 'Silva', origin: 'Portugal' },
-  { id: 'tag-056', number: '056', name: 'Wong', origin: 'China' }
-];
+import {
+  DEFAULT_BANGO_PAIRS,
+  DEFAULT_BANGO_TITLE,
+} from '../../lib/content/gameChallengeDefaults.js';
 
 const CARD_COLORS = {
   default: 0xebd7bc,
   hover: 0xd4c4a8,
-  matched: 0x1b3823
+  matched: 0x1b3823,
 };
 
-export default function BangoMatchPixi({ onComplete }) {
+export default function BangoMatchPixi({
+  onComplete,
+  pairs: pairsProp,
+  title: titleProp,
+}) {
+  const pairs = Array.isArray(pairsProp) && pairsProp.length
+    ? pairsProp
+    : DEFAULT_BANGO_PAIRS;
+  const titleText = titleProp || DEFAULT_BANGO_TITLE;
+  const pairsKey = JSON.stringify(pairs);
   const canvasRef = useRef(null);
   const appRef = useRef(null);
   const onCompleteRef = useRef(onComplete);
   onCompleteRef.current = onComplete;
 
   useEffect(() => {
+    const pairsData = JSON.parse(pairsKey);
     let active = true;
     const app = new Application();
     const matchedCountRef = { value: 0 };
+    const height = Math.max(400, 55 + pairsData.length * 82 + 20);
 
     async function initPixi() {
       if (!canvasRef.current) return;
 
       await app.init({
         width: 700,
-        height: 400,
+        height,
         background: '#f2e5d5',
         resolution: window.devicePixelRatio || 1,
         autoDensity: true,
-        antialias: true
+        antialias: true,
       });
 
       if (!active) {
@@ -49,13 +57,13 @@ export default function BangoMatchPixi({ onComplete }) {
       app.stage.addChild(root);
 
       const title = new Text({
-        text: 'Match each worker to their bango tag number',
+        text: titleText,
         style: {
           fontFamily: 'Courier Prime, monospace',
           fontSize: 14,
           fill: '#4a3728',
-          fontWeight: 'bold'
-        }
+          fontWeight: 'bold',
+        },
       });
       title.x = 20;
       title.y = 12;
@@ -65,7 +73,7 @@ export default function BangoMatchPixi({ onComplete }) {
       const tagStartY = 55;
       const tagSpacing = 82;
 
-      PAIRS.forEach((pair, idx) => {
+      pairsData.forEach((pair, idx) => {
         const zone = new Container();
         zone.x = 380;
         zone.y = tagStartY + idx * tagSpacing;
@@ -82,8 +90,8 @@ export default function BangoMatchPixi({ onComplete }) {
             fontFamily: 'Courier Prime, monospace',
             fontSize: 13,
             fill: '#4a3728',
-            fontWeight: 'bold'
-          }
+            fontWeight: 'bold',
+          },
         });
         tagLabel.x = 12;
         tagLabel.y = 10;
@@ -95,8 +103,8 @@ export default function BangoMatchPixi({ onComplete }) {
             fontFamily: 'Georgia, serif',
             fontSize: 12,
             fill: '#8b7355',
-            fontStyle: 'italic'
-          }
+            fontStyle: 'italic',
+          },
         });
         slotHint.x = 12;
         slotHint.y = 34;
@@ -110,8 +118,7 @@ export default function BangoMatchPixi({ onComplete }) {
         dropZones.push(zone);
       });
 
-      const cards = [];
-      const shuffled = [...PAIRS].sort(() => Math.random() - 0.5);
+      const shuffled = [...pairsData].sort(() => Math.random() - 0.5);
 
       shuffled.forEach((pair, idx) => {
         const card = new Container();
@@ -135,8 +142,8 @@ export default function BangoMatchPixi({ onComplete }) {
             fontFamily: 'Georgia, serif',
             fontSize: 16,
             fill: '#4a3728',
-            fontWeight: 'bold'
-          }
+            fontWeight: 'bold',
+          },
         });
         nameText.x = 14;
         nameText.y = 12;
@@ -147,8 +154,8 @@ export default function BangoMatchPixi({ onComplete }) {
           style: {
             fontFamily: 'Courier Prime, monospace',
             fontSize: 11,
-            fill: '#6b5344'
-          }
+            fill: '#6b5344',
+          },
         });
         originText.x = 14;
         originText.y = 38;
@@ -209,15 +216,15 @@ export default function BangoMatchPixi({ onComplete }) {
                     fontFamily: 'Georgia, serif',
                     fontSize: 13,
                     fill: '#1b3823',
-                    fontWeight: 'bold'
-                  }
+                    fontWeight: 'bold',
+                  },
                 });
                 matchedLabel.x = 12;
                 matchedLabel.y = 34;
                 zone.addChild(matchedLabel);
 
                 matchedCountRef.value += 1;
-                if (matchedCountRef.value === PAIRS.length) {
+                if (matchedCountRef.value === pairsData.length) {
                   onCompleteRef.current?.();
                 }
                 snapped = true;
@@ -253,7 +260,6 @@ export default function BangoMatchPixi({ onComplete }) {
         });
 
         root.addChild(card);
-        cards.push(card);
       });
 
       root.sortableChildren = true;
@@ -266,12 +272,12 @@ export default function BangoMatchPixi({ onComplete }) {
       if (appRef.current) {
         appRef.current.destroy(
           { removeView: true, releaseGlobalResources: true },
-          { children: true, texture: true, textureSource: true }
+          { children: true, texture: true, textureSource: true },
         );
         appRef.current = null;
       }
     };
-  }, []);
+  }, [pairsKey, titleText]);
 
   return (
     <div style={styles.wrapper}>
@@ -286,19 +292,19 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '0.75rem'
+    gap: '0.75rem',
   },
   canvasHost: {
     border: '2px dashed var(--kraft-tan-dark)',
     borderRadius: '4px',
     overflow: 'hidden',
-    maxWidth: '100%'
+    maxWidth: '100%',
   },
   hint: {
     fontFamily: 'var(--font-body)',
     fontSize: '0.9rem',
     color: 'var(--text-muted)',
     margin: 0,
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };

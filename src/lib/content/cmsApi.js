@@ -23,7 +23,7 @@ export async function fetchAllPageSections({ preview = false } = {}) {
   return fetchPageSections(null, { preview });
 }
 
-export async function fetchPublishedContent(type) {
+export async function fetchPublishedContent(type, { pageKey } = {}) {
   if (!supabase) return [];
   let query = supabase
     .from('content_entries')
@@ -32,6 +32,7 @@ export async function fetchPublishedContent(type) {
     .order('sort_order', { ascending: true })
     .order('published_at', { ascending: false });
   if (type) query = query.eq('content_type', type);
+  if (pageKey) query = query.eq('page_key', pageKey);
   const { data, error } = await query;
   if (error) throw error;
   return data ?? [];
@@ -97,6 +98,7 @@ export async function fetchCurriculumModule(slug) {
 
 const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
 const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
+const VIDEO_MAX_BYTES = 100 * 1024 * 1024;
 
 /**
  * Upload a file to cms-media and record it in media_assets.
@@ -160,6 +162,14 @@ export async function uploadCmsAudio(file, label = '') {
     acceptPrefix: 'audio/',
     maxBytes: AUDIO_MAX_BYTES,
     kindLabel: 'audio',
+  });
+}
+
+export async function uploadCmsVideo(file, label = '') {
+  return uploadCmsMedia(file, label, {
+    acceptPrefix: 'video/',
+    maxBytes: VIDEO_MAX_BYTES,
+    kindLabel: 'video',
   });
 }
 

@@ -22,10 +22,11 @@ describe('SectionsPanel', () => {
     expect(screen.getAllByText('Home').length).toBeGreaterThan(0);
   });
 
-  it('shows add section form and section picker', async () => {
+  it('shows section picker without add section', async () => {
     render(<SectionsPanel />);
-    expect(await screen.findByRole('button', { name: 'Add section' })).toBeInTheDocument();
-    expect(screen.getByText('Choose a section…')).toBeInTheDocument();
+    expect(await screen.findByText('Choose a section…')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: 'Add section' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: 'Custom section key…' })).not.toBeInTheDocument();
   });
 
   it('shows empty state for filtered page with no rows', async () => {
@@ -101,14 +102,14 @@ describe('SectionsPanel', () => {
     expect(screen.getByText('Edit section')).toBeInTheDocument();
 
     await user.selectOptions(screen.getByLabelText('Section'), '');
-    expect(screen.getByText('New page section')).toBeInTheDocument();
+    expect(screen.getByText('Select a section')).toBeInTheDocument();
     expect(screen.queryByLabelText('Title')).not.toBeInTheDocument();
   });
 
   it('shows guided fields for Quick Visit instead of raw JSON', async () => {
     const user = userEvent.setup();
     render(<SectionsPanel />);
-    await screen.findByRole('button', { name: 'Add section' });
+    await screen.findByText('Choose a section…');
 
     const sectionSelect = screen.getByDisplayValue('Choose a section…');
     await user.selectOptions(sectionSelect, 'quickVisit');
@@ -124,7 +125,7 @@ describe('SectionsPanel', () => {
   it('toggles to advanced JSON editor', async () => {
     const user = userEvent.setup();
     render(<SectionsPanel />);
-    await screen.findByRole('button', { name: 'Add section' });
+    await screen.findByText('Choose a section…');
 
     await user.selectOptions(screen.getByDisplayValue('Choose a section…'), 'quickVisit');
     await user.click(screen.getByRole('button', { name: 'Advanced JSON editor' }));
@@ -155,5 +156,16 @@ describe('SectionsPanel', () => {
     const [payload] = saveSpy.mock.calls[0];
     expect(payload.section_key).toBe('quickVisit');
     expect(payload.payload.hours.title).toBe('OPEN HOURS');
+  });
+
+  it('scopes to a page when pageKey prop is set', async () => {
+    vi.spyOn(cmsAdminApi, 'fetchAllPageSections').mockResolvedValue([
+      { id: '1', page_key: 'home', section_key: 'whyVisit', status: 'published', sort_order: 2, payload: {} },
+      { id: '2', page_key: 'visit', section_key: 'hours', status: 'published', sort_order: 1, payload: {} },
+    ]);
+    render(<SectionsPanel pageKey="visit" />);
+    expect(await screen.findByText('hours')).toBeInTheDocument();
+    expect(screen.queryByText('whyVisit')).not.toBeInTheDocument();
+    expect(screen.queryByLabelText('Page')).not.toBeInTheDocument();
   });
 });
