@@ -1,18 +1,57 @@
-import React, { useState } from 'react';
-import { Ticket, Heart, Award, ArrowRight, ShieldCheck, Mail } from 'lucide-react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
+import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/api.js';
+import { isSupabaseConfigured } from '../../lib/supabase.js';
+import QRPass from '../../components/QRPass.jsx';
+import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
 
 export default function Support() {
-  const [donateAmount, setDonateAmount] = useState('50');
+  const { settings } = useSiteSettings();
+  const { section: header } = usePageSection('support', 'header', {
+    stamp: 'SUPPORT MISSION',
+    stampClass: 'rust',
+    title: 'Support the Village',
+    subtitle: 'Help us preserve Oʻahu\'s plantation cottages and share immigration stories for future generations.',
+  });
+  const { section: donateSection } = usePageSection('support', 'donate', {
+    title: 'Make a Tax-Deductible Contribution',
+    impactTitle: 'How Your Gift Helps',
+    impactTemplate: 'A gift of <strong>${amount}</strong> directly supports the preservation of timber frames and restoration of historical furnishings inside our represented ethnic camp cottages.',
+  });
+  const { section: membershipIntro } = usePageSection('support', 'membershipIntro', {
+    title: 'Preserve Heritage, Enjoy Benefits',
+    description: 'Select a steward membership tier. Your pass will be registered, emailed with a QR code, and visible in the admin dashboard.',
+  });
+  const { section: impactSidebar } = usePageSection('support', 'impactSidebar', {
+    title: 'Annual Support Impact',
+  });
+  const donationPresets = settings?.donationPresets ?? [];
+  const presetAmounts = useMemo(
+    () => (donationPresets.length ? donationPresets.map((p) => String(p.amount)) : ['15', '25', '50', '100', '250']),
+    [donationPresets],
+  );
+  const [donateAmount, setDonateAmount] = useState(presetAmounts[1] ?? '50');
   const [customAmount, setCustomAmount] = useState('');
   const [frequency, setFrequency] = useState('one-time'); // 'one-time' | 'monthly'
   const [supportType, setSupportType] = useState('donate'); // 'donate' | 'membership'
   const [complete, setComplete] = useState(false);
+  const [selectedTier, setSelectedTier] = useState(null);
+  const [membershipStep, setMembershipStep] = useState('tiers'); // tiers | checkout | done
+  const [memFirstName, setMemFirstName] = useState('');
+  const [memLastName, setMemLastName] = useState('');
+  const [memEmail, setMemEmail] = useState('');
+  const [householdNote, setHouseholdNote] = useState('');
+  const [memSubmitting, setMemSubmitting] = useState(false);
+  const [memError, setMemError] = useState('');
+  const [memConfirmation, setMemConfirmation] = useState(null);
+  const [tiersFromDb, setTiersFromDb] = useState([]);
 
-  const memberships = [
+  const FALLBACK_TIERS = [
     {
+      slug: 'individual',
       level: 'Individual',
       price: '$45',
       period: 'per year',
@@ -25,6 +64,7 @@ export default function Support() {
       ]
     },
     {
+      slug: 'household',
       level: 'Household',
       price: '$75',
       period: 'per year',
@@ -37,6 +77,7 @@ export default function Support() {
       ]
     },
     {
+      slug: 'steward',
       level: 'Steward',
       price: '$150',
       period: 'per year',
@@ -50,15 +91,57 @@ export default function Support() {
     }
   ];
 
+  useEffect(() => {
+    if (!isSupabaseConfigured) return;
+    fetchMembershipTiers()
+      .then((data) => { if (data?.length) setTiersFromDb(data); })
+      .catch(() => {});
+  }, []);
+
+  const memberships = (tiersFromDb.length ? tiersFromDb : FALLBACK_TIERS).map((t) => ({
+    slug: t.slug,
+    level: t.level,
+    price: t.price_cents != null ? formatCents(t.price_cents) : t.price,
+    priceCents: t.price_cents ?? parseInt(String(t.price).replace(/\D/g, ''), 10),
+    period: t.period_label ?? t.period ?? 'per year',
+    color: t.accent_color ?? t.color ?? 'var(--cane-green)',
+    benefits: Array.isArray(t.benefits) ? t.benefits : t.benefits,
+  }));
+
   const handleSupportSubmit = (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 100,
-      spread: 60,
-      origin: { y: 0.8 }
-    });
+    confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
     setComplete(true);
   };
+
+  async function handleMembershipSubmit(e) {
+    e.preventDefault();
+    if (!selectedTier) return;
+    setMemError('');
+    setMemSubmitting(true);
+    try {
+      const result = await createMembership({
+        tierSlug: selectedTier.slug,
+        firstName: memFirstName,
+        lastName: memLastName,
+        email: memEmail,
+        householdNote: selectedTier.slug === 'household' || selectedTier.slug === 'steward' ? householdNote : undefined,
+      });
+      confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
+      setMemConfirmation(result);
+      setMembershipStep('done');
+    } catch (err) {
+      setMemError(err.message ?? 'Registration failed');
+    } finally {
+      setMemSubmitting(false);
+    }
+  }
+
+  function selectTier(tier) {
+    setSelectedTier(tier);
+    setMembershipStep('checkout');
+    setMemError('');
+  }
 
   const getActiveAmount = () => {
     return donateAmount === 'custom' ? customAmount : donateAmount;
@@ -68,10 +151,10 @@ export default function Support() {
     <div style={styles.pageContainer}>
       <PageHeaderParallax
         layers={parallaxLayers.support}
-        stamp="SUPPORT MISSION"
-        stampClass="ink-stamp rust"
-        title="Support the Village"
-        subtitle="Help us preserve Oʻahu's plantation cottages and share immigration stories for future generations."
+        stamp={header?.stamp ?? 'SUPPORT MISSION'}
+        stampClass={`ink-stamp ${header?.stampClass ?? 'rust'}`}
+        title={header?.title ?? 'Support the Village'}
+        subtitle={header?.subtitle ?? 'Help us preserve Oʻahu\'s plantation cottages and share immigration stories for future generations.'}
       />
 
       <div style={styles.container}>
@@ -84,7 +167,7 @@ export default function Support() {
             Direct Donation
           </button>
           <button
-            onClick={() => { setSupportType('membership'); setComplete(false); }}
+            onClick={() => { setSupportType('membership'); setComplete(false); setMembershipStep('tiers'); setMemConfirmation(null); }}
             style={{ ...styles.toggleBtn, ...(supportType === 'membership' ? styles.toggleBtnActive : {}) }}
           >
             Steward Membership
@@ -96,7 +179,7 @@ export default function Support() {
           <div style={styles.donateLayout}>
             {!complete ? (
               <form className="paper-card animate-fade-in" style={styles.supportCard} onSubmit={handleSupportSubmit}>
-                <h3 style={styles.cardHeaderTitle}>Make a Tax-Deductible Contribution</h3>
+                <h3 style={styles.cardHeaderTitle}>{donateSection?.title ?? 'Make a Tax-Deductible Contribution'}</h3>
                 
                 {/* Frequency */}
                 <div style={styles.freqSelector}>
@@ -118,7 +201,7 @@ export default function Support() {
 
                 {/* Amount buttons */}
                 <div style={styles.amountGrid}>
-                  {['15', '25', '50', '100', '250'].map((amt) => (
+                  {presetAmounts.map((amt) => (
                     <button
                       key={amt}
                       type="button"
@@ -161,9 +244,9 @@ export default function Support() {
                 <div style={styles.impactCard}>
                   <Award size={18} color="var(--tin-rust)" />
                   <div>
-                    <h4 style={styles.impactTitle}>How Your Gift Helps</h4>
+                    <h4 style={styles.impactTitle}>{donateSection?.impactTitle ?? 'How Your Gift Helps'}</h4>
                     <p style={styles.impactText}>
-                      A gift of <strong>${getActiveAmount() || '0'}</strong> directly supports the preservation of timber frames and restoration of historical furnishings inside our represented ethnic camp cottages.
+                      A gift of <strong>${getActiveAmount() || '0'}</strong> {donateSection?.impactSuffix ?? 'directly supports the preservation of timber frames and restoration of historical furnishings inside our represented ethnic camp cottages.'}
                     </p>
                   </div>
                 </div>
@@ -220,20 +303,18 @@ export default function Support() {
             {/* Sidebar impact info */}
             <div style={styles.impactSidebar}>
               <div className="paper-card" style={styles.sideImpactCard}>
-                <h3 style={styles.sideImpactTitle}>Annual Support Impact</h3>
+                <h3 style={styles.sideImpactTitle}>{impactSidebar?.title ?? 'Annual Support Impact'}</h3>
                 <ul style={styles.impactList}>
-                  <li style={styles.impactListItem}>
-                    <strong>$25 buys</strong> craft supplies and traditional fiber/straw elements for local Obon dance classes.
-                  </li>
-                  <li style={styles.impactListItem}>
-                    <strong>$50 maintains</strong> the heritage vegetable gardens surrounding one ethnic camp house for three months.
-                  </li>
-                  <li style={styles.impactListItem}>
-                    <strong>$100 funds</strong> free admission and guided worksheets for a class of 10 local public school students.
-                  </li>
-                  <li style={styles.impactListItem}>
-                    <strong>$500 preserves</strong> structural timbers and tin-panel roofing under tropical weathering.
-                  </li>
+                  {(donationPresets.length ? donationPresets : [
+                    { amount: 25, label: '$25 buys craft supplies and traditional fiber/straw elements for local Obon dance classes.' },
+                    { amount: 50, label: '$50 maintains the heritage vegetable gardens surrounding one ethnic camp house for three months.' },
+                    { amount: 100, label: '$100 funds free admission and guided worksheets for a class of 10 local public school students.' },
+                  ]).map((preset) => (
+                    <li key={preset.amount} style={styles.impactListItem}>{preset.label}</li>
+                  ))}
+                  {impactSidebar?.extraItem && (
+                    <li style={styles.impactListItem}>{impactSidebar.extraItem}</li>
+                  )}
                 </ul>
               </div>
             </div>
@@ -243,40 +324,86 @@ export default function Support() {
         {/* Type 2: Membership */}
         {supportType === 'membership' && (
           <div style={styles.membershipSection}>
-            <div style={styles.membershipIntro}>
-              <h3 style={styles.subHeadingTitle}>Preserve Heritage, Enjoy Benefits</h3>
-              <p style={styles.bodyText}>
-                Becoming a member of Hawaiian Plantation Village is an act of cultural stewardship. Your annual dues ensure our collection stays accessible, while giving you free admissions and discounts.
-              </p>
-            </div>
-
-            <div style={styles.tiersGrid}>
-              {memberships.map((m, idx) => (
-                <div key={idx} className="paper-card" style={styles.tierCard}>
-                  <div style={{ ...styles.tierHeader, borderTop: `4px solid ${m.color}` }}>
-                    <h4 style={styles.tierLevel}>{m.level}</h4>
-                    <div style={styles.priceBlock}>
-                      <span style={styles.tierPrice}>{m.price}</span>
-                      <span style={styles.tierPeriod}>{m.period}</span>
-                    </div>
+            {membershipStep === 'done' && memConfirmation?.membership ? (
+              <div className="paper-card animate-fade-in" style={styles.successCard}>
+                <div style={styles.successIcon}><Award size={40} color="white" /></div>
+                <h2 style={styles.successTitle}>Membership Registered!</h2>
+                <p style={styles.successText}>
+                  Reference <strong>{memConfirmation.membership.referenceId}</strong> — {memConfirmation.membership.tier} level.
+                  {memConfirmation.emailSent
+                    ? ' Your membership pass and QR code have been emailed.'
+                    : ' Registration saved; email delivery failed — contact staff to resend.'}
+                </p>
+                <QRPass token={memConfirmation.membership.qrToken} label="Membership pass" />
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+                  Valid {memConfirmation.membership.startsOn} through {memConfirmation.membership.endsOn}. Payment status: pending.
+                </p>
+                <button type="button" className="btn-primary" onClick={() => { setMembershipStep('tiers'); setMemConfirmation(null); setSelectedTier(null); }}>
+                  Register another membership
+                </button>
+              </div>
+            ) : membershipStep === 'checkout' && selectedTier ? (
+              <form className="paper-card animate-fade-in" style={{ ...styles.supportCard, maxWidth: 560, margin: '0 auto' }} onSubmit={handleMembershipSubmit}>
+                <button type="button" className="btn-secondary" style={{ marginBottom: '1rem' }} onClick={() => setMembershipStep('tiers')}>← Back to tiers</button>
+                <h3 style={styles.cardHeaderTitle}>{selectedTier.level} Membership</h3>
+                <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>{selectedTier.price} {selectedTier.period} — payment pending until online checkout is enabled.</p>
+                {memError && <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '1rem', display: 'flex', gap: 8 }}><AlertCircle size={16} />{memError}</p>}
+                <div className="form-row-responsive" style={styles.formRow}>
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>First name</label>
+                    <input className="admin-form-input" required value={memFirstName} onChange={(e) => setMemFirstName(e.target.value)} />
                   </div>
-
-                  <div style={styles.ledgerDivider} className="ledger-divider" />
-
-                  <ul style={styles.benefitsList}>
-                    {m.benefits.map((b, bIdx) => (
-                      <li key={bIdx} style={styles.benefitItem}>
-                        <span>✓</span> {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <button className="btn-primary" onClick={handleSupportSubmit} style={styles.selectTierBtn}>
-                    Select {m.level} Level <ArrowRight size={16} />
-                  </button>
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>Last name</label>
+                    <input className="admin-form-input" required value={memLastName} onChange={(e) => setMemLastName(e.target.value)} />
+                  </div>
                 </div>
-              ))}
-            </div>
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Email</label>
+                  <input className="admin-form-input" type="email" required value={memEmail} onChange={(e) => setMemEmail(e.target.value)} />
+                </div>
+                {(selectedTier.slug === 'household' || selectedTier.slug === 'steward') && (
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>Household members (optional note)</label>
+                    <textarea className="admin-form-textarea" value={householdNote} onChange={(e) => setHouseholdNote(e.target.value)} placeholder="Names of adults and children covered" />
+                  </div>
+                )}
+                <button type="submit" className="btn-primary" style={styles.submitBtn} disabled={memSubmitting}>
+                  {memSubmitting ? 'Registering…' : `Complete Registration (${selectedTier.price})`}
+                </button>
+              </form>
+            ) : (
+              <>
+                <div style={styles.membershipIntro}>
+                  <h3 style={styles.subHeadingTitle}>{membershipIntro?.title ?? 'Preserve Heritage, Enjoy Benefits'}</h3>
+                  <p style={styles.bodyText}>
+                    {membershipIntro?.description ?? 'Select a steward membership tier. Your pass will be registered, emailed with a QR code, and visible in the admin dashboard.'}
+                  </p>
+                </div>
+                <div className="tiers-grid-responsive" style={styles.tiersGrid}>
+                  {memberships.map((m) => (
+                    <div key={m.slug ?? m.level} className="paper-card" style={styles.tierCard}>
+                      <div style={{ ...styles.tierHeader, borderTop: `4px solid ${m.color}` }}>
+                        <h4 style={styles.tierLevel}>{m.level}</h4>
+                        <div style={styles.priceBlock}>
+                          <span style={styles.tierPrice}>{m.price}</span>
+                          <span style={styles.tierPeriod}>{m.period}</span>
+                        </div>
+                      </div>
+                      <div className="ledger-divider" />
+                      <ul style={styles.benefitsList}>
+                        {m.benefits.map((b, bIdx) => (
+                          <li key={bIdx} style={styles.benefitItem}><span>✓</span> {b}</li>
+                        ))}
+                      </ul>
+                      <button type="button" className="btn-primary" onClick={() => selectTier(m)} style={styles.selectTierBtn}>
+                        Select {m.level} Level <ArrowRight size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
