@@ -14,6 +14,11 @@ export const PAGE_LABELS = {
 };
 
 /** Canonical section keys per page with labels and starter payloads from fallbacks. */
+const SECTION_LABEL_OVERRIDES = {
+  'home.events': 'Upcoming Community Programs',
+  'home.eventsHeader': 'Events Header',
+};
+
 export const SECTION_REGISTRY = Object.fromEntries(
   PAGE_KEYS.map((pageKey) => {
     const sections = DEFAULT_PAGE_SECTIONS[pageKey] ?? {};
@@ -21,7 +26,9 @@ export const SECTION_REGISTRY = Object.fromEntries(
       pageKey,
       Object.entries(sections).map(([sectionKey, payload]) => ({
         key: sectionKey,
-        label: sectionKey.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase()),
+        label:
+          SECTION_LABEL_OVERRIDES[`${pageKey}.${sectionKey}`] ??
+          sectionKey.replace(/([A-Z])/g, ' $1').replace(/^./, (c) => c.toUpperCase()),
         starterPayload: payload,
       })),
     ];
