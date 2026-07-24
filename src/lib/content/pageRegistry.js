@@ -8,9 +8,11 @@ import { PAGE_KEYS, PAGE_LABELS } from './sectionKeys.js';
  * - catalog: group tickets + tour slots (Visit)
  * - campStories: addable camp_story entries (Stories)
  * - curriculum: lesson modules (Learn)
+ * - communityPrograms: upcoming events list (Home)
  */
 
 export const PAGE_EXTRA_PANELS = {
+  home: ['communityPrograms'],
   visit: ['catalog'],
   stories: ['campStories'],
   learn: ['curriculum'],

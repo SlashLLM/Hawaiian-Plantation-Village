@@ -9,7 +9,7 @@ React + Vite public site with a Supabase-backed CMS focused on **item lists** (s
 3. Apply migrations in order under `supabase/migrations/`
 4. Seed operational data: `supabase/seed.sql`
 5. Seed CMS content: `supabase/seed_cms.sql`
-6. Deploy edge functions and set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `SUPABASE_SERVICE_ROLE_KEY`
+6. Deploy edge functions (`create-booking`, `create-membership`, `submit-inquiry`, etc.) and set `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, `INQUIRY_TO_EMAIL`, `SUPABASE_SERVICE_ROLE_KEY`
 7. Create auth user and `update public.profiles set role = 'admin' where email = '...'`
 8. `npm run dev` — public site at `/`, admin at `/admin`
 
@@ -48,13 +48,16 @@ Staff signed into `/admin` can preview draft content via RLS (`is_staff()` polic
 | `curriculum_modules` / `curriculum_checkpoints` | Learn modules, videos, quizzes |
 | `media_assets` + `cms-media` Storage bucket | Uploaded images/audio/video with alt text |
 
-### Admin authoring (`/admin` → Content)
+### Admin authoring (`/admin` → Content / Page Editor)
 
 - **Stories** — add / edit / delete camp stories (oral history audio)
 - **News & Announcements** — add / edit / delete About-page news
 - **Careers** — add / edit / delete job postings
 - **Curriculum** — modules and checkpoints (archive/deactivate to remove from public)
+- **Community Programs** — Home page Upcoming Community Programs events (`Page Editor` → Home)
 - **Media uploads** — `MediaUploadField` / `AudioUploadField` / `VideoUploadField` upload to `cms-media`
+
+Contact, career, field trip, student program, and workshop forms submit via the `submit-inquiry` edge function and email staff at `INQUIRY_TO_EMAIL` (with an auto-reply to the submitter).
 
 Publishing sets `status = 'published'` and `published_at`. Delete permanently removes content entry rows. Public pages refresh on next fetch (no rebuild required).
 

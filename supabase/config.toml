@@ -25,6 +25,9 @@ verify_jwt = false
 [functions.create-membership]
 verify_jwt = false
 
+[functions.submit-inquiry]
+verify_jwt = false
+
 # Staff-only endpoints (require authenticated session JWT)
 [functions.verify-credential]
 verify_jwt = true

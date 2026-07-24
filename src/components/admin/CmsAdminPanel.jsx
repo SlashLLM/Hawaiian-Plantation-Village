@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import CampStoriesPanel from './CampStoriesPanel.jsx';
+import CommunityProgramsPanel from './CommunityProgramsPanel.jsx';
 import NewsPanel from './NewsPanel.jsx';
 import CareersPanel from './CareersPanel.jsx';
 import CurriculumPanel from './CurriculumPanel.jsx';
 
 const TABS = [
   { id: 'stories', label: 'Stories' },
+  { id: 'events', label: 'Upcoming Events' },
   { id: 'news', label: 'News & Announcements' },
   { id: 'careers', label: 'Careers' },
   { id: 'curriculum', label: 'Curriculum' },
@@ -30,6 +32,7 @@ export default function CmsAdminPanel() {
         ))}
       </div>
       {tab === 'stories' && <CampStoriesPanel />}
+      {tab === 'events' && <CommunityProgramsPanel />}
       {tab === 'news' && <NewsPanel />}
       {tab === 'careers' && <CareersPanel />}
       {tab === 'curriculum' && <CurriculumPanel />}

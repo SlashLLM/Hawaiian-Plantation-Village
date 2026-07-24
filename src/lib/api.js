@@ -50,6 +50,10 @@ export async function createMembership(membershipData) {
   return invokeFunction('create-membership', membershipData, { idempotencyKey });
 }
 
+export async function submitInquiry(payload) {
+  return invokeFunction('submit-inquiry', payload);
+}
+
 export async function verifyCredential(payload) {
   return invokeFunction('verify-credential', payload, { auth: true });
 }

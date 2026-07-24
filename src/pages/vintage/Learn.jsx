@@ -9,13 +9,15 @@ import {
   Sprout,
   Download,
   Map,
-  HeartHandshake
+  HeartHandshake,
+  AlertCircle
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { parallaxLayers } from '../../assets/parallax';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
+import { submitInquiry } from '../../lib/api.js';
 
 export default function Learn() {
   const setActivePage = useAppNavigate();
@@ -27,13 +29,20 @@ export default function Learn() {
 
   // School Booking Form State
   const [complete, setComplete] = useState(false);
+  const [schoolSubmitting, setSchoolSubmitting] = useState(false);
+  const [schoolSubmitError, setSchoolSubmitError] = useState('');
   const [schoolName, setSchoolName] = useState('');
   const [studentCount, setStudentCount] = useState('');
   const [gradeLevel, setGradeLevel] = useState('4th Grade');
   const [preferredDate, setPreferredDate] = useState('');
+  const [contactName, setContactName] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
 
   // Youth Program Form State
   const [youthComplete, setYouthComplete] = useState(false);
+  const [youthSubmitting, setYouthSubmitting] = useState(false);
+  const [youthSubmitError, setYouthSubmitError] = useState('');
   const [youthName, setYouthName] = useState('');
   const [youthEmail, setYouthEmail] = useState('');
   const [youthSchool, setYouthSchool] = useState('');
@@ -43,6 +52,8 @@ export default function Learn() {
 
   // Family RSVP Form State
   const [familyComplete, setFamilyComplete] = useState(false);
+  const [familySubmitting, setFamilySubmitting] = useState(false);
+  const [familySubmitError, setFamilySubmitError] = useState('');
   const [familyContactName, setFamilyContactName] = useState('');
   const [familyEmail, setFamilyEmail] = useState('');
   const [familyWorkshop, setFamilyWorkshop] = useState('Talk Story Saturdays');
@@ -70,34 +81,84 @@ export default function Learn() {
     [youthSection],
   );
 
-  const handleBookingSubmit = (e) => {
+  const handleBookingSubmit = async (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 80,
-      spread: 50,
-      origin: { y: 0.8 }
-    });
-    setComplete(true);
+    setSchoolSubmitting(true);
+    setSchoolSubmitError('');
+    try {
+      await submitInquiry({
+        type: 'field_trip',
+        schoolName,
+        gradeLevel,
+        studentCount,
+        preferredDate,
+        contactName,
+        contactEmail,
+        contactPhone,
+      });
+      confetti({
+        particleCount: 80,
+        spread: 50,
+        origin: { y: 0.8 },
+      });
+      setComplete(true);
+    } catch (err) {
+      setSchoolSubmitError(err.message ?? 'Failed to submit inquiry. Please try again.');
+    } finally {
+      setSchoolSubmitting(false);
+    }
   };
 
-  const handleYouthSubmit = (e) => {
+  const handleYouthSubmit = async (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 80,
-      spread: 50,
-      origin: { y: 0.8 }
-    });
-    setYouthComplete(true);
+    setYouthSubmitting(true);
+    setYouthSubmitError('');
+    try {
+      await submitInquiry({
+        type: 'youth_program',
+        name: youthName,
+        email: youthEmail,
+        school: youthSchool,
+        grade: youthGrade,
+        interest: youthInterest,
+        message: youthMessage,
+      });
+      confetti({
+        particleCount: 80,
+        spread: 50,
+        origin: { y: 0.8 },
+      });
+      setYouthComplete(true);
+    } catch (err) {
+      setYouthSubmitError(err.message ?? 'Failed to submit inquiry. Please try again.');
+    } finally {
+      setYouthSubmitting(false);
+    }
   };
 
-  const handleFamilySubmit = (e) => {
+  const handleFamilySubmit = async (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 80,
-      spread: 50,
-      origin: { y: 0.8 }
-    });
-    setFamilyComplete(true);
+    setFamilySubmitting(true);
+    setFamilySubmitError('');
+    try {
+      await submitInquiry({
+        type: 'workshop_rsvp',
+        contactName: familyContactName,
+        email: familyEmail,
+        workshop: familyWorkshop,
+        attendeeCount: familyCount,
+      });
+      confetti({
+        particleCount: 80,
+        spread: 50,
+        origin: { y: 0.8 },
+      });
+      setFamilyComplete(true);
+    } catch (err) {
+      setFamilySubmitError(err.message ?? 'Failed to reserve spot. Please try again.');
+    } finally {
+      setFamilySubmitting(false);
+    }
   };
 
   const tabSections = { school: schoolSection, youth: youthSection, family: familySection };
@@ -245,6 +306,39 @@ export default function Learn() {
                     />
                   </div>
 
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>Teacher / Contact Name</label>
+                    <input
+                      type="text"
+                      required
+                      value={contactName}
+                      onChange={(e) => setContactName(e.target.value)}
+                      style={styles.formInput}
+                    />
+                  </div>
+
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>Contact Email</label>
+                    <input
+                      type="email"
+                      required
+                      value={contactEmail}
+                      onChange={(e) => setContactEmail(e.target.value)}
+                      style={styles.formInput}
+                    />
+                  </div>
+
+                  <div style={styles.formCol}>
+                    <label style={styles.formLabel}>Contact Phone</label>
+                    <input
+                      type="tel"
+                      required
+                      value={contactPhone}
+                      onChange={(e) => setContactPhone(e.target.value)}
+                      style={styles.formInput}
+                    />
+                  </div>
+
                   <div style={styles.helpfulAlert}>
                     <Compass size={18} color="var(--tin-rust)" />
                     <p style={styles.alertText}>
@@ -252,8 +346,14 @@ export default function Learn() {
                     </p>
                   </div>
 
-                  <button type="submit" className="btn-primary" style={styles.submitBtn}>
-                    Submit Booking Inquiry <ChevronRight size={16} />
+                  {schoolSubmitError && (
+                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <AlertCircle size={16} /> {schoolSubmitError}
+                    </p>
+                  )}
+
+                  <button type="submit" className="btn-primary" style={styles.submitBtn} disabled={schoolSubmitting}>
+                    {schoolSubmitting ? 'Submitting…' : 'Submit Booking Inquiry'} <ChevronRight size={16} />
                   </button>
                 </form>
               ) : (
@@ -272,9 +372,10 @@ export default function Learn() {
                     <div style={styles.receiptRow}><span>School:</span><strong>{schoolName}</strong></div>
                     <div style={styles.receiptRow}><span>Grade / Count:</span><strong>{gradeLevel} ({studentCount} students)</strong></div>
                     <div style={styles.receiptRow}><span>Requested Date:</span><strong>{preferredDate}</strong></div>
+                    <div style={styles.receiptRow}><span>Contact:</span><strong>{contactName}</strong></div>
                   </div>
 
-                  <button className="btn-primary" onClick={() => setComplete(false)}>
+                  <button className="btn-primary" onClick={() => { setComplete(false); setSchoolSubmitError(''); }}>
                     Submit New Request
                   </button>
                 </div>
@@ -399,8 +500,14 @@ export default function Learn() {
                     />
                   </div>
 
-                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--tin-rust)' }}>
-                    Submit Inquiry <ChevronRight size={16} />
+                  {youthSubmitError && (
+                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <AlertCircle size={16} /> {youthSubmitError}
+                    </p>
+                  )}
+
+                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--tin-rust)' }} disabled={youthSubmitting}>
+                    {youthSubmitting ? 'Submitting…' : 'Submit Inquiry'} <ChevronRight size={16} />
                   </button>
                 </form>
               ) : (
@@ -421,7 +528,7 @@ export default function Learn() {
                     <div style={styles.receiptRow}><span>Interest Area:</span><strong>{youthInterest}</strong></div>
                   </div>
 
-                  <button className="btn-primary" style={{ backgroundColor: 'var(--tin-rust)' }} onClick={() => setYouthComplete(false)}>
+                  <button className="btn-primary" style={{ backgroundColor: 'var(--tin-rust)' }} onClick={() => { setYouthComplete(false); setYouthSubmitError(''); }}>
                     Submit New Inquiry
                   </button>
                 </div>
@@ -528,8 +635,14 @@ export default function Learn() {
                     />
                   </div>
 
-                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--ocean-teal)' }}>
-                    Reserve Free Spot <ChevronRight size={16} />
+                  {familySubmitError && (
+                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                      <AlertCircle size={16} /> {familySubmitError}
+                    </p>
+                  )}
+
+                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--ocean-teal)' }} disabled={familySubmitting}>
+                    {familySubmitting ? 'Reserving…' : 'Reserve Free Spot'} <ChevronRight size={16} />
                   </button>
                 </form>
               ) : (
@@ -550,7 +663,7 @@ export default function Learn() {
                     <div style={styles.receiptRow}><span>Attendees:</span><strong>{familyCount} spots</strong></div>
                   </div>
 
-                  <button className="btn-primary" style={{ backgroundColor: 'var(--ocean-teal)' }} onClick={() => setFamilyComplete(false)}>
+                  <button className="btn-primary" style={{ backgroundColor: 'var(--ocean-teal)' }} onClick={() => { setFamilyComplete(false); setFamilySubmitError(''); }}>
                     Reserve Another Spot
                   </button>
                 </div>

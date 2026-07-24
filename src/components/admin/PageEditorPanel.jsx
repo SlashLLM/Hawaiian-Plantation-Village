@@ -4,12 +4,14 @@ import SectionsPanel from './SectionsPanel.jsx';
 import CampStoriesPanel from './CampStoriesPanel.jsx';
 import CatalogPanel from './CatalogPanel.jsx';
 import CurriculumPanel from './CurriculumPanel.jsx';
+import CommunityProgramsPanel from './CommunityProgramsPanel.jsx';
 
 const SUB_TABS = {
   sections: 'Sections',
   campStories: 'Camp stories',
   catalog: 'Catalog',
   curriculum: 'Curriculum',
+  communityPrograms: 'Community Programs',
 };
 
 export default function PageEditorPanel() {
@@ -30,7 +32,7 @@ export default function PageEditorPanel() {
     <div>
       <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
         Edit content page by page. Sections hold copy and lists; Stories can add camp stories;
-        Visit includes catalog pricing; Learn includes curriculum modules.
+        Visit includes catalog pricing; Learn includes curriculum modules; Home includes community programs.
       </p>
 
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1rem' }}>
@@ -67,6 +69,7 @@ export default function PageEditorPanel() {
       {activeSub === 'campStories' && <CampStoriesPanel />}
       {activeSub === 'catalog' && <CatalogPanel />}
       {activeSub === 'curriculum' && <CurriculumPanel />}
+      {activeSub === 'communityPrograms' && <CommunityProgramsPanel />}
     </div>
   );
 }

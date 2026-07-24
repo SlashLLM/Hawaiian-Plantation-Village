@@ -26,7 +26,9 @@ vi.mock('../lib/content/cmsAdminApi.js', () => ({
   fetchAllPageSections: vi.fn(() => Promise.resolve([])),
   saveSiteSettings: vi.fn(),
   saveContentEntry: vi.fn(),
+  savePageSection: vi.fn(),
   setContentEntryStatus: vi.fn(),
+  setPageSectionStatus: vi.fn(),
   deleteContentEntry: vi.fn(),
   fetchCatalogData: vi.fn(() => Promise.resolve({ events: [], tiers: [], groupTickets: [], tourSlots: [] })),
   fetchCurriculumModulesAdmin: vi.fn(() => Promise.resolve([])),
@@ -52,6 +54,7 @@ describe('CmsAdminPanel', () => {
   it('renders item CMS tabs without Pages or Collections', () => {
     render(<CmsAdminPanel />);
     expect(screen.getByRole('button', { name: 'Stories' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Upcoming Events' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'News & Announcements' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Careers' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Curriculum' })).toBeInTheDocument();
@@ -65,7 +68,7 @@ describe('CmsAdminPanel', () => {
     expect(await screen.findByText(/plantation camp stories/i)).toBeInTheDocument();
   });
 
-  it('switches to news, careers, and curriculum tabs', async () => {
+  it('switches to news, careers, curriculum, and upcoming events tabs', async () => {
     const user = userEvent.setup();
     render(<CmsAdminPanel />);
 
@@ -77,5 +80,8 @@ describe('CmsAdminPanel', () => {
 
     await user.click(screen.getByRole('button', { name: 'Curriculum' }));
     expect(screen.getByText('No modules yet')).toBeInTheDocument();
+
+    await user.click(screen.getByRole('button', { name: 'Upcoming Events' }));
+    expect(await screen.findByText(/upcoming community programs/i)).toBeInTheDocument();
   });
 });

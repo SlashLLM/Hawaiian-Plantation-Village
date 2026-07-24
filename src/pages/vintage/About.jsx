@@ -2,10 +2,11 @@ import React, { useMemo, useState } from 'react';
 import { 
   Compass, BookOpen, Users, Calendar, ArrowRight, Briefcase, Mail, 
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
-  ChevronRight, ChevronDown, Send, Printer, User
+  ChevronRight, ChevronDown, Send, Printer, User, AlertCircle
 } from 'lucide-react';
 import bangoImage from '../../assets/bango_lunch_tin.png';
 import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
+import { submitInquiry } from '../../lib/api.js';
 
 export default function About({ activeTab: propActiveTab, setActiveTab: propSetActiveTab }) {
   const { settings } = useSiteSettings();
@@ -49,12 +50,16 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const [jobForm, setJobForm] = useState({ name: '', email: '', phone: '', statement: '', resume: '' });
   const [jobFormErrors, setJobFormErrors] = useState({});
   const [jobSubmitSuccess, setJobSubmitSuccess] = useState(false);
+  const [jobSubmitting, setJobSubmitting] = useState(false);
+  const [jobSubmitError, setJobSubmitError] = useState('');
   const [appliedJobTitle, setAppliedJobTitle] = useState('');
 
   // Contact Form State
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: subjectOptions[0] ?? 'General Inquiry', message: '' });
   const [contactFormErrors, setContactFormErrors] = useState({});
   const [contactSubmitSuccess, setContactSubmitSuccess] = useState(false);
+  const [contactSubmitting, setContactSubmitting] = useState(false);
+  const [contactSubmitError, setContactSubmitError] = useState('');
   const [contactReceipt, setContactReceipt] = useState(null);
 
   // News Filtering
@@ -67,7 +72,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   });
 
   // Handle Career Application Submission
-  const handleJobSubmit = (e) => {
+  const handleJobSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!jobForm.name.trim()) errors.name = 'Full name is required';
@@ -86,9 +91,27 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
       setJobFormErrors(errors);
       return;
     }
-    setAppliedJobTitle(applyingJob.title);
-    setJobSubmitSuccess(true);
+
+    setJobSubmitting(true);
+    setJobSubmitError('');
     setJobFormErrors({});
+    try {
+      await submitInquiry({
+        type: 'career',
+        name: jobForm.name,
+        email: jobForm.email,
+        phone: jobForm.phone,
+        statement: jobForm.statement,
+        resume: jobForm.resume,
+        jobTitle: applyingJob.title,
+      });
+      setAppliedJobTitle(applyingJob.title);
+      setJobSubmitSuccess(true);
+    } catch (err) {
+      setJobSubmitError(err.message ?? 'Failed to submit application. Please try again.');
+    } finally {
+      setJobSubmitting(false);
+    }
   };
 
   // Reset Career Application Modal
@@ -97,10 +120,12 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
     setJobForm({ name: '', email: '', phone: '', statement: '', resume: '' });
     setJobFormErrors({});
     setJobSubmitSuccess(false);
+    setJobSubmitError('');
+    setJobSubmitting(false);
   };
 
   // Handle Contact Form Submission
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault();
     const errors = {};
     if (!contactForm.name.trim()) errors.name = 'Full name is required';
@@ -115,20 +140,36 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
       setContactFormErrors(errors);
       return;
     }
-    
-    setContactReceipt({
-      receiptId: 'HPV-INQ-' + Math.floor(100000 + Math.random() * 900000),
-      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
-      ...contactForm
-    });
-    setContactSubmitSuccess(true);
+
+    setContactSubmitting(true);
+    setContactSubmitError('');
     setContactFormErrors({});
+    try {
+      const res = await submitInquiry({
+        type: 'contact',
+        name: contactForm.name,
+        email: contactForm.email,
+        subject: contactForm.subject,
+        message: contactForm.message,
+      });
+      setContactReceipt({
+        receiptId: res.referenceId,
+        date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+        ...contactForm,
+      });
+      setContactSubmitSuccess(true);
+    } catch (err) {
+      setContactSubmitError(err.message ?? 'Failed to submit inquiry. Please try again.');
+    } finally {
+      setContactSubmitting(false);
+    }
   };
 
   // Reset Contact Success state
   const resetContactForm = () => {
     setContactSubmitSuccess(false);
     setContactReceipt(null);
+    setContactSubmitError('');
     setContactForm({ name: '', email: '', subject: subjectOptions[0] ?? 'General Inquiry', message: '' });
   };
 
@@ -494,8 +535,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                         />
                       </div>
 
-                      <button type="submit" className="btn-primary" style={{ marginTop: '1rem', width: '100%', justifyContent: 'center' }}>
-                        <Send size={16} /> Submit Application
+                      {jobSubmitError && (
+                        <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                          <AlertCircle size={16} /> {jobSubmitError}
+                        </p>
+                      )}
+
+                      <button type="submit" className="btn-primary" style={{ marginTop: '1rem', width: '100%', justifyContent: 'center' }} disabled={jobSubmitting}>
+                        <Send size={16} /> {jobSubmitting ? 'Submitting…' : 'Submit Application'}
                       </button>
                     </form>
                   ) : (
@@ -609,8 +656,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                       {contactFormErrors.message && <span style={styles.errorText}>{contactFormErrors.message}</span>}
                     </div>
 
-                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                      <Send size={16} /> Submit Inquiry
+                    {contactSubmitError && (
+                      <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                        <AlertCircle size={16} /> {contactSubmitError}
+                      </p>
+                    )}
+
+                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} disabled={contactSubmitting}>
+                      <Send size={16} /> {contactSubmitting ? 'Submitting…' : 'Submit Inquiry'}
                     </button>
                   </form>
                 ) : (
