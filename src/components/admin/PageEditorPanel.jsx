@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getCmsPageChoices, getPageExtraPanels, PAGE_LABELS } from '../../lib/content/pageRegistry.js';
 import SectionsPanel from './SectionsPanel.jsx';
 import CampStoriesPanel from './CampStoriesPanel.jsx';
+import PhotographsPanel from './PhotographsPanel.jsx';
 import CatalogPanel from './CatalogPanel.jsx';
 import CurriculumPanel from './CurriculumPanel.jsx';
 import CommunityProgramsPanel from './CommunityProgramsPanel.jsx';
@@ -9,6 +10,7 @@ import CommunityProgramsPanel from './CommunityProgramsPanel.jsx';
 const SUB_TABS = {
   sections: 'Sections',
   campStories: 'Camp stories',
+  photographs: 'Photographs',
   catalog: 'Catalog',
   curriculum: 'Curriculum',
   communityPrograms: 'Community Programs',
@@ -67,6 +69,7 @@ export default function PageEditorPanel() {
 
       {activeSub === 'sections' && <SectionsPanel pageKey={pageKey} />}
       {activeSub === 'campStories' && <CampStoriesPanel />}
+      {activeSub === 'photographs' && <PhotographsPanel />}
       {activeSub === 'catalog' && <CatalogPanel />}
       {activeSub === 'curriculum' && <CurriculumPanel />}
       {activeSub === 'communityPrograms' && <CommunityProgramsPanel />}

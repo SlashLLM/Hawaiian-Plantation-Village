@@ -151,10 +151,9 @@ export default function Support() {
     <div style={styles.pageContainer}>
       <PageHeaderParallax
         layers={parallaxLayers.support}
-        stamp={header?.stamp ?? 'SUPPORT MISSION'}
-        stampClass={`ink-stamp ${header?.stampClass ?? 'rust'}`}
-        title={header?.title ?? 'Support the Village'}
-        subtitle={header?.subtitle ?? 'Help us preserve Oʻahu\'s plantation cottages and share immigration stories for future generations.'}
+        stamp={header?.stamp ?? 'Support the village'}
+        title={header?.title ?? 'Keep these houses standing'}
+        subtitle={header?.subtitle ?? 'Your gift maintains the cottages, the gardens, and the stories told inside them.'}
       />
 
       <div style={styles.container}>
@@ -164,13 +163,13 @@ export default function Support() {
             onClick={() => { setSupportType('donate'); setComplete(false); }}
             style={{ ...styles.toggleBtn, ...(supportType === 'donate' ? styles.toggleBtnActive : {}) }}
           >
-            Direct Donation
+            Give a gift
           </button>
           <button
             onClick={() => { setSupportType('membership'); setComplete(false); setMembershipStep('tiers'); setMemConfirmation(null); }}
             style={{ ...styles.toggleBtn, ...(supportType === 'membership' ? styles.toggleBtnActive : {}) }}
           >
-            Steward Membership
+            Become a member
           </button>
         </div>
 
@@ -179,7 +178,7 @@ export default function Support() {
           <div style={styles.donateLayout}>
             {!complete ? (
               <form className="paper-card animate-fade-in" style={styles.supportCard} onSubmit={handleSupportSubmit}>
-                <h3 style={styles.cardHeaderTitle}>{donateSection?.title ?? 'Make a Tax-Deductible Contribution'}</h3>
+                <h3 style={styles.cardHeaderTitle}>{donateSection?.title ?? 'Make a tax-deductible gift'}</h3>
                 
                 {/* Frequency */}
                 <div style={styles.freqSelector}>
@@ -188,14 +187,14 @@ export default function Support() {
                     onClick={() => setFrequency('one-time')}
                     style={{ ...styles.freqBtn, ...(frequency === 'one-time' ? styles.freqBtnActive : {}) }}
                   >
-                    Give One-Time
+                    One time
                   </button>
                   <button
                     type="button"
                     onClick={() => setFrequency('monthly')}
                     style={{ ...styles.freqBtn, ...(frequency === 'monthly' ? styles.freqBtnActive : {}) }}
                   >
-                    Give Monthly
+                    Monthly
                   </button>
                 </div>
 
@@ -242,9 +241,9 @@ export default function Support() {
 
                 {/* Impact Statement */}
                 <div style={styles.impactCard}>
-                  <Award size={18} color="var(--tin-rust)" />
+                  <Award size={18} color="var(--terracotta-clay)" />
                   <div>
-                    <h4 style={styles.impactTitle}>{donateSection?.impactTitle ?? 'How Your Gift Helps'}</h4>
+                    <h4 style={styles.impactTitle}>{donateSection?.impactTitle ?? 'How your gift helps'}</h4>
                     <p style={styles.impactText}>
                       A gift of <strong>${getActiveAmount() || '0'}</strong> {donateSection?.impactSuffix ?? 'directly supports the preservation of timber frames and restoration of historical furnishings inside our represented ethnic camp cottages.'}
                     </p>
@@ -252,27 +251,27 @@ export default function Support() {
                 </div>
 
                 {/* Payment Fields */}
-                <div className="ledger-header" style={{ marginTop: '2rem', marginBottom: '1rem' }}>PAYMENT INFO</div>
+                <div className="ledger-header" style={{ marginTop: '2rem', marginBottom: '1rem' }}>PAYMENT</div>
                 <div style={styles.formRow}>
                   <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Full Name</label>
+                    <label style={styles.formLabel}>Full name</label>
                     <input type="text" required style={styles.formInput} />
                   </div>
                   <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Email Address</label>
+                    <label style={styles.formLabel}>Email address</label>
                     <input type="email" required style={styles.formInput} />
                   </div>
                 </div>
 
                 <div style={styles.ccFields}>
                   <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Card Number</label>
-                    <input type="text" placeholder="Card details..." required style={styles.formInput} />
+                    <label style={styles.formLabel}>Card number</label>
+                    <input type="text" placeholder="Card details" required style={styles.formInput} />
                   </div>
                 </div>
 
-                <button type="submit" className="btn-primary" style={styles.submitBtn}>
-                  <Heart size={16} /> Complete Donation (${getActiveAmount() || '0'})
+                <button type="submit" className="btn-clay" style={styles.submitBtn}>
+                  <Heart size={16} /> Give ${getActiveAmount() || '0'}
                 </button>
               </form>
             ) : (
@@ -281,7 +280,7 @@ export default function Support() {
                 <div style={styles.successIcon}>
                   <Heart size={40} color="white" />
                 </div>
-                <h2 style={styles.successTitle}>Thank You for Your Stewardship!</h2>
+                <h2 style={styles.successTitle}>Thank you</h2>
                 <p style={styles.successText}>
                   Your tax-deductible donation of <strong>${getActiveAmount()}</strong> has been processed successfully. A formal donor acknowledgement receipt has been sent to your email.
                 </p>
@@ -294,8 +293,8 @@ export default function Support() {
                     </p>
                   </div>
                 </div>
-                <button className="btn-primary" onClick={() => setComplete(false)}>
-                  Make Another Gift
+                <button className="btn-clay" onClick={() => setComplete(false)}>
+                  Give again
                 </button>
               </div>
             )}
@@ -396,8 +395,8 @@ export default function Support() {
                           <li key={bIdx} style={styles.benefitItem}><span>✓</span> {b}</li>
                         ))}
                       </ul>
-                      <button type="button" className="btn-primary" onClick={() => selectTier(m)} style={styles.selectTierBtn}>
-                        Select {m.level} Level <ArrowRight size={16} />
+                      <button type="button" className="btn-secondary" onClick={() => selectTier(m)} style={styles.selectTierBtn}>
+                        Choose {m.level} <ArrowRight size={16} />
                       </button>
                     </div>
                   ))}
@@ -416,34 +415,33 @@ const styles = {
     paddingBottom: '5rem'
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1180px',
     margin: '0 auto',
-    padding: '0 1.5rem'
+    padding: '0 clamp(1.25rem, 4vw, 2.5rem)'
   },
   supportToggle: {
     display: 'flex',
     justifyContent: 'center',
-    gap: '12px',
-    marginBottom: '3rem'
+    gap: '8px',
+    marginBottom: 'clamp(2.5rem, 5vw, 3.5rem)'
   },
   toggleBtn: {
     background: 'none',
-    border: '2px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
-    padding: '0.75rem 1.5rem',
-    fontFamily: 'var(--font-typewriter)',
-    fontWeight: 'bold',
-    fontSize: '1rem',
-    textTransform: 'uppercase',
-    color: 'var(--text-muted)',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
+    padding: '0.7rem 1.4rem',
+    fontFamily: 'var(--font-sans)',
+    fontWeight: 500,
+    fontSize: '0.95rem',
+    color: 'var(--muted-sage)',
     cursor: 'pointer',
     transition: 'all 0.2s'
   },
   toggleBtnActive: {
-    backgroundColor: 'var(--cane-green)',
-    color: 'white',
-    borderColor: 'var(--cane-green)',
-    boxShadow: 'var(--shadow-md)'
+    backgroundColor: 'var(--plantation-ink)',
+    color: 'var(--sugarcane-cream)',
+    borderColor: 'var(--plantation-ink)',
+    fontWeight: 600
   },
   donateLayout: {
     display: 'grid',
@@ -458,12 +456,11 @@ const styles = {
     }
   },
   supportCard: {
-    padding: '2rem',
-    borderRadius: '4px'
+    padding: 'clamp(1.5rem, 3vw, 2.25rem)'
   },
   cardHeaderTitle: {
-    fontSize: '1.4rem',
-    color: 'var(--koa-wood)',
+    fontSize: '1.5rem',
+    fontWeight: 500,
     marginBottom: '1.5rem'
   },
   freqSelector: {
@@ -473,18 +470,18 @@ const styles = {
   },
   freqBtn: {
     background: 'none',
-    border: '1px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
-    padding: '6px 12px',
-    fontSize: '0.85rem',
-    fontFamily: 'var(--font-typewriter)',
-    color: 'var(--text-dark)',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
+    padding: '8px 14px',
+    fontSize: '0.9rem',
+    fontFamily: 'var(--font-sans)',
+    color: 'var(--plantation-ink)',
     cursor: 'pointer'
   },
   freqBtnActive: {
-    backgroundColor: 'var(--tin-rust)',
-    color: 'white',
-    borderColor: 'var(--tin-rust)'
+    backgroundColor: 'var(--terracotta-clay)',
+    color: 'var(--sugarcane-cream)',
+    borderColor: 'var(--terracotta-clay)'
   },
   amountGrid: {
     display: 'grid',
@@ -493,65 +490,67 @@ const styles = {
     marginBottom: '1.5rem'
   },
   amtBtn: {
-    padding: '0.75rem',
-    border: '1px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
-    backgroundColor: 'white',
+    padding: '0.8rem',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
+    backgroundColor: 'transparent',
     cursor: 'pointer',
-    fontSize: '1.1rem',
-    fontWeight: 'bold',
-    fontFamily: 'var(--font-typewriter)',
-    color: 'var(--text-dark)'
+    fontSize: '1.05rem',
+    fontWeight: 600,
+    fontFamily: 'var(--font-sans)',
+    color: 'var(--plantation-ink)'
   },
   amtBtnActive: {
-    backgroundColor: 'var(--cane-green)',
-    color: 'white',
-    borderColor: 'var(--cane-green)'
+    backgroundColor: 'var(--plantation-ink)',
+    color: 'var(--sugarcane-cream)',
+    borderColor: 'var(--plantation-ink)'
   },
   customAmtInputBox: {
     display: 'flex',
     alignItems: 'center',
-    border: '1px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
     padding: '0.5rem 1rem',
-    backgroundColor: 'white',
+    backgroundColor: 'var(--sugarcane-cream)',
     marginBottom: '1.5rem'
   },
   dollarSign: {
-    fontFamily: 'var(--font-typewriter)',
-    fontWeight: 'bold',
-    fontSize: '1.2rem',
+    fontFamily: 'var(--font-sans)',
+    fontWeight: 600,
+    fontSize: '1.15rem',
     marginRight: '8px',
-    color: 'var(--text-muted)'
+    color: 'var(--muted-sage)'
   },
   customInput: {
     border: 'none',
     outline: 'none',
-    fontSize: '1.1rem',
-    fontWeight: 'bold',
+    fontSize: '1.05rem',
+    fontWeight: 600,
     width: '100%',
-    fontFamily: 'var(--font-typewriter)'
+    background: 'transparent',
+    fontFamily: 'var(--font-sans)'
   },
   impactCard: {
     display: 'flex',
     gap: '12px',
-    backgroundColor: 'var(--paper-dark)',
-    padding: '1rem 1.25rem',
-    borderLeft: '4px solid var(--tin-rust)',
-    borderRadius: '4px',
+    backgroundColor: 'var(--sand)',
+    padding: '1.1rem 1.25rem',
+    borderLeft: '2px solid var(--terracotta-clay)',
+    borderRadius: 'var(--border-radius-md)',
     alignItems: 'flex-start',
     marginBottom: '2rem'
   },
   impactTitle: {
-    fontSize: '0.95rem',
-    color: 'var(--tin-rust)',
-    fontWeight: 'bold',
-    marginBottom: '2px'
+    fontSize: '0.98rem',
+    color: 'var(--terracotta-clay-deep)',
+    fontWeight: 600,
+    fontFamily: 'var(--font-sans)',
+    marginBottom: '4px'
   },
   impactText: {
-    fontSize: '0.85rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.4',
+    fontSize: '0.9rem',
+    color: 'var(--muted-sage)',
+    lineHeight: '1.6',
     marginBottom: 0
   },
   formRow: {
@@ -569,90 +568,89 @@ const styles = {
   },
   formLabel: {
     fontSize: '0.85rem',
-    fontWeight: 'bold',
-    color: 'var(--koa-wood)'
+    fontWeight: 600,
+    color: 'var(--plantation-ink)'
   },
   formInput: {
     padding: '0.75rem',
-    border: '1px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
     outline: 'none',
-    fontSize: '0.95rem'
+    fontSize: '0.95rem',
+    backgroundColor: 'var(--sugarcane-cream)'
   },
   ccFields: {
-    border: '1px solid var(--kraft-tan-dark)',
+    border: '1px solid var(--hairline)',
     padding: '1.25rem',
-    borderRadius: '4px',
-    backgroundColor: 'var(--paper-dark)',
+    borderRadius: 'var(--border-radius-md)',
+    backgroundColor: 'var(--sand)',
     marginBottom: '2rem'
   },
   submitBtn: {
-    width: '100%',
-    justifyContent: 'center'
+    width: '100%'
   },
   // Success state
   successCard: {
-    padding: '3rem 2rem',
-    textAlign: 'center',
-    borderRadius: '4px'
+    padding: 'clamp(2.5rem, 5vw, 3rem) 2rem',
+    textAlign: 'center'
   },
   successIcon: {
-    width: '70px',
-    height: '70px',
+    width: '66px',
+    height: '66px',
     borderRadius: '50%',
-    backgroundColor: 'var(--cane-green)',
+    backgroundColor: 'var(--terracotta-clay)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     margin: '0 auto 1.5rem auto'
   },
   successTitle: {
-    fontSize: '1.8rem',
-    color: 'var(--cane-green)',
+    fontSize: '1.9rem',
+    fontWeight: 500,
     marginBottom: '0.75rem'
   },
   successText: {
     fontSize: '1rem',
-    color: 'var(--text-muted)',
+    color: 'var(--muted-sage)',
     marginBottom: '2rem',
-    lineHeight: '1.6'
+    lineHeight: '1.7'
   },
   helpfulCard: {
     display: 'flex',
     gap: '12px',
     alignItems: 'flex-start',
-    backgroundColor: 'rgba(27,56,35,0.06)',
-    borderLeft: '4px solid var(--cane-green)',
+    backgroundColor: 'var(--sand)',
+    borderLeft: '2px solid var(--plantation-ink)',
+    borderRadius: 'var(--border-radius-md)',
     padding: '1rem',
     textAlign: 'left',
     maxWidth: '450px',
     margin: '0 auto 2rem auto'
   },
   noteTitle: {
-    fontSize: '0.9rem',
-    fontWeight: 'bold',
-    color: 'var(--cane-green)',
-    marginBottom: '2px'
+    fontSize: '0.92rem',
+    fontWeight: 600,
+    color: 'var(--plantation-ink)',
+    marginBottom: '4px'
   },
   noteDesc: {
-    fontSize: '0.8rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.4'
+    fontSize: '0.88rem',
+    color: 'var(--muted-sage)',
+    lineHeight: '1.6'
   },
   // Sidebar
   impactSidebar: {
     width: '100%'
   },
   sideImpactCard: {
-    padding: '1.75rem',
-    borderRadius: '4px'
+    padding: '1.75rem'
   },
   sideImpactTitle: {
     fontSize: '1.25rem',
-    color: 'var(--koa-wood)',
+    fontWeight: 500,
     marginBottom: '1rem',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    paddingBottom: '4px'
+    borderBottom: '1px solid var(--hairline)',
+    paddingBottom: '0.65rem'
   },
   impactList: {
     listStyle: 'none',
@@ -661,9 +659,9 @@ const styles = {
     gap: '16px'
   },
   impactListItem: {
-    fontSize: '0.9rem',
-    lineHeight: '1.5',
-    color: 'var(--text-muted)'
+    fontSize: '0.92rem',
+    lineHeight: '1.6',
+    color: 'var(--muted-sage)'
   },
   // Membership Style
   membershipSection: {
@@ -675,9 +673,9 @@ const styles = {
     marginBottom: '3rem'
   },
   subHeadingTitle: {
-    fontSize: '1.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
+    fontSize: '1.9rem',
+    fontWeight: 500,
+    marginBottom: '0.75rem'
   },
   tiersGrid: {
     display: 'grid',
@@ -690,7 +688,6 @@ const styles = {
   },
   tierCard: {
     padding: '2rem 1.5rem',
-    borderRadius: '4px',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -701,7 +698,7 @@ const styles = {
   },
   tierLevel: {
     fontSize: '1.5rem',
-    color: 'var(--koa-wood-dark)',
+    fontWeight: 500,
     marginBottom: '0.5rem'
   },
   priceBlock: {
@@ -711,13 +708,13 @@ const styles = {
   },
   tierPrice: {
     fontSize: '2rem',
-    fontWeight: 'bold',
-    fontFamily: 'var(--font-typewriter)',
-    color: 'var(--tin-rust)'
+    fontWeight: 500,
+    fontFamily: 'var(--font-display)',
+    color: 'var(--terracotta-clay)'
   },
   tierPeriod: {
     fontSize: '0.85rem',
-    color: 'var(--text-muted)'
+    color: 'var(--muted-sage)'
   },
   benefitsList: {
     listStyle: 'none',
@@ -727,16 +724,15 @@ const styles = {
     marginBottom: '2rem'
   },
   benefitItem: {
-    fontSize: '0.85rem',
-    lineHeight: '1.4',
-    color: 'var(--text-dark)',
+    fontSize: '0.9rem',
+    lineHeight: '1.55',
+    color: 'var(--muted-sage)',
     display: 'flex',
     alignItems: 'flex-start',
     gap: '8px'
   },
   selectTierBtn: {
     width: '100%',
-    justifyContent: 'center',
     marginTop: 'auto'
   }
 };

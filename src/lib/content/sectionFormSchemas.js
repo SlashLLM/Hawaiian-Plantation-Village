@@ -58,6 +58,61 @@ const SECTION_FORM_SCHEMAS = {
       { title: 'Admission', fields: [infoBlock('admission', 'Admission')] },
     ],
   },
+  'home.cultures': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Cultures',
+        fields: [
+          objectList(
+            'items',
+            'Culture tiles',
+            { name: '', note: '' },
+            [
+              { key: 'name', label: 'Culture', type: 'text' },
+              { key: 'note', label: 'Note', type: 'text' },
+            ],
+            'Culture',
+          ),
+        ],
+      },
+    ],
+  },
+  'home.planVisit': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Audience doors',
+        fields: [
+          objectList(
+            'items',
+            'Doors',
+            { title: '', note: '', page: 'visit' },
+            [
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'note', label: 'Note', type: 'text' },
+              { key: 'page', label: 'Page id', type: 'text' },
+            ],
+            'Door',
+          ),
+        ],
+      },
+    ],
+  },
   'home.whyVisit': {
     groups: [
       { title: 'Header', fields: [STAMP_HEADER_NO_SUB] },
@@ -523,6 +578,134 @@ const SECTION_FORM_SCHEMAS = {
   // --- Stories ---
   'stories.header': {
     groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+
+  // --- Archives ---
+  'archives.header': {
+    groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+  'archives.collections': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Collections',
+        fields: [
+          objectList(
+            'items',
+            'Donor collections',
+            { id: '', name: '', blurb: '' },
+            [
+              { key: 'id', label: 'Collection key', type: 'text' },
+              { key: 'name', label: 'Name', type: 'text' },
+              { key: 'blurb', label: 'Description', type: 'textarea' },
+            ],
+            'Collection',
+          ),
+        ],
+      },
+    ],
+  },
+  'archives.howToLook': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Steps',
+        fields: [
+          objectList(
+            'steps',
+            'Looking steps',
+            { title: '', note: '' },
+            [
+              { key: 'title', label: 'Step title', type: 'text' },
+              { key: 'note', label: 'Note', type: 'textarea' },
+            ],
+            'Step',
+          ),
+        ],
+      },
+    ],
+  },
+  'archives.samples': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Worked examples',
+        fields: [
+          objectList(
+            'items',
+            'Samples',
+            { label: '', title: '', arkIds: [], note: '' },
+            [
+              { key: 'label', label: 'Label', type: 'text' },
+              { key: 'title', label: 'Title', type: 'text' },
+              { key: 'note', label: 'Reading', type: 'textarea' },
+            ],
+            'Sample',
+          ),
+        ],
+      },
+    ],
+  },
+  'archives.analyze': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+    ],
+  },
+  'archives.resources': {
+    groups: [
+      {
+        title: 'Header',
+        fields: [
+          text('eyebrow', 'Eyebrow'),
+          text('title', 'Title'),
+          textarea('description', 'Description'),
+        ],
+      },
+      {
+        title: 'Resources',
+        fields: [
+          objectList(
+            'items',
+            'Research resources',
+            { label: '', note: '', href: '' },
+            [
+              { key: 'label', label: 'Label', type: 'text' },
+              { key: 'note', label: 'Note', type: 'textarea' },
+              { key: 'href', label: 'Link (optional)', type: 'text' },
+            ],
+            'Resource',
+          ),
+        ],
+      },
+    ],
   },
 
   // --- Learn ---

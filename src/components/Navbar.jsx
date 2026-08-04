@@ -15,6 +15,7 @@ export default function Navbar({ activePage }) {
     { id: 'home', label: 'Home' },
     { id: 'visit', label: 'Visit' },
     { id: 'stories', label: 'Stories' },
+    { id: 'archives', label: 'Archives' },
     { id: 'play', label: 'Play & Learn' },
     { id: 'learn', label: 'Learn' },
     { id: 'support', label: 'Support' },
@@ -31,6 +32,7 @@ export default function Navbar({ activePage }) {
 
   const isActive = (linkId) => {
     if (linkId === 'learn' && location.pathname.startsWith('/learn')) return true;
+    if (linkId === 'archives' && location.pathname.startsWith('/archives')) return true;
     return activePage === linkId;
   };
 
@@ -64,10 +66,10 @@ export default function Navbar({ activePage }) {
 
         <div className="nav-desktop-ctas" style={styles.ctaGroup}>
           <button onClick={() => handleNavClick('support')} style={styles.donateLink}>
-            <Heart size={16} /> Donate
+            <Heart size={15} /> Give
           </button>
           <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={styles.ticketBtn}>
-            <Ticket size={16} /> Buy Tickets
+            <Ticket size={15} /> Get tickets
           </button>
         </div>
 
@@ -93,13 +95,13 @@ export default function Navbar({ activePage }) {
               </li>
             ))}
             <li style={styles.mobileLinkItem}>
-              <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--tin-rust)' }}>
-                Donate Now
+              <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--terracotta-clay-deep)' }}>
+                Give
               </button>
             </li>
             <li style={styles.mobileLinkItem}>
-              <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}>
-                <Ticket size={16} /> Buy Tickets
+              <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={{ width: '100%', marginTop: '10px' }}>
+                <Ticket size={16} /> Get tickets
               </button>
             </li>
           </ul>
@@ -114,18 +116,19 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: 100,
-    backgroundColor: 'var(--paper-light)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    boxShadow: 'var(--shadow-sm)',
+    backgroundColor: 'rgba(250, 246, 236, 0.94)',
+    backdropFilter: 'saturate(140%) blur(8px)',
+    borderBottom: '1px solid var(--hairline)',
     width: '100%'
   },
   navWrapper: {
-    maxWidth: '1200px',
+    maxWidth: '1180px',
     margin: '0 auto',
-    padding: '0.75rem 1.5rem',
+    padding: '0.85rem clamp(1.25rem, 4vw, 2.5rem)',
     display: 'flex',
     justifyContent: 'space-between',
-    alignItems: 'center'
+    alignItems: 'center',
+    gap: '1.5rem'
   },
   logoGroup: {
     display: 'flex',
@@ -134,8 +137,8 @@ const styles = {
     cursor: 'pointer'
   },
   logoImg: {
-    height: '45px',
-    width: '45px',
+    height: '42px',
+    width: '42px',
     objectFit: 'contain'
   },
   logoText: {
@@ -144,22 +147,23 @@ const styles = {
   },
   brandTitle: {
     fontFamily: 'var(--font-display)',
-    fontWeight: '700',
-    fontSize: '1.25rem',
-    color: 'var(--koa-wood)',
-    lineHeight: '1.1'
+    fontWeight: '500',
+    fontSize: '1.2rem',
+    color: 'var(--plantation-ink)',
+    lineHeight: '1.1',
+    letterSpacing: '-0.01em'
   },
   brandSubtitle: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.7rem',
-    letterSpacing: '0.05em',
-    color: 'var(--text-muted)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    letterSpacing: '0.12em',
+    color: 'var(--muted-sage)',
     textTransform: 'uppercase'
   },
   navLinksList: {
     display: 'flex',
     listStyle: 'none',
-    gap: '24px',
+    gap: 'clamp(12px, 1.7vw, 24px)',
     alignItems: 'center',
     margin: 0,
     padding: 0
@@ -170,58 +174,52 @@ const styles = {
   navButton: {
     background: 'none',
     border: 'none',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.9rem',
-    fontWeight: '700',
-    color: 'var(--text-dark)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.92rem',
+    fontWeight: '500',
+    color: 'var(--plantation-ink)',
     cursor: 'pointer',
+    whiteSpace: 'nowrap',
     position: 'relative',
-    padding: '4px 0',
-    textTransform: 'uppercase'
+    padding: '4px 0'
   },
   navButtonActive: {
-    color: 'var(--cane-green)'
+    fontWeight: '600'
   },
   activeDot: {
     position: 'absolute',
-    bottom: '-4px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '4px',
-    height: '4px',
-    borderRadius: '50%',
-    backgroundColor: 'var(--cane-green)'
+    bottom: '-6px',
+    left: 0,
+    right: 0,
+    height: '1px',
+    backgroundColor: 'var(--heritage-gold)'
   },
   ctaGroup: {
     display: 'flex',
     alignItems: 'center',
-    gap: '16px'
+    gap: '18px'
   },
   donateLink: {
     background: 'none',
     border: 'none',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.85rem',
-    fontWeight: '700',
-    color: 'var(--tin-rust)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.95rem',
+    fontWeight: '500',
+    color: 'var(--terracotta-clay-deep)',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '6px',
-    textTransform: 'uppercase'
+    gap: '6px'
   },
   ticketBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    padding: '0.5rem 1rem',
-    fontSize: '0.85rem'
+    padding: '0.55rem 1.1rem',
+    fontSize: '0.9rem'
   },
   mobileToggle: {
     display: 'none',
     background: 'none',
     border: 'none',
-    color: 'var(--koa-wood)',
+    color: 'var(--plantation-ink)',
     cursor: 'pointer',
     padding: '4px'
   },
@@ -230,9 +228,8 @@ const styles = {
     top: '100%',
     left: 0,
     width: '100%',
-    backgroundColor: 'var(--paper-light)',
-    borderBottom: '2px solid var(--kraft-tan-dark)',
-    boxShadow: 'var(--shadow-md)',
+    backgroundColor: 'var(--sugarcane-cream)',
+    borderBottom: '1px solid var(--hairline)',
     padding: '1.5rem',
     zIndex: 99
   },
@@ -248,19 +245,18 @@ const styles = {
   mobileNavButton: {
     background: 'none',
     border: 'none',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '1rem',
-    fontWeight: '700',
-    color: 'var(--text-dark)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '1.05rem',
+    fontWeight: '500',
+    color: 'var(--plantation-ink)',
     cursor: 'pointer',
     width: '100%',
     textAlign: 'left',
-    textTransform: 'uppercase',
     padding: '8px 0'
   },
   mobileNavButtonActive: {
-    color: 'var(--cane-green)',
-    borderLeft: '4px solid var(--cane-green)',
+    fontWeight: '600',
+    borderLeft: '2px solid var(--heritage-gold)',
     paddingLeft: '12px'
   }
 };

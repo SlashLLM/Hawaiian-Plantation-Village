@@ -1,6 +1,6 @@
 import { DEFAULT_PAGE_SECTIONS } from './fallbacks.js';
 
-export const PAGE_KEYS = ['home', 'visit', 'about', 'learn', 'play', 'stories', 'support', 'tickets'];
+export const PAGE_KEYS = ['home', 'visit', 'about', 'learn', 'play', 'stories', 'archives', 'support', 'tickets'];
 
 export const PAGE_LABELS = {
   home: 'Home',
@@ -9,6 +9,7 @@ export const PAGE_LABELS = {
   learn: 'Learn',
   play: 'Play & Learn',
   stories: 'Stories',
+  archives: 'Archives',
   support: 'Support',
   tickets: 'Tickets',
 };

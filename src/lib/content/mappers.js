@@ -38,6 +38,30 @@ export function mapCampStory(row) {
   };
 }
 
+export function mapPhotograph(row) {
+  const meta = row.metadata ?? {};
+  return {
+    arkId: meta.arkId ?? row.slug,
+    slug: row.slug,
+    title: row.title,
+    caption: row.summary ?? row.body ?? '',
+    imageUrl: row.image_url ?? meta.imageUrl ?? null,
+    thumbnailUrl: meta.thumbnailUrl ?? row.image_url ?? meta.imageUrl ?? null,
+    collection: meta.collection ?? row.category ?? 'fwcgp',
+    filingCategory: meta.filingCategory ?? '',
+    subject: meta.subject ?? '',
+    donor: meta.donor ?? '',
+    accessionNumber: meta.accessionNumber ?? '',
+    circaDate: meta.circaDate ?? row.event_date_label ?? '',
+    photographer: meta.photographer ?? '',
+    relatedArkIds: meta.relatedArkIds ?? [],
+    backImageUrl: meta.backImageUrl ?? null,
+    accessionCardUrl: meta.accessionCardUrl ?? null,
+    studyNotes: meta.studyNotes ?? row.body ?? '',
+    provisional: meta.provisional ?? false,
+  };
+}
+
 export function mapCareer(row) {
   const meta = row.metadata ?? {};
   return {

@@ -195,10 +195,9 @@ export default function Stories() {
       `}</style>
       <PageHeaderParallax
         layers={parallaxLayers.stories}
-        stamp={header?.stamp ?? 'ORAL HISTORIES'}
-        stampClass={`ink-stamp ${header?.stampClass ?? 'green'}`}
-        title={header?.title ?? 'Plantation Stories'}
-        subtitle={header?.subtitle ?? 'Explore the lives, struggles, and music of the eight immigrant communities that built Waipahu.'}
+        stamp={header?.stamp ?? 'Oral histories'}
+        title={header?.title ?? 'Plantation stories'}
+        subtitle={header?.subtitle ?? 'The lives, struggles, and music of the eight immigrant communities that built Waipahu.'}
       />
 
       <div style={styles.container}>

@@ -1,0 +1,435 @@
+{
+  "color/brand/plantation-ink": {
+    "value": "#1c2b22",
+    "type": "color",
+    "description": "Primary ink — text, nav, primary buttons"
+  },
+  "color/brand/plantation-ink-soft": {
+    "value": "#2a3d31",
+    "type": "color",
+    "description": "Ink hover / soft fill"
+  },
+  "color/brand/heritage-gold": {
+    "value": "#d98e04",
+    "type": "color",
+    "description": "Primary action (CTA) fill"
+  },
+  "color/brand/heritage-gold-deep": {
+    "value": "#c98304",
+    "type": "color",
+    "description": "Gold CTA hover"
+  },
+  "color/brand/heritage-gold-ink": {
+    "value": "#8a5a02",
+    "type": "color",
+    "description": "Gold text on cream/sand (WCAG AA)"
+  },
+  "color/brand/terracotta-clay": {
+    "value": "#b5502e",
+    "type": "color",
+    "description": "Give / donate accent fill"
+  },
+  "color/brand/terracotta-clay-deep": {
+    "value": "#97401f",
+    "type": "color",
+    "description": "Clay hover and clay text on light surfaces"
+  },
+  "color/brand/sugarcane-cream": {
+    "value": "#faf6ec",
+    "type": "color",
+    "description": "Primary page surface"
+  },
+  "color/brand/sand": {
+    "value": "#f0e9d8",
+    "type": "color",
+    "description": "Secondary surface / section band"
+  },
+  "color/brand/muted-sage": {
+    "value": "#61685e",
+    "type": "color",
+    "description": "Supporting / muted text"
+  },
+  "color/supporting/ocean-teal": {
+    "value": "#3f5c4c",
+    "type": "color",
+    "description": "Link colour"
+  },
+  "color/supporting/ocean-teal-light": {
+    "value": "#2f4739",
+    "type": "color",
+    "description": "Link hover"
+  },
+  "color/supporting/koa-wood-dark": {
+    "value": "#101a14",
+    "type": "color",
+    "description": "Deepest ink (legacy koa-wood-dark)"
+  },
+  "color/supporting/kraft-tan-dark": {
+    "value": "#ddd3bd",
+    "type": "color",
+    "description": "Subtle border tint (legacy)"
+  },
+  "color/border/hairline": {
+    "value": "rgba(28, 43, 34, 0.14)",
+    "type": "color",
+    "description": "Default hairline on cream/sand"
+  },
+  "color/border/hairline-strong": {
+    "value": "rgba(28, 43, 34, 0.24)",
+    "type": "color",
+    "description": "Stronger hairline / ghost button border"
+  },
+  "color/border/hairline-invert": {
+    "value": "rgba(250, 246, 236, 0.22)",
+    "type": "color",
+    "description": "Hairline on ink surfaces"
+  },
+  "color/semantic/surface/cream": {
+    "value": "#faf6ec",
+    "type": "color",
+    "description": "Default page background"
+  },
+  "color/semantic/surface/sand": {
+    "value": "#f0e9d8",
+    "type": "color",
+    "description": "Alternating section background"
+  },
+  "color/semantic/surface/ink": {
+    "value": "#1c2b22",
+    "type": "color",
+    "description": "Inverted / hero band"
+  },
+  "color/semantic/text/primary": {
+    "value": "#1c2b22",
+    "type": "color",
+    "description": "Body and headings on light surfaces"
+  },
+  "color/semantic/text/muted": {
+    "value": "#61685e",
+    "type": "color",
+    "description": "Supporting copy"
+  },
+  "color/semantic/text/on-ink": {
+    "value": "#faf6ec",
+    "type": "color",
+    "description": "Headings on ink"
+  },
+  "color/semantic/text/on-ink-muted": {
+    "value": "rgba(250, 246, 236, 0.78)",
+    "type": "color",
+    "description": "Body on ink (~78% cream)"
+  },
+  "color/semantic/text/gold": {
+    "value": "#8a5a02",
+    "type": "color",
+    "description": "Gold text on light surfaces"
+  },
+  "color/semantic/text/clay": {
+    "value": "#97401f",
+    "type": "color",
+    "description": "Clay accent text / Give link"
+  },
+  "color/semantic/cta/primary": {
+    "value": "#1c2b22",
+    "type": "color",
+    "description": ".btn-primary fill"
+  },
+  "color/semantic/cta/accent": {
+    "value": "#d98e04",
+    "type": "color",
+    "description": ".btn-accent — one gold act per view"
+  },
+  "color/semantic/cta/accent-hover": {
+    "value": "#c98304",
+    "type": "color",
+    "description": ""
+  },
+  "color/semantic/cta/give": {
+    "value": "#b5502e",
+    "type": "color",
+    "description": ".btn-clay — donate / give moments"
+  },
+  "color/semantic/cta/give-hover": {
+    "value": "#97401f",
+    "type": "color",
+    "description": ""
+  },
+  "color/semantic/cta/on-accent": {
+    "value": "#1c2b22",
+    "type": "color",
+    "description": "Label on gold CTA"
+  },
+  "color/semantic/cta/on-give": {
+    "value": "#faf6ec",
+    "type": "color",
+    "description": "Label on clay CTA"
+  },
+  "color/semantic/cta/on-primary": {
+    "value": "#faf6ec",
+    "type": "color",
+    "description": "Label on ink CTA"
+  },
+  "fontFamily/display": {
+    "value": "Fraunces, Georgia, serif",
+    "type": "fontFamilies",
+    "description": "Editorial display / headings"
+  },
+  "fontFamily/body": {
+    "value": "Inter, system-ui, sans-serif",
+    "type": "fontFamilies",
+    "description": "Body copy"
+  },
+  "fontFamily/sans": {
+    "value": "Inter, system-ui, sans-serif",
+    "type": "fontFamilies",
+    "description": "UI / nav / buttons"
+  },
+  "typography/display/hero": {
+    "value": {
+      "fontFamily": "Fraunces, Georgia, serif",
+      "fontWeight": "500",
+      "fontSize": "clamp(2.5rem, 6.4vw, 5rem)",
+      "lineHeight": "1.02",
+      "letterSpacing": "-0.025em",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ".hero-headline"
+  },
+  "typography/display/section": {
+    "value": {
+      "fontFamily": "Fraunces, Georgia, serif",
+      "fontWeight": "500",
+      "fontSize": "clamp(2rem, 4.2vw, 3.1rem)",
+      "lineHeight": "1.08",
+      "letterSpacing": "-0.015em",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ".editorial-title"
+  },
+  "typography/display/heading": {
+    "value": {
+      "fontFamily": "Fraunces, Georgia, serif",
+      "fontWeight": "600",
+      "fontSize": "2rem",
+      "lineHeight": "1.12",
+      "letterSpacing": "-0.015em",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": "Default h1–h6"
+  },
+  "typography/body/default": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "400",
+      "fontSize": "1rem",
+      "lineHeight": "1.6",
+      "letterSpacing": "0",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ""
+  },
+  "typography/body/lede": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "400",
+      "fontSize": "1.05rem",
+      "lineHeight": "1.7",
+      "letterSpacing": "0",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ".editorial-lede"
+  },
+  "typography/eyebrow": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "600",
+      "fontSize": "0.72rem",
+      "lineHeight": "1.4",
+      "letterSpacing": "0.16em",
+      "textCase": "uppercase"
+    },
+    "type": "typography",
+    "description": ".editorial-eyebrow"
+  },
+  "typography/ui/button": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "600",
+      "fontSize": "0.95rem",
+      "lineHeight": "1.2",
+      "letterSpacing": "0",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ""
+  },
+  "typography/ui/nav": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "500",
+      "fontSize": "0.92rem",
+      "lineHeight": "1.2",
+      "letterSpacing": "0",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ""
+  },
+  "typography/caption/stat": {
+    "value": {
+      "fontFamily": "Inter, system-ui, sans-serif",
+      "fontWeight": "400",
+      "fontSize": "0.78rem",
+      "lineHeight": "1.3",
+      "letterSpacing": "0.12em",
+      "textCase": "uppercase"
+    },
+    "type": "typography",
+    "description": ".hero-stat-label"
+  },
+  "typography/caption/stat-value": {
+    "value": {
+      "fontFamily": "Fraunces, Georgia, serif",
+      "fontWeight": "500",
+      "fontSize": "clamp(1.5rem, 2.6vw, 2rem)",
+      "lineHeight": "1",
+      "letterSpacing": "0",
+      "textCase": "none"
+    },
+    "type": "typography",
+    "description": ".hero-stat-value"
+  },
+  "spacing/4": {
+    "value": "4px",
+    "type": "spacing"
+  },
+  "spacing/8": {
+    "value": "8px",
+    "type": "spacing"
+  },
+  "spacing/12": {
+    "value": "12px",
+    "type": "spacing"
+  },
+  "spacing/16": {
+    "value": "16px",
+    "type": "spacing"
+  },
+  "spacing/20": {
+    "value": "20px",
+    "type": "spacing"
+  },
+  "spacing/24": {
+    "value": "24px",
+    "type": "spacing"
+  },
+  "spacing/32": {
+    "value": "32px",
+    "type": "spacing"
+  },
+  "spacing/48": {
+    "value": "48px",
+    "type": "spacing"
+  },
+  "spacing/64": {
+    "value": "64px",
+    "type": "spacing"
+  },
+  "spacing/80": {
+    "value": "80px",
+    "type": "spacing"
+  },
+  "spacing/112": {
+    "value": "112px",
+    "type": "spacing"
+  },
+  "spacing/named/button-y": {
+    "value": "0.8rem",
+    "type": "spacing",
+    "description": "Button vertical padding"
+  },
+  "spacing/named/button-x": {
+    "value": "1.4rem",
+    "type": "spacing",
+    "description": "Button horizontal padding"
+  },
+  "spacing/named/button-gap": {
+    "value": "8px",
+    "type": "spacing",
+    "description": ""
+  },
+  "spacing/named/card": {
+    "value": "1.5rem",
+    "type": "spacing",
+    "description": ""
+  },
+  "spacing/named/tile-gap": {
+    "value": "1.5rem",
+    "type": "spacing",
+    "description": ""
+  },
+  "layout/shell/inline": {
+    "value": "clamp(1.25rem, 4vw, 2.5rem)",
+    "type": "spacing",
+    "description": ".editorial-shell horizontal padding"
+  },
+  "layout/shell/max-width": {
+    "value": "1180px",
+    "type": "sizing"
+  },
+  "layout/section/block": {
+    "value": "clamp(3.5rem, 8vw, 7rem)",
+    "type": "spacing",
+    "description": "--section-pad / .editorial-section"
+  },
+  "layout/measure/prose": {
+    "value": "68ch",
+    "type": "sizing"
+  },
+  "radius/sm": {
+    "value": "4px",
+    "type": "borderRadius",
+    "description": "--border-radius-sm"
+  },
+  "radius/md": {
+    "value": "6px",
+    "type": "borderRadius",
+    "description": "--border-radius-md"
+  },
+  "radius/lg": {
+    "value": "6px",
+    "type": "borderRadius",
+    "description": "--border-radius-lg (same as md per brief)"
+  },
+  "shadow/sm": {
+    "value": "none",
+    "type": "boxShadow"
+  },
+  "shadow/md": {
+    "value": {
+      "x": "0",
+      "y": "1px",
+      "blur": "2px",
+      "spread": "0",
+      "color": "rgba(28, 43, 34, 0.06)",
+      "type": "dropShadow"
+    },
+    "type": "boxShadow"
+  },
+  "shadow/lg": {
+    "value": {
+      "x": "0",
+      "y": "8px",
+      "blur": "24px",
+      "spread": "0",
+      "color": "rgba(28, 43, 34, 0.1)",
+      "type": "dropShadow"
+    },
+    "type": "boxShadow"
+  }
+}
