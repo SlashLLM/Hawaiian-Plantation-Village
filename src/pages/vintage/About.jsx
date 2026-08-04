@@ -4,7 +4,6 @@ import {
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
   ChevronRight, ChevronDown, Send, Printer, User, AlertCircle
 } from 'lucide-react';
-import bangoImage from '../../assets/bango_lunch_tin.png';
 import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
 
@@ -243,7 +242,11 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 </div>
                 <div style={styles.imgCol}>
                   <div style={styles.imgWrapper}>
-                    <img src={bangoImage} alt="Vintage Bango tags and lunch tin" style={styles.featuredImg} />
+                    <img
+                      src="/digitized-photos/ark_70111_1ZgL.0.jpeg"
+                      alt="Restored camp house at Hawaiian Plantation Village"
+                      style={styles.featuredImg}
+                    />
                     <div style={styles.imgTextureOverlay} />
                   </div>
                 </div>
@@ -272,9 +275,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               </div>
             </section>
 
-            {/* Leadership */}
+            {/* Leadership / founders */}
+            {leadership.length > 0 && (
             <section style={styles.aboutSection}>
-              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Leadership & Board'}</h2>
+              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Founders and builders'}</h2>
               <div style={styles.boardGrid}>
                 {leadership.map((person) => (
                   <div key={person.name} className="paper-card" style={styles.boardCard}>
@@ -285,6 +289,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 ))}
               </div>
             </section>
+            )}
           </div>
         )}
 
@@ -394,6 +399,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
             </div>
 
             {/* Accordion Listings */}
+            {careersList.length === 0 ? (
+              <div style={styles.noResultsCard} className="paper-card">
+                <p style={styles.noResultsText}>
+                  No open positions are listed right now. Volunteer openings for artifact and archives
+                  assistants are shared when available — use Contact to ask about volunteering.
+                </p>
+              </div>
+            ) : (
             <div style={styles.careersList}>
               {careersList.map(job => {
                 const isExpanded = expandedJobId === job.id;
@@ -459,6 +472,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 );
               })}
             </div>
+            )}
 
             {/* Career Application Modal */}
             {applyingJob && (

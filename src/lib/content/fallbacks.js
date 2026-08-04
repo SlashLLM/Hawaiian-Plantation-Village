@@ -13,7 +13,8 @@ export const DEFAULT_SITE_SETTINGS = {
   brand: {
     title: 'Hawaiian Plantation Village',
     subtitle: 'Waipahu, Oʻahu, Hawaiʻi',
-    tagline: 'A non-profit cultural heritage destination dedicated to preserving the history of Hawaii\'s plantation workers and immigrant roots.',
+    tagline:
+      'A living plantation village built so future generations can recognize today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.',
     estBadge: 'EST. 1992',
   },
   nav: [
@@ -28,8 +29,9 @@ export const DEFAULT_SITE_SETTINGS = {
   ],
   footer: {
     brand: 'Hawaiian Plantation Village',
-    text: 'A non-profit cultural heritage destination dedicated to preserving the history of Hawaii\'s plantation workers and immigrant roots.',
-    copyright: '© 2026 Hawaiian Plantation Village. All rights reserved. Built for cultural stewardship.',
+    text:
+      'Founded by plantation workers and their descendants to preserve plantation heritage and legacy through authentic homes, gardens, and community memory.',
+    copyright: '© 2026 Hawaiian Plantation Village. All rights reserved.',
     ctaLinks: [
       { label: 'Get tickets', page: 'tickets' },
       { label: 'Become a member', page: 'support' },
@@ -37,8 +39,8 @@ export const DEFAULT_SITE_SETTINGS = {
       { label: 'Volunteer with us', page: 'support' },
     ],
     newsletter: {
-      heading: 'THE LEDGER',
-      description: 'Seasonal festivals, lectures, and volunteer days, once a month.',
+      heading: 'Village updates',
+      description: 'Festivals, school tours, and volunteer days from Waipahu.',
       placeholder: 'Your email address',
       buttonLabel: 'Join',
     },
@@ -62,25 +64,25 @@ export const DEFAULT_SITE_SETTINGS = {
     parking: 'Free Visitor Parking Onsite',
   },
   hero: {
-    eyebrow: 'Hawaiʻi\'s living museum · Waipahu, Oʻahu',
-    headline: 'History didn\'t happen here. It still does.',
+    eyebrow: 'Waipahu, Oʻahu · Living plantation village',
+    headline: 'The story of the plantation worker',
     support:
-      'Walk the camp houses where eight immigrant communities built a life together — and still gather today.',
+      'Homes, furnishings, and gardens for the major ethnic groups who worked Hawaiʻi\'s plantations — built so later generations can walk that heritage.',
     primaryCta: { label: 'Plan your visit' },
     secondaryCta: { label: 'Watch the story' },
     stats: [
-      { value: '1992', label: 'Opened' },
+      { value: '1973', label: 'Friends founded' },
+      { value: '1992', label: 'Village opened' },
       { value: '8', label: 'Cultures' },
-      { value: '30', label: 'Structures' },
-      { value: '25k+', label: 'Students a year' },
+      { value: '4', label: 'Free festivals' },
     ],
     videoSrc: '/Plantation_life_documentary_video_202607131034.mp4',
     posterSrc: '/digitized-photos/ark_70111_1ZgL.0.jpeg',
   },
   seo: {
-    title: 'Hawaiian Plantation Village | Living History Museum in Waipahu, Oʻahu',
+    title: 'Hawaiian Plantation Village | Plantation Heritage in Waipahu, Oʻahu',
     description:
-      'Explore 25 restored plantation camp houses and hear the stories of immigrant communities who shaped modern Hawaiʻi. Plan your visit, book tickets, and discover educational programs.',
+      'Walk a living plantation village in Waipahu: ethnic camp homes, gardens, school tours, and free festivals that honor Hawaiʻi\'s plantation workers and immigrant communities.',
     keywords: [
       'Hawaiian Plantation Village',
       'Waipahu history',
@@ -90,9 +92,9 @@ export const DEFAULT_SITE_SETTINGS = {
     ],
   },
   donationPresets: [
-    { amount: 25, label: '$25 buys organic elements for hands-on history classes.' },
-    { amount: 50, label: '$50 maintains camp gardens for three months.' },
-    { amount: 100, label: '$100 funds school admission worksheets for a class of 10.' },
+    { amount: 25, label: '$25 helps process artifact and photograph donations.' },
+    { amount: 50, label: '$50 supports volunteer work in the collections archives.' },
+    { amount: 100, label: '$100 helps furnish and care for ethnic camp homes.' },
   ],
 };
 
@@ -105,19 +107,19 @@ export const PHOTOGRAPH_COLLECTIONS = [
     id: 'oahu_sugar',
     name: 'Oahu Sugar Company',
     blurb:
-      'Mainly 1940s to 1950s: cane cultivation and harvesting, mill operations, water systems, housing, and medical services. Most images are credited to R.H. “Harry” Lodge, division overseer, and Ernest Malterre Jr., housing supervisor.',
+      'Mainly from the 1940s to 1950s: sugar cane cultivation and harvesting, finances, mill operations, water systems, housing, and medical services. R.H. “Harry” Lodge, division overseer, and Ernest Malterre, Jr., housing supervisor, are credited for most of the collection. Lodge’s photographs of Honouliuli Internment Camp remain a constant resource for researchers.',
   },
   {
     id: 'murakoshi',
     name: 'Murakoshi Collection',
     blurb:
-      'Mae Okada’s collection of father-and-son photographers Nobunosuke and Henry Murakoshi. Nobunosuke worked mostly in the studio; Henry photographed school activities, picnics, camp homes, and businesses around Waipahu.',
+      'Mae Okada’s collection of father-and-son photographers Nobunosuke and Henry Murakoshi. Nobunosuke’s photographs are primarily studio work; Henry’s give a peek into everyday Waipahu — school activities, picnics, celebrations, community events, camp homes, businesses, and locations.',
   },
   {
     id: 'fwcgp',
     name: 'Friends of Waipahu Cultural Garden Park',
     blurb:
-      'The largest collection in the archives, built from family donations: work culture, WWII induction, graduations, funerals, panoramic class pictures, and documentation of the village site itself.',
+      'The largest collection in the HPV Photograph Archives: individual donations of family, work culture, WWII induction, group photos, education and recreation from plantation life. There is some overlap with Lodge, Malterre, and Nobunosuke Murakoshi. Includes panoramic class pictures, graduations, recognition and awards, and funeral photos.',
   },
 ];
 
@@ -145,56 +147,55 @@ export const DEFAULT_PAGE_SECTIONS = {
       },
     },
     cultures: {
-      eyebrow: 'Eight cultures, one village',
-      title: 'Every camp house belongs to somebody\'s family.',
+      eyebrow: 'Ethnic homes and gardens',
+      title: 'Each group furnished a home to tell its story',
       description:
-        'Each home was furnished by the community it belongs to — their gardens, their kitchens, their celebrations. Pick a culture and hear from the people who lived it.',
+        'Ethnic historical groups planned the exhibits: furnishings, thematic celebrations, and gardens with plants specific to their culture. School and visitor tours walk these homes throughout the year.',
       items: [
-        { name: 'Hawaiian', note: 'The land before the cane' },
-        { name: 'Chinese', note: 'First contract workers, 1852' },
-        { name: 'Japanese', note: 'Furo, temples, picture brides' },
-        { name: 'Filipino', note: 'Sakada families and pancit' },
-        { name: 'Korean', note: 'Small camp, long memory' },
-        { name: 'Okinawan', note: 'Sanshin on the porch' },
-        { name: 'Portuguese', note: 'Stone forno and sweet bread' },
-        { name: 'Puerto Rican', note: 'Christmas Eve in the parlor' },
+        { name: 'Hawaiian', note: 'The land and people before the cane' },
+        { name: 'Chinese', note: 'Contract labor roots and community life' },
+        { name: 'Japanese', note: 'Home life, celebrations, and tradition' },
+        { name: 'Filipino', note: 'Families, work culture, and gatherings' },
+        { name: 'Korean', note: 'A cultural celebration in the home' },
+        { name: 'Okinawan', note: 'Community memory in the camp' },
+        { name: 'Portuguese', note: 'Home, garden, and festa traditions' },
+        { name: 'Puerto Rican', note: 'Preparing for Christmas Eve' },
       ],
     },
     planVisit: {
       eyebrow: 'Plan your visit',
-      title: 'Walk in. Sit down. Stay a while.',
+      title: 'Walk the homes and gardens',
       description:
         'Tuesday to Saturday, 9:00 AM to 2:00 PM. 94-695 Waipahu Street, Waipahu, Oʻahu. Free parking onsite.',
       items: [
         { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
         { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
-        { title: 'Schools', note: 'DOE-aligned field trips and classroom curriculum.', page: 'learn' },
+        { title: 'Schools', note: 'Student tours through furnished homes and gardens.', page: 'learn' },
         { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
       ],
     },
     whyVisit: {
-      stamp: 'Living museum',
+      stamp: 'The village',
       stampClass: 'green',
-      title: 'Where Hawaiʻi\'s roots run deep',
+      title: 'A place to share the laborers\' story',
       paragraphs: [
-        'Hawaiian Plantation Village is an outdoor, living history museum located in Waipahu. It tells the story of the immigrants who arrived in Hawaiʻi from China, Portugal, Japan, Puerto Rico, Korea, the Philippines, Okinawa, and other nations during the sugar plantation era (1852–1946).',
-        'Explore 25 authentic, fully restored camp houses, complete with period furniture, personal artifacts, and lush heritage gardens. Walk the same paths as the workers, feel the heat of the stone ovens, and hear the stories of the community that shaped Hawaii\'s unique multicultural society.',
+        'Hawaiian Plantation Village focuses on the plantation worker — people from many cultures, natives and immigrants, who were promised a chance to better their lives. The long-range goal has been a collection of structures typifying a plantation village, with each major ethnic group represented by buildings, furnishings, and gardens.',
+        'Instead of hiring professionals to plan every exhibit, the village worked with ethnic historical groups to furnish each home with a thematic plan and to design gardens with plants specific to their culture. Docents guide students, teachers, and visitors through the hardships and life-affirming experiences of plantation camp life.',
       ],
       primaryCta: { label: 'Read our story', page: 'about' },
       secondaryCta: { label: 'Plan your visit', page: 'visit' },
     },
     featuredBango: {
-      stamp: 'Featured narrative',
+      stamp: 'Okada Education Center',
       stampClass: 'rust',
-      title: 'The bango system: numbers replacing names',
+      title: 'Orientation, galleries, and the archives',
       paragraphs: [
-        'Upon arrival at the plantation, each immigrant worker was stripped of their name in the company ledgers and issued a small, stamped metal disk called a Bango tag.',
-        'Because the plantation managers and overseers (Lunas) could not pronounce or easily spell the names of Chinese, Japanese, Portuguese, Korean, or Filipino workers, the Bango number became their identity. It dictated their work assignment, their pay ledger, and their credit at the company store.',
+        'The Okada Education Center — named after Hideo “Major” Okada, a former sugar worker, labor union organizer, and one of the village founders — houses the main office, meeting room, three exhibit galleries, collections archives and workroom, and gift shop.',
+        'Gallery exhibits introduce immigration, plantation work culture, and WWII internment at Honouliuli. Artifact and archives assistants — all volunteers — help process donations that continue to arrive from plantation-era households.',
       ],
-      quote:
-        'My grandfather told me the bango was a constant weight in his pocket. But it also forced the camps to find a common language—Pidgin—to connect their true names behind those metal numbers.',
-      quoteCite: '— Siu Lung Chang, Oral History Archive',
-      cta: { label: 'Hear the camp stories', page: 'stories' },
+      quote: '',
+      quoteCite: '',
+      cta: { label: 'Explore the photograph archives', page: 'archives' },
     },
     bellToBell: {
       stamp: 'Interactive',
@@ -206,42 +207,42 @@ export const DEFAULT_PAGE_SECTIONS = {
     educators: {
       stamp: 'For educators',
       stampClass: 'teal',
-      title: 'Curriculum and field trips',
+      title: 'School and visitor tours',
       paragraphs: [
-        'Bring history to life for your students. We offer structured field trips and curriculum-linked educational packages that cover the waves of plantation immigration, camp structures, cultural preservation, and the economic history of Oʻahu.',
-        'Our resources align directly with Hawaii Department of Education social studies and history standards, making field trips educational, engaging, and memorable.',
+        'School and visitor tours are scheduled throughout the year. Students, teachers, and visitors are guided through the furnished homes and survey the gardens around them.',
+        'Docents share both the hardships and the life-affirming experiences of living in plantation camps during Hawaiʻi\'s plantation era — a foundation for classroom work before and after the visit.',
       ],
       cta: { label: 'Bring a class', page: 'learn' },
     },
     getInvolved: {
       stamp: 'Get involved',
       stampClass: 'green',
-      title: 'Keep these houses standing',
+      title: 'Help keep the collections growing',
       description:
-        'Whether you become an annual member or make a one-time donation, your contribution directly funds critical cottage upkeep and cultural stewardship programs.',
+        'Volunteers process artifact and photograph donations, care for the village, and make plantation-themed crafts sold in the gift shop to support tours and programs.',
       donation: {
         title: 'Give directly',
         description:
-          'Help us protect the structural timbers and maintain the historical gardens surrounding our 25 camp cottages. 100% of direct donations go to site preservation.',
+          'Your gift supports the village homes, gardens, galleries, and the collections archives where donations are processed and stored.',
         items: DEFAULT_SITE_SETTINGS.donationPresets,
         cta: { label: 'Make a gift', page: 'support' },
       },
       membership: {
         title: 'Become a steward',
         description:
-          'Belong to the village. Support repeat access and gain exclusive member benefits while securing the heritage of immigrant communities.',
+          'Belong to the village. Membership helps sustain tours, free festivals, and the work of volunteer archives assistants.',
         items: [
           { label: 'Free admission', text: 'for you and your guests all year.' },
-          { label: '10% off', text: 'at the camp gift shop.' },
-          { label: 'Ledger circular', text: 'print magazine subscription.' },
+          { label: 'Gift shop support', text: 'volunteer crafts fund village programs.' },
+          { label: 'Village updates', text: 'festivals, tours, and volunteer days.' },
         ],
         cta: { label: 'See membership', page: 'support' },
       },
     },
     eventsHeader: {
-      stamp: 'Happening at the village',
+      stamp: 'Free village events',
       stampClass: 'gold',
-      title: 'Come for a festival, stay for the food',
+      title: 'Festivals the community is invited to',
     },
     testimonialsHeader: {
       stamp: 'From our visitors',
@@ -253,54 +254,44 @@ export const DEFAULT_PAGE_SECTIONS = {
     events: {
       items: [
         {
-          slug: 'obon-festival-event',
-          date: 'AUG 15',
-          title: 'Obon Festival & Bon Dance',
-          time: '5:00 PM - 9:00 PM',
-          desc: 'Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.',
+          slug: 'lunar-new-year',
+          date: 'Seasonal',
+          title: 'Multi-ethnic Lunar New Year Celebration',
+          time: '',
+          desc: 'A free village festival with cultural entertainment, food, games, and displays — including Chinese lion blessings and student performers.',
           image: '',
         },
         {
-          slug: 'heritage-day-event',
-          date: 'SEP 12',
-          title: 'Plantation Heritage Day',
-          time: '10:00 AM - 3:00 PM',
-          desc: 'Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.',
+          slug: 'obon-in-the-village',
+          date: 'Seasonal',
+          title: 'Opening of Hawaiʻi\'s Obon season',
+          time: 'Late afternoon',
+          desc: 'Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.',
+          image: '',
+        },
+        {
+          slug: 'portuguese-festa',
+          date: 'Seasonal',
+          title: 'Portuguese Festa',
+          time: '',
+          desc: 'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
+          image: '',
+        },
+        {
+          slug: 'harvest-festival',
+          date: 'Seasonal',
+          title: 'Harvest Festival',
+          time: '',
+          desc: 'A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.',
           image: '',
         },
       ],
     },
     testimonials: {
-      items: [
-        {
-          slug: 'sarah-l',
-          quote:
-            'The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn\'t want to leave!',
-          authorName: 'Sarah L.',
-          authorMeta: '4th Grade Teacher, HIDOE',
-        },
-        {
-          slug: 'david-k',
-          quote:
-            'Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic.',
-          authorName: 'David K.',
-          authorMeta: 'Honolulu Resident',
-        },
-        {
-          slug: 'michael-r',
-          quote:
-            'One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive.',
-          authorName: 'Michael R.',
-          authorMeta: 'Traveler from Seattle',
-        },
-      ],
+      items: [],
     },
     partners: {
-      items: [
-        { slug: 'hidoe', name: 'Hawaiʻi Department of Education' },
-        { slug: 'tripadvisor-2026', name: 'Tripadvisor Travelers\' Choice 2026' },
-        { slug: 'historic-hawaii', name: 'Historic Hawaiʻi Foundation' },
-      ],
+      items: [],
     },
   },
   visit: {
@@ -407,27 +398,27 @@ export const DEFAULT_PAGE_SECTIONS = {
     header: {
       stamp: 'Our story',
       stampClass: 'green',
-      title: 'Built by the people who lived it',
+      title: 'Built by plantation workers and their descendants',
       subtitle:
-        'Founded by plantation workers and their descendants so their grandchildren would know where they came from.',
+        'The Friends of Waipahu Cultural Garden Park incorporated in 1973 so future generations would acknowledge today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.',
     },
     mission: {
       stamp: 'MISSION',
-      title: 'Preserving the roots of modern Hawaiʻi',
+      title: 'A village for plantation heritage and legacy',
       paragraphs: [
-        'Hawaiian Plantation Village is an outdoor museum cataloging the historical memories of the waves of immigration that arrived between 1852 and 1946. Our mission is to share the history, culture, and values of the communities that shaped modern Hawaii.',
-        'We maintain 25 authentic or reconstructed camp homes representing the domestic lives of the Chinese, Japanese, Filipino, Portuguese, Korean, Puerto Rican, Okinawan, and Spanish workers. It is a testament to the resilience, solidarity, and cross-cultural unity that gave birth to Hawaii\'s unique local identity.',
+        'From its inception, the long-range goal has been a collection of structures typifying a plantation village — each major ethnic group who worked the plantations represented with buildings, furnishings, and gardens that portray an authentic, culturally informed everyday life.',
+        'Much of the capital raised came from outside Waipahu. The committee changed the project name to include all of Hawaiʻi\'s plantations rather than focusing only on Waipahu. Hawaiian Plantation Village focuses on the plantation worker: natives and immigrants promised a chance to better their lives, whose differing cultural values and traditions form the basis of our multiethnic society today.',
       ],
     },
     timelineIntro: {
       stamp: 'CHRONICLES',
       stampClass: 'rust',
-      title: 'Plantation era timeline',
+      title: 'From camps to village',
       description:
-        'Key historical milestones of immigration waves, industrial growth, and cultural synthesis in Hawaii.',
+        'Immigration waves that shaped plantation Hawaiʻi, and the founding of the Friends and the village that tells their story.',
     },
     leadershipIntro: {
-      title: 'Leadership and board',
+      title: 'Founders and builders',
     },
     newsIntro: {
       stamp: 'NEWS',
@@ -437,7 +428,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       stamp: 'WORK WITH US',
       title: 'Join the preservation',
       description:
-        'Help keep the stories of Waipahu\'s immigrant communities alive. Here is what we are hiring for.',
+        'Volunteer openings and paid roles are posted here when available. Artifact and archives assistants — all volunteers — help process donations.',
     },
     contactIntro: {
       stamp: 'CONTACT',
@@ -453,90 +444,10 @@ export const DEFAULT_PAGE_SECTIONS = {
       ],
     },
     news: {
-      items: [
-        {
-          slug: 'smokestack-restoration',
-          title: 'Historic Oahu Sugar Co. Smokestack Restoration Underway',
-          date: 'July 10, 2026',
-          category: 'Preservation',
-          summary:
-            'A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu\'s skyline.',
-          content:
-            'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project. Standing as a beacon of Waipahu\'s industrial sugar heritage, the 1917 concrete smokestack has faced severe weathering over the decades. Thanks to a generous grant from the Historic Hawaiʻi Foundation and community donations, local structural preservationists have begun scaffolding the column to repair micro-cracks and reinforce historical masonry joints. The project is expected to run through September, with no interruption to scheduled village tours.',
-          image:
-            'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
-        },
-        {
-          slug: 'heritage-festival',
-          title: 'Announcing the 34th Annual Plantation Heritage Festival',
-          date: 'June 28, 2026',
-          category: 'Community',
-          summary:
-            'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.',
-          content:
-            'Save the date! On Saturday, August 15, 2026, from 9:00 AM to 4:00 PM, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival. Celebrate the multi-ethnic legacy that formed modern Hawaiʻi. The event features live performances including Japanese Taiko drumming, Portuguese folk dancing, Filipino Kulintang music, and Hawaiian hula. Food booths will serve authentic plantation-era treats like fresh malasadas, Chinese manapua, and plantation-style plate lunches. Admission is free, with voluntary donations supporting our educational outreach programs.',
-          image:
-            'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
-        },
-        {
-          slug: 'bango-exhibit',
-          title: 'New Permanent Exhibit: The Secret Language of Bango Tags',
-          date: 'May 15, 2026',
-          category: 'Exhibits',
-          summary:
-            'Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.',
-          content:
-            'We are proud to unveil our latest permanent installation: "The Secret Language of Bango Tags." Located inside the Japanese Camp Cottage, this exhibit showcases a collection of original brass, copper, and tin bango tags used by workers to receive wages and identify themselves to camp lunas (overseers). Visitors will learn about the numbering codes, racial categorizations, and how workers personalized these tags. The exhibit also features oral history recordings from descendants sharing what these tags meant to their families.',
-          image:
-            'https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80',
-        },
-      ],
+      items: [],
     },
     careers: {
-      items: [
-        {
-          slug: 'docent',
-          title: 'Cultural Heritage Docent & Tour Guide',
-          type: 'Part-Time',
-          department: 'Education & Guest Services',
-          compensation: '$19.50 / hour',
-          hours: '15-20 hours / week (includes Saturdays)',
-          summary:
-            'Bring plantation history to life by leading educational group excursions and public tours through our 25 camp cottages.',
-          responsibilities: [
-            'Lead groups of 10-25 visitors (students, tourists, and locals) through the historic camp houses.',
-            'Explain the cultural history, lifestyles, and contributions of the various immigrant groups (1852-1946).',
-            'Ensure the safety of visitors and the protection of museum artifacts during tours.',
-            'Assist in setting up tour resources and answering guest questions at the visitor center.',
-          ],
-          requirements: [
-            'Strong public speaking skills and enthusiasm for local history and multicultural storytelling.',
-            'Basic knowledge of Hawaiʻi\'s history and plantation era (additional training provided).',
-            'Ability to walk and stand outdoors on gravel pathways for up to 2 hours.',
-            'Prior experience in education, museum docentry, or hospitality is highly preferred.',
-          ],
-        },
-        {
-          slug: 'restoration',
-          title: 'Site Preservationist & Historical Carpenter',
-          type: 'Full-Time',
-          department: 'Maintenance & Preservation',
-          compensation: '$26.00 - $30.00 / hour (DOE)',
-          hours: '40 hours / week (Monday - Friday)',
-          summary:
-            'Maintain and restore the structural integrity of 25 authentic and reconstructed camp cottages using period-appropriate materials.',
-          responsibilities: [
-            'Inspect, repair, and maintain the wooden structures, roofs, and fences of the village cottage sites.',
-            'Source and use period-appropriate building materials (e.g. Douglas fir, redwood, corrugated iron).',
-            'Apply historic carpentry and joinery techniques to preserve the original architectural look and feel.',
-            'Ensure all structural repairs adhere to historic preservation guidelines and safety standards.',
-          ],
-          requirements: [
-            '3+ years of experience in carpentry, timber framing, or historic building preservation.',
-            'Proficiency with hand and power tools; ability to read structural plans.',
-          ],
-        },
-      ],
+      items: [],
     },
     timeline: {
       items: [
@@ -568,39 +479,39 @@ export const DEFAULT_PAGE_SECTIONS = {
         {
           year: '1906',
           event:
-            'The First Filipino Sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.',
+            'The first Filipino sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.',
         },
         {
-          year: '1946',
+          year: '1973',
           event:
-            'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill\'s eventual closure in 1995.',
+            'The Friends of Waipahu Cultural Garden Park incorporate, founded by a former plantation worker and plantation-worker descendants committed to a village that would teach later generations their heritage.',
         },
         {
           year: '1992',
           event:
-            'Hawaiian Plantation Village opens in Waipahu as a living cultural museum to preserve history and honor worker roots.',
+            'Hawaiian Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
         },
       ],
     },
     leadership: {
       items: [
         {
-          slug: 'jeanne-ishikawa',
-          name: 'Jeanne Ishikawa',
-          role: 'Executive Director',
-          desc: 'Oversees daily operations, site preservation projects, and curates cultural programs.',
+          slug: 'hideo-major-okada',
+          name: 'Hideo “Major” Okada',
+          role: 'Founder',
+          desc: 'Former sugar worker and labor union organizer; one of the village founders. The Okada Education Center is named in his honor.',
         },
         {
-          slug: 'glenn-kawatachi',
-          name: 'Dr. Glenn Kawatachi',
-          role: 'Board President',
-          desc: 'Leads institutional fundraising, historical verification committees, and university partnerships.',
+          slug: 'cal-kawamoto',
+          name: 'Cal Kawamoto',
+          role: 'Executive director (capital campaign)',
+          desc: 'Created the capital fund drive advisory committee and worked with ethnic historical groups to plan and furnish the village exhibits.',
         },
         {
-          slug: 'alvin-ramos',
-          name: 'Alvin Ramos',
-          role: 'Head Site Preservationist',
-          desc: 'Maintains structural integrity of the 25 camp homes using original wood-grain carpentry tools.',
+          slug: 'spencer-leinweber',
+          name: 'Spencer Leinweber',
+          role: 'Principal architect',
+          desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaiian Plantation Village.',
         },
       ],
     },
@@ -618,60 +529,60 @@ export const DEFAULT_PAGE_SECTIONS = {
     header: {
       stamp: 'Photograph archives',
       stampClass: 'green',
-      title: 'Look closely at the record',
+      title: 'Engaging photographs in the archives',
       subtitle:
-        'Thousands of photographs survive from the plantation era and from the building of this village. Read them the way historians do: observe first, then ask what the image can and cannot tell you.',
+        'Most old photographs have little significance to others unless you bring context. Ask what you see, what dates or places the image hints at, whether it matches what you know, and how the elements interact — then look for more context.',
     },
     collections: {
       eyebrow: 'Three collections',
-      title: 'Where these photographs came from',
+      title: 'Photograph collections',
       description:
-        'Every photograph in the archives arrives through one of three donations. Knowing who kept an image, and why, changes how you read it.',
+        'Photographs donated to Hawaiian Plantation Village are organized into three primary collections. Knowing who kept an image, and why, changes how you read it.',
       items: PHOTOGRAPH_COLLECTIONS,
     },
     howToLook: {
-      eyebrow: 'How to look',
-      title: 'A photograph is evidence, not a caption',
+      eyebrow: 'Looking at photographs',
+      title: 'Questions that open an image',
       description:
-        'Captions on old prints are often written years later, by someone who was not there. Start with what is visible, then move outward to what it implies.',
+        'When viewing and interacting with photographs from the archives, these questions help develop a broader understanding of the image. All one needs is more context.',
       steps: [
         {
-          title: 'Meet the photograph',
-          note: 'Quick scan. What is the overall impression, before you name anything in it?',
+          title: 'What does one see?',
+          note: 'What are you able to identify in the image to indicate who or what is being captured in the photograph?',
         },
         {
-          title: 'Observe its parts',
-          note: 'People, objects, buildings, text, weather, light. List what you actually see.',
+          title: 'When or where?',
+          note: 'Is there anything in the photograph that indicates when or where the photograph was taken?',
         },
         {
-          title: 'Try to make sense of it',
-          note: 'Who made it and for whom? What was happening around it? What is deliberately posed?',
+          title: 'Match, reinforce, or conflict?',
+          note: 'Does the photograph match, reinforce, or conflict with your own knowledge of what has been captured in the image?',
         },
         {
-          title: 'Use it as historical evidence',
-          note: 'What does it prove, what does it only suggest, and what would you need to confirm it?',
+          title: 'How do the elements interact?',
+          note: 'Finally, how do the elements identified in the image interact with each other?',
         },
       ],
     },
     samples: {
       eyebrow: 'Worked examples',
-      title: 'Two photographs read in sequence',
+      title: 'How related frames build context',
       description:
-        'Single images rarely settle a question. Photographs taken minutes apart, by the same person, are what let you check a reading against a second view.',
+        'The study guide reads plantation-era prints with accession cards and backs. Use the same method on the digitized village slides below: observe first, then ask what a second frame confirms or complicates.',
       items: [
         {
           label: 'Sample 1',
           title: 'Outside, then inside the same house',
           arkIds: ['ark_70111_1ZgL', 'ark_70111_1ZgJ'],
           note:
-            'The exterior shows a finished camp house: painted trim, intact roof, a lamp on the path. The interior of the same kind of structure shows bare single-wall boards and no ceiling. Read together, they explain why plantation housing could be raised quickly and why families remembered the heat, the cold, and every sound from the next room.',
+            'In the study guide, Sample 1 uses metadata — filing category, subject, donor, accession year — and clues such as vehicles to date an undated street scene. Here, an exterior and an interior of camp housing work the same way: read what is visible in each frame, then ask what the pair can tell you that either image alone cannot.',
         },
         {
           label: 'Sample 2',
           title: 'A building, then the people in front of it',
           arkIds: ['ark_70111_1ZgR', 'ark_70111_1ZgS'],
           note:
-            'The first frame records a structure. The second puts a group in front of it, and the group is what dates the photograph: their clothing belongs to the museum era, not the plantation era. When people appear in a frame, ask whether they are the subject or the evidence of when the shutter opened.',
+            'Study Guide Sample 2 shows how a group event photograph can contradict assumptions — for example, that the Filipino community was primarily male by 1937. When people appear in a frame, ask whether they are the subject or the evidence of when the shutter opened, and what the group composition challenges in your prior knowledge.',
         },
       ],
     },
@@ -679,74 +590,93 @@ export const DEFAULT_PAGE_SECTIONS = {
       eyebrow: 'Analyze a photograph',
       title: 'Work through one image',
       description:
-        'Answer in your own words. Your responses save in this browser only, so you can come back to them, and you can print or export the finished worksheet.',
+        'Based on the National Archives and Records Administration “Analyze an Artifact” form. Your responses save in this browser only; you can print or export the finished worksheet.',
       prompts: [
         {
           id: 'meet',
-          heading: 'Meet the photograph',
+          heading: 'Meet the photo',
           questions: [
-            'Quickly scan the image. What do you notice first?',
-            'Is it black and white, color, or hand-tinted? Posed or candid?',
+            'What do you notice when you first looked at the photograph?',
+            'How would you describe the photograph (portrait, landscape, event, posed, candid, documentary, or other)?',
+            'Is there a caption?',
           ],
         },
         {
           id: 'observe',
           heading: 'Observe its parts',
           questions: [
-            'List the people, objects, and structures you can see.',
-            'What words, numbers, or signs appear in the image?',
-            'What activity is taking place?',
+            'List and describe the people, objects, and activities you see.',
+            'Write one sentence summarizing this photo.',
           ],
         },
         {
           id: 'sense',
           heading: 'Try to make sense of it',
           questions: [
-            'When and where do you think it was taken, and what tells you that?',
-            'Why do you think it was taken, and who was meant to see it?',
-            'What is missing from the frame?',
+            'Look at any scans that accompany the image (back, accession card). Who? Where? When?',
+            'What was happening at the time in history this photo was taken?',
+            'Why was it taken? List evidence from the image or accompanying materials.',
           ],
         },
         {
           id: 'evidence',
           heading: 'Use it as historical evidence',
           questions: [
-            'What does this photograph tell you about plantation life?',
-            'What questions does it leave unanswered?',
-            'What other source would help you confirm what you see?',
+            'What did you find out from this photo that you might not learn anywhere else?',
+            'What other documents, photos, or historical evidence are you going to use to help you understand this event or topic?',
           ],
         },
       ],
     },
     resources: {
       eyebrow: 'Keep researching',
-      title: 'Where to go next',
+      title: 'Resources for the photograph collections',
       description:
-        'The archives are one entry point. These collections and books carry the research further.',
+        'A sample of online and library resources related to HPV’s photograph collections. This list is not exhaustive.',
       items: [
         {
-          label: 'Hawaiʻi Plantation Village archives',
-          note: 'Request research access to originals, accession cards, and back-of-photo notes.',
+          label: 'BYU Joseph F. Smith Library — Filipino Labor Collection',
+          note: 'Special collections on Filipino laborers in Hawaiʻi.',
+          href: 'https://lib.byu.edu/collections/filipino-laborers-collection/about/',
+        },
+        {
+          label: 'Hawaiʻi State Archives Digital Collections',
+          note: 'Chinese, Japanese, and Portuguese passenger manifests; vital statistics 1826–1929; WWI service records.',
+          href: 'https://digitalcollections.hawaii.gov/greenstone3/library',
+        },
+        {
+          label: 'UH Mānoa Special Collections — HSPA Collection',
+          note: 'Hawaii Sugar Planters Association records and related materials.',
+          href: 'https://www2.hawaii.edu/~speccoll/hawaiihspa.html',
+        },
+        {
+          label: 'Kawakami & Kikumura Yano, Picture Bride Stories (2016)',
+          note: 'University of Hawaiʻi Press.',
           href: '',
         },
         {
-          label: 'Hawaiʻi State Archives',
-          note: 'Government records, immigration papers, and territorial photograph collections.',
-          href: 'https://ags.hawaii.gov/archives/',
-        },
-        {
-          label: 'Bishop Museum Library and Archives',
-          note: 'Hawaiian language sources, maps, and one of the largest photograph holdings in the islands.',
-          href: 'https://www.bishopmuseum.org/library-archives/',
-        },
-        {
-          label: 'Ronald Takaki, Pau Hana: Plantation Life and Labor in Hawaii',
-          note: 'The standard narrative history of plantation labor, camp life, and resistance.',
+          label: 'Odo, Voices from the Canefields (2013)',
+          note: 'Folksongs from Japanese immigrant workers in Hawaiʻi. Oxford University Press.',
           href: '',
         },
         {
-          label: 'National Archives photograph analysis worksheet',
-          note: 'The observe / reflect / question method this page adapts for classroom use.',
+          label: 'Poblete, Islanders in the Empire (2014)',
+          note: 'Filipino and Puerto Rican laborers in Hawaiʻi. University of Illinois Press.',
+          href: '',
+        },
+        {
+          label: 'Kodama-Nishimoto et al., Talking Hawaiʻi’s Story (2009)',
+          note: 'Oral histories of an island people. University of Hawaiʻi Press.',
+          href: '',
+        },
+        {
+          label: 'UH Center for Oral History — Koloa; Closing of Sugar Plantations',
+          note: 'Koloa: an Oral History of a Kauaʻi Community (1988); The Closing of Sugar Plantations: Hamakua and Kaʻu (1997).',
+          href: '',
+        },
+        {
+          label: 'National Archives analyze worksheets',
+          note: 'Public-domain materials this form is adopted from.',
           href: 'https://www.archives.gov/education/lessons/worksheets',
         },
       ],
@@ -904,129 +834,9 @@ export const DEFAULT_PAGE_SECTIONS = {
 // Content collections
 // ---------------------------------------------------------------------------
 
-export const newsArticles = [
-  {
-    id: 1,
-    slug: 'smokestack-restoration',
-    title: 'Historic Oahu Sugar Co. Smokestack Restoration Underway',
-    date: 'July 10, 2026',
-    category: 'Preservation',
-    summary:
-      'A team of local masonry experts has begun repairing structural joints on the iconic 1917 smokestack to preserve Waipahu\'s skyline.',
-    content:
-      'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project. Standing as a beacon of Waipahu\'s industrial sugar heritage, the 1917 concrete smokestack has faced severe weathering over the decades. Thanks to a generous grant from the Historic Hawaiʻi Foundation and community donations, local structural preservationists have begun scaffolding the column to repair micro-cracks and reinforce historical masonry joints. The project is expected to run through September, with no interruption to scheduled village tours.',
-    image:
-      'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 2,
-    slug: 'heritage-festival',
-    title: 'Announcing the 34th Annual Plantation Heritage Festival',
-    date: 'June 28, 2026',
-    category: 'Community',
-    summary:
-      'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music, ethnic food booths, and living history demonstrations.',
-    content:
-      'Save the date! On Saturday, August 15, 2026, from 9:00 AM to 4:00 PM, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival. Celebrate the multi-ethnic legacy that formed modern Hawaiʻi. The event features live performances including Japanese Taiko drumming, Portuguese folk dancing, Filipino Kulintang music, and Hawaiian hula. Food booths will serve authentic plantation-era treats like fresh malasadas, Chinese manapua, and plantation-style plate lunches. Admission is free, with voluntary donations supporting our educational outreach programs.',
-    image:
-      'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 3,
-    slug: 'bango-exhibit',
-    title: 'New Permanent Exhibit: The Secret Language of Bango Tags',
-    date: 'May 15, 2026',
-    category: 'Exhibits',
-    summary:
-      'Explore the newly opened display in the Japanese Camp Cottage featuring over 150 authenticated bango metal identification tags.',
-    content:
-      'We are proud to unveil our latest permanent installation: "The Secret Language of Bango Tags." Located inside the Japanese Camp Cottage, this exhibit showcases a collection of original brass, copper, and tin bango tags used by workers to receive wages and identify themselves to camp lunas (overseers). Visitors will learn about the numbering codes, racial categorizations, and how workers personalized these tags. The exhibit also features oral history recordings from descendants sharing what these tags meant to their families.',
-    image:
-      'https://images.unsplash.com/photo-1447069387593-a5de0862481e?auto=format&fit=crop&w=600&q=80',
-  },
-  {
-    id: 4,
-    slug: 'garden-volunteers',
-    title: 'Volunteers Needed: Native Botanical Garden Maintenance',
-    date: 'April 22, 2026',
-    category: 'Volunteer',
-    summary:
-      'Join our weekly Tuesday gardening cohort to help nurture and catalog traditional medicinal plants brought by immigrant workers.',
-    content:
-      'Our ethno-botanical gardens are in need of green thumbs! Hawaiian Plantation Village houses a collection of native plants and medicinal herbs brought by successive waves of immigrants—from Chinese ginger and Portuguese rosemary to Filipino moringa (unggay) and traditional Hawaiian kalo. We are recruiting volunteers for our Tuesday Morning Gardening Cohort (8:30 AM - 11:30 AM). No professional gardening experience required; training on native cultivation and plant history will be provided by our senior landscape docent.',
-    image:
-      'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80',
-  },
-];
+export const newsArticles = [];
 
-export const careersList = [
-  {
-    id: 'docent',
-    title: 'Cultural Heritage Docent & Tour Guide',
-    type: 'Part-Time',
-    department: 'Education & Guest Services',
-    compensation: '$19.50 / hour',
-    hours: '15-20 hours / week (includes Saturdays)',
-    summary:
-      'Bring plantation history to life by leading educational group excursions and public tours through our 25 camp cottages.',
-    responsibilities: [
-      'Lead groups of 10-25 visitors (students, tourists, and locals) through the historic camp houses.',
-      'Explain the cultural history, lifestyles, and contributions of the various immigrant groups (1852-1946).',
-      'Ensure the safety of visitors and the protection of museum artifacts during tours.',
-      'Assist in setting up tour resources and answering guest questions at the visitor center.',
-    ],
-    requirements: [
-      'Strong public speaking skills and enthusiasm for local history and multicultural storytelling.',
-      'Basic knowledge of Hawaiʻi\'s history and plantation era (additional training provided).',
-      'Ability to walk and stand outdoors on gravel pathways for up to 2 hours.',
-      'Prior experience in education, museum docentry, or hospitality is highly preferred.',
-    ],
-  },
-  {
-    id: 'restoration',
-    title: 'Site Preservationist & Historical Carpenter',
-    type: 'Full-Time',
-    department: 'Maintenance & Preservation',
-    compensation: '$26.00 - $30.00 / hour (DOE)',
-    hours: '40 hours / week (Monday - Friday)',
-    summary:
-      'Maintain and restore the structural integrity of 25 authentic and reconstructed camp cottages using period-appropriate materials.',
-    responsibilities: [
-      'Inspect, repair, and maintain the wooden structures, roofs, and fences of the village cottage sites.',
-      'Source and use period-appropriate building materials (e.g. Douglas fir, redwood, corrugated iron).',
-      'Apply historic carpentry and joinery techniques to preserve the original architectural look and feel.',
-      'Ensure all structural repairs adhere to historic preservation guidelines and safety standards.',
-    ],
-    requirements: [
-      '3+ years of experience in carpentry, timber framing, or historic building preservation.',
-      'Proficiency with hand and power tools; ability to read structural plans.',
-      'Knowledge of local wood rot prevention and historical preservation standards.',
-      'Ability to lift up to 50 lbs and work comfortably on ladders/scaffolding.',
-    ],
-  },
-  {
-    id: 'gardener',
-    title: 'Ethno-Botanical Garden Coordinator',
-    type: 'Part-Time',
-    department: 'Horticulture & Landscape',
-    compensation: '$21.00 / hour',
-    hours: '20 hours / week',
-    summary:
-      'Oversee the cultivation, labelling, and care of our historical crop plots, native plants, and immigrant medicinal gardens.',
-    responsibilities: [
-      'Maintain, plant, and weed the plantation-era agricultural plots (sugar cane, taro, sweet potato).',
-      'Care for ethnic medicinal herb gardens representing Chinese, Japanese, Filipino, and Portuguese remedies.',
-      'Lead and coordinate weekly volunteer gardening cohorts.',
-      'Collaborate with the education team to update botanical signage and guide resources.',
-    ],
-    requirements: [
-      'Experience in gardening, tropical horticulture, or organic farming.',
-      'Interest in ethno-botany and the history of crop introduction in Hawaiʻi.',
-      'Ability to perform physical outdoor labor in various weather conditions.',
-      'Experience leading volunteers or working in community garden settings is a plus.',
-    ],
-  },
-];
+export const careersList = [];
 
 /**
  * Photograph archives seed.
@@ -1409,47 +1219,38 @@ export const CAMPS_DATA = [
 
 export const HOME_EVENTS = [
   {
-    slug: 'obon-festival-event',
-    date: 'AUG 15',
-    title: 'Obon Festival & Bon Dance',
-    time: '5:00 PM - 9:00 PM',
-    desc: 'Celebrate plantation ancestral roots with traditional music, dancing, and local food stalls in the central courtyard.',
+    slug: 'lunar-new-year',
+    date: 'Seasonal',
+    title: 'Multi-ethnic Lunar New Year Celebration',
+    time: '',
+    desc: 'A free village festival with cultural entertainment, food, games, and displays — including Chinese lion blessings and student performers.',
   },
   {
-    slug: 'heritage-day-event',
-    date: 'SEP 12',
-    title: 'Plantation Heritage Day',
-    time: '10:00 AM - 3:00 PM',
-    desc: 'Live cultural demonstrations, including Portuguese stone-oven bread baking, Okinawan sanshin playing, and historic crafts.',
+    slug: 'obon-in-the-village',
+    date: 'Seasonal',
+    title: 'Opening of Hawaiʻi\'s Obon season',
+    time: 'Late afternoon',
+    desc: 'Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.',
+  },
+  {
+    slug: 'portuguese-festa',
+    date: 'Seasonal',
+    title: 'Portuguese Festa',
+    time: '',
+    desc: 'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
+  },
+  {
+    slug: 'harvest-festival',
+    date: 'Seasonal',
+    title: 'Harvest Festival',
+    time: '',
+    desc: 'A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.',
   },
 ];
 
-export const TESTIMONIALS = [
-  {
-    quote:
-      'The curriculum-aligned worksheets made our field trip incredibly easy to organize. The students were completely absorbed in exploring the camp houses—they didn\'t want to leave!',
-    authorName: 'Sarah L.',
-    authorMeta: '4th Grade Teacher, HIDOE',
-  },
-  {
-    quote:
-      'Standing inside the Japanese furo and seeing the Portuguese forno stone ovens brought back stories my grandmother used to tell me about Waipahu. It is incredibly authentic.',
-    authorName: 'David K.',
-    authorMeta: 'Honolulu Resident',
-  },
-  {
-    quote:
-      'One of the best visitor attraction sites on Oʻahu. It feels completely different from a static museum. The docents tell real human stories that make the plantation era come alive.',
-    authorName: 'Michael R.',
-    authorMeta: 'Traveler from Seattle',
-  },
-];
+export const TESTIMONIALS = [];
 
-export const PARTNERS = [
-  'HAWAIʻI DEPARTMENT OF EDUCATION',
-  'TRIPADVISOR TRAVELER CHOICE 2026',
-  'HISTORIC HAWAIʻI FOUNDATION',
-];
+export const PARTNERS = [];
 
 export const VISIT_FAQS = [
   {
@@ -1499,35 +1300,38 @@ export const TIMELINE = [
   {
     year: '1906',
     event:
-      'The First Filipino Sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.',
+      'The first Filipino sakadas arrive, recruited by the Hawaii Sugar Planters Association (HSPA), eventually forming the largest labor segment.',
   },
   {
-    year: '1946',
+    year: '1973',
     event:
-      'The Oahu Sugar Company operations peak, transitioning into late-era modern farming until the mill\'s eventual closure in 1995.',
+      'The Friends of Waipahu Cultural Garden Park incorporate, founded by a former plantation worker and plantation-worker descendants committed to a village that would teach later generations their heritage.',
   },
   {
     year: '1992',
     event:
-      'Hawaiian Plantation Village opens in Waipahu as a living cultural museum to preserve history and honor worker roots.',
+      'Hawaiian Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
   },
 ];
 
 export const LEADERSHIP = [
   {
-    name: 'Jeanne Ishikawa',
-    role: 'Executive Director',
-    desc: 'Oversees daily operations, site preservation projects, and curates cultural programs.',
+    slug: 'hideo-major-okada',
+    name: 'Hideo “Major” Okada',
+    role: 'Founder',
+    desc: 'Former sugar worker and labor union organizer; one of the village founders. The Okada Education Center is named in his honor.',
   },
   {
-    name: 'Dr. Glenn Kawatachi',
-    role: 'Board President',
-    desc: 'Leads institutional fundraising, historical verification committees, and university partnerships.',
+    slug: 'cal-kawamoto',
+    name: 'Cal Kawamoto',
+    role: 'Executive director (capital campaign)',
+    desc: 'Created the capital fund drive advisory committee and worked with ethnic historical groups to plan and furnish the village exhibits.',
   },
   {
-    name: 'Alvin Ramos',
-    role: 'Head Site Preservationist',
-    desc: 'Maintains structural integrity of the 25 camp homes using original wood-grain carpentry tools.',
+    slug: 'spencer-leinweber',
+    name: 'Spencer Leinweber',
+    role: 'Principal architect',
+    desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaiian Plantation Village.',
   },
 ];
 
