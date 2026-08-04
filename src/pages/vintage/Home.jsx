@@ -1,12 +1,53 @@
 import React, { useRef } from 'react';
-import HeroVideoPixi from '../../components/HeroVideoPixi';
+import { motion, useReducedMotion } from 'framer-motion';
+import HeroStage from '../../components/HeroStage';
 import BellToBell from '../../components/BellToBell';
 import sugarcaneField from '../../assets/sugarcane_field.png';
 import campHouse from '../../assets/historic_camp_house.png';
-import bangoImage from '../../assets/bango_lunch_tin.png';
-import { Calendar, Clock, MapPin, Info, ArrowRight, UserPlus, Mail, Heart } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
+
+const DEFAULT_CULTURES = [
+  { name: 'Hawaiian', note: 'The land and people before the cane' },
+  { name: 'Chinese', note: 'Contract labor roots and community life' },
+  { name: 'Japanese', note: 'Home life, celebrations, and tradition' },
+  { name: 'Filipino', note: 'Families, work culture, and gatherings' },
+  { name: 'Korean', note: 'A cultural celebration in the home' },
+  { name: 'Okinawan', note: 'Community memory in the camp' },
+  { name: 'Portuguese', note: 'Home, garden, and festa traditions' },
+  { name: 'Puerto Rican', note: 'Preparing for Christmas Eve' },
+];
+
+const DEFAULT_DOORS = [
+  { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
+  { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
+  { title: 'Schools', note: 'Student tours through furnished homes and gardens.', page: 'learn' },
+  { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
+];
+
+const reveal = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 0.61, 0.36, 1] } },
+};
+
+const still = { hidden: { opacity: 1 }, visible: { opacity: 1 } };
+
+function Reveal({ children, className, style }) {
+  const shouldReduceMotion = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      style={style}
+      variants={shouldReduceMotion ? still : reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.25 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function Home() {
   const setActivePage = useAppNavigate();
@@ -16,9 +57,11 @@ export default function Home() {
   const { section: whyVisit } = usePageSection('home', 'whyVisit', {});
   const { section: featuredBango } = usePageSection('home', 'featuredBango', {});
   const { section: bellToBell } = usePageSection('home', 'bellToBell', {});
+  const { section: cultures } = usePageSection('home', 'cultures', {});
   const { section: educators } = usePageSection('home', 'educators', {});
   const { section: getInvolved } = usePageSection('home', 'getInvolved', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
+  const { section: planVisit } = usePageSection('home', 'planVisit', {});
   const { section: testimonialsHeader } = usePageSection('home', 'testimonialsHeader', {});
   const { items: events } = usePageListSection('home', 'events');
   const { items: testimonials } = usePageListSection('home', 'testimonials');
@@ -26,724 +69,543 @@ export default function Home() {
   const footer = settings?.footer ?? {};
   const contact = settings?.contact ?? {};
   const donationPresets = settings?.donationPresets ?? [];
+  const cultureTiles = cultures?.items?.length ? cultures.items : DEFAULT_CULTURES;
+  const doors = planVisit?.items?.length ? planVisit.items : DEFAULT_DOORS;
 
-  const handleExplore = () => {
-    visitRef.current?.scrollIntoView({ behavior: 'smooth' });
+  const goTo = (page) => {
+    setActivePage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handleBookTickets = () => {
-    setActivePage('tickets');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const handlePlanVisit = () => {
+    visitRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
     <div>
-      {/* 1. Hero Video Pixi */}
-      <HeroVideoPixi hero={settings?.hero} onExploreClick={handleExplore} />
+      <HeroStage hero={settings?.hero} onPrimaryClick={handlePlanVisit} />
 
-      {/* 2. Quick Visit-Planning Module */}
-      <div ref={visitRef} style={styles.quickVisitSection}>
-        <div style={styles.container}>
-          <div style={styles.quickGrid}>
-            <div style={styles.quickItem}>
-              <Clock size={20} color="var(--tin-rust)" />
-              <div>
-                <h4 style={styles.quickTitle}>{quickVisit?.hours?.title ?? 'HOURS OF OPERATION'}</h4>
-                <p style={styles.quickText}>{quickVisit?.hours?.primary ?? settings?.hours?.schedule}</p>
-                <p style={styles.quickSubtext}>{quickVisit?.hours?.secondary ?? settings?.hours?.toursNote}</p>
-              </div>
-            </div>
+      {/* Eight cultures, one village */}
+      <section className="editorial-section">
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{cultures?.eyebrow ?? 'Ethnic homes and gardens'}</p>
+            <h2 className="editorial-title">
+              {cultures?.title ?? 'Each group furnished a home to tell its story'}
+            </h2>
+            <p className="editorial-lede">
+              {cultures?.description ??
+                'Ethnic historical groups planned the exhibits: furnishings, thematic celebrations, and gardens with plants specific to their culture. School and visitor tours walk these homes throughout the year.'}
+            </p>
+          </Reveal>
 
-            <div style={styles.quickItem}>
-              <MapPin size={20} color="var(--tin-rust)" />
-              <div>
-                <h4 style={styles.quickTitle}>{quickVisit?.location?.title ?? 'LOCATION'}</h4>
-                <p style={styles.quickText}>{quickVisit?.location?.primary ?? contact?.address?.line1}</p>
-                <p style={styles.quickSubtext}>{quickVisit?.location?.secondary ?? contact?.address?.line2}</p>
-              </div>
-            </div>
-
-            <div style={styles.quickItem}>
-              <Info size={20} color="var(--tin-rust)" />
-              <div>
-                <h4 style={styles.quickTitle}>{quickVisit?.admission?.title ?? 'ADMISSION'}</h4>
-                <p style={styles.quickText}>{quickVisit?.admission?.primary}</p>
-                <p style={styles.quickSubtext}>{quickVisit?.admission?.secondary}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 3. "Why Visit" - Experiential Storytelling */}
-      <section style={styles.section}>
-        <div style={styles.container}>
-          <div style={styles.twoColumnGrid}>
-            <div style={styles.textCol}>
-              <span className={`ink-stamp ${whyVisit?.stampClass ?? 'green'}`} style={{ marginBottom: '1rem' }}>{whyVisit?.stamp ?? 'Living Museum'}</span>
-              <h2 style={styles.sectionTitle}>{whyVisit?.title ?? 'Where Hawaiʻi\'s Roots Run Deep'}</h2>
-              {(whyVisit?.paragraphs ?? []).map((p, i) => (
-                <p key={i} style={styles.bodyText}>{p}</p>
-              ))}
-              <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => setActivePage(whyVisit?.primaryCta?.page ?? 'about')}>
-                  {whyVisit?.primaryCta?.label ?? 'Discover Our History'}
-                </button>
-                <button className="btn-secondary" onClick={() => setActivePage(whyVisit?.secondaryCta?.page ?? 'visit')}>
-                  {whyVisit?.secondaryCta?.label ?? 'Plan Your Visit'}
-                </button>
-              </div>
-            </div>
-            <div style={styles.imgCol}>
-              <div style={styles.imgWrapper}>
-                <img src={campHouse} alt="Historic Camp Houses at the Village" style={styles.featuredImg} />
-                <div style={styles.imgTextureOverlay} />
-              </div>
-            </div>
+          <div className="mosaic-grid">
+            {cultureTiles.map((culture) => (
+              <button
+                key={culture.name}
+                type="button"
+                className="mosaic-tile"
+                onClick={() => goTo('stories')}
+              >
+                <span className="mosaic-name">{culture.name}</span>
+                <span className="mosaic-note">{culture.note}</span>
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Featured Story - The Bango System */}
-      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)', borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '1px solid var(--kraft-tan-dark)' }}>
-        <div style={styles.container}>
-          <div style={{ ...styles.twoColumnGrid, gridTemplateColumns: '1fr 1.2fr' }}>
-            <div style={styles.imgCol}>
-              <div style={styles.imgWrapper}>
-                <img src={bangoImage} alt="Historic Bango Identification Tags" style={styles.featuredImg} />
-                <div style={styles.imgTextureOverlay} />
+      {/* Why visit */}
+      <section className="editorial-section on-sand">
+        <div className="editorial-shell">
+          <div style={styles.split}>
+            <Reveal>
+              <p className="editorial-eyebrow">{whyVisit?.stamp ?? 'The village'}</p>
+              <h2 className="editorial-title">{whyVisit?.title ?? 'A place to share the laborers\u2019 story'}</h2>
+              {(whyVisit?.paragraphs ?? []).map((paragraph, index) => (
+                <p key={index} style={styles.body}>{paragraph}</p>
+              ))}
+              <div style={styles.actions}>
+                <button className="btn-primary" onClick={() => goTo(whyVisit?.primaryCta?.page ?? 'about')}>
+                  {whyVisit?.primaryCta?.label ?? 'Read our story'}
+                </button>
+                <button className="btn-secondary" onClick={() => goTo(whyVisit?.secondaryCta?.page ?? 'visit')}>
+                  {whyVisit?.secondaryCta?.label ?? 'Plan your visit'}
+                </button>
               </div>
-            </div>
-            <div style={styles.textCol}>
-              <span className={`ink-stamp ${featuredBango?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{featuredBango?.stamp ?? 'Featured Narrative'}</span>
-              <h2 style={styles.sectionTitle}>{featuredBango?.title ?? 'The Bango System: Numbers Replacing Names'}</h2>
-              {(featuredBango?.paragraphs ?? []).map((p, i) => (
-                <p key={i} style={styles.bodyText} dangerouslySetInnerHTML={{ __html: p }} />
+            </Reveal>
+            <Reveal>
+              <img
+                src={campHouse}
+                alt="Restored plantation camp houses along the village path"
+                style={styles.plate}
+              />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured narrative — Okada Education Center */}
+      <section className="editorial-section on-ink">
+        <div className="editorial-shell">
+          <div style={styles.split}>
+            <Reveal>
+              <img
+                src="/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg"
+                alt="Village buildings and gardens at Hawaiian Plantation Village"
+                style={styles.plate}
+              />
+            </Reveal>
+            <Reveal>
+              <p className="editorial-eyebrow">{featuredBango?.stamp ?? 'Okada Education Center'}</p>
+              <h2 className="editorial-title">
+                {featuredBango?.title ?? 'Orientation, galleries, and the archives'}
+              </h2>
+              {(featuredBango?.paragraphs ?? []).map((paragraph, index) => (
+                <p
+                  key={index}
+                  style={{ ...styles.body, color: 'rgba(250, 246, 236, 0.74)' }}
+                  dangerouslySetInnerHTML={{ __html: paragraph }}
+                />
               ))}
               {featuredBango?.quote && (
-                <blockquote style={styles.bangoQuote}>
+                <blockquote style={styles.quote}>
                   {typeof featuredBango.quote === 'string' ? featuredBango.quote : featuredBango.quote.text}
-                  <cite style={styles.bangoQuoteCite}>
+                  <cite style={styles.quoteCite}>
                     {typeof featuredBango.quote === 'string' ? featuredBango.quoteCite : featuredBango.quote.cite}
                   </cite>
                 </blockquote>
               )}
-              <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => { setActivePage(featuredBango?.cta?.page ?? 'stories'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
-                  {featuredBango?.cta?.label ?? 'Explore Camp Stories'} <ArrowRight size={16} />
+              <div style={styles.actions}>
+                <button className="btn-accent" onClick={() => goTo(featuredBango?.cta?.page ?? 'archives')}>
+                  {featuredBango?.cta?.label ?? 'Explore the photograph archives'} <ArrowRight size={16} />
                 </button>
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* 4. "Bell to Bell" Choice-based Game */}
-      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
-        <div style={styles.container}>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <span className={`ink-stamp ${bellToBell?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{bellToBell?.stamp ?? 'Interactive Log'}</span>
-            <h2 style={styles.sectionTitle}>{bellToBell?.title ?? 'Step Into Their Shoes'}</h2>
-            <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              {bellToBell?.description ?? 'Simulate one day on the plantation. Hear the morning whistle, complete tasks in the cane rows, and gather in the community camp at sunset.'}
+      {/* Bell to bell */}
+      <section className="editorial-section">
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{bellToBell?.stamp ?? 'Interactive'}</p>
+            <h2 className="editorial-title">{bellToBell?.title ?? 'Step into their shoes'}</h2>
+            <p className="editorial-lede">
+              {bellToBell?.description ??
+                'Live one day on the plantation. The morning whistle, the cane rows, and the camp at sunset.'}
             </p>
-          </div>
-          <BellToBell onVisitClick={handleBookTickets} />
-        </div>
-      </section>
-
-      {/* 5. School and Educator Callout */}
-      <section style={styles.section}>
-        <div style={styles.container}>
-          <div style={{ ...styles.twoColumnGrid, gridTemplateColumns: '1fr 1.2fr' }}>
-            <div style={styles.imgCol}>
-              <div style={styles.imgWrapper}>
-                <img src={sugarcaneField} alt="Sugarcane fields in Waipahu" style={styles.featuredImg} />
-                <div style={styles.imgTextureOverlay} />
-              </div>
-            </div>
-            <div style={styles.textCol}>
-              <span className={`ink-stamp ${educators?.stampClass ?? 'teal'}`} style={{ marginBottom: '1rem' }}>{educators?.stamp ?? 'For Educators'}</span>
-              <h2 style={styles.sectionTitle}>{educators?.title ?? 'Curriculum & Field Trips'}</h2>
-              {(educators?.paragraphs ?? []).map((p, i) => (
-                <p key={i} style={styles.bodyText}>{p}</p>
-              ))}
-              <div style={styles.btnRow}>
-                <button className="btn-primary" onClick={() => setActivePage(educators?.cta?.page ?? 'learn')}>
-                  {educators?.cta?.label ?? 'Schedule a Field Trip'} <ArrowRight size={16} />
-                </button>
-              </div>
-            </div>
+          </Reveal>
+          <div style={{ marginTop: '2.5rem' }}>
+            <BellToBell onVisitClick={() => goTo('tickets')} />
           </div>
         </div>
       </section>
 
-      {/* 6. Membership & Donation Split Section */}
-      <section style={{ ...styles.section, borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '1px solid var(--kraft-tan-dark)' }}>
-        <div style={styles.container}>
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className={`ink-stamp ${getInvolved?.stampClass ?? 'green'}`} style={{ marginBottom: '1rem' }}>{getInvolved?.stamp ?? 'Get Involved'}</span>
-            <h2 style={styles.sectionTitle}>{getInvolved?.title ?? 'Support the Preservation of Waipahu\'s History'}</h2>
-            <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              {getInvolved?.intro ?? getInvolved?.description}
-            </p>
-          </div>
-          
-          <div style={styles.splitGrid}>
-            {/* Donation Card */}
-            <div className="paper-card" style={styles.splitCard}>
-              <div>
-                <h3 style={styles.splitCardTitle}>{getInvolved?.donation?.title ?? 'Direct Donation Impact'}</h3>
-                <p style={styles.splitCardDesc}>{getInvolved?.donation?.description}</p>
-                <ul style={styles.splitList}>
-                  {donationPresets.map((d) => (
-                    <li key={d.amount}><strong>${d.amount}</strong> {d.label.replace(/^\$\d+\s*/, '')}</li>
-                  ))}
-                </ul>
-              </div>
-              <button className="btn-primary" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
-                Make a Direct Gift <Heart size={14} style={{ marginLeft: '4px' }} />
-              </button>
-            </div>
-
-            {/* Membership Card */}
-            <div className="paper-card" style={styles.splitCard}>
-              <div>
-                <h3 style={styles.splitCardTitle}>{getInvolved?.membership?.title ?? 'Steward Membership'}</h3>
-                <p style={styles.splitCardDesc}>{getInvolved?.membership?.description}</p>
-                <ul style={styles.splitList}>
-                  {(getInvolved?.membership?.benefits ?? getInvolved?.membership?.items ?? []).map((b, i) => (
-                    <li key={i}><strong>{b.label}</strong> {b.text}</li>
-                  ))}
-                </ul>
-              </div>
-              <button className="btn-accent" onClick={() => { setActivePage('support'); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={styles.splitBtn}>
-                Join as a Member <UserPlus size={14} style={{ marginLeft: '4px' }} />
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 6. Upcoming Events */}
-      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)' }}>
-        <div style={styles.container}>
-          <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <span className={`ink-stamp ${eventsHeader?.stampClass ?? 'gold'}`} style={{ marginBottom: '1rem' }}>{eventsHeader?.stamp ?? 'Calendar'}</span>
-            <h2 style={styles.sectionTitle}>{eventsHeader?.title ?? 'Upcoming Community Programs'}</h2>
-          </div>
-          
-          <div style={styles.eventsGrid}>
-            {events.map((ev, idx) => (
-              <div key={idx} className="paper-card" style={styles.eventCard}>
-                <div style={styles.eventDateBlock}>
-                  <Calendar size={18} color="var(--tin-rust)" />
-                  <span style={styles.eventDateText}>{ev.date}</span>
-                </div>
-                <div style={styles.eventBody}>
-                  <h3 style={styles.eventTitle}>{ev.title}</h3>
-                  <span style={styles.eventTime}>{ev.time}</span>
-                  <p style={styles.eventDesc}>{ev.desc}</p>
+      {/* Happening at the village */}
+      {events.length > 0 && (
+      <section className="editorial-section on-sand">
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{eventsHeader?.stamp ?? 'Free village events'}</p>
+            <h2 className="editorial-title">{eventsHeader?.title ?? 'Festivals the community is invited to'}</h2>
+          </Reveal>
+          <div style={{ marginTop: '2.5rem', borderBottom: '1px solid var(--hairline)' }}>
+            {events.map((event, index) => (
+              <div key={event.slug ?? index} className="event-row">
+                <span className="event-date">{event.date}{event.time ? ` · ${event.time}` : ''}</span>
+                <div>
+                  <h3 className="event-title">{event.title}</h3>
+                  <p className="event-note">{event.desc}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+      )}
 
-      {/* 8. Testimonials & Social Proof Section */}
-      <section style={{ ...styles.section, backgroundColor: 'var(--paper-dark)', borderTop: '1px solid var(--kraft-tan-dark)', borderBottom: '4px solid var(--koa-wood)' }}>
-        <div style={styles.container}>
-          <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
-            <span className={`ink-stamp ${testimonialsHeader?.stampClass ?? 'rust'}`} style={{ marginBottom: '1rem' }}>{testimonialsHeader?.stamp ?? 'Testimonials'}</span>
-            <h2 style={styles.sectionTitle}>{testimonialsHeader?.title ?? 'What Visitors & Educators Say'}</h2>
-            <p style={{ ...styles.bodyText, maxWidth: '600px', margin: '0 auto' }}>
-              {testimonialsHeader?.description ?? 'Hear from our community of school teachers, local residents, and travelers who have experienced the living history.'}
-            </p>
-          </div>
-
-          <div style={styles.testimonialsGrid}>
-            {testimonials.map((t, idx) => (
-              <div key={idx} className="paper-card" style={styles.testimonialCard}>
-                <p style={styles.testimonialText}>"{t.quote}"</p>
-                <div style={styles.testimonialDivider} />
-                <div style={styles.testimonialAuthor}>
-                  <span style={styles.testimonialAuthorName}>{t.authorName}</span>
-                  <span style={styles.testimonialAuthorMeta}>{t.authorMeta}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={styles.partnersRow}>
-            <span style={styles.partnersLabel}>COMMUNITY PARTNERS & STANDARDS:</span>
-            <div style={styles.partnersList}>
-              {partners.map((p, i) => (
-                <React.Fragment key={p.slug ?? p.name ?? i}>
-                  {i > 0 && <span style={styles.partnerDivider}>•</span>}
-                  <span style={styles.partnerItem}>{typeof p === 'string' ? p : (p.name ?? p.title)}</span>
-                </React.Fragment>
+      {/* Educators */}
+      <section className="editorial-section">
+        <div className="editorial-shell">
+          <div style={styles.split}>
+            <Reveal>
+              <img src={sugarcaneField} alt="Sugarcane fields above Waipahu" style={styles.plate} />
+            </Reveal>
+            <Reveal>
+              <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators'}</p>
+              <h2 className="editorial-title">{educators?.title ?? 'Curriculum and field trips'}</h2>
+              {(educators?.paragraphs ?? []).map((paragraph, index) => (
+                <p key={index} style={styles.body}>{paragraph}</p>
               ))}
-            </div>
+              <div style={styles.actions}>
+                <button className="btn-primary" onClick={() => goTo(educators?.cta?.page ?? 'learn')}>
+                  {educators?.cta?.label ?? 'Bring a class'} <ArrowRight size={16} />
+                </button>
+              </div>
+            </Reveal>
           </div>
         </div>
       </section>
 
-      {/* 9. Footer CTA Zone */}
+      {/* Get involved — clay gives */}
+      <section className="editorial-section on-sand">
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{getInvolved?.stamp ?? 'Get involved'}</p>
+            <h2 className="editorial-title">
+              {getInvolved?.title ?? 'Keep these houses standing'}
+            </h2>
+            <p className="editorial-lede">{getInvolved?.intro ?? getInvolved?.description}</p>
+          </Reveal>
+
+          <div style={styles.supportGrid}>
+            <Reveal style={styles.supportColumn}>
+              <h3 style={styles.supportTitle}>{getInvolved?.donation?.title ?? 'Give directly'}</h3>
+              <p style={styles.supportNote}>{getInvolved?.donation?.description}</p>
+              <ul style={styles.supportList}>
+                {donationPresets.map((preset) => (
+                  <li key={preset.amount}>
+                    <strong>${preset.amount}</strong> {preset.label.replace(/^\$\d+\s*/, '')}
+                  </li>
+                ))}
+              </ul>
+              <button className="btn-clay" onClick={() => goTo('support')} style={styles.supportBtn}>
+                Make a gift
+              </button>
+            </Reveal>
+
+            <Reveal style={styles.supportColumn}>
+              <h3 style={styles.supportTitle}>{getInvolved?.membership?.title ?? 'Become a steward'}</h3>
+              <p style={styles.supportNote}>{getInvolved?.membership?.description}</p>
+              <ul style={styles.supportList}>
+                {(getInvolved?.membership?.benefits ?? getInvolved?.membership?.items ?? []).map((benefit, index) => (
+                  <li key={index}><strong>{benefit.label}</strong> {benefit.text}</li>
+                ))}
+              </ul>
+              <button className="btn-secondary" onClick={() => goTo('support')} style={styles.supportBtn}>
+                See membership
+              </button>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      {(testimonials.length > 0 || partners.length > 0) && (
+      <section className="editorial-section on-ink">
+        <div className="editorial-shell">
+          {testimonials.length > 0 && (
+            <>
+              <Reveal>
+                <p className="editorial-eyebrow">{testimonialsHeader?.stamp ?? 'From our visitors'}</p>
+                <h2 className="editorial-title">{testimonialsHeader?.title ?? 'What people say after they walk it'}</h2>
+              </Reveal>
+
+              <div style={styles.quoteGrid}>
+                {testimonials.map((testimonial, index) => (
+                  <Reveal key={testimonial.slug ?? index}>
+                    <blockquote style={styles.testimonial}>
+                      {testimonial.quote}
+                      <footer style={styles.testimonialMeta}>
+                        <span style={styles.testimonialName}>{testimonial.authorName}</span>
+                        <span>{testimonial.authorMeta}</span>
+                      </footer>
+                    </blockquote>
+                  </Reveal>
+                ))}
+              </div>
+            </>
+          )}
+
+          {partners.length > 0 && (
+          <div style={styles.partners}>
+            {partners.map((partner, index) => (
+              <span key={partner.slug ?? index} style={styles.partner}>
+                {typeof partner === 'string' ? partner : (partner.name ?? partner.title)}
+              </span>
+            ))}
+          </div>
+          )}
+        </div>
+      </section>
+      )}
+
+      {/* Plan your visit */}
+      <section className="editorial-section" ref={visitRef}>
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{planVisit?.eyebrow ?? 'Plan your visit'}</p>
+            <h2 className="editorial-title">{planVisit?.title ?? 'Walk in. Sit down. Stay a while.'}</h2>
+            <p className="editorial-lede">
+              {planVisit?.description ??
+                `${quickVisit?.hours?.primary ?? settings?.hours?.schedule} · ${contact?.address?.line1 ?? ''}, ${contact?.address?.line2 ?? ''}`}
+            </p>
+          </Reveal>
+
+          <div className="door-grid">
+            {doors.map((door) => (
+              <button key={door.title} type="button" className="door" onClick={() => goTo(door.page)}>
+                <span className="door-title">{door.title} <ArrowRight size={15} /></span>
+                <span className="door-note">{door.note}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <footer style={styles.footer}>
-        <div style={styles.container}>
+        <div className="editorial-shell">
           <div style={styles.footerGrid}>
             <div>
               <h3 style={styles.footerBrand}>{footer.brand ?? settings?.brand?.title}</h3>
               <p style={styles.footerText}>{footer.text}</p>
               <p style={styles.footerContact}>
-                Phone: {contact.phone} <br />
-                Email: {contact.email}
+                {contact.phone}
+                <br />
+                {contact.email}
               </p>
             </div>
-            
-            <div style={styles.footerCTAColumn}>
-              <h4 style={styles.footerHeader}>CTA INDEX</h4>
-              <ul style={styles.footerLinksList}>
+
+            <div>
+              <h4 style={styles.footerHeader}>Go to</h4>
+              <ul style={styles.footerLinks}>
                 {(footer.ctaLinks ?? []).map((link) => (
                   <li key={link.label}>
-                    <button className="footer-link-btn" onClick={() => { setActivePage(link.page); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                    <button className="footer-link-btn" onClick={() => goTo(link.page)}>
                       {link.label}
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
-            
-            <div style={styles.newsletterBox}>
+
+            <div>
               <h4 style={styles.footerHeader}>{footer.newsletter?.heading}</h4>
               <p style={styles.footerText}>{footer.newsletter?.description}</p>
-              <div style={styles.emailForm}>
-                <input type="email" placeholder={footer.newsletter?.placeholder} style={styles.emailInput} />
-                <button className="btn-primary" style={styles.emailBtn}>
+              <form
+                style={styles.newsletterForm}
+                onSubmit={(event) => event.preventDefault()}
+              >
+                <label htmlFor="newsletter-email" style={styles.srOnly}>Email address</label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  placeholder={footer.newsletter?.placeholder}
+                  style={styles.newsletterInput}
+                />
+                <button className="btn-accent" type="submit">
                   <Mail size={16} /> {footer.newsletter?.buttonLabel ?? 'Join'}
                 </button>
-              </div>
+              </form>
             </div>
           </div>
-          
-          <div style={styles.footerBottom}>
-            <p>{footer.copyright}</p>
-          </div>
+
+          <p style={styles.footerBottom}>{footer.copyright}</p>
         </div>
       </footer>
-
     </div>
   );
 }
 
 const styles = {
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 1.5rem'
-  },
-  quickVisitSection: {
-    backgroundColor: 'var(--koa-wood)',
-    borderBottom: '4px solid var(--sugar-gold)',
-    color: 'var(--kraft-tan)',
-    padding: '1.5rem 0'
-  },
-  quickGrid: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: '2rem',
-    flexWrap: 'wrap',
-    '@media (max-width: 768px)': {
-      flexDirection: 'column',
-      gap: '1.5rem'
-    }
-  },
-  quickItem: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    gap: '12px',
-    flex: '1',
-    minWidth: '240px'
-  },
-  quickTitle: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.8rem',
-    letterSpacing: '0.05em',
-    color: 'var(--sugar-gold)',
-    marginBottom: '4px'
-  },
-  quickText: {
-    fontSize: '0.95rem',
-    color: 'var(--paper-light)',
-    marginBottom: '2px',
-    fontWeight: '600'
-  },
-  quickSubtext: {
-    fontSize: '0.8rem',
-    color: 'var(--kraft-tan-dark)'
-  },
-  section: {
-    padding: '5rem 0',
-    overflow: 'hidden'
-  },
-  twoColumnGrid: {
+  split: {
     display: 'grid',
-    gridTemplateColumns: '1.2fr 1fr',
-    gap: '4rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gap: 'clamp(2rem, 5vw, 4.5rem)',
     alignItems: 'center',
-    '@media (max-width: 850px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
   },
-  textCol: {
+  body: {
+    fontSize: '1.02rem',
+    lineHeight: 1.7,
+    color: 'var(--muted-sage)',
+    maxWidth: '58ch',
+    marginBottom: '1.1rem',
+  },
+  actions: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
-  },
-  sectionTitle: {
-    fontSize: '2.5rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '1.5rem',
-    lineHeight: '1.15'
-  },
-  bodyText: {
-    fontSize: '1.05rem',
-    color: 'var(--text-dark)',
-    marginBottom: '1.25rem'
-  },
-  btnRow: {
-    display: 'flex',
-    gap: '12px',
     flexWrap: 'wrap',
-    marginTop: '1.5rem'
+    gap: '0.75rem',
+    marginTop: '1.75rem',
   },
-  imgCol: {
+  plate: {
     width: '100%',
-    display: 'flex',
-    justifyContent: 'center'
-  },
-  imgWrapper: {
-    position: 'relative',
-    borderRadius: '4px',
-    border: '3px solid var(--koa-wood)',
-    padding: '6px',
-    backgroundColor: 'var(--paper-light)',
-    boxShadow: 'var(--shadow-lg)',
-    width: '100%',
-    maxWidth: '480px'
-  },
-  featuredImg: {
-    width: '100%',
-    height: '320px',
+    height: 'clamp(280px, 42vw, 460px)',
     objectFit: 'cover',
-    display: 'block'
+    borderRadius: 'var(--border-radius-md)',
+    display: 'block',
   },
-  imgTextureOverlay: {
-    position: 'absolute',
-    inset: 0,
-    backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.03\'/%3E%3C/svg%3E")',
-    pointerEvents: 'none'
+  quote: {
+    fontFamily: 'var(--font-display)',
+    fontSize: '1.25rem',
+    lineHeight: 1.5,
+    color: 'var(--sugarcane-cream)',
+    borderLeft: '1px solid var(--heritage-gold)',
+    paddingLeft: '1.25rem',
+    margin: '1.75rem 0 0',
   },
-  eventsGrid: {
+  quoteCite: {
+    display: 'block',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.85rem',
+    fontStyle: 'normal',
+    color: 'var(--heritage-gold)',
+    marginTop: '0.75rem',
+  },
+  supportGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '2rem',
-    '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr'
-    }
+    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gap: 'clamp(2rem, 5vw, 4rem)',
+    marginTop: '3rem',
   },
-  eventCard: {
-    padding: '1.75rem',
-    borderRadius: '4px',
-    display: 'flex',
-    gap: '1.5rem',
-    '@media (max-width: 500px)': {
-      flexDirection: 'column',
-      gap: '1rem'
-    }
-  },
-  eventDateBlock: {
+  supportColumn: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    border: '1px dashed var(--kraft-tan-dark)',
-    backgroundColor: 'var(--paper-dark)',
-    width: '90px',
-    height: '90px',
-    flexShrink: 0
+    alignItems: 'flex-start',
+    borderTop: '1px solid var(--hairline-strong)',
+    paddingTop: '1.5rem',
   },
-  eventDateText: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.95rem',
-    fontWeight: 'bold',
-    color: 'var(--tin-rust)',
-    marginTop: '6px'
+  supportTitle: {
+    fontSize: '1.5rem',
+    fontWeight: 500,
+    margin: '0 0 0.75rem',
   },
-  eventBody: {
+  supportNote: {
+    color: 'var(--muted-sage)',
+    lineHeight: 1.65,
+    margin: '0 0 1.25rem',
+    maxWidth: '46ch',
+  },
+  supportList: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '0 0 1.75rem',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    gap: '0.6rem',
+    fontSize: '0.95rem',
+    lineHeight: 1.55,
   },
-  eventTitle: {
-    fontSize: '1.3rem',
-    color: 'var(--koa-wood)',
-    marginBottom: '4px'
+  supportBtn: {
+    marginTop: 'auto',
   },
-  eventTime: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.75rem',
-    color: 'var(--text-muted)',
+  quoteGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: 'clamp(2rem, 4vw, 3rem)',
+    marginTop: '3rem',
+  },
+  testimonial: {
+    margin: 0,
+    fontFamily: 'var(--font-display)',
+    fontSize: '1.15rem',
+    lineHeight: 1.55,
+    color: 'var(--sugarcane-cream)',
+  },
+  testimonialMeta: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '2px',
+    marginTop: '1.25rem',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.85rem',
+    color: 'rgba(250, 246, 236, 0.6)',
+  },
+  testimonialName: {
+    color: 'var(--heritage-gold)',
+    fontWeight: 600,
+  },
+  partners: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '1.5rem 2.5rem',
+    marginTop: 'clamp(3rem, 6vw, 4.5rem)',
+    paddingTop: '1.5rem',
+    borderTop: '1px solid var(--hairline-invert)',
+    fontSize: '0.82rem',
+    letterSpacing: '0.1em',
     textTransform: 'uppercase',
-    marginBottom: '10px'
+    color: 'rgba(250, 246, 236, 0.55)',
   },
-  eventDesc: {
-    fontSize: '0.9rem',
-    color: 'var(--text-dark)',
-    lineHeight: '1.5'
+  partner: {
+    whiteSpace: 'nowrap',
   },
   footer: {
-    backgroundColor: 'var(--koa-wood-dark)',
-    color: 'var(--kraft-tan)',
-    padding: '4rem 0 2rem 0',
-    borderTop: '5px solid var(--cane-green)'
+    backgroundColor: 'var(--plantation-ink)',
+    color: 'rgba(250, 246, 236, 0.72)',
+    paddingBlock: 'clamp(3rem, 6vw, 5rem) 2rem',
   },
   footerGrid: {
     display: 'grid',
-    gridTemplateColumns: '1fr 1fr 1.2fr',
-    gap: '3rem',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+    gap: 'clamp(2rem, 5vw, 3.5rem)',
     marginBottom: '3rem',
-    '@media (max-width: 850px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
   },
   footerBrand: {
-    fontFamily: 'var(--font-display)',
-    fontSize: '1.75rem',
-    color: 'var(--paper-light)',
-    marginBottom: '1rem'
+    fontSize: '1.6rem',
+    fontWeight: 500,
+    color: 'var(--sugarcane-cream)',
+    margin: '0 0 1rem',
   },
   footerText: {
-    fontSize: '0.9rem',
-    color: 'var(--kraft-tan-dark)',
-    marginBottom: '1.5rem',
-    maxWidth: '500px'
+    fontSize: '0.95rem',
+    lineHeight: 1.65,
+    marginBottom: '1.25rem',
+    maxWidth: '44ch',
   },
   footerContact: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.8rem',
-    lineHeight: '1.6',
-    color: 'var(--kraft-tan)'
+    fontSize: '0.95rem',
+    lineHeight: 1.7,
+    color: 'var(--sugarcane-cream)',
+    margin: 0,
   },
-  footerCTAColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
+  footerHeader: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    fontWeight: 600,
+    letterSpacing: '0.16em',
+    textTransform: 'uppercase',
+    color: 'var(--heritage-gold)',
+    margin: '0 0 1rem',
   },
-  footerLinksList: {
+  footerLinks: {
     listStyle: 'none',
     padding: 0,
     margin: 0,
     display: 'flex',
     flexDirection: 'column',
-    gap: '12px'
+    gap: '0.75rem',
   },
-  footerLinkBtn: {
-    background: 'none',
-    border: 'none',
-    color: 'var(--kraft-tan-dark)',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.85rem',
-    fontWeight: 'bold',
-    cursor: 'pointer',
-    textAlign: 'left',
-    padding: 0,
-    textTransform: 'uppercase',
-    transition: 'color 0.2s ease'
-  },
-  newsletterBox: {
+  newsletterForm: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start'
-  },
-  footerHeader: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.85rem',
-    letterSpacing: '0.1em',
-    color: 'var(--sugar-gold)',
-    marginBottom: '1rem'
-  },
-  emailForm: {
-    display: 'flex',
-    width: '100%',
+    gap: '0.5rem',
+    flexWrap: 'wrap',
     maxWidth: '420px',
-    gap: '8px'
   },
-  emailInput: {
-    flex: '1',
+  newsletterInput: {
+    flex: '1 1 200px',
     padding: '0.75rem 1rem',
-    border: '1px solid var(--koa-wood)',
-    backgroundColor: 'rgba(255,255,255,0.05)',
-    color: 'var(--paper-light)',
-    fontSize: '0.9rem',
+    border: '1px solid var(--hairline-invert)',
+    borderRadius: 'var(--border-radius-md)',
+    backgroundColor: 'rgba(250, 246, 236, 0.06)',
+    color: 'var(--sugarcane-cream)',
+    fontSize: '0.95rem',
     outline: 'none',
-    fontFamily: 'var(--font-sans)'
   },
-  emailBtn: {
-    padding: '0.75rem 1.25rem'
+  srOnly: {
+    position: 'absolute',
+    width: '1px',
+    height: '1px',
+    overflow: 'hidden',
+    clip: 'rect(0 0 0 0)',
+    whiteSpace: 'nowrap',
   },
   footerBottom: {
-    borderTop: '1px solid rgba(204, 180, 149, 0.1)',
+    borderTop: '1px solid var(--hairline-invert)',
     paddingTop: '1.5rem',
-    textAlign: 'center',
-    fontSize: '0.8rem',
-    color: 'var(--kraft-tan-dark)'
-  },
-  bangoQuote: {
-    fontFamily: 'var(--font-body)',
-    fontStyle: 'italic',
-    fontSize: '1.05rem',
-    color: 'var(--text-muted)',
-    borderLeft: '3px solid var(--sugar-gold)',
-    paddingLeft: '1rem',
-    margin: '1.5rem 0',
-    lineHeight: '1.6'
-  },
-  bangoQuoteCite: {
-    display: 'block',
     fontSize: '0.85rem',
-    fontFamily: 'var(--font-typewriter)',
-    fontWeight: 'bold',
-    color: 'var(--tin-rust)',
-    marginTop: '0.5rem',
-    fontStyle: 'normal'
+    color: 'rgba(250, 246, 236, 0.5)',
+    margin: 0,
   },
-  splitGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '2.5rem',
-    '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr',
-      gap: '1.5rem'
-    }
-  },
-  splitCard: {
-    padding: '2.5rem 2rem',
-    borderRadius: '4px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    height: '100%'
-  },
-  splitCardTitle: {
-    fontSize: '1.5rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '1rem',
-    fontFamily: 'var(--font-display)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    paddingBottom: '0.5rem'
-  },
-  splitCardDesc: {
-    fontSize: '0.95rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.5',
-    marginBottom: '1.5rem'
-  },
-  splitList: {
-    listStyleType: 'circle',
-    paddingLeft: '1.5rem',
-    fontSize: '0.9rem',
-    color: 'var(--text-dark)',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '8px',
-    marginBottom: '2rem'
-  },
-  splitBtn: {
-    width: '100%',
-    justifyContent: 'center',
-    marginTop: 'auto'
-  },
-  testimonialsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2rem',
-    marginBottom: '3rem'
-  },
-  testimonialCard: {
-    padding: '2rem',
-    borderRadius: '4px',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    backgroundColor: 'var(--paper-light)',
-    height: '100%'
-  },
-  testimonialText: {
-    fontFamily: 'var(--font-body)',
-    fontStyle: 'italic',
-    fontSize: '0.95rem',
-    lineHeight: '1.6',
-    color: 'var(--text-dark)',
-    marginBottom: '1.5rem'
-  },
-  testimonialDivider: {
-    borderTop: '1px dashed var(--kraft-tan-dark)',
-    margin: '0.75rem 0',
-    width: '100%'
-  },
-  testimonialAuthor: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '2px'
-  },
-  testimonialAuthorName: {
-    fontFamily: 'var(--font-typewriter)',
-    fontWeight: 'bold',
-    fontSize: '0.9rem',
-    color: 'var(--koa-wood)'
-  },
-  testimonialAuthorMeta: {
-    fontSize: '0.75rem',
-    color: 'var(--text-muted)',
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em'
-  },
-  partnersRow: {
-    marginTop: '4rem',
-    borderTop: '1px double var(--kraft-tan-dark)',
-    paddingTop: '2rem',
-    textAlign: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '12px'
-  },
-  partnersLabel: {
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.75rem',
-    fontWeight: 'bold',
-    color: 'var(--text-muted)',
-    letterSpacing: '0.05em'
-  },
-  partnersList: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    gap: '12px',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.8rem',
-    color: 'var(--text-muted)',
-    fontWeight: '600'
-  },
-  partnerItem: {
-    whiteSpace: 'nowrap'
-  },
-  partnerDivider: {
-    color: 'var(--sugar-gold)'
-  }
 };
-

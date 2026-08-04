@@ -1,13 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
-export default function PageHeaderParallax({
-  layers,
-  stamp,
-  stampClass = 'ink-stamp green',
-  title,
-  subtitle,
-}) {
+export default function PageHeaderParallax({ layers, stamp, title, subtitle }) {
   const targetRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -52,12 +46,10 @@ export default function PageHeaderParallax({
         <div style={styles.gradientOverlay} />
       </div>
 
-      <div style={styles.container}>
-        <span className={stampClass} style={{ marginBottom: '0.5rem' }}>
-          {stamp}
-        </span>
+      <div className="editorial-shell" style={styles.container}>
+        <p style={styles.eyebrow}>{stamp}</p>
         <h1 style={styles.pageTitle}>{title}</h1>
-        <p style={styles.pageSubtitle}>{subtitle}</p>
+        {subtitle && <p style={styles.pageSubtitle}>{subtitle}</p>}
       </div>
     </div>
   );
@@ -67,10 +59,12 @@ const styles = {
   headerBlock: {
     position: 'relative',
     overflow: 'hidden',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
-    marginBottom: '3rem',
-    backgroundColor: 'var(--paper-dark)',
+    display: 'flex',
+    alignItems: 'flex-end',
+    minHeight: 'min(52vh, 460px)',
+    padding: 'clamp(3rem, 8vh, 5rem) 0 clamp(2.5rem, 6vh, 3.5rem)',
+    marginBottom: 'clamp(3rem, 7vw, 5rem)',
+    backgroundColor: 'var(--plantation-ink)',
   },
   layersContainer: {
     position: 'absolute',
@@ -86,33 +80,41 @@ const styles = {
     width: '100%',
     height: '100%',
     objectFit: 'cover',
-    objectPosition: 'right center',
+    objectPosition: 'center',
     display: 'block',
   },
   gradientOverlay: {
     position: 'absolute',
     inset: 0,
     background:
-      'linear-gradient(90deg, rgba(240,234,225,0.95) 0%, rgba(240,234,225,0.75) 40%, rgba(240,234,225,0.25) 65%, transparent 85%)',
+      'linear-gradient(to top, rgba(16,26,20,0.94) 0%, rgba(16,26,20,0.66) 45%, rgba(16,26,20,0.3) 100%)',
     pointerEvents: 'none',
   },
   container: {
     position: 'relative',
     zIndex: 2,
-    maxWidth: '1200px',
-    margin: '0 auto',
-    padding: '0 1.5rem',
+  },
+  eyebrow: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    fontWeight: 600,
+    letterSpacing: '0.16em',
+    textTransform: 'uppercase',
+    color: 'var(--heritage-gold)',
+    margin: '0 0 0.9rem',
   },
   pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem',
+    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+    fontWeight: 500,
+    color: 'var(--sugarcane-cream)',
+    margin: 0,
+    maxWidth: '18ch',
   },
   pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px',
-    marginBottom: 0,
+    fontSize: 'clamp(1rem, 1.4vw, 1.12rem)',
+    lineHeight: 1.65,
+    color: 'rgba(250, 246, 236, 0.76)',
+    maxWidth: '52ch',
+    margin: '1.1rem 0 0',
   },
 };
