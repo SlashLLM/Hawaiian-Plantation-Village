@@ -20,6 +20,7 @@ export const DEFAULT_SITE_SETTINGS = {
     { id: 'home', label: 'Home' },
     { id: 'visit', label: 'Visit' },
     { id: 'stories', label: 'Stories' },
+    { id: 'archives', label: 'Archives' },
     { id: 'play', label: 'Play & Learn' },
     { id: 'learn', label: 'Learn' },
     { id: 'support', label: 'Support' },
@@ -30,15 +31,15 @@ export const DEFAULT_SITE_SETTINGS = {
     text: 'A non-profit cultural heritage destination dedicated to preserving the history of Hawaii\'s plantation workers and immigrant roots.',
     copyright: '© 2026 Hawaiian Plantation Village. All rights reserved. Built for cultural stewardship.',
     ctaLinks: [
-      { label: 'Book Excursion Tickets', page: 'tickets' },
-      { label: 'Become a Member', page: 'support' },
-      { label: 'Make a Donation', page: 'support' },
-      { label: 'Volunteer Inquiry', page: 'support' },
+      { label: 'Get tickets', page: 'tickets' },
+      { label: 'Become a member', page: 'support' },
+      { label: 'Make a gift', page: 'support' },
+      { label: 'Volunteer with us', page: 'support' },
     ],
     newsletter: {
-      heading: 'JOIN THE LEDGER NEWSLETTER',
-      description: 'Receive updates on seasonal festivals, lectures, and volunteer days.',
-      placeholder: 'Your Email Address',
+      heading: 'THE LEDGER',
+      description: 'Seasonal festivals, lectures, and volunteer days, once a month.',
+      placeholder: 'Your email address',
       buttonLabel: 'Join',
     },
   },
@@ -61,11 +62,20 @@ export const DEFAULT_SITE_SETTINGS = {
     parking: 'Free Visitor Parking Onsite',
   },
   hero: {
-    badge: 'EST. 1992',
-    title: 'Experience a Living History',
-    subtitle: 'Walk in the footsteps of the immigrant communities that built modern Hawaiʻi.',
-    ctaLabel: 'Explore the Village',
+    eyebrow: 'Hawaiʻi\'s living museum · Waipahu, Oʻahu',
+    headline: 'History didn\'t happen here. It still does.',
+    support:
+      'Walk the camp houses where eight immigrant communities built a life together — and still gather today.',
+    primaryCta: { label: 'Plan your visit' },
+    secondaryCta: { label: 'Watch the story' },
+    stats: [
+      { value: '1992', label: 'Opened' },
+      { value: '8', label: 'Cultures' },
+      { value: '30', label: 'Structures' },
+      { value: '25k+', label: 'Students a year' },
+    ],
     videoSrc: '/Plantation_life_documentary_video_202607131034.mp4',
+    posterSrc: '/digitized-photos/ark_70111_1ZgL.0.jpeg',
   },
   seo: {
     title: 'Hawaiian Plantation Village | Living History Museum in Waipahu, Oʻahu',
@@ -85,6 +95,31 @@ export const DEFAULT_SITE_SETTINGS = {
     { amount: 100, label: '$100 funds school admission worksheets for a class of 10.' },
   ],
 };
+
+/**
+ * Donor collections the photograph archives are drawn from. Used both as the
+ * archives page fallback copy and as the collection filter vocabulary.
+ */
+export const PHOTOGRAPH_COLLECTIONS = [
+  {
+    id: 'oahu_sugar',
+    name: 'Oahu Sugar Company',
+    blurb:
+      'Mainly 1940s to 1950s: cane cultivation and harvesting, mill operations, water systems, housing, and medical services. Most images are credited to R.H. “Harry” Lodge, division overseer, and Ernest Malterre Jr., housing supervisor.',
+  },
+  {
+    id: 'murakoshi',
+    name: 'Murakoshi Collection',
+    blurb:
+      'Mae Okada’s collection of father-and-son photographers Nobunosuke and Henry Murakoshi. Nobunosuke worked mostly in the studio; Henry photographed school activities, picnics, camp homes, and businesses around Waipahu.',
+  },
+  {
+    id: 'fwcgp',
+    name: 'Friends of Waipahu Cultural Garden Park',
+    blurb:
+      'The largest collection in the archives, built from family donations: work culture, WWII induction, graduations, funerals, panoramic class pictures, and documentation of the village site itself.',
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Page sections (keyed by page → section)
@@ -109,21 +144,49 @@ export const DEFAULT_PAGE_SECTIONS = {
         secondary: 'Children (5-12): $8 | Under 5: Free',
       },
     },
+    cultures: {
+      eyebrow: 'Eight cultures, one village',
+      title: 'Every camp house belongs to somebody\'s family.',
+      description:
+        'Each home was furnished by the community it belongs to — their gardens, their kitchens, their celebrations. Pick a culture and hear from the people who lived it.',
+      items: [
+        { name: 'Hawaiian', note: 'The land before the cane' },
+        { name: 'Chinese', note: 'First contract workers, 1852' },
+        { name: 'Japanese', note: 'Furo, temples, picture brides' },
+        { name: 'Filipino', note: 'Sakada families and pancit' },
+        { name: 'Korean', note: 'Small camp, long memory' },
+        { name: 'Okinawan', note: 'Sanshin on the porch' },
+        { name: 'Portuguese', note: 'Stone forno and sweet bread' },
+        { name: 'Puerto Rican', note: 'Christmas Eve in the parlor' },
+      ],
+    },
+    planVisit: {
+      eyebrow: 'Plan your visit',
+      title: 'Walk in. Sit down. Stay a while.',
+      description:
+        'Tuesday to Saturday, 9:00 AM to 2:00 PM. 94-695 Waipahu Street, Waipahu, Oʻahu. Free parking onsite.',
+      items: [
+        { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
+        { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
+        { title: 'Schools', note: 'DOE-aligned field trips and classroom curriculum.', page: 'learn' },
+        { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
+      ],
+    },
     whyVisit: {
-      stamp: 'Living Museum',
+      stamp: 'Living museum',
       stampClass: 'green',
-      title: 'Where Hawaiʻi\'s Roots Run Deep',
+      title: 'Where Hawaiʻi\'s roots run deep',
       paragraphs: [
         'Hawaiian Plantation Village is an outdoor, living history museum located in Waipahu. It tells the story of the immigrants who arrived in Hawaiʻi from China, Portugal, Japan, Puerto Rico, Korea, the Philippines, Okinawa, and other nations during the sugar plantation era (1852–1946).',
         'Explore 25 authentic, fully restored camp houses, complete with period furniture, personal artifacts, and lush heritage gardens. Walk the same paths as the workers, feel the heat of the stone ovens, and hear the stories of the community that shaped Hawaii\'s unique multicultural society.',
       ],
-      primaryCta: { label: 'Discover Our History', page: 'about' },
-      secondaryCta: { label: 'Plan Your Visit', page: 'visit' },
+      primaryCta: { label: 'Read our story', page: 'about' },
+      secondaryCta: { label: 'Plan your visit', page: 'visit' },
     },
     featuredBango: {
-      stamp: 'Featured Narrative',
+      stamp: 'Featured narrative',
       stampClass: 'rust',
-      title: 'The Bango System: Numbers Replacing Names',
+      title: 'The bango system: numbers replacing names',
       paragraphs: [
         'Upon arrival at the plantation, each immigrant worker was stripped of their name in the company ledgers and issued a small, stamped metal disk called a Bango tag.',
         'Because the plantation managers and overseers (Lunas) could not pronounce or easily spell the names of Chinese, Japanese, Portuguese, Korean, or Filipino workers, the Bango number became their identity. It dictated their work assignment, their pay ledger, and their credit at the company store.',
@@ -131,61 +194,61 @@ export const DEFAULT_PAGE_SECTIONS = {
       quote:
         'My grandfather told me the bango was a constant weight in his pocket. But it also forced the camps to find a common language—Pidgin—to connect their true names behind those metal numbers.',
       quoteCite: '— Siu Lung Chang, Oral History Archive',
-      cta: { label: 'Explore Camp Stories', page: 'stories' },
+      cta: { label: 'Hear the camp stories', page: 'stories' },
     },
     bellToBell: {
-      stamp: 'Interactive Log',
+      stamp: 'Interactive',
       stampClass: 'rust',
-      title: 'Step Into Their Shoes',
+      title: 'Step into their shoes',
       description:
         'Simulate one day on the plantation. Hear the morning whistle, complete tasks in the cane rows, and gather in the community camp at sunset.',
     },
     educators: {
-      stamp: 'For Educators',
+      stamp: 'For educators',
       stampClass: 'teal',
-      title: 'Curriculum & Field Trips',
+      title: 'Curriculum and field trips',
       paragraphs: [
         'Bring history to life for your students. We offer structured field trips and curriculum-linked educational packages that cover the waves of plantation immigration, camp structures, cultural preservation, and the economic history of Oʻahu.',
         'Our resources align directly with Hawaii Department of Education social studies and history standards, making field trips educational, engaging, and memorable.',
       ],
-      cta: { label: 'Schedule a Field Trip', page: 'learn' },
+      cta: { label: 'Bring a class', page: 'learn' },
     },
     getInvolved: {
-      stamp: 'Get Involved',
+      stamp: 'Get involved',
       stampClass: 'green',
-      title: 'Support the Preservation of Waipahu\'s History',
+      title: 'Keep these houses standing',
       description:
         'Whether you become an annual member or make a one-time donation, your contribution directly funds critical cottage upkeep and cultural stewardship programs.',
       donation: {
-        title: 'Direct Donation Impact',
+        title: 'Give directly',
         description:
           'Help us protect the structural timbers and maintain the historical gardens surrounding our 25 camp cottages. 100% of direct donations go to site preservation.',
         items: DEFAULT_SITE_SETTINGS.donationPresets,
-        cta: { label: 'Make a Direct Gift', page: 'support' },
+        cta: { label: 'Make a gift', page: 'support' },
       },
       membership: {
-        title: 'Steward Membership',
+        title: 'Become a steward',
         description:
           'Belong to the village. Support repeat access and gain exclusive member benefits while securing the heritage of immigrant communities.',
         items: [
-          { label: 'Free Admission', text: 'for you and guests all year round.' },
-          { label: '10% Discount', text: 'at the historical camp gift shop.' },
+          { label: 'Free admission', text: 'for you and your guests all year.' },
+          { label: '10% off', text: 'at the camp gift shop.' },
           { label: 'Ledger circular', text: 'print magazine subscription.' },
         ],
-        cta: { label: 'Join as a Member', page: 'support' },
+        cta: { label: 'See membership', page: 'support' },
       },
     },
     eventsHeader: {
-      stamp: 'Calendar',
+      stamp: 'Happening at the village',
       stampClass: 'gold',
-      title: 'Upcoming Community Programs',
+      title: 'Come for a festival, stay for the food',
     },
     testimonialsHeader: {
-      stamp: 'Testimonials',
+      stamp: 'From our visitors',
       stampClass: 'rust',
-      title: 'What Visitors & Educators Say',
+      title: 'What people say after they walk it',
       description:
-        'Hear from our community of school teachers, local residents, and travelers who have experienced the living history.',
+        'Teachers, neighbors, and travelers who have spent a morning in the camps.',
     },
     events: {
       items: [
@@ -234,28 +297,28 @@ export const DEFAULT_PAGE_SECTIONS = {
     },
     partners: {
       items: [
-        { slug: 'hidoe', name: 'HAWAIʻI DEPARTMENT OF EDUCATION' },
-        { slug: 'tripadvisor-2026', name: 'TRIPADVISOR TRAVELER CHOICE 2026' },
-        { slug: 'historic-hawaii', name: 'HISTORIC HAWAIʻI FOUNDATION' },
+        { slug: 'hidoe', name: 'Hawaiʻi Department of Education' },
+        { slug: 'tripadvisor-2026', name: 'Tripadvisor Travelers\' Choice 2026' },
+        { slug: 'historic-hawaii', name: 'Historic Hawaiʻi Foundation' },
       ],
     },
   },
   visit: {
     header: {
-      stamp: 'VISITOR GUIDE',
+      stamp: 'Visitor guide',
       stampClass: 'green',
-      title: 'Plan Your Visit',
-      subtitle: 'Everything you need to know to prepare for your journey into Waipahu\'s history.',
+      title: 'Plan your visit',
+      subtitle: 'Hours, directions, admission, and everything else you need before you walk the village.',
     },
     hours: {
-      title: 'Opening Hours',
+      title: 'Opening hours',
       schedule: 'Tuesday – Saturday: 9:00 AM – 2:00 PM',
       closedNote: 'Closed on Sundays, Mondays, and major state holidays.',
       toursIntro:
         'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:',
       tourSlots: [
-        { label: 'Morning Tour', time: '10:00 AM daily' },
-        { label: 'Midday Tour', time: '12:00 PM daily' },
+        { label: 'Morning tour', time: '10:00 AM daily' },
+        { label: 'Midday tour', time: '12:00 PM daily' },
       ],
       walkInNote:
         '*Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.',
@@ -264,23 +327,23 @@ export const DEFAULT_PAGE_SECTIONS = {
       address: '94-695 Waipahu Street, Waipahu, HI 96797',
       directions:
         'Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to Exit 8B (Farrington Hwy), then turn right onto Waipahu Depo Road and right onto Waipahu Street.',
-      parkingTitle: 'Free Visitor Parking Onsite',
+      parkingTitle: 'Free visitor parking onsite',
       parkingDesc:
         'We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.',
     },
     safety: {
-      terrainTitle: 'Terrain & Navigation',
+      terrainTitle: 'Terrain and navigation',
       terrainDesc:
         'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.',
-      guidelinesTitle: 'Preserving Cultural Heritage',
+      guidelinesTitle: 'Preserving cultural heritage',
       guidelinesDesc:
         'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaiian Plantation Village is a smoke-free facility.',
     },
     group: {
-      title: 'Group Visits & Private Tours',
+      title: 'Group visits and private tours',
       intro:
         'We welcome groups of all sizes, including tour operators, family reunions, historical organizations, and corporate outings. Group admission discounts are available for pre-registered groups of 10 or more.',
-      commercialTitle: 'Operator Scheduling & Access',
+      commercialTitle: 'Operator scheduling and access',
       commercialDesc:
         'We work closely with local and international tour operators. Commercial bus parking is available onsite. Bookings must be requested at least 14 days in advance to guarantee an exclusive docent guide.',
       groupTypes: [
@@ -292,7 +355,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       ],
     },
     admission: {
-      title: 'Admission Tickets',
+      title: 'Admission',
       description:
         'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.',
       rates: [
@@ -302,24 +365,24 @@ export const DEFAULT_PAGE_SECTIONS = {
         { label: 'Youth (5 - 12)', price: '$8.00' },
         { label: 'Child (Under 5)', price: 'Free' },
       ],
-      buttonLabel: 'Book Tickets Online',
+      buttonLabel: 'Get tickets',
       buttonPage: 'tickets',
       schoolCta: {
-        title: 'Bringing a School Group?',
+        title: 'Bringing a school group?',
         description:
-          'We host educational class visits Tuesday through Friday. Learn about specialized curriculum programs and discounted school group pricing.',
-        buttonLabel: 'School Field Trips',
+          'We host class visits Tuesday through Friday, with curriculum programs and discounted school pricing.',
+        buttonLabel: 'School field trips',
         page: 'learn',
       },
       groupCta: {
-        title: 'Private & Commercial Groups',
+        title: 'Private and commercial groups',
         description:
-          'Are you organizing a tour operator, family reunion, or corporate event for 10+ people? Get special rates and a dedicated guide.',
-        buttonLabel: 'Group Admission Rates',
+          'Organizing a tour, family reunion, or company outing for 10 or more? You get special rates and a dedicated guide.',
+        buttonLabel: 'Group admission rates',
       },
     },
     faq: {
-      title: 'Frequently Asked Questions',
+      title: 'Common questions',
       items: [
         {
           q: 'How long does a typical visit take?',
@@ -342,15 +405,15 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   about: {
     header: {
-      stamp: 'Preservation',
+      stamp: 'Our story',
       stampClass: 'green',
-      title: 'About the Village',
+      title: 'Built by the people who lived it',
       subtitle:
-        'A cultural sanctuary in Waipahu preserving stories and memories of Oʻahu\'s plantation communities.',
+        'Founded by plantation workers and their descendants so their grandchildren would know where they came from.',
     },
     mission: {
-      stamp: 'MISSION & VISION',
-      title: 'Preserving the Roots of Modern Hawaiʻi',
+      stamp: 'MISSION',
+      title: 'Preserving the roots of modern Hawaiʻi',
       paragraphs: [
         'Hawaiian Plantation Village is an outdoor museum cataloging the historical memories of the waves of immigration that arrived between 1852 and 1946. Our mission is to share the history, culture, and values of the communities that shaped modern Hawaii.',
         'We maintain 25 authentic or reconstructed camp homes representing the domestic lives of the Chinese, Japanese, Filipino, Portuguese, Korean, Puerto Rican, Okinawan, and Spanish workers. It is a testament to the resilience, solidarity, and cross-cultural unity that gave birth to Hawaii\'s unique local identity.',
@@ -359,33 +422,33 @@ export const DEFAULT_PAGE_SECTIONS = {
     timelineIntro: {
       stamp: 'CHRONICLES',
       stampClass: 'rust',
-      title: 'Plantation Era Timeline',
+      title: 'Plantation era timeline',
       description:
         'Key historical milestones of immigration waves, industrial growth, and cultural synthesis in Hawaii.',
     },
     leadershipIntro: {
-      title: 'Leadership & Board',
+      title: 'Leadership and board',
     },
     newsIntro: {
-      stamp: 'LEDGER REPORTS',
-      title: 'News & Announcements',
+      stamp: 'NEWS',
+      title: 'What is happening here',
     },
     careersIntro: {
-      stamp: 'LABOR & STEWARDSHIP',
-      title: 'Join the Preservation',
+      stamp: 'WORK WITH US',
+      title: 'Join the preservation',
       description:
-        'Help us keep the stories of Waipahu\'s immigrant communities alive. Discover our active career and volunteering opportunities below.',
+        'Help keep the stories of Waipahu\'s immigrant communities alive. Here is what we are hiring for.',
     },
     contactIntro: {
-      stamp: 'INQUIRY REGISTRATION',
-      title: 'Send a Message',
+      stamp: 'CONTACT',
+      title: 'Send us a message',
       description:
-        'Have questions about cottage history, schedules, or support? Fill out the registration form.',
+        'Questions about cottage history, schedules, or support? Write to us and a person will answer.',
       subjectOptions: [
-        'General Inquiry',
-        'Educational Tours',
-        'Private Events',
-        'Donation/Sponsorship',
+        'General question',
+        'Educational tours',
+        'Private events',
+        'Donation or sponsorship',
         'Volunteering',
       ],
     },
@@ -544,28 +607,166 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   stories: {
     header: {
-      stamp: 'ORAL HISTORIES',
+      stamp: 'Oral histories',
       stampClass: 'green',
-      title: 'Plantation Stories',
+      title: 'Plantation stories',
       subtitle:
-        'Explore the lives, struggles, and music of the eight immigrant communities that built Waipahu.',
+        'The lives, struggles, and music of the eight immigrant communities that built Waipahu.',
+    },
+  },
+  archives: {
+    header: {
+      stamp: 'Photograph archives',
+      stampClass: 'green',
+      title: 'Look closely at the record',
+      subtitle:
+        'Thousands of photographs survive from the plantation era and from the building of this village. Read them the way historians do: observe first, then ask what the image can and cannot tell you.',
+    },
+    collections: {
+      eyebrow: 'Three collections',
+      title: 'Where these photographs came from',
+      description:
+        'Every photograph in the archives arrives through one of three donations. Knowing who kept an image, and why, changes how you read it.',
+      items: PHOTOGRAPH_COLLECTIONS,
+    },
+    howToLook: {
+      eyebrow: 'How to look',
+      title: 'A photograph is evidence, not a caption',
+      description:
+        'Captions on old prints are often written years later, by someone who was not there. Start with what is visible, then move outward to what it implies.',
+      steps: [
+        {
+          title: 'Meet the photograph',
+          note: 'Quick scan. What is the overall impression, before you name anything in it?',
+        },
+        {
+          title: 'Observe its parts',
+          note: 'People, objects, buildings, text, weather, light. List what you actually see.',
+        },
+        {
+          title: 'Try to make sense of it',
+          note: 'Who made it and for whom? What was happening around it? What is deliberately posed?',
+        },
+        {
+          title: 'Use it as historical evidence',
+          note: 'What does it prove, what does it only suggest, and what would you need to confirm it?',
+        },
+      ],
+    },
+    samples: {
+      eyebrow: 'Worked examples',
+      title: 'Two photographs read in sequence',
+      description:
+        'Single images rarely settle a question. Photographs taken minutes apart, by the same person, are what let you check a reading against a second view.',
+      items: [
+        {
+          label: 'Sample 1',
+          title: 'Outside, then inside the same house',
+          arkIds: ['ark_70111_1ZgL', 'ark_70111_1ZgJ'],
+          note:
+            'The exterior shows a finished camp house: painted trim, intact roof, a lamp on the path. The interior of the same kind of structure shows bare single-wall boards and no ceiling. Read together, they explain why plantation housing could be raised quickly and why families remembered the heat, the cold, and every sound from the next room.',
+        },
+        {
+          label: 'Sample 2',
+          title: 'A building, then the people in front of it',
+          arkIds: ['ark_70111_1ZgR', 'ark_70111_1ZgS'],
+          note:
+            'The first frame records a structure. The second puts a group in front of it, and the group is what dates the photograph: their clothing belongs to the museum era, not the plantation era. When people appear in a frame, ask whether they are the subject or the evidence of when the shutter opened.',
+        },
+      ],
+    },
+    analyze: {
+      eyebrow: 'Analyze a photograph',
+      title: 'Work through one image',
+      description:
+        'Answer in your own words. Your responses save in this browser only, so you can come back to them, and you can print or export the finished worksheet.',
+      prompts: [
+        {
+          id: 'meet',
+          heading: 'Meet the photograph',
+          questions: [
+            'Quickly scan the image. What do you notice first?',
+            'Is it black and white, color, or hand-tinted? Posed or candid?',
+          ],
+        },
+        {
+          id: 'observe',
+          heading: 'Observe its parts',
+          questions: [
+            'List the people, objects, and structures you can see.',
+            'What words, numbers, or signs appear in the image?',
+            'What activity is taking place?',
+          ],
+        },
+        {
+          id: 'sense',
+          heading: 'Try to make sense of it',
+          questions: [
+            'When and where do you think it was taken, and what tells you that?',
+            'Why do you think it was taken, and who was meant to see it?',
+            'What is missing from the frame?',
+          ],
+        },
+        {
+          id: 'evidence',
+          heading: 'Use it as historical evidence',
+          questions: [
+            'What does this photograph tell you about plantation life?',
+            'What questions does it leave unanswered?',
+            'What other source would help you confirm what you see?',
+          ],
+        },
+      ],
+    },
+    resources: {
+      eyebrow: 'Keep researching',
+      title: 'Where to go next',
+      description:
+        'The archives are one entry point. These collections and books carry the research further.',
+      items: [
+        {
+          label: 'Hawaiʻi Plantation Village archives',
+          note: 'Request research access to originals, accession cards, and back-of-photo notes.',
+          href: '',
+        },
+        {
+          label: 'Hawaiʻi State Archives',
+          note: 'Government records, immigration papers, and territorial photograph collections.',
+          href: 'https://ags.hawaii.gov/archives/',
+        },
+        {
+          label: 'Bishop Museum Library and Archives',
+          note: 'Hawaiian language sources, maps, and one of the largest photograph holdings in the islands.',
+          href: 'https://www.bishopmuseum.org/library-archives/',
+        },
+        {
+          label: 'Ronald Takaki, Pau Hana: Plantation Life and Labor in Hawaii',
+          note: 'The standard narrative history of plantation labor, camp life, and resistance.',
+          href: '',
+        },
+        {
+          label: 'National Archives photograph analysis worksheet',
+          note: 'The observe / reflect / question method this page adapts for classroom use.',
+          href: 'https://www.archives.gov/education/lessons/worksheets',
+        },
+      ],
     },
   },
   learn: {
     school: {
-      stamp: 'Educator Experience',
+      stamp: 'For educators',
       stampClass: 'green',
-      title: 'Education & Field Trips',
-      subtitle: 'Bring history to life. Explore educational packages and request school visits below.',
+      title: 'Education and field trips',
+      subtitle: 'Curriculum packages, classroom lessons, and school visit requests.',
       resourcesIntro:
         'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:',
       fieldTripNote:
         'Field trips require a minimum of 10 students and at least one adult chaperone per 10 children.',
     },
     youth: {
-      stamp: 'Youth Paths & Service',
+      stamp: 'Youth programs',
       stampClass: 'rust',
-      title: 'Student & Youth Programs',
+      title: 'Student and youth programs',
       subtitle:
         'Grow your skills, discover community history, and shape Waipahu\'s future through internships and volunteer guilds.',
       programs: [
@@ -586,9 +787,9 @@ export const DEFAULT_PAGE_SECTIONS = {
       ],
     },
     family: {
-      stamp: 'Ohana Learning',
+      stamp: 'Ohana learning',
       stampClass: 'teal',
-      title: 'Family Learning & Workshops',
+      title: 'Family learning and workshops',
       subtitle:
         'Discover plantation heritage together. Hands-on weekend workshops, storytelling, and self-guided exploration for all ages.',
       workshops: [
@@ -618,11 +819,11 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   play: {
     header: {
-      stamp: 'KIDS PLAYGROUND',
+      stamp: 'Play',
       stampClass: 'green',
       title: 'Sugar Mill Tycoon',
       subtitle:
-        'Experience the historical process of manufacturing sugar from raw crop in our PixiJS 2D Mill simulator!',
+        'Cut the cane, crush it, boil it, spin it. Run the mill the way Waipahu once did.',
     },
     gameSteps: {
       steps: [
@@ -663,24 +864,24 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   support: {
     header: {
-      stamp: 'STEWARDSHIP',
+      stamp: 'Support the village',
       stampClass: 'green',
-      title: 'Support the Village',
+      title: 'Keep these houses standing',
       subtitle:
-        'Your membership and donations directly fund cottage preservation and cultural programs.',
+        'Your gift maintains the cottages, the gardens, and the stories told inside them.',
     },
     donate: {
-      title: 'Make a Direct Gift',
+      title: 'Make a tax-deductible gift',
       description:
-        '100% of direct donations go to site preservation and educational outreach.',
+        'Every dollar of a direct gift goes to site preservation and educational outreach.',
     },
     membershipIntro: {
-      title: 'Become a Member',
+      title: 'Become a member',
       description:
-        'Join as a steward and enjoy year-round benefits while supporting Waipahu heritage.',
+        'Join as a steward for year-round benefits while you keep Waipahu heritage standing.',
     },
     impactSidebar: {
-      title: 'Your Impact',
+      title: 'Where it goes',
       items: [
         'Maintains 25 historic camp cottages',
         'Funds school field trip scholarships',
@@ -690,11 +891,11 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   tickets: {
     header: {
-      stamp: 'BOOK YOUR VISIT',
+      stamp: 'Book your visit',
       stampClass: 'green',
-      title: 'Tickets & Reservations',
+      title: 'Tickets and reservations',
       subtitle:
-        'Secure your guided tour slot and skip the check-in queue at the visitor center.',
+        'Reserve a guided tour slot and skip the check-in queue at the visitor center.',
     },
   },
 };
@@ -824,6 +1025,246 @@ export const careersList = [
       'Ability to perform physical outdoor labor in various weather conditions.',
       'Experience leading volunteers or working in community garden settings is a plus.',
     ],
+  },
+];
+
+/**
+ * Photograph archives seed.
+ *
+ * These 12 records describe the digitized 35mm slides currently in
+ * public/digitized-photos. Descriptions are working descriptions written from
+ * the images themselves, not catalog records: `provisional: true` tells the UI
+ * to say so rather than present them as archive fact. Staff replace them from
+ * the accession cards in the CMS.
+ */
+export const PHOTOGRAPHS = [
+  {
+    arkId: 'ark_70111_1ZgL',
+    title: 'Camp house with corrugated roof and street lamp',
+    imageUrl: '/digitized-photos/ark_70111_1ZgL.0.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgL.0.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Single-wall camp house with red trim, plantation street lamp, and a visitor at the doorway',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'Looking down on a restored single-wall camp house. Corrugated iron roof, board-and-batten walls, red door and window frames, and a plantation-era street lamp in the foreground.',
+    relatedArkIds: ['ark_70111_1ZgK', 'ark_70111_1ZgJ'],
+    studyNotes:
+      'The clothing and camera carried by the person in the doorway date the exposure to the museum era, not the plantation era. The structure is the subject; the visitor tells you this is documentation of the village as it was being built or interpreted.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1ZgK',
+    title: 'Camp roofs from above, street lamp in foreground',
+    imageUrl: '/digitized-photos/ark_70111_1ZgK.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgK.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Corrugated roofs of adjoining camp structures with a red plantation lamp post',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'An elevated view across several camp roofs. The same red lamp post appears here as in the wider view of the camp house, which places the two exposures minutes apart.',
+    relatedArkIds: ['ark_70111_1ZgL', 'ark_70111_1Zh0'],
+    studyNotes:
+      'Matching the lamp post across two frames is the simplest kind of archival evidence: it tells you the photographer moved rather than that the buildings did.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1ZgJ',
+    title: 'Interior of an unfurnished camp house',
+    imageUrl: '/digitized-photos/ark_70111_1ZgJ.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgJ.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Two people standing in a bare camp house interior beside a double-hung window',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'A bare interior with exposed ceiling joists, single-wall construction, and one double-hung window. Two people stand inside; neither is identified.',
+    relatedArkIds: ['ark_70111_1ZgL', 'ark_70111_1Zgr'],
+    studyNotes:
+      'Single-wall construction — no studs, no insulation, boards nailed straight to the frame — is visible here. It is the detail that explains how quickly plantation housing went up and how little it kept out.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1ZgM',
+    title: 'Visitors entering through the village gate',
+    imageUrl: '/digitized-photos/ark_70111_1ZgM.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgM.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Events and tours',
+    subject: 'A group walking up a path through a tiled gateway structure',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'Visitors walking a paved path beneath a tile-roofed gateway. Utility poles and a street lamp stand behind the gate.',
+    relatedArkIds: ['ark_70111_1Zh0', 'ark_70111_1ZgK'],
+    studyNotes:
+      'Count the people and look at what they are wearing and carrying. Group size and dress often date a photograph more reliably than the buildings do.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Zgn',
+    title: 'Two-story building with red railings',
+    imageUrl: '/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Two-story wooden building with red posts and railings, seen from the garden below',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'A two-story wooden building with a deep lanai, red posts and railings, and a stone retaining wall and plantings in the foreground.',
+    relatedArkIds: ['ark_70111_1Zgx'],
+    studyNotes:
+      'Two stories and a wraparound lanai set this building apart from the single-story worker housing elsewhere in the archive. Scale is a class marker on a plantation.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Zgx',
+    title: 'Front stairway of the two-story building',
+    imageUrl: '/digitized-photos/ark_70111_1Zgx.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Zgx.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Front elevation and stairway of a two-story red-trimmed building',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'The front of the same two-story building, photographed straight on: a central stairway to the first-floor lanai and a second lanai above it.',
+    relatedArkIds: ['ark_70111_1Zgn'],
+    studyNotes:
+      'Photographers documenting a structure usually shoot a three-quarter view and a straight-on elevation. Finding both in a collection is a sign of deliberate survey work rather than snapshots.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Zgr',
+    title: 'Camp cottage behind a picket fence',
+    imageUrl: '/digitized-photos/ark_70111_1Zgr.0.thumbnail (1).jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Zgr.0.thumbnail (1).jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'White camp cottage with corrugated roof behind a low picket fence',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'A white cottage with a corrugated roof and a covered side entry, photographed across a low white picket fence.',
+    relatedArkIds: ['ark_70111_1ZgR', 'ark_70111_1ZgS'],
+    studyNotes:
+      'Fences, yards, and plantings are worth noting. They record how families claimed space around housing they did not own.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1ZgR',
+    title: 'Dark outbuilding beside a green cottage',
+    imageUrl: '/digitized-photos/ark_70111_1ZgR.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgR.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Village site documentation',
+    subject: 'Dark-painted outbuilding with white trim next to a pale green cottage',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'A dark-painted outbuilding with white trim stands beside a pale green cottage. A visitor walks along the path between them.',
+    relatedArkIds: ['ark_70111_1ZgS', 'ark_70111_1Zgr'],
+    studyNotes:
+      'The same outbuilding appears in a second frame with a group posed in front of it. Sequences like this often mark a dedication or a work day.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1ZgS',
+    title: 'Group standing in front of the outbuilding',
+    imageUrl: '/digitized-photos/ark_70111_1ZgS.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1ZgS.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Group photos',
+    subject: 'Three people standing at the corner of a dark outbuilding',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'Three people stand at the left edge of the frame beside the dark outbuilding. None are identified on the slide.',
+    relatedArkIds: ['ark_70111_1ZgR'],
+    studyNotes:
+      'Unidentified people in a group photo are the most common gap in this archive. If you recognize someone here, the archives staff want to hear from you.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Zh0',
+    title: 'Visitors between rows of camp cottages',
+    imageUrl: '/digitized-photos/ark_70111_1Zh0.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Zh0.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Events and tours',
+    subject: 'A group walking a fenced path between camp cottages with red roofs',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'People walk a fenced path between two rows of camp cottages with red roofs and white trim, in what appears to be a tour or an opening event.',
+    relatedArkIds: ['ark_70111_1ZgM', 'ark_70111_1ZgK'],
+    studyNotes:
+      'This is the closest thing in the set to a crowd scene. Compare the density of housing here with the isolated structures in the other frames.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Zh3',
+    title: 'Overgrown camp house with a parked truck',
+    imageUrl: '/digitized-photos/ark_70111_1Zh3.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Zh3.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Plantation towns',
+    subject: 'Weathered camp house under heavy vegetation with a pickup truck in the yard',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: 'ca. 1990s',
+    photographer: '',
+    caption:
+      'A weathered camp house nearly closed in by trees, with a light-colored pickup truck parked in the yard.',
+    relatedArkIds: ['ark_70111_1Zgr'],
+    studyNotes:
+      'The truck is the most datable object in this frame. Vehicle models are one of the standard ways to bracket an undated photograph.',
+    provisional: true,
+  },
+  {
+    arkId: 'ark_70111_1Z4t',
+    title: 'Slide storage box with color reference bar',
+    imageUrl: '/digitized-photos/ark_70111_1Z4t.0.thumbnail.jpeg',
+    thumbnailUrl: '/digitized-photos/ark_70111_1Z4t.0.thumbnail.jpeg',
+    collection: 'fwcgp',
+    filingCategory: 'Archives housing',
+    subject: 'Open slide storage box with mounted 35mm slides, photographed with a color reference bar',
+    donor: 'Friends of Waipahu Cultural Garden Park',
+    accessionNumber: '',
+    circaDate: '',
+    photographer: '',
+    caption:
+      'A green slide storage box, open, holding rows of mounted 35mm slides. Two loose slides sit to the right and a color reference bar runs across the top.',
+    relatedArkIds: [],
+    studyNotes:
+      'This frame is part of the digitization record rather than the historical record. The color bar lets a technician correct color shift in every other scan made that day.',
+    provisional: true,
   },
 ];
 

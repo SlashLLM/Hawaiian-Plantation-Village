@@ -174,7 +174,6 @@ export default function Learn() {
       <PageHeaderParallax
         layers={parallaxLayers.learn}
         stamp={headerDetails.stampText}
-        stampClass={headerDetails.stampColorClass}
         title={headerDetails.title}
         subtitle={headerDetails.subtitle}
       />

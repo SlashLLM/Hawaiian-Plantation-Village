@@ -53,10 +53,9 @@ export default function Visit() {
     <div style={styles.pageContainer}>
       <PageHeaderParallax
         layers={parallaxLayers.visit}
-        stamp={header?.stamp ?? 'VISITOR GUIDE'}
-        stampClass={`ink-stamp ${header?.stampClass ?? 'green'}`}
-        title={header?.title ?? 'Plan Your Visit'}
-        subtitle={header?.subtitle ?? "Everything you need to know to prepare for your journey into Waipahu's history."}
+        stamp={header?.stamp ?? 'Visitor guide'}
+        title={header?.title ?? 'Plan your visit'}
+        subtitle={header?.subtitle ?? 'Hours, directions, admission, and everything else you need before you walk the village.'}
       />
 
       <div style={styles.container}>
@@ -69,25 +68,25 @@ export default function Visit() {
                 onClick={() => setActiveTab('hours')}
                 style={{ ...styles.tabButton, ...(activeTab === 'hours' ? styles.tabButtonActive : {}) }}
               >
-                Hours & Tours
+                Hours and tours
               </button>
               <button
                 onClick={() => setActiveTab('parking')}
                 style={{ ...styles.tabButton, ...(activeTab === 'parking' ? styles.tabButtonActive : {}) }}
               >
-                Directions & Parking
+                Directions and parking
               </button>
               <button
                 onClick={() => setActiveTab('safety')}
                 style={{ ...styles.tabButton, ...(activeTab === 'safety' ? styles.tabButtonActive : {}) }}
               >
-                Accessibility & Guidelines
+                Accessibility
               </button>
               <button
                 onClick={() => setActiveTab('group')}
                 style={{ ...styles.tabButton, ...(activeTab === 'group' ? styles.tabButtonActive : {}) }}
               >
-                Group Visits
+                Group visits
               </button>
             </div>
 
@@ -95,7 +94,7 @@ export default function Visit() {
             {/* Tab: Hours & Tours */}
             {activeTab === 'hours' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>{hoursSection?.title ?? 'Opening Hours'}</h3>
+                <h3 style={styles.tabTitle}>{hoursSection?.title ?? 'Opening hours'}</h3>
                 <div style={styles.infoRow}>
                   <Clock size={20} color="var(--cane-green)" />
                   <div>
@@ -106,7 +105,7 @@ export default function Visit() {
 
                 <div style={styles.ledgerDivider} className="ledger-divider" />
 
-                <h3 style={styles.tabTitle}>Guided Tour Schedule</h3>
+                <h3 style={styles.tabTitle}>Guided tour schedule</h3>
                 <p style={styles.bodyText}>
                   {hoursSection?.toursIntro ?? 'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:'}
                 </p>
@@ -124,7 +123,7 @@ export default function Visit() {
             {/* Tab: Directions & Parking */}
             {activeTab === 'parking' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>Directions to the Village</h3>
+                <h3 style={styles.tabTitle}>Directions to the village</h3>
                 <div style={styles.infoRow}>
                   <MapPin size={20} color="var(--cane-green)" />
                   <div>
@@ -137,7 +136,7 @@ export default function Visit() {
 
                 <div style={styles.ledgerDivider} className="ledger-divider" />
 
-                <h3 style={styles.tabTitle}>Parking Information</h3>
+                <h3 style={styles.tabTitle}>Parking</h3>
                 <div style={styles.infoRow}>
                   <ParkingCircle size={20} color="var(--cane-green)" />
                   <div>
@@ -153,7 +152,7 @@ export default function Visit() {
             {/* Tab: Accessibility & Safety */}
             {activeTab === 'safety' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>Accessibility Support</h3>
+                <h3 style={styles.tabTitle}>Accessibility support</h3>
                 <div style={styles.infoRow}>
                   <Footprints size={20} color="var(--cane-green)" />
                   <div>
@@ -166,7 +165,7 @@ export default function Visit() {
 
                 <div style={styles.ledgerDivider} className="ledger-divider" />
 
-                <h3 style={styles.tabTitle}>Visitor Guidelines</h3>
+                <h3 style={styles.tabTitle}>Visitor guidelines</h3>
                 <div style={styles.infoRow}>
                   <ShieldAlert size={20} color="var(--cane-green)" />
                   <div>
@@ -182,7 +181,7 @@ export default function Visit() {
             {/* Tab: Group Visits */}
             {activeTab === 'group' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
-                <h3 style={styles.tabTitle}>{groupSection?.title ?? 'Group Visits & Private Tours'}</h3>
+                <h3 style={styles.tabTitle}>{groupSection?.title ?? 'Group visits and private tours'}</h3>
                 <p style={styles.bodyText}>
                   {groupSection?.intro ?? 'We welcome groups of all sizes, including tour operators, family reunions, historical organizations, and corporate outings. Group admission discounts are available for pre-registered groups of 10 or more.'}
                 </p>
@@ -190,7 +189,7 @@ export default function Visit() {
                 <div style={styles.infoRow}>
                   <Users size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Group Admission Discount Rates</p>
+                    <p style={styles.infoValue}>Group admission rates</p>
                     <div style={{ ...styles.priceList, marginTop: '8px', width: '100%', maxWidth: '380px' }}>
                       {(groupTickets ?? []).map((ticket) => (
                         <div key={ticket.slug} style={styles.priceItem}><span>{ticket.label}</span><strong>{ticket.priceDisplay ?? `$${(ticket.priceCents / 100).toFixed(2)}`}</strong></div>
@@ -201,11 +200,11 @@ export default function Visit() {
 
                 <div style={styles.ledgerDivider} className="ledger-divider" />
 
-                <h3 style={styles.tabTitle}>Commercial Tour Operators</h3>
+                <h3 style={styles.tabTitle}>Commercial tour operators</h3>
                 <div style={styles.infoRow}>
                   <Building size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>{groupSection?.commercialTitle ?? 'Operator Scheduling & Access'}</p>
+                    <p style={styles.infoValue}>{groupSection?.commercialTitle ?? 'Operator scheduling and access'}</p>
                     <p style={styles.infoDesc}>
                       {groupSection?.commercialDesc ?? 'We work closely with local and international tour operators. Commercial bus parking is available onsite. Bookings must be requested at least 14 days in advance to guarantee an exclusive docent guide.'}
                     </p>
@@ -217,7 +216,7 @@ export default function Visit() {
                 {/* Inquiry Form */}
                 {!groupComplete ? (
                   <form style={styles.groupInquiryForm} onSubmit={handleGroupSubmit}>
-                    <h3 style={styles.tabSubTitle}>Group Reservation Inquiry</h3>
+                    <h3 style={styles.tabSubTitle}>Group reservation inquiry</h3>
                     <p style={{ ...styles.infoDesc, marginBottom: '1.25rem' }}>
                       Submit your details, and our group booking coordinator will follow up with scheduling options and payment instructions within 1 business day.
                     </p>
@@ -225,7 +224,7 @@ export default function Visit() {
 
                     <div style={styles.formRow}>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Organization / Group Name</label>
+                        <label style={styles.formLabel}>Organization or group name</label>
                         <input
                           type="text"
                           required
@@ -236,7 +235,7 @@ export default function Visit() {
                         />
                       </div>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Contact Person</label>
+                        <label style={styles.formLabel}>Contact person</label>
                         <input
                           type="text"
                           required
@@ -250,7 +249,7 @@ export default function Visit() {
 
                     <div style={styles.formRow}>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Estimated Group Size</label>
+                        <label style={styles.formLabel}>Estimated group size</label>
                         <input
                           type="number"
                           required
@@ -262,7 +261,7 @@ export default function Visit() {
                         />
                       </div>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Group Type</label>
+                        <label style={styles.formLabel}>Group type</label>
                         <select
                           value={groupType}
                           onChange={(e) => setGroupType(e.target.value)}
@@ -283,7 +282,7 @@ export default function Visit() {
 
                     <div style={styles.formRow}>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Preferred Date</label>
+                        <label style={styles.formLabel}>Preferred date</label>
                         <input
                           type="date"
                           required
@@ -293,7 +292,7 @@ export default function Visit() {
                         />
                       </div>
                       <div style={styles.formCol}>
-                        <label style={styles.formLabel}>Contact Email</label>
+                        <label style={styles.formLabel}>Contact email</label>
                         <input
                           type="email"
                           required
@@ -306,7 +305,7 @@ export default function Visit() {
                     </div>
 
                     <div style={{ ...styles.formCol, marginBottom: '1.5rem' }}>
-                      <label style={styles.formLabel}>Contact Phone Number</label>
+                      <label style={styles.formLabel}>Contact phone number</label>
 
                       <input
                         type="tel"
@@ -318,8 +317,8 @@ export default function Visit() {
                       />
                     </div>
 
-                    <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                      Submit Group Inquiry <ArrowRight size={16} />
+                    <button type="submit" className="btn-primary" style={{ width: '100%' }}>
+                      Send inquiry <ArrowRight size={16} />
                     </button>
                   </form>
                 ) : (
@@ -327,7 +326,7 @@ export default function Visit() {
                     <div style={styles.successIcon}>
                       <Check size={28} color="white" />
                     </div>
-                    <h4 style={styles.successTitle}>Inquiry Sent Successfully!</h4>
+                    <h4 style={styles.successTitle}>Inquiry sent</h4>
                     <p style={{ ...styles.infoDesc, textAlign: 'center', marginBottom: '1.5rem' }}>
                       Thank you for contacting us. We have received your request for <strong>{groupName}</strong> ({groupSize} visitors) for <strong>{groupDate}</strong>.
                     </p>
@@ -337,8 +336,8 @@ export default function Visit() {
                       <div style={styles.receiptRow}><span>Contact:</span><strong>{contactName}</strong></div>
                       <div style={styles.receiptRow}><span>Email/Phone:</span><strong>{groupEmail} / {groupPhone}</strong></div>
                     </div>
-                    <button className="btn-secondary" onClick={() => setGroupComplete(false)} style={{ width: '100%', justifyContent: 'center' }}>
-                      Submit Another Inquiry
+                    <button className="btn-secondary" onClick={() => setGroupComplete(false)} style={{ width: '100%' }}>
+                      Send another inquiry
                     </button>
                   </div>
                 )}
@@ -347,11 +346,11 @@ export default function Visit() {
 
             {/* FAQs */}
             <div style={styles.faqSection}>
-              <h3 style={styles.faqHeaderTitle}>{faqSection?.title ?? 'Frequently Asked Questions'}</h3>
+              <h3 style={styles.faqHeaderTitle}>{faqSection?.title ?? 'Common questions'}</h3>
               <div style={styles.faqList}>
                 {faqs.map((faq, idx) => (
                   <div key={faq.q ?? idx} style={styles.faqItem}>
-                    <h4 style={styles.faqQuestion}>Q: {faq.q}</h4>
+                    <h4 style={styles.faqQuestion}>{faq.q}</h4>
                     <p style={styles.faqAnswer}>{faq.a}</p>
                   </div>
                 ))}
@@ -363,8 +362,8 @@ export default function Visit() {
           <div style={styles.rightCol}>
             <div className="paper-card" style={styles.ctaCard}>
               <div style={styles.priceHeader}>
-                <Ticket size={24} color="var(--sugar-gold)" />
-                <h3 style={styles.ctaCardTitle}>{admissionSection?.title ?? 'Admission Tickets'}</h3>
+                <Ticket size={22} color="var(--heritage-gold)" />
+                <h3 style={styles.ctaCardTitle}>{admissionSection?.title ?? 'Admission'}</h3>
               </div>
               <p style={styles.ctaCardText}>
                 {admissionSection?.description ?? 'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.'}
@@ -389,17 +388,17 @@ export default function Visit() {
               </div>
 
               <button
-                className="btn-primary"
+                className="btn-accent"
                 onClick={() => setActivePage(admissionSection?.buttonPage ?? 'tickets')}
                 style={styles.bookBtn}
               >
-                {admissionSection?.buttonLabel ?? 'Book Tickets Online'} <ArrowRight size={16} />
+                {admissionSection?.buttonLabel ?? 'Get tickets'} <ArrowRight size={16} />
               </button>
             </div>
 
             {/* School tours CTA */}
-            <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem', backgroundColor: '#fffcf7' }}>
-              <h4 style={styles.schoolTitle}>{admissionSection?.schoolCta?.title ?? 'Bringing a School Group?'}</h4>
+            <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem' }}>
+              <h4 style={styles.schoolTitle}>{admissionSection?.schoolCta?.title ?? 'Bringing a school group?'}</h4>
               <p style={styles.schoolText}>
                 {admissionSection?.schoolCta?.description ?? 'We host educational class visits Tuesday through Friday. Learn about specialized curriculum programs and discounted school group pricing.'}
               </p>
@@ -409,8 +408,8 @@ export default function Visit() {
             </div>
 
             {/* General Group visits CTA */}
-            <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem', backgroundColor: '#fffdf9', border: '1px dashed var(--sugar-gold)' }}>
-              <h4 style={styles.schoolTitle}>{admissionSection?.groupCta?.title ?? 'Private & Commercial Groups'}</h4>
+            <div className="paper-card" style={{ ...styles.ctaCard, marginTop: '1.5rem' }}>
+              <h4 style={styles.schoolTitle}>{admissionSection?.groupCta?.title ?? 'Private and commercial groups'}</h4>
               <p style={styles.schoolText}>
                 {admissionSection?.groupCta?.description ?? 'Are you organizing a tour operator, family reunion, or corporate event for 10+ people? Get special rates and a dedicated guide.'}
               </p>
@@ -428,17 +427,18 @@ export default function Visit() {
 
 const styles = {
   pageContainer: {
-    paddingBottom: '5rem'
+    paddingBottom: 'clamp(3.5rem, 8vw, 6rem)'
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1180px',
     margin: '0 auto',
-    padding: '0 1.5rem'
+    padding: '0 clamp(1.25rem, 4vw, 2.5rem)'
   },
   contentGrid: {
     display: 'grid',
-    gridTemplateColumns: '1.6fr 1fr',
-    gap: '3rem',
+    gridTemplateColumns: 'minmax(0, 1.7fr) minmax(280px, 1fr)',
+    gap: 'clamp(2rem, 5vw, 4rem)',
+    alignItems: 'start',
     '@media (max-width: 800px)': {
       gridTemplateColumns: '1fr',
       gap: '2.5rem'
@@ -446,39 +446,39 @@ const styles = {
   },
   leftCol: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    minWidth: 0
   },
   tabsHeader: {
     display: 'flex',
-    borderBottom: '2px solid var(--kraft-tan-dark)',
-    gap: '12px',
-    marginBottom: '1.5rem',
+    borderBottom: '1px solid var(--hairline)',
+    gap: '4px',
+    marginBottom: '2rem',
     overflowX: 'auto'
   },
   tabButton: {
     background: 'none',
     border: 'none',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.9rem',
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    color: 'var(--text-muted)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.95rem',
+    fontWeight: '500',
+    color: 'var(--muted-sage)',
     cursor: 'pointer',
     padding: '0.75rem 1rem',
-    borderBottom: '3px solid transparent',
+    borderBottom: '2px solid transparent',
     whiteSpace: 'nowrap'
   },
   tabButtonActive: {
-    color: 'var(--cane-green)',
-    borderBottom: '3px solid var(--cane-green)'
+    color: 'var(--plantation-ink)',
+    fontWeight: '600',
+    borderBottom: '2px solid var(--heritage-gold)'
   },
   tabContentCard: {
-    padding: '2rem',
-    borderRadius: '4px'
+    padding: 'clamp(1.5rem, 3vw, 2.25rem)'
   },
   tabTitle: {
-    fontSize: '1.4rem',
-    color: 'var(--koa-wood)',
+    fontSize: '1.45rem',
+    fontWeight: 500,
     marginBottom: '1rem'
   },
   infoRow: {
@@ -488,63 +488,69 @@ const styles = {
     marginTop: '0.5rem'
   },
   infoValue: {
-    fontSize: '1.05rem',
-    fontWeight: 'bold',
-    color: 'var(--text-dark)',
-    marginBottom: '2px'
+    fontSize: '1.02rem',
+    fontWeight: 600,
+    color: 'var(--plantation-ink)',
+    marginBottom: '4px'
   },
   infoDesc: {
-    fontSize: '0.9rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.5'
+    fontSize: '0.95rem',
+    color: 'var(--muted-sage)',
+    lineHeight: '1.65'
   },
   tourList: {
-    listStyleType: 'circle',
-    paddingLeft: '1.5rem',
+    listStyle: 'none',
+    padding: 0,
     marginBottom: '1rem',
-    fontSize: '0.95rem'
+    fontSize: '0.98rem',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.5rem'
   },
   bodyText: {
-    fontSize: '0.95rem',
+    fontSize: '0.98rem',
+    color: 'var(--muted-sage)',
+    lineHeight: 1.7,
     marginBottom: '1rem'
   },
   faqSection: {
-    marginTop: '3.5rem'
+    marginTop: 'clamp(3rem, 6vw, 4.5rem)'
   },
   faqHeaderTitle: {
-    fontSize: '1.75rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '1.5rem',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    paddingBottom: '0.5rem'
+    fontSize: '1.9rem',
+    fontWeight: 500,
+    marginBottom: '1.75rem'
   },
   faqList: {
     display: 'flex',
-    flexDirection: 'column',
-    gap: '1.5rem'
+    flexDirection: 'column'
   },
   faqItem: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '6px'
+    gap: '8px',
+    padding: '1.5rem 0',
+    borderTop: '1px solid var(--hairline)'
   },
   faqQuestion: {
-    fontSize: '1.05rem',
-    color: 'var(--koa-wood)',
-    fontWeight: '700'
+    fontSize: '1.1rem',
+    fontWeight: 500,
+    fontFamily: 'var(--font-display)'
   },
   faqAnswer: {
     fontSize: '0.95rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.5'
+    color: 'var(--muted-sage)',
+    lineHeight: '1.65',
+    maxWidth: '62ch'
   },
   rightCol: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    position: 'sticky',
+    top: '5.5rem'
   },
   ctaCard: {
-    padding: '2rem',
-    borderRadius: '4px'
+    padding: 'clamp(1.5rem, 3vw, 2rem)'
   },
   priceHeader: {
     display: 'flex',
@@ -553,14 +559,14 @@ const styles = {
     marginBottom: '1rem'
   },
   ctaCardTitle: {
-    fontSize: '1.4rem',
-    color: 'var(--koa-wood)'
+    fontSize: '1.35rem',
+    fontWeight: 500
   },
   ctaCardText: {
-    fontSize: '0.9rem',
-    color: 'var(--text-muted)',
+    fontSize: '0.95rem',
+    color: 'var(--muted-sage)',
     marginBottom: '1.5rem',
-    lineHeight: '1.5'
+    lineHeight: '1.65'
   },
   priceList: {
     display: 'flex',
@@ -571,41 +577,40 @@ const styles = {
   priceItem: {
     display: 'flex',
     justifyContent: 'space-between',
+    gap: '1rem',
     fontSize: '0.95rem',
-    borderBottom: '1px dotted var(--kraft-tan-dark)',
-    paddingBottom: '6px',
-    color: 'var(--text-dark)'
+    borderBottom: '1px solid var(--hairline)',
+    paddingBottom: '8px',
+    color: 'var(--plantation-ink)'
   },
   bookBtn: {
-    width: '100%',
-    justifyContent: 'center'
+    width: '100%'
   },
   schoolTitle: {
-    fontSize: '1.25rem',
-    color: 'var(--koa-wood)',
+    fontSize: '1.2rem',
+    fontWeight: 500,
     marginBottom: '0.5rem'
   },
   schoolText: {
-    fontSize: '0.85rem',
-    color: 'var(--text-muted)',
-    lineHeight: '1.5',
+    fontSize: '0.92rem',
+    color: 'var(--muted-sage)',
+    lineHeight: '1.6',
     marginBottom: '1.25rem'
   },
   schoolBtn: {
-    width: '100%',
-    justifyContent: 'center'
+    width: '100%'
   },
   groupInquiryForm: {
     marginTop: '2rem',
-    padding: '2rem 1.5rem',
-    border: '1px dashed var(--kraft-tan-dark)',
-    backgroundColor: 'var(--paper-dark)',
-    borderRadius: '4px',
+    padding: 'clamp(1.5rem, 3vw, 2rem)',
+    border: '1px solid var(--hairline)',
+    backgroundColor: 'var(--sand)',
+    borderRadius: 'var(--border-radius-md)',
     textAlign: 'left'
   },
   tabSubTitle: {
     fontSize: '1.25rem',
-    color: 'var(--koa-wood)',
+    fontWeight: 500,
     marginBottom: '0.5rem'
   },
   formRow: {
@@ -623,30 +628,30 @@ const styles = {
   },
   formLabel: {
     fontSize: '0.85rem',
-    fontWeight: 'bold',
-    color: 'var(--koa-wood)'
+    fontWeight: 600,
+    color: 'var(--plantation-ink)'
   },
   formInput: {
     padding: '0.75rem',
-    border: '1px solid var(--kraft-tan-dark)',
-    borderRadius: '4px',
+    border: '1px solid var(--hairline-strong)',
+    borderRadius: 'var(--border-radius-md)',
     outline: 'none',
     fontSize: '0.95rem',
-    backgroundColor: 'white'
+    backgroundColor: 'var(--sugarcane-cream)'
   },
   groupSuccessBlock: {
     marginTop: '2rem',
-    padding: '2.5rem 1.5rem',
+    padding: 'clamp(2rem, 4vw, 2.5rem) 1.5rem',
     textAlign: 'center',
-    borderRadius: '4px',
-    border: '1px solid var(--kraft-tan-dark)',
-    backgroundColor: 'var(--paper-dark)'
+    borderRadius: 'var(--border-radius-md)',
+    border: '1px solid var(--hairline)',
+    backgroundColor: 'var(--sand)'
   },
   successIcon: {
-    width: '55px',
-    height: '55px',
+    width: '52px',
+    height: '52px',
     borderRadius: '50%',
-    backgroundColor: 'var(--cane-green)',
+    backgroundColor: 'var(--plantation-ink)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -654,21 +659,23 @@ const styles = {
   },
   successTitle: {
     fontSize: '1.5rem',
-    color: 'var(--cane-green)',
+    fontWeight: 500,
     marginBottom: '0.5rem'
   },
   receiptSummary: {
-    border: '1px solid var(--kraft-tan-dark)',
+    border: '1px solid var(--hairline)',
+    borderRadius: 'var(--border-radius-md)',
     padding: '1.25rem',
     textAlign: 'left',
-    backgroundColor: 'white',
+    backgroundColor: 'var(--sugarcane-cream)',
     marginBottom: '1.5rem'
   },
   receiptRow: {
     display: 'flex',
     justifyContent: 'space-between',
-    fontSize: '0.85rem',
-    borderBottom: '1px dotted var(--kraft-tan-dark)',
+    gap: '1rem',
+    fontSize: '0.88rem',
+    borderBottom: '1px solid var(--hairline)',
     paddingBottom: '6px',
     marginBottom: '6px'
   }

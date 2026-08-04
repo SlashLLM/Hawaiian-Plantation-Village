@@ -2,6 +2,8 @@ export const ROUTES = {
   home: '/',
   visit: '/visit',
   stories: '/stories',
+  archives: '/archives',
+  archivePhoto: '/archives/:arkId',
   play: '/play',
   learn: '/learn',
   learnModule: '/learn/:moduleId',
@@ -16,6 +18,7 @@ export const PAGE_IDS = {
   '/': 'home',
   '/visit': 'visit',
   '/stories': 'stories',
+  '/archives': 'archives',
   '/play': 'play',
   '/learn': 'learn',
   '/support': 'support',
@@ -25,6 +28,7 @@ export const PAGE_IDS = {
 
 export function pageIdFromPath(pathname) {
   if (pathname.startsWith('/learn/')) return 'learn';
+  if (pathname.startsWith('/archives/')) return 'archives';
   if (pathname.startsWith('/admin')) return 'admin';
   return PAGE_IDS[pathname] ?? 'home';
 }
@@ -34,6 +38,8 @@ export function pathFromPageId(pageId, params = {}) {
     case 'home': return '/';
     case 'visit': return '/visit';
     case 'stories': return '/stories';
+    case 'archives': return '/archives';
+    case 'archive-photo': return `/archives/${params.arkId ?? ''}`;
     case 'play': return '/play';
     case 'learn': return '/learn';
     case 'learn-module': return `/learn/${params.moduleId ?? ''}`;
