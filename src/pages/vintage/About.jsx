@@ -4,7 +4,6 @@ import {
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
   ChevronRight, ChevronDown, Send, Printer, User, AlertCircle
 } from 'lucide-react';
-import bangoImage from '../../assets/bango_lunch_tin.png';
 import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
 
@@ -178,9 +177,12 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
       {/* Header */}
       <div style={styles.headerBlock}>
         <div style={styles.container}>
-          <span className={`ink-stamp ${header?.stampClass ?? 'green'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'Preservation'}</span>
-          <h1 style={styles.pageTitle}>{header?.title ?? 'About the Village'}</h1>
-          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'A cultural sanctuary in Waipahu preserving stories and memories of Oʻahu\'s plantation communities.'}</p>
+          <p style={styles.pageEyebrow}>{header?.stamp ?? 'Our story'}</p>
+          <h1 style={styles.pageTitle}>{header?.title ?? 'Built by the people who lived it'}</h1>
+          <p style={styles.pageSubtitle}>
+            {header?.subtitle ??
+              'Founded by plantation workers and their descendants so their grandchildren would know where they came from.'}
+          </p>
         </div>
       </div>
 
@@ -193,7 +195,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               style={{ ...styles.tabButton, ...(activeTab === 'history' ? styles.tabButtonActive : {}) }}
             >
               <BookOpen size={16} />
-              <span>History & Mission</span>
+              <span>History and mission</span>
               {activeTab === 'history' && <div style={styles.tabIndicator} />}
             </button>
             <button 
@@ -201,7 +203,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               style={{ ...styles.tabButton, ...(activeTab === 'news' ? styles.tabButtonActive : {}) }}
             >
               <Calendar size={16} />
-              <span>News & Announcements</span>
+              <span>News</span>
               {activeTab === 'news' && <div style={styles.tabIndicator} />}
             </button>
             <button 
@@ -217,7 +219,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               style={{ ...styles.tabButton, ...(activeTab === 'contact' ? styles.tabButtonActive : {}) }}
             >
               <Mail size={16} />
-              <span>Contact Us</span>
+              <span>Contact</span>
               {activeTab === 'contact' && <div style={styles.tabIndicator} />}
             </button>
           </div>
@@ -240,7 +242,11 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 </div>
                 <div style={styles.imgCol}>
                   <div style={styles.imgWrapper}>
-                    <img src={bangoImage} alt="Vintage Bango tags and lunch tin" style={styles.featuredImg} />
+                    <img
+                      src="/digitized-photos/ark_70111_1ZgL.0.jpeg"
+                      alt="Restored camp house at Hawaiian Plantation Village"
+                      style={styles.featuredImg}
+                    />
                     <div style={styles.imgTextureOverlay} />
                   </div>
                 </div>
@@ -269,9 +275,10 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               </div>
             </section>
 
-            {/* Leadership */}
+            {/* Leadership / founders */}
+            {leadership.length > 0 && (
             <section style={styles.aboutSection}>
-              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Leadership & Board'}</h2>
+              <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Founders and builders'}</h2>
               <div style={styles.boardGrid}>
                 {leadership.map((person) => (
                   <div key={person.name} className="paper-card" style={styles.boardCard}>
@@ -282,6 +289,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 ))}
               </div>
             </section>
+            )}
           </div>
         )}
 
@@ -391,6 +399,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
             </div>
 
             {/* Accordion Listings */}
+            {careersList.length === 0 ? (
+              <div style={styles.noResultsCard} className="paper-card">
+                <p style={styles.noResultsText}>
+                  No open positions are listed right now. Volunteer openings for artifact and archives
+                  assistants are shared when available — use Contact to ask about volunteering.
+                </p>
+              </div>
+            ) : (
             <div style={styles.careersList}>
               {careersList.map(job => {
                 const isExpanded = expandedJobId === job.id;
@@ -456,6 +472,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 );
               })}
             </div>
+            )}
 
             {/* Career Application Modal */}
             {applyingJob && (
@@ -808,38 +825,49 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
 
 const styles = {
   pageContainer: {
-    paddingBottom: '5rem'
+    paddingBottom: 'clamp(3.5rem, 8vw, 6rem)'
   },
   headerBlock: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
+    backgroundColor: 'var(--plantation-ink)',
+    padding: 'clamp(4rem, 10vh, 7rem) 0 clamp(3rem, 7vh, 5rem)',
     marginBottom: '0'
   },
   container: {
-    maxWidth: '1200px',
+    maxWidth: '1180px',
     margin: '0 auto',
-    padding: '0 1.5rem'
+    padding: '0 clamp(1.25rem, 4vw, 2.5rem)'
+  },
+  pageEyebrow: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    fontWeight: 600,
+    letterSpacing: '0.16em',
+    textTransform: 'uppercase',
+    color: 'var(--heritage-gold)',
+    margin: '0 0 0.9rem'
   },
   pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
+    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+    fontWeight: 500,
+    color: 'var(--sugarcane-cream)',
+    margin: 0,
+    maxWidth: '18ch'
   },
   pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px'
+    fontSize: 'clamp(1rem, 1.4vw, 1.12rem)',
+    lineHeight: 1.65,
+    color: 'rgba(250, 246, 236, 0.76)',
+    maxWidth: '52ch',
+    margin: '1.1rem 0 0'
   },
   // Sub-navigation tabs
   tabsContainer: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
+    backgroundColor: 'var(--sugarcane-cream)',
+    borderBottom: '1px solid var(--hairline)',
     position: 'sticky',
-    top: '78px', // offset from navbar height
+    top: '74px', // offset from navbar height
     zIndex: 90,
-    marginBottom: '3rem'
+    marginBottom: 'clamp(2.5rem, 6vw, 4rem)'
   },
   tabsWrapper: {
     display: 'flex',
@@ -853,36 +881,31 @@ const styles = {
   },
   tabButton: {
     background: 'none',
-    border: 'none',
-    fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.85rem',
-    fontWeight: 'bold',
-    color: 'var(--text-muted)',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.95rem',
+    fontWeight: 500,
+    color: 'var(--muted-sage)',
     cursor: 'pointer',
-    padding: '0.75rem 1.25rem',
+    padding: '0.85rem 1rem',
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    textTransform: 'uppercase',
     whiteSpace: 'nowrap',
     position: 'relative',
     transition: 'color 0.2s ease',
-    borderRadius: '4px 4px 0 0',
-    border: '1px solid transparent',
-    borderBottom: 'none'
+    border: 'none'
   },
   tabButtonActive: {
-    color: 'var(--cane-green)',
-    backgroundColor: 'var(--paper-light)',
-    borderColor: 'var(--kraft-tan-dark)'
+    color: 'var(--plantation-ink)',
+    fontWeight: 600
   },
   tabIndicator: {
     position: 'absolute',
-    bottom: '-1px',
+    bottom: 0,
     left: 0,
     right: 0,
     height: '2px',
-    backgroundColor: 'var(--paper-light)',
+    backgroundColor: 'var(--heritage-gold)',
     zIndex: 10
   },
   // Sections
@@ -909,14 +932,14 @@ const styles = {
     alignItems: 'flex-start'
   },
   sectionTitle: {
-    fontSize: '2.2rem',
-    color: 'var(--koa-wood-dark)',
+    fontSize: 'clamp(1.8rem, 3.4vw, 2.4rem)',
+    fontWeight: 500,
     marginBottom: '1.25rem'
   },
   bodyText: {
     fontSize: '1rem',
-    lineHeight: '1.6',
-    color: 'var(--text-dark)',
+    lineHeight: '1.7',
+    color: 'var(--muted-sage)',
     marginBottom: '1.25rem'
   },
   imgCol: {

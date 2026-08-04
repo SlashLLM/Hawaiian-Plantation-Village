@@ -6,6 +6,8 @@ import AdminRoute from './components/admin/AdminRoute.jsx';
 import VintageHome from './pages/vintage/Home.jsx';
 import VintageVisit from './pages/vintage/Visit.jsx';
 import VintageStories from './pages/vintage/Stories.jsx';
+import VintageArchives from './pages/vintage/Archives.jsx';
+import VintagePhotographDetail from './pages/vintage/PhotographDetail.jsx';
 import VintageLearn from './pages/vintage/Learn.jsx';
 import CurriculumModule from './pages/vintage/CurriculumModule.jsx';
 import VintageSupport from './pages/vintage/Support.jsx';
@@ -24,6 +26,8 @@ export default function App() {
           <Route index element={<VintageHome />} />
           <Route path="visit" element={<VintageVisit />} />
           <Route path="stories" element={<VintageStories />} />
+          <Route path="archives" element={<VintageArchives />} />
+          <Route path="archives/:arkId" element={<VintagePhotographDetail />} />
           <Route path="play" element={<VintagePlay />} />
           <Route path="learn" element={<VintageLearn />} />
           <Route path="learn/:moduleId" element={<CurriculumModule />} />

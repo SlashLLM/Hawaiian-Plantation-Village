@@ -9,6 +9,7 @@ import {
   DEFAULT_SITE_SETTINGS,
   DEFAULT_PAGE_SECTIONS,
   CAMPS_DATA,
+  PHOTOGRAPHS,
   newsArticles,
   careersList,
   CURRICULUM_MODULES,
@@ -17,6 +18,7 @@ import {
 } from '../lib/content/fallbacks.js';
 import {
   mapCampStory,
+  mapPhotograph,
   mapNewsArticle,
   mapCareer,
   mapCurriculumModule,
@@ -34,12 +36,14 @@ const ContentContext = createContext(null);
 /** Admin-managed item lists live in content_entries; page copy stays in page_sections. */
 const COLLECTION_FALLBACKS = {
   camp_story: CAMPS_DATA,
+  photograph: PHOTOGRAPHS,
   news: newsArticles,
   career: careersList,
 };
 
 const COLLECTION_MAPPERS = {
   camp_story: mapCampStory,
+  photograph: mapPhotograph,
   news: mapNewsArticle,
   career: mapCareer,
 };

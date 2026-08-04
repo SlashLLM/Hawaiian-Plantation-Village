@@ -7,6 +7,7 @@ import { PAGE_KEYS, PAGE_LABELS } from './sectionKeys.js';
  * Extra panels:
  * - catalog: group tickets + tour slots (Visit)
  * - campStories: addable camp_story entries (Stories)
+ * - photographs: addable photograph entries (Archives)
  * - curriculum: lesson modules (Learn)
  * - communityPrograms: upcoming events list (Home)
  */
@@ -15,6 +16,7 @@ export const PAGE_EXTRA_PANELS = {
   home: ['communityPrograms'],
   visit: ['catalog'],
   stories: ['campStories'],
+  archives: ['photographs'],
   learn: ['curriculum'],
 };
 
