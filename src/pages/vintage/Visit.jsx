@@ -171,7 +171,7 @@ export default function Visit() {
                   <div>
                     <p style={styles.infoValue}>{safetySection?.guidelinesTitle ?? 'Preserving Cultural Heritage'}</p>
                     <p style={styles.infoDesc}>
-                      {safetySection?.guidelinesDesc ?? 'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaiian Plantation Village is a smoke-free facility.'}
+                      {safetySection?.guidelinesDesc ?? 'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaii\'s Plantation Village is a smoke-free facility.'}
                     </p>
                   </div>
                 </div>

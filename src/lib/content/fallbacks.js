@@ -11,7 +11,7 @@ export { CURRICULUM_MODULES } from '../../data/curriculumModules.js';
 
 export const DEFAULT_SITE_SETTINGS = {
   brand: {
-    title: 'Hawaiian Plantation Village',
+    title: 'Hawaii\'s Plantation Village',
     subtitle: 'Waipahu, Oʻahu, Hawaiʻi',
     tagline:
       'A living plantation village built so future generations can recognize today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.',
@@ -28,10 +28,10 @@ export const DEFAULT_SITE_SETTINGS = {
     { id: 'about', label: 'About' },
   ],
   footer: {
-    brand: 'Hawaiian Plantation Village',
+    brand: 'Hawaii\'s Plantation Village',
     text:
       'Founded by plantation workers and their descendants to preserve plantation heritage and legacy through authentic homes, gardens, and community memory.',
-    copyright: '© 2026 Hawaiian Plantation Village. All rights reserved.',
+    copyright: '© 2026 Hawaii\'s Plantation Village. All rights reserved.',
     ctaLinks: [
       { label: 'Get tickets', page: 'tickets' },
       { label: 'Become a member', page: 'support' },
@@ -55,7 +55,7 @@ export const DEFAULT_SITE_SETTINGS = {
       line2: 'Waipahu, Oʻahu, Hawaiʻi 96797',
     },
     mapEmbed:
-      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaiian%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
+      'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaii%27s%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
   },
   hours: {
     schedule: 'Tuesday – Saturday: 9:00 AM – 2:00 PM',
@@ -80,11 +80,11 @@ export const DEFAULT_SITE_SETTINGS = {
     posterSrc: '/digitized-photos/ark_70111_1ZgL.0.jpeg',
   },
   seo: {
-    title: 'Hawaiian Plantation Village | Plantation Heritage in Waipahu, Oʻahu',
+    title: 'Hawaii\'s Plantation Village | Plantation Heritage in Waipahu, Oʻahu',
     description:
       'Walk a living plantation village in Waipahu: ethnic camp homes, gardens, school tours, and free festivals that honor Hawaiʻi\'s plantation workers and immigrant communities.',
     keywords: [
-      'Hawaiian Plantation Village',
+      'Hawaii\'s Plantation Village',
       'Waipahu history',
       'plantation museum',
       'Oʻahu field trips',
@@ -179,7 +179,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       stampClass: 'green',
       title: 'A place to share the laborers\' story',
       paragraphs: [
-        'Hawaiian Plantation Village focuses on the plantation worker — people from many cultures, natives and immigrants, who were promised a chance to better their lives. The long-range goal has been a collection of structures typifying a plantation village, with each major ethnic group represented by buildings, furnishings, and gardens.',
+        'Hawaii\'s Plantation Village focuses on the plantation worker — people from many cultures, natives and immigrants, who were promised a chance to better their lives. The long-range goal has been a collection of structures typifying a plantation village, with each major ethnic group represented by buildings, furnishings, and gardens.',
         'Instead of hiring professionals to plan every exhibit, the village worked with ethnic historical groups to furnish each home with a thematic plan and to design gardens with plants specific to their culture. Docents guide students, teachers, and visitors through the hardships and life-affirming experiences of plantation camp life.',
       ],
       primaryCta: { label: 'Read our story', page: 'about' },
@@ -328,7 +328,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.',
       guidelinesTitle: 'Preserving cultural heritage',
       guidelinesDesc:
-        'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaiian Plantation Village is a smoke-free facility.',
+        'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaii\'s Plantation Village is a smoke-free facility.',
     },
     group: {
       title: 'Group visits and private tours',
@@ -407,7 +407,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'A village for plantation heritage and legacy',
       paragraphs: [
         'From its inception, the long-range goal has been a collection of structures typifying a plantation village — each major ethnic group who worked the plantations represented with buildings, furnishings, and gardens that portray an authentic, culturally informed everyday life.',
-        'Much of the capital raised came from outside Waipahu. The committee changed the project name to include all of Hawaiʻi\'s plantations rather than focusing only on Waipahu. Hawaiian Plantation Village focuses on the plantation worker: natives and immigrants promised a chance to better their lives, whose differing cultural values and traditions form the basis of our multiethnic society today.',
+        'Much of the capital raised came from outside Waipahu. The committee changed the project name to include all of Hawaiʻi\'s plantations rather than focusing only on Waipahu. Hawaii\'s Plantation Village focuses on the plantation worker: natives and immigrants promised a chance to better their lives, whose differing cultural values and traditions form the basis of our multiethnic society today.',
       ],
     },
     timelineIntro: {
@@ -489,7 +489,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         {
           year: '1992',
           event:
-            'Hawaiian Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
+            'Hawaii\'s Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
         },
       ],
     },
@@ -511,7 +511,7 @@ export const DEFAULT_PAGE_SECTIONS = {
           slug: 'spencer-leinweber',
           name: 'Spencer Leinweber',
           role: 'Principal architect',
-          desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaiian Plantation Village.',
+          desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaii\'s Plantation Village.',
         },
       ],
     },
@@ -537,7 +537,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       eyebrow: 'Three collections',
       title: 'Photograph collections',
       description:
-        'Photographs donated to Hawaiian Plantation Village are organized into three primary collections. Knowing who kept an image, and why, changes how you read it.',
+        'Photographs donated to Hawaii\'s Plantation Village are organized into three primary collections. Knowing who kept an image, and why, changes how you read it.',
       items: PHOTOGRAPH_COLLECTIONS,
     },
     howToLook: {
@@ -1310,7 +1310,7 @@ export const TIMELINE = [
   {
     year: '1992',
     event:
-      'Hawaiian Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
+      'Hawaii\'s Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
   },
 ];
 
@@ -1331,7 +1331,7 @@ export const LEADERSHIP = [
     slug: 'spencer-leinweber',
     name: 'Spencer Leinweber',
     role: 'Principal architect',
-    desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaiian Plantation Village.',
+    desc: 'Of Spencer Mason Architecture; selected as principal architect for Hawaii\'s Plantation Village.',
   },
 ];
 

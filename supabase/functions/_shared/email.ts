@@ -55,7 +55,7 @@ function shellHtml(title: string, bodyInner: string): string {
 <body style="margin:0;padding:0;background:#fbf9f5;font-family:Georgia,serif;color:#211c18;">
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:24px auto;background:#fff;border:2px solid #4a2c11;">
     <tr><td style="padding:24px;background:#1b3823;color:#fff;">
-      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;">Hawaiian Plantation Village</div>
+      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;">Hawaii's Plantation Village</div>
       <h1 style="margin:8px 0 0;font-size:22px;font-weight:normal;">${escapeHtml(title)}</h1>
     </td></tr>
     <tr><td style="padding:24px;">
@@ -81,7 +81,7 @@ function passHtml(details: PassDetails): string {
 <body style="margin:0;padding:0;background:#fbf9f5;font-family:Georgia,serif;color:#211c18;">
   <table width="100%" cellpadding="0" cellspacing="0" style="max-width:560px;margin:24px auto;background:#fff;border:2px solid #4a2c11;">
     <tr><td style="padding:24px;background:#1b3823;color:#fff;">
-      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;">Hawaiian Plantation Village</div>
+      <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;">Hawaii's Plantation Village</div>
       <h1 style="margin:8px 0 0;font-size:22px;font-weight:normal;">${escapeHtml(details.title)}</h1>
       <p style="margin:4px 0 0;opacity:0.9;">${escapeHtml(details.subtitle)}</p>
     </td></tr>
@@ -182,7 +182,7 @@ export async function sendInquiryAutoReply(input: InquiryAutoReplyInput) {
     `We received your ${input.typeLabel}`,
     `
       <p style="margin:0 0 16px;">Aloha ${escapeHtml(input.recipientName)},</p>
-      <p style="margin:0 0 16px;">Mahalo for reaching out to Hawaiian Plantation Village. We received your ${escapeHtml(input.typeLabel.toLowerCase())} and our team will follow up soon.</p>
+      <p style="margin:0 0 16px;">Mahalo for reaching out to Hawaii's Plantation Village. We received your ${escapeHtml(input.typeLabel.toLowerCase())} and our team will follow up soon.</p>
       <p style="margin:0 0 16px;font-size:13px;color:#61554d;"><strong>Reference:</strong> ${escapeHtml(input.referenceId)}</p>
       <table width="100%" style="border-top:1px dotted #ccb495;border-bottom:1px dotted #ccb495;margin-bottom:20px;">${rows}</table>
     `,

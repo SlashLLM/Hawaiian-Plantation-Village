@@ -543,7 +543,7 @@ export default function Learn() {
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Family Learning & Activities</h2>
               <p style={styles.bodyText}>
-                Learning at the Hawaiian Plantation Village is an intergenerational journey. Bring your children, parents, and kupuna (elders) to learn, craft, and garden together.
+                Learning at Hawaii's Plantation Village is an intergenerational journey. Bring your children, parents, and kupuna (elders) to learn, craft, and garden together.
               </p>
 
               <div style={styles.resourcesList}>

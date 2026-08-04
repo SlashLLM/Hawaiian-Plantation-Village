@@ -1,10 +1,10 @@
 {
   "$schema": "https://design-tokens.github.io/community-group/format/",
-  "$description": "Hawaiian Plantation Village design tokens — creative brief 2026. Canonical source for Figma (Tokens Studio) and docs/HPV_Style_Guide.html. Runtime CSS lives in src/index.css; keep names aligned.",
+  "$description": "Hawaii's Plantation Village design tokens — creative brief 2026. Canonical source for Figma (Tokens Studio) and docs/HPV_Style_Guide.html. Runtime CSS lives in src/index.css; keep names aligned.",
   "meta": {
     "name": "HPV Design Tokens",
     "version": "1.0.0",
-    "brand": "Hawaiian Plantation Village",
+    "brand": "Hawaii's Plantation Village",
     "fontsUrl": "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap",
     "cssSource": "src/index.css",
     "contrastScript": "scripts/contrast-check.mjs",
