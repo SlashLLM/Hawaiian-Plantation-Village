@@ -136,7 +136,7 @@ values
    'The Friends of Waipahu Cultural Garden Park incorporate, founded by a former plantation worker and plantation-worker descendants committed to a village that would teach later generations their heritage.',
    7, '{"year": "1973"}'::jsonb, now()),
   ('timeline-1992', 'timeline', 'published', '1992', null,
-   'Hawaiian Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
+   'Hawaii''s Plantation Village opens in Waipahu after a capital campaign led by executive director Cal Kawamoto raised over $2 million, with another $1 million from the State Legislature for the $2.5 million project.',
    8, '{"year": "1992"}'::jsonb, now()),
 
   ('leadership-okada', 'leadership', 'published', 'Hideo “Major” Okada',
@@ -146,7 +146,7 @@ values
    'Created the capital fund drive advisory committee and worked with ethnic historical groups to plan and furnish the village exhibits.', null,
    2, '{"role": "Executive director (capital campaign)"}'::jsonb, now()),
   ('leadership-leinweber', 'leadership', 'published', 'Spencer Leinweber',
-   'Of Spencer Mason Architecture; selected as principal architect for Hawaiian Plantation Village.', null,
+   'Of Spencer Mason Architecture; selected as principal architect for Hawaii''s Plantation Village.', null,
    3, '{"role": "Principal architect"}'::jsonb, now())
 on conflict (slug) do nothing;
 

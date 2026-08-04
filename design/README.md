@@ -1,6 +1,6 @@
 # HPV design tokens
 
-Shareable **colour, type, and spacing** tokens for Hawaiian Plantation Village (creative brief 2026). Figma is the preferred design handoff; the HTML style guide is for anyone who does not use Figma.
+Shareable **colour, type, and spacing** tokens for Hawaii's Plantation Village (creative brief 2026). Figma is the preferred design handoff; the HTML style guide is for anyone who does not use Figma.
 
 ## Files
 

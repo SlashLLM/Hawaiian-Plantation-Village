@@ -1,4 +1,4 @@
-﻿# Hawaiian Plantation Village — CMS, Ticketing & Membership
+# Hawaii's Plantation Village — CMS, Ticketing & Membership
 
 React + Vite public site with a Supabase-backed CMS focused on **item lists** (stories, news, careers, curriculum), plus site settings, ticketing, memberships, and Storage uploads.
 

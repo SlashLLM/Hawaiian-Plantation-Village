@@ -101,7 +101,7 @@ values
     'published',
     'Announcing the 34th Annual Plantation Heritage Festival',
     'Celebrate the rich multicultural heritage of Oʻahu on August 15th with traditional music and living history.',
-    'Save the date! On Saturday, August 15, 2026, Hawaiian Plantation Village will host our signature Annual Plantation Heritage Festival.',
+    'Save the date! On Saturday, August 15, 2026, Hawaii''s Plantation Village will host our signature Annual Plantation Heritage Festival.',
     'Community',
     'June 28, 2026',
     'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',

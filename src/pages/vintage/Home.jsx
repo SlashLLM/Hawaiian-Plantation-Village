@@ -152,7 +152,7 @@ export default function Home() {
             <Reveal>
               <img
                 src="/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg"
-                alt="Village buildings and gardens at Hawaiian Plantation Village"
+                alt="Village buildings and gardens at Hawaii's Plantation Village"
                 style={styles.plate}
               />
             </Reveal>

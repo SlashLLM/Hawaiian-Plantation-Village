@@ -40,9 +40,9 @@ export default function Navbar({ activePage }) {
     <nav style={styles.navContainer}>
       <div style={styles.navWrapper}>
         <div style={styles.logoGroup} onClick={() => handleNavClick('home')}>
-          <img src={logo} alt="Hawaiian Plantation Village Logo" style={styles.logoImg} />
+          <img src={logo} alt="Hawaii's Plantation Village Logo" style={styles.logoImg} />
           <div style={styles.logoText}>
-            <span style={styles.brandTitle}>{brand.title ?? 'Hawaiian Plantation Village'}</span>
+            <span style={styles.brandTitle}>{brand.title ?? 'Hawaii\'s Plantation Village'}</span>
             <span style={styles.brandSubtitle}>{brand.subtitle ?? 'Waipahu, Oʻahu, Hawaiʻi'}</span>
           </div>
         </div>
