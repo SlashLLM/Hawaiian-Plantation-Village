@@ -530,7 +530,7 @@ function buildHtml() {
 </head>
 <body>
   <header class="hero">
-    <p class="eyebrow">Hawaiian Plantation Village · Design tokens</p>
+    <p class="eyebrow">Hawaii's Plantation Village · Design tokens</p>
     <h1>Colour, type &amp; spacing</h1>
     <p>${escapeHtml(tokens.meta.voice)} Shareable style guide aligned to the live site tokens in <code>src/index.css</code>.</p>
   </header>

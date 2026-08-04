@@ -332,7 +332,7 @@ export default function Tickets() {
 
               {step === 3 && (
                 <div className="paper-card animate-fade-in" style={styles.stepCard}>
-                  <h3 style={styles.stepCardTitle}>3. Join & Support Hawaiian Plantation Village</h3>
+                  <h3 style={styles.stepCardTitle}>3. Join & Support Hawaii's Plantation Village</h3>
                   <div style={styles.supportBox}>
                     <label style={styles.checkboxLabel}>
                       <input type="checkbox" checked={joinMembership} onChange={(e) => setJoinMembership(e.target.checked)} style={styles.checkboxInput} />

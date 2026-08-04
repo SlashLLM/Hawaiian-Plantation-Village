@@ -244,7 +244,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                   <div style={styles.imgWrapper}>
                     <img
                       src="/digitized-photos/ark_70111_1ZgL.0.jpeg"
-                      alt="Restored camp house at Hawaiian Plantation Village"
+                      alt="Restored camp house at Hawaii's Plantation Village"
                       style={styles.featuredImg}
                     />
                     <div style={styles.imgTextureOverlay} />
@@ -533,7 +533,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                         <label style={styles.formLabel}>Statement of Interest & Experience</label>
                         <textarea 
                           rows={4}
-                          placeholder="Describe your background and why you want to work with Hawaiian Plantation Village..."
+                          placeholder="Describe your background and why you want to work with Hawaii's Plantation Village..."
                           value={jobForm.statement} 
                           onChange={(e) => setJobForm({ ...jobForm, statement: e.target.value })}
                           style={{ ...styles.formTextArea, ...(jobFormErrors.statement ? styles.formInputError : {}) }}
@@ -798,14 +798,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 <div className="paper-card" style={styles.mapCard}>
                   <div style={styles.mapFrameBorder}>
                     <iframe 
-                      src={contact.mapEmbed ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaiian%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus'} 
+                      src={contact.mapEmbed ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaii%27s%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus'} 
                       width="100%" 
                       height="260" 
                       style={{ border: 0, display: 'block' }} 
                       allowFullScreen="" 
                       loading="lazy" 
                       referrerPolicy="no-referrer-when-downgrade"
-                      title="Hawaiian Plantation Village Map"
+                      title="Hawaii's Plantation Village Map"
                     />
                   </div>
                   <div style={styles.mapTag}>
