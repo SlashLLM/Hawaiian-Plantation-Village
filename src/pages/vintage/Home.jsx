@@ -4,26 +4,25 @@ import HeroStage from '../../components/HeroStage';
 import BellToBell from '../../components/BellToBell';
 import sugarcaneField from '../../assets/sugarcane_field.png';
 import campHouse from '../../assets/historic_camp_house.png';
-import bangoImage from '../../assets/bango_lunch_tin.png';
 import { ArrowRight, Mail } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 
 const DEFAULT_CULTURES = [
-  { name: 'Hawaiian', note: 'The land before the cane' },
-  { name: 'Chinese', note: 'First contract workers, 1852' },
-  { name: 'Japanese', note: 'Furo, temples, picture brides' },
-  { name: 'Filipino', note: 'Sakada families and pancit' },
-  { name: 'Korean', note: 'Small camp, long memory' },
-  { name: 'Okinawan', note: 'Sanshin on the porch' },
-  { name: 'Portuguese', note: 'Stone forno and sweet bread' },
-  { name: 'Puerto Rican', note: 'Christmas Eve in the parlor' },
+  { name: 'Hawaiian', note: 'The land and people before the cane' },
+  { name: 'Chinese', note: 'Contract labor roots and community life' },
+  { name: 'Japanese', note: 'Home life, celebrations, and tradition' },
+  { name: 'Filipino', note: 'Families, work culture, and gatherings' },
+  { name: 'Korean', note: 'A cultural celebration in the home' },
+  { name: 'Okinawan', note: 'Community memory in the camp' },
+  { name: 'Portuguese', note: 'Home, garden, and festa traditions' },
+  { name: 'Puerto Rican', note: 'Preparing for Christmas Eve' },
 ];
 
 const DEFAULT_DOORS = [
   { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
   { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
-  { title: 'Schools', note: 'DOE-aligned field trips and classroom curriculum.', page: 'learn' },
+  { title: 'Schools', note: 'Student tours through furnished homes and gardens.', page: 'learn' },
   { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
 ];
 
@@ -90,13 +89,13 @@ export default function Home() {
       <section className="editorial-section">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{cultures?.eyebrow ?? 'Eight cultures, one village'}</p>
+            <p className="editorial-eyebrow">{cultures?.eyebrow ?? 'Ethnic homes and gardens'}</p>
             <h2 className="editorial-title">
-              {cultures?.title ?? 'Every camp house belongs to somebody\u2019s family.'}
+              {cultures?.title ?? 'Each group furnished a home to tell its story'}
             </h2>
             <p className="editorial-lede">
               {cultures?.description ??
-                'Each home was furnished by the community it belongs to \u2014 their gardens, their kitchens, their celebrations. Pick a culture and hear from the people who lived it.'}
+                'Ethnic historical groups planned the exhibits: furnishings, thematic celebrations, and gardens with plants specific to their culture. School and visitor tours walk these homes throughout the year.'}
             </p>
           </Reveal>
 
@@ -121,8 +120,8 @@ export default function Home() {
         <div className="editorial-shell">
           <div style={styles.split}>
             <Reveal>
-              <p className="editorial-eyebrow">{whyVisit?.stamp ?? 'Living museum'}</p>
-              <h2 className="editorial-title">{whyVisit?.title ?? 'Where Hawaiʻi\u2019s roots run deep'}</h2>
+              <p className="editorial-eyebrow">{whyVisit?.stamp ?? 'The village'}</p>
+              <h2 className="editorial-title">{whyVisit?.title ?? 'A place to share the laborers\u2019 story'}</h2>
               {(whyVisit?.paragraphs ?? []).map((paragraph, index) => (
                 <p key={index} style={styles.body}>{paragraph}</p>
               ))}
@@ -146,17 +145,21 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Featured narrative — high emotion, ink */}
+      {/* Featured narrative — Okada Education Center */}
       <section className="editorial-section on-ink">
         <div className="editorial-shell">
           <div style={styles.split}>
             <Reveal>
-              <img src={bangoImage} alt="Stamped brass bango identification tags" style={styles.plate} />
+              <img
+                src="/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg"
+                alt="Village buildings and gardens at Hawaiian Plantation Village"
+                style={styles.plate}
+              />
             </Reveal>
             <Reveal>
-              <p className="editorial-eyebrow">{featuredBango?.stamp ?? 'Featured narrative'}</p>
+              <p className="editorial-eyebrow">{featuredBango?.stamp ?? 'Okada Education Center'}</p>
               <h2 className="editorial-title">
-                {featuredBango?.title ?? 'The bango system: numbers replacing names'}
+                {featuredBango?.title ?? 'Orientation, galleries, and the archives'}
               </h2>
               {(featuredBango?.paragraphs ?? []).map((paragraph, index) => (
                 <p
@@ -174,8 +177,8 @@ export default function Home() {
                 </blockquote>
               )}
               <div style={styles.actions}>
-                <button className="btn-accent" onClick={() => goTo(featuredBango?.cta?.page ?? 'stories')}>
-                  {featuredBango?.cta?.label ?? 'Hear the camp stories'} <ArrowRight size={16} />
+                <button className="btn-accent" onClick={() => goTo(featuredBango?.cta?.page ?? 'archives')}>
+                  {featuredBango?.cta?.label ?? 'Explore the photograph archives'} <ArrowRight size={16} />
                 </button>
               </div>
             </Reveal>
@@ -201,11 +204,12 @@ export default function Home() {
       </section>
 
       {/* Happening at the village */}
+      {events.length > 0 && (
       <section className="editorial-section on-sand">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{eventsHeader?.stamp ?? 'Happening at the village'}</p>
-            <h2 className="editorial-title">{eventsHeader?.title ?? 'Come for a festival, stay for the food'}</h2>
+            <p className="editorial-eyebrow">{eventsHeader?.stamp ?? 'Free village events'}</p>
+            <h2 className="editorial-title">{eventsHeader?.title ?? 'Festivals the community is invited to'}</h2>
           </Reveal>
           <div style={{ marginTop: '2.5rem', borderBottom: '1px solid var(--hairline)' }}>
             {events.map((event, index) => (
@@ -220,6 +224,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Educators */}
       <section className="editorial-section">
@@ -288,27 +293,33 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
+      {(testimonials.length > 0 || partners.length > 0) && (
       <section className="editorial-section on-ink">
         <div className="editorial-shell">
-          <Reveal>
-            <p className="editorial-eyebrow">{testimonialsHeader?.stamp ?? 'From our visitors'}</p>
-            <h2 className="editorial-title">{testimonialsHeader?.title ?? 'What people say after they walk it'}</h2>
-          </Reveal>
-
-          <div style={styles.quoteGrid}>
-            {testimonials.map((testimonial, index) => (
-              <Reveal key={testimonial.slug ?? index}>
-                <blockquote style={styles.testimonial}>
-                  {testimonial.quote}
-                  <footer style={styles.testimonialMeta}>
-                    <span style={styles.testimonialName}>{testimonial.authorName}</span>
-                    <span>{testimonial.authorMeta}</span>
-                  </footer>
-                </blockquote>
+          {testimonials.length > 0 && (
+            <>
+              <Reveal>
+                <p className="editorial-eyebrow">{testimonialsHeader?.stamp ?? 'From our visitors'}</p>
+                <h2 className="editorial-title">{testimonialsHeader?.title ?? 'What people say after they walk it'}</h2>
               </Reveal>
-            ))}
-          </div>
 
+              <div style={styles.quoteGrid}>
+                {testimonials.map((testimonial, index) => (
+                  <Reveal key={testimonial.slug ?? index}>
+                    <blockquote style={styles.testimonial}>
+                      {testimonial.quote}
+                      <footer style={styles.testimonialMeta}>
+                        <span style={styles.testimonialName}>{testimonial.authorName}</span>
+                        <span>{testimonial.authorMeta}</span>
+                      </footer>
+                    </blockquote>
+                  </Reveal>
+                ))}
+              </div>
+            </>
+          )}
+
+          {partners.length > 0 && (
           <div style={styles.partners}>
             {partners.map((partner, index) => (
               <span key={partner.slug ?? index} style={styles.partner}>
@@ -316,8 +327,10 @@ export default function Home() {
               </span>
             ))}
           </div>
+          )}
         </div>
       </section>
+      )}
 
       {/* Plan your visit */}
       <section className="editorial-section" ref={visitRef}>
