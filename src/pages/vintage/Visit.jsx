@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
-import { parallaxLayers } from '../../assets/parallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useContent } from '../../context/ContentProvider.jsx';
 import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
@@ -52,7 +52,7 @@ export default function Visit() {
   return (
     <div style={styles.pageContainer}>
       <PageHeaderParallax
-        layers={parallaxLayers.visit}
+        image={SITE_PHOTOS.headers.visit}
         stamp={header?.stamp ?? 'Visitor guide'}
         title={header?.title ?? 'Plan your visit'}
         subtitle={header?.subtitle ?? 'Hours, directions, admission, and everything else you need before you walk the village.'}

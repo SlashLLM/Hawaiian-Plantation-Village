@@ -28,7 +28,7 @@ export default function HeroStage({ hero = {}, onPrimaryClick }) {
   const variants = shouldReduceMotion ? still : rise;
 
   const videoSrc = hero.videoSrc ?? '/Plantation_life_documentary_video_202607131034.mp4';
-  const posterSrc = hero.posterSrc ?? '/digitized-photos/ark_70111_1ZgL.0.jpeg';
+  const posterSrc = hero.posterSrc ?? '/digitized-photos/IMG_6805.jpeg';
   const eyebrow = hero.eyebrow ?? hero.badge ?? 'Hawaiʻi\'s living museum · Waipahu, Oʻahu';
   const headline = hero.headline ?? hero.title ?? 'History didn\'t happen here. It still does.';
   const support =

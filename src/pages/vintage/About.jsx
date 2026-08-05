@@ -4,6 +4,8 @@ import {
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
   ChevronRight, ChevronDown, Send, Printer, User, AlertCircle
 } from 'lucide-react';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
 
@@ -174,17 +176,15 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
 
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
-      <div style={styles.headerBlock}>
-        <div style={styles.container}>
-          <p style={styles.pageEyebrow}>{header?.stamp ?? 'Our story'}</p>
-          <h1 style={styles.pageTitle}>{header?.title ?? 'Built by the people who lived it'}</h1>
-          <p style={styles.pageSubtitle}>
-            {header?.subtitle ??
-              'Founded by plantation workers and their descendants so their grandchildren would know where they came from.'}
-          </p>
-        </div>
-      </div>
+      <PageHeaderParallax
+        image={SITE_PHOTOS.headers.about}
+        stamp={header?.stamp ?? 'Our story'}
+        title={header?.title ?? 'Built by plantation workers and their descendants'}
+        subtitle={
+          header?.subtitle ??
+          'The Friends of Waipahu Cultural Garden Park incorporated in 1973 so future generations would acknowledge today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.'
+        }
+      />
 
       {/* Interactive Vintage Sub-Tabs Navigation */}
       <div style={styles.tabsContainer}>
@@ -243,7 +243,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 <div style={styles.imgCol}>
                   <div style={styles.imgWrapper}>
                     <img
-                      src="/digitized-photos/ark_70111_1ZgL.0.jpeg"
+                      src="/digitized-photos/IMG_6066.jpeg"
                       alt="Restored camp house at Hawaii's Plantation Village"
                       style={styles.featuredImg}
                     />
@@ -827,38 +827,10 @@ const styles = {
   pageContainer: {
     paddingBottom: 'clamp(3.5rem, 8vw, 6rem)'
   },
-  headerBlock: {
-    backgroundColor: 'var(--plantation-ink)',
-    padding: 'clamp(4rem, 10vh, 7rem) 0 clamp(3rem, 7vh, 5rem)',
-    marginBottom: '0'
-  },
   container: {
     maxWidth: '1180px',
     margin: '0 auto',
     padding: '0 clamp(1.25rem, 4vw, 2.5rem)'
-  },
-  pageEyebrow: {
-    fontFamily: 'var(--font-sans)',
-    fontSize: '0.72rem',
-    fontWeight: 600,
-    letterSpacing: '0.16em',
-    textTransform: 'uppercase',
-    color: 'var(--heritage-gold)',
-    margin: '0 0 0.9rem'
-  },
-  pageTitle: {
-    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
-    fontWeight: 500,
-    color: 'var(--sugarcane-cream)',
-    margin: 0,
-    maxWidth: '18ch'
-  },
-  pageSubtitle: {
-    fontSize: 'clamp(1rem, 1.4vw, 1.12rem)',
-    lineHeight: 1.65,
-    color: 'rgba(250, 246, 236, 0.76)',
-    maxWidth: '52ch',
-    margin: '1.1rem 0 0'
   },
   // Sub-navigation tabs
   tabsContainer: {

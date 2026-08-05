@@ -33,7 +33,7 @@ export default function PhotographFields({ form, setForm }) {
           className="admin-form-input"
           value={getMetadataAt(meta, 'arkId', '')}
           onChange={(e) => setMeta('arkId', e.target.value)}
-          placeholder="e.g. ark_70111_1ZgL"
+          placeholder="e.g. img_6805"
         />
       </div>
       <div className="admin-form-field">

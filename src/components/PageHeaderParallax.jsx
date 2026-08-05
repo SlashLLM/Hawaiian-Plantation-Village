@@ -1,17 +1,12 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 
-export default function PageHeaderParallax({ layers, stamp, title, subtitle }) {
+export default function PageHeaderParallax({ image, stamp, title, subtitle }) {
   const targetRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
   const { scrollY } = useScroll();
-
-  const yBack = useTransform(scrollY, [0, 600], [0, 80]);
-  const yMid = useTransform(scrollY, [0, 600], [0, 200]);
-  const yFront = useTransform(scrollY, [0, 600], [0, 350]);
-
-  const layerMotion = (y) => (shouldReduceMotion ? 0 : y);
+  const yImage = useTransform(scrollY, [0, 600], [0, 120]);
 
   return (
     <div ref={targetRef} style={styles.headerBlock}>
@@ -19,28 +14,10 @@ export default function PageHeaderParallax({ layers, stamp, title, subtitle }) {
         <motion.div
           style={{
             ...styles.layer,
-            y: layerMotion(yBack),
+            y: shouldReduceMotion ? 0 : yImage,
           }}
         >
-          <img src={layers.back} alt="" style={styles.layerImage} />
-        </motion.div>
-
-        <motion.div
-          style={{
-            ...styles.layer,
-            y: layerMotion(yMid),
-          }}
-        >
-          <img src={layers.mid} alt="" style={styles.layerImage} />
-        </motion.div>
-
-        <motion.div
-          style={{
-            ...styles.layer,
-            y: layerMotion(yFront),
-          }}
-        >
-          <img src={layers.front} alt="" style={styles.layerImage} />
+          <img src={image} alt="" style={styles.layerImage} />
         </motion.div>
 
         <div style={styles.gradientOverlay} />
@@ -73,7 +50,7 @@ const styles = {
   },
   layer: {
     position: 'absolute',
-    inset: '-15% 0',
+    inset: '-12% 0',
     willChange: 'transform',
   },
   layerImage: {

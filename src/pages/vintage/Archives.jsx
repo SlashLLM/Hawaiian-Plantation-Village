@@ -2,12 +2,14 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
 import {
   useContentCollection,
   usePageSection,
   usePageListSection,
 } from '../../context/ContentProvider.jsx';
 import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 
 const collectionName = (id) =>
   PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? 'Archives';
@@ -59,23 +61,12 @@ export default function Archives() {
 
   return (
     <div>
-      <section className="editorial-section on-ink" style={{ paddingBottom: 'clamp(2.5rem, 6vw, 4rem)' }}>
-        <div className="editorial-shell">
-          <p className="editorial-eyebrow">{header?.stamp ?? 'Photograph archives'}</p>
-          <h1 className="editorial-title" style={{ maxWidth: '16ch' }}>
-            {header?.title ?? 'Look closely at the record'}
-          </h1>
-          <p className="editorial-lede">{header?.subtitle}</p>
-        </div>
-      </section>
-
-      {lead?.imageUrl && (
-        <img
-          src={lead.imageUrl}
-          alt={lead.title}
-          style={{ width: '100%', height: 'clamp(240px, 46vh, 460px)', objectFit: 'cover', display: 'block' }}
-        />
-      )}
+      <PageHeaderParallax
+        image={lead?.imageUrl || SITE_PHOTOS.headers.visit}
+        stamp={header?.stamp ?? 'Photograph archives'}
+        title={header?.title ?? 'Look closely at the record'}
+        subtitle={header?.subtitle}
+      />
 
       <section className="editorial-section">
         <div className="editorial-shell">

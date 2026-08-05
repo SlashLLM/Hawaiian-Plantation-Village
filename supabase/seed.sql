@@ -92,7 +92,7 @@ values
     'We are thrilled to announce the commencement of the Oahu Sugar Co. Smokestack Restoration Project.',
     'Preservation',
     'July 10, 2026',
-    'https://images.unsplash.com/photo-1578328819058-b69f3a3b0f6b?auto=format&fit=crop&w=600&q=80',
+    '/digitized-photos/IMG_6810.jpeg',
     now()
   ),
   (
@@ -104,7 +104,7 @@ values
     'Save the date! On Saturday, August 15, 2026, Hawaii''s Plantation Village will host our signature Annual Plantation Heritage Festival.',
     'Community',
     'June 28, 2026',
-    'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=600&q=80',
+    '/digitized-photos/IMG_6103.jpeg',
     now()
   ),
   (
