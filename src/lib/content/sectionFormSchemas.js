@@ -297,6 +297,7 @@ const SECTION_FORM_SCHEMAS = {
             ],
             'Slot',
           ),
+          textarea('lastEntryNote', 'Last entry note'),
           textarea('walkInNote', 'Walk-in note'),
         ],
       },

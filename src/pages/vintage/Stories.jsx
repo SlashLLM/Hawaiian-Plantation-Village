@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight } from 'lucide-react';
-import campPhoto from '../../assets/historic_camp_house.png';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
-import { parallaxLayers } from '../../assets/parallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { formatAudioLength } from '../../lib/content/collectionFormUtils.js';
 
@@ -194,7 +193,7 @@ export default function Stories() {
         }
       `}</style>
       <PageHeaderParallax
-        layers={parallaxLayers.stories}
+        image={SITE_PHOTOS.headers.stories}
         stamp={header?.stamp ?? 'Oral histories'}
         title={header?.title ?? 'Plantation stories'}
         subtitle={header?.subtitle ?? 'The lives, struggles, and music of the eight immigrant communities that built Waipahu.'}
@@ -271,7 +270,7 @@ export default function Stories() {
               <div style={styles.drawerBody}>
                 {/* Photo Header */}
                 <div style={styles.photoContainer}>
-                  <img src={selectedCamp.image_url || campPhoto} alt={selectedCamp.title} style={styles.drawerPhoto} />
+                  <img src={selectedCamp.image_url || SITE_PHOTOS.storiesFallback} alt={selectedCamp.title} style={styles.drawerPhoto} />
                   <div style={styles.photoCaption}>Historic {selectedCamp.culture} Camp Cottage Representation</div>
                 </div>
 

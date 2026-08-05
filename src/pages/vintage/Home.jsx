@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import HeroStage from '../../components/HeroStage';
 import BellToBell from '../../components/BellToBell';
-import sugarcaneField from '../../assets/sugarcane_field.png';
-import campHouse from '../../assets/historic_camp_house.png';
 import { ArrowRight, Mail } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 
 const DEFAULT_CULTURES = [
   { name: 'Hawaiian', note: 'The land and people before the cane' },
@@ -136,7 +135,7 @@ export default function Home() {
             </Reveal>
             <Reveal>
               <img
-                src={campHouse}
+                src={SITE_PHOTOS.homeWhyVisit}
                 alt="Restored plantation camp houses along the village path"
                 style={styles.plate}
               />
@@ -151,7 +150,7 @@ export default function Home() {
           <div style={styles.split}>
             <Reveal>
               <img
-                src="/digitized-photos/ark_70111_1Zgn.0.thumbnail.jpeg"
+                src={SITE_PHOTOS.homeFeatured}
                 alt="Village buildings and gardens at Hawaii's Plantation Village"
                 style={styles.plate}
               />
@@ -231,7 +230,7 @@ export default function Home() {
         <div className="editorial-shell">
           <div style={styles.split}>
             <Reveal>
-              <img src={sugarcaneField} alt="Sugarcane fields above Waipahu" style={styles.plate} />
+              <img src={SITE_PHOTOS.homeEducators} alt="Furnished camp house interior for school tours" style={styles.plate} />
             </Reveal>
             <Reveal>
               <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators'}</p>

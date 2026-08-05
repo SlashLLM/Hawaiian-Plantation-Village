@@ -70,7 +70,7 @@ describe('Archives hub', () => {
     const photo = PHOTOGRAPHS[0];
     renderArchives(`/archives/${photo.arkId}`);
 
-    const field = screen.getByLabelText('Quickly scan the image. What do you notice first?');
+    const field = screen.getByLabelText('What do you notice when you first looked at the photograph?');
     await user.type(field, 'A tin roof.');
 
     await vi.waitFor(() => {

@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
-import { parallaxLayers } from '../../assets/parallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
@@ -172,7 +172,7 @@ export default function Learn() {
   return (
     <div style={styles.pageContainer}>
       <PageHeaderParallax
-        layers={parallaxLayers.learn}
+        image={SITE_PHOTOS.headers.learn}
         stamp={headerDetails.stampText}
         title={headerDetails.title}
         subtitle={headerDetails.subtitle}

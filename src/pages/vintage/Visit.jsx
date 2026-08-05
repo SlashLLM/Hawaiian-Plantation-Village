@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
-import { parallaxLayers } from '../../assets/parallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useContent } from '../../context/ContentProvider.jsx';
 import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
@@ -52,7 +52,7 @@ export default function Visit() {
   return (
     <div style={styles.pageContainer}>
       <PageHeaderParallax
-        layers={parallaxLayers.visit}
+        image={SITE_PHOTOS.headers.visit}
         stamp={header?.stamp ?? 'Visitor guide'}
         title={header?.title ?? 'Plan your visit'}
         subtitle={header?.subtitle ?? 'Hours, directions, admission, and everything else you need before you walk the village.'}
@@ -100,6 +100,9 @@ export default function Visit() {
                   <div>
                     <p style={styles.infoValue}>{hoursSection?.schedule ?? 'Tuesday – Saturday: 9:00 AM – 2:00 PM'}</p>
                     <p style={styles.infoDesc}>{hoursSection?.closedNote ?? 'Closed on Sundays, Mondays, and major state holidays.'}</p>
+                    <p style={styles.infoDesc}>
+                      {hoursSection?.lastEntryNote ?? 'Last entry for self-tour is at 1:00 PM.'}
+                    </p>
                   </div>
                 </div>
 
@@ -373,11 +376,11 @@ export default function Visit() {
                 {(admissionSection?.rates?.length
                   ? admissionSection.rates
                   : [
-                      { label: 'Adults (13+)', price: '$17.00' },
-                      { label: 'Kamaʻāina / Military (with ID)', price: '$12.00' },
-                      { label: 'Seniors (62+)', price: '$12.00' },
-                      { label: 'Youth (5 - 12)', price: '$8.00' },
-                      { label: 'Child (Under 5)', price: 'Free' },
+                      { label: 'General Admission', price: '$25.00' },
+                      { label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price: '$20.00' },
+                      { label: 'Youth (11 – 17)', price: '$12.00' },
+                      { label: 'Children (5 – 10)', price: '$8.00' },
+                      { label: 'Children (4 & under)', price: 'Free' },
                     ]
                 ).map((rate) => (
                   <div key={rate.label} style={styles.priceItem}>

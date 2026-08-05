@@ -52,9 +52,10 @@ describe('Tickets event cards', () => {
     const user = userEvent.setup();
     render(<Tickets />);
     await user.click(screen.getByRole('button', { name: /Next Step/i }));
-    expect(screen.getByText('General Admission (Adults 13+)')).toBeInTheDocument();
-    expect(screen.getByText('Youth (Ages 5 – 12)')).toBeInTheDocument();
-    expect(screen.getByText('Child (Under 5)')).toBeInTheDocument();
+    expect(screen.getByText('General Admission')).toBeInTheDocument();
+    expect(screen.getByText('Youth (11 – 17)')).toBeInTheDocument();
+    expect(screen.getByText('Children (5 – 10)')).toBeInTheDocument();
+    expect(screen.getByText('Children (4 & under)')).toBeInTheDocument();
   });
 
   it('shows fallback tour time slots for the selected event', () => {

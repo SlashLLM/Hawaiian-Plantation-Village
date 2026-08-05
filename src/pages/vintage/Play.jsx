@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { Award, HelpCircle, ArrowRight, RefreshCw } from 'lucide-react';
 import SugarMakerPixi from '../../components/SugarMakerPixi';
+import PageHeaderParallax from '../../components/PageHeaderParallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { usePageSection } from '../../context/ContentProvider.jsx';
 import { GAME_STEPS as DEFAULT_GAME_STEPS } from '../../lib/content/fallbacks.js';
 
@@ -88,14 +90,15 @@ export default function Play() {
 
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
-      <div style={styles.headerBlock}>
-        <div style={styles.container}>
-          <span className={`ink-stamp ${header?.stampClass ?? 'green'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'KIDS PLAYGROUND'}</span>
-          <h1 style={styles.pageTitle}>{header?.title ?? 'Sugar Mill Tycoon'}</h1>
-          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Experience the historical process of manufacturing sugar from raw crop in our PixiJS 2D Mill simulator!'}</p>
-        </div>
-      </div>
+      <PageHeaderParallax
+        image={SITE_PHOTOS.headers.play}
+        stamp={header?.stamp ?? 'Play'}
+        title={header?.title ?? 'Sugar Mill Tycoon'}
+        subtitle={
+          header?.subtitle ??
+          'Cut the cane, crush it, boil it, spin it. Run the mill the way Waipahu once did.'
+        }
+      />
 
       <div style={styles.container}>
         <div style={styles.gameWrapper}>
@@ -292,27 +295,10 @@ const styles = {
   pageContainer: {
     paddingBottom: '5rem'
   },
-  headerBlock: {
-    backgroundColor: 'var(--paper-dark)',
-    borderBottom: '1px solid var(--kraft-tan-dark)',
-    padding: '3.5rem 0',
-    marginBottom: '3rem'
-  },
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
     padding: '0 1.5rem'
-  },
-  pageTitle: {
-    fontSize: '2.8rem',
-    color: 'var(--koa-wood-dark)',
-    marginBottom: '0.5rem'
-  },
-  pageSubtitle: {
-    fontFamily: 'var(--font-body)',
-    fontSize: '1.15rem',
-    color: 'var(--text-muted)',
-    maxWidth: '700px'
   },
   gameWrapper: {
     maxWidth: '800px',

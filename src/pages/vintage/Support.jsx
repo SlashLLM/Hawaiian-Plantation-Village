@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
-import { parallaxLayers } from '../../assets/parallax';
+import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/api.js';
 import { isSupabaseConfigured } from '../../lib/supabase.js';
 import QRPass from '../../components/QRPass.jsx';
@@ -150,7 +150,7 @@ export default function Support() {
   return (
     <div style={styles.pageContainer}>
       <PageHeaderParallax
-        layers={parallaxLayers.support}
+        image={SITE_PHOTOS.headers.support}
         stamp={header?.stamp ?? 'Support the village'}
         title={header?.title ?? 'Keep these houses standing'}
         subtitle={header?.subtitle ?? 'Your gift maintains the cottages, the gardens, and the stories told inside them.'}
