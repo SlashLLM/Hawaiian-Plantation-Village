@@ -100,6 +100,9 @@ export default function Visit() {
                   <div>
                     <p style={styles.infoValue}>{hoursSection?.schedule ?? 'Tuesday – Saturday: 9:00 AM – 2:00 PM'}</p>
                     <p style={styles.infoDesc}>{hoursSection?.closedNote ?? 'Closed on Sundays, Mondays, and major state holidays.'}</p>
+                    <p style={styles.infoDesc}>
+                      {hoursSection?.lastEntryNote ?? 'Last entry for self-tour is at 1:00 PM.'}
+                    </p>
                   </div>
                 </div>
 
@@ -373,11 +376,11 @@ export default function Visit() {
                 {(admissionSection?.rates?.length
                   ? admissionSection.rates
                   : [
-                      { label: 'Adults (13+)', price: '$17.00' },
-                      { label: 'Kamaʻāina / Military (with ID)', price: '$12.00' },
-                      { label: 'Seniors (62+)', price: '$12.00' },
-                      { label: 'Youth (5 - 12)', price: '$8.00' },
-                      { label: 'Child (Under 5)', price: 'Free' },
+                      { label: 'General Admission', price: '$25.00' },
+                      { label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price: '$20.00' },
+                      { label: 'Youth (11 – 17)', price: '$12.00' },
+                      { label: 'Children (5 – 10)', price: '$8.00' },
+                      { label: 'Children (4 & under)', price: 'Free' },
                     ]
                 ).map((rate) => (
                   <div key={rate.label} style={styles.priceItem}>

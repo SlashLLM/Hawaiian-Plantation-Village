@@ -142,8 +142,8 @@ export const DEFAULT_PAGE_SECTIONS = {
       },
       admission: {
         title: 'ADMISSION',
-        primary: 'Adults: $17 | Kamaʻāina/Military: $12',
-        secondary: 'Children (5-12): $8 | Under 5: Free',
+        primary: 'General: $25 | Senior/Kamaʻāina/Military: $20',
+        secondary: 'Youth (11–17): $12 | Children (5–10): $8 | 4 & under: Free',
       },
     },
     cultures: {
@@ -311,6 +311,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         { label: 'Morning tour', time: '10:00 AM daily' },
         { label: 'Midday tour', time: '12:00 PM daily' },
       ],
+      lastEntryNote: 'Last entry for self-tour is at 1:00 PM.',
       walkInNote:
         '*Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.',
     },
@@ -350,11 +351,11 @@ export const DEFAULT_PAGE_SECTIONS = {
       description:
         'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.',
       rates: [
-        { label: 'Adults (13+)', price: '$17.00' },
-        { label: 'Kamaʻāina / Military (with ID)', price: '$12.00' },
-        { label: 'Seniors (62+)', price: '$12.00' },
-        { label: 'Youth (5 - 12)', price: '$8.00' },
-        { label: 'Child (Under 5)', price: 'Free' },
+        { label: 'General Admission', price: '$25.00' },
+        { label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price: '$20.00' },
+        { label: 'Youth (11 – 17)', price: '$12.00' },
+        { label: 'Children (5 – 10)', price: '$8.00' },
+        { label: 'Children (4 & under)', price: 'Free' },
       ],
       buttonLabel: 'Get tickets',
       buttonPage: 'tickets',
@@ -1492,11 +1493,11 @@ export const WORKSHOPS = [
 // ---------------------------------------------------------------------------
 
 export const ADMISSION_TICKET_TYPES = [
-  { slug: 'adult', label: 'Adults (13+)', priceCents: 1700, priceDisplay: '$17.00' },
-  { slug: 'local', label: 'Kamaʻāina / Military (with ID)', priceCents: 1200, priceDisplay: '$12.00', requiresId: true },
-  { slug: 'senior', label: 'Seniors (62+)', priceCents: 1200, priceDisplay: '$12.00' },
-  { slug: 'youth', label: 'Youth (5 - 12)', priceCents: 800, priceDisplay: '$8.00' },
-  { slug: 'child', label: 'Child (Under 5)', priceCents: 0, priceDisplay: 'Free' },
+  { slug: 'adult', label: 'General Admission', priceCents: 2500, priceDisplay: '$25.00' },
+  { slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', priceCents: 2000, priceDisplay: '$20.00', requiresId: true },
+  { slug: 'youth', label: 'Youth (11 – 17)', priceCents: 1200, priceDisplay: '$12.00' },
+  { slug: 'children', label: 'Children (5 – 10)', priceCents: 800, priceDisplay: '$8.00' },
+  { slug: 'child', label: 'Children (4 & under)', priceCents: 0, priceDisplay: 'Free' },
 ];
 
 export const GROUP_TICKET_TYPES = [

@@ -27,10 +27,11 @@ const FALLBACK_EVENTS = [
     start_time: '10:00 AM',
     end_time: '12:00 PM',
     ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission (Adults 13+)', price_cents: 1700 },
-      { id: 'local', slug: 'local', label: 'Kamaʻāina / Military / Seniors', price_cents: 1200, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (Ages 5 – 12)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Child (Under 5)', price_cents: 0 },
+      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
+      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
+      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
+      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
+      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
     ],
     tour_time_slots: [
       { id: 'slot-am', label: '10:00 AM', sort_order: 1 },
@@ -46,10 +47,11 @@ const FALLBACK_EVENTS = [
     start_time: '5:00 PM',
     end_time: '9:00 PM',
     ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission (Adults 13+)', price_cents: 1700 },
-      { id: 'local', slug: 'local', label: 'Kamaʻāina / Military / Seniors', price_cents: 1200, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (Ages 5 – 12)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Child (Under 5)', price_cents: 0 },
+      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
+      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
+      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
+      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
+      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
     ],
     tour_time_slots: [
       { id: 'slot-obon', label: '5:00 PM', sort_order: 1 },
