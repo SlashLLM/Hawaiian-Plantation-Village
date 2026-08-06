@@ -57,6 +57,11 @@
   /* Editorial rhythm */
   --measure: 68ch;
   --section-pad: clamp(3.5rem, 8vw, 7rem);
+
+  /* Breakpoint tokens (documented intent; @media still uses literals) */
+  --bp-sm: 560px;
+  --bp-md: 800px;
+  --bp-lg: 900px;
 }
 
 /* Base Styles */
@@ -717,14 +722,168 @@ button, input, select, textarea {
   max-width: 220px;
 }
 
+/* ------------------------------------------------------------------ */
+/* Public responsive layout utilities                                  */
+/* ------------------------------------------------------------------ */
+
+.content-sidebar-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+  width: 100%;
+}
+
+.content-sidebar-grid--wide {
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+}
+
+.content-sidebar-grid--mission {
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.content-sidebar-grid--job {
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 2.5rem;
+}
+
+.content-sidebar-grid--book {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 2.5rem;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.amount-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.steps-grid-responsive {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.fluid-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 2.5rem;
+}
+
+.sticky-sidebar {
+  position: sticky;
+  top: 5.5rem;
+}
+
+.sticky-sidebar-form {
+  position: sticky;
+  top: 120px;
+}
+
+.passport-side {
+  border-right: 1px dashed var(--kraft-tan-dark);
+  padding-right: 1.5rem;
+}
+
 .tiers-grid-responsive {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  align-items: stretch;
+}
+
+.form-row-responsive {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.wizard-grid-responsive {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 2.5rem;
+}
+
+.wizard-steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  padding: 0;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.wizard-steps-bar .wizard-step-line {
+  margin: 0 1rem;
+}
+
+.wizard-steps-bar .wizard-step-label {
+  font-size: 0.85rem;
+}
+
+.pixi-canvas-host {
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 7 / 4;
+  margin-inline: auto;
+  overflow: hidden;
+}
+
+.pixi-canvas-host canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.nav-brand-subtitle {
+  display: block;
 }
 
 @media (max-width: 800px) {
+  .content-sidebar-grid,
+  .content-sidebar-grid--wide,
+  .content-sidebar-grid--mission,
+  .content-sidebar-grid--job,
+  .content-sidebar-grid--book {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .sticky-sidebar,
+  .sticky-sidebar-form {
+    position: static;
+  }
+
+  .passport-side {
+    border-right: none;
+    border-bottom: 1px dashed var(--kraft-tan-dark);
+    padding-right: 0;
+    padding-bottom: 1.5rem;
+  }
+
   .tiers-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+
+  .amount-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+
+  .two-col-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -739,11 +898,61 @@ button, input, select, textarea {
   }
 
   .wizard-grid-responsive {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
   }
 
   .form-row-responsive {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wizard-steps-bar {
+    margin-bottom: 2rem;
+    gap: 0.15rem;
+  }
+
+  .wizard-steps-bar .wizard-step-label {
+    font-size: 0.6rem;
+    letter-spacing: 0;
+    max-width: 4.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .wizard-steps-bar .wizard-step-line {
+    margin: 0 0.2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .steps-grid-responsive {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-brand-subtitle {
+    display: none;
+  }
+
+  .nav-logo-group {
+    gap: 8px;
+  }
+
+  .nav-brand-title {
+    font-size: clamp(0.92rem, 3.8vw, 1.1rem);
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-width: none;
+    line-height: 1.15;
+  }
+}
+
+@media (max-width: 900px) {
+  .nav-mobile-toggle {
+    flex-shrink: 0;
   }
 }
 

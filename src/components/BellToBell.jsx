@@ -58,9 +58,9 @@ export default function BellToBell({
           <span>PASSPORT NO: HPV-1900-24</span>
         </div>
 
-        <div style={styles.bookGrid}>
+        <div className="content-sidebar-grid content-sidebar-grid--book">
           {/* Left Page: Virtual Passport Stamps */}
-          <div style={styles.passportSide}>
+          <div className="passport-side">
             <h3 style={styles.sideTitle}>IMMIGRATION PASSPORT</h3>
             <p style={styles.sideSubtitle}>Stamps awarded for completing plantation tasks</p>
             
@@ -189,25 +189,6 @@ const styles = {
     borderBottom: '1px solid var(--kraft-tan-dark)',
     paddingBottom: '0.5rem',
     marginBottom: '1.5rem'
-  },
-  bookGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1.2fr',
-    gap: '2.5rem',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2rem'
-    }
-  },
-  passportSide: {
-    borderRight: '1px dashed var(--kraft-tan-dark)',
-    paddingRight: '1.5rem',
-    '@media (max-width: 800px)': {
-      borderRight: 'none',
-      borderBottom: '1px dashed var(--kraft-tan-dark)',
-      paddingRight: 0,
-      paddingBottom: '1.5rem'
-    }
   },
   sideTitle: {
     fontFamily: 'var(--font-display)',

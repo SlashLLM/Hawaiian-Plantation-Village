@@ -221,13 +221,13 @@ export default function Tickets() {
       <div style={styles.container}>
         <div style={styles.wizardLayout}>
           {step < 5 && (
-            <div style={styles.stepsBar}>
+            <div className="wizard-steps-bar" style={styles.stepsBar}>
               {['Experience', 'Quantity', 'Support', 'Checkout'].map((label, i) => (
                 <React.Fragment key={label}>
-                  {i > 0 && <div style={styles.stepLine} />}
+                  {i > 0 && <div className="wizard-step-line" style={styles.stepLine} />}
                   <div style={{ ...styles.stepNode, ...(step >= i + 1 ? styles.stepNodeActive : {}) }}>
                     <span>{i + 1}</span>
-                    <label style={styles.stepLabel}>{label}</label>
+                    <label className="wizard-step-label" style={styles.stepLabel}>{label}</label>
                   </div>
                 </React.Fragment>
               ))}
@@ -469,18 +469,18 @@ export default function Tickets() {
 const styles = {
   pageContainer: { paddingBottom: '5rem' },
   headerBlock: { backgroundColor: 'var(--paper-dark)', borderBottom: '1px solid var(--kraft-tan-dark)', padding: '3.5rem 0', marginBottom: '3rem' },
-  container: { maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem' },
-  pageTitle: { fontSize: '2.8rem', color: 'var(--koa-wood-dark)', marginBottom: '0.5rem' },
+  container: { maxWidth: '1200px', margin: '0 auto', padding: '0 clamp(1rem, 4vw, 1.5rem)', width: '100%', boxSizing: 'border-box' },
+  pageTitle: { fontSize: 'clamp(1.75rem, 5vw, 2.8rem)', color: 'var(--koa-wood-dark)', marginBottom: '0.5rem' },
   pageSubtitle: { fontFamily: 'var(--font-body)', fontSize: '1.15rem', color: 'var(--text-muted)', maxWidth: '700px' },
   wizardLayout: { maxWidth: '1000px', margin: '0 auto' },
-  stepsBar: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3rem', padding: '0 2rem' },
-  stepNode: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-typewriter)', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-muted)' },
+  stepsBar: {},
+  stepNode: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-typewriter)', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-muted)', flex: '0 1 auto', minWidth: 0 },
   stepNodeActive: { color: 'var(--cane-green)' },
-  stepLabel: { fontSize: '0.75rem', textTransform: 'uppercase' },
-  stepLine: { height: '2px', backgroundColor: 'var(--kraft-tan-dark)', flex: '1', margin: '0 1rem', transform: 'translateY(-12px)' },
-  wizardGrid: { display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '2.5rem' },
+  stepLabel: { fontSize: '0.75rem', textTransform: 'uppercase', textAlign: 'center' },
+  stepLine: { height: '2px', backgroundColor: 'var(--kraft-tan-dark)', flex: '1 1 0', minWidth: '8px', transform: 'translateY(-12px)' },
+  wizardGrid: {},
   mainPanel: { display: 'flex', flexDirection: 'column' },
-  stepCard: { padding: '2rem', borderRadius: '4px' },
+  stepCard: { padding: 'clamp(1.25rem, 4vw, 2rem)', borderRadius: '4px', minWidth: 0 },
   stepCardTitle: { fontSize: '1.5rem', color: 'var(--koa-wood)', marginBottom: '1.5rem' },
   choiceGroup: { display: 'flex', flexDirection: 'column', gap: '1rem' },
   choiceOption: { border: '1px solid var(--kraft-tan-dark)', borderRadius: '4px', padding: '1.25rem', cursor: 'pointer', display: 'flex', alignItems: 'flex-start', gap: '12px', backgroundColor: 'var(--paper-light)' },
@@ -491,7 +491,7 @@ const styles = {
   optionText: { fontSize: '0.85rem', color: 'var(--text-muted)', lineHeight: '1.5' },
   dateTimeBlock: { marginTop: '2rem', marginBottom: '2rem' },
   subTitle: { fontSize: '1.2rem', color: 'var(--koa-wood)', marginBottom: '1rem' },
-  dateGrid: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' },
+  dateGrid: {},
   datePicker: { padding: '0.75rem', border: '1px solid var(--kraft-tan-dark)', borderRadius: '4px', fontFamily: 'var(--font-typewriter)' },
   datePickerLocked: { backgroundColor: 'var(--paper-dark)', cursor: 'default' },
   timeSelector: { padding: '0.75rem', border: '1px solid var(--kraft-tan-dark)', borderRadius: '4px', fontFamily: 'var(--font-typewriter)' },
@@ -507,10 +507,10 @@ const styles = {
   supportBox: { border: '1px solid var(--kraft-tan-dark)', borderRadius: '4px', padding: '1.25rem', backgroundColor: '#fffcf7', marginBottom: '1.5rem' },
   checkboxLabel: { display: 'flex', alignItems: 'flex-start', gap: '12px', cursor: 'pointer' },
   checkboxInput: { marginTop: '4px', accentColor: 'var(--cane-green)' },
-  donationSelector: { display: 'flex', gap: '8px', marginTop: '12px' },
+  donationSelector: { display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '12px' },
   donationBtn: { flex: 1, padding: '6px 12px', border: '1px solid var(--kraft-tan-dark)', background: 'white', cursor: 'pointer', fontFamily: 'var(--font-typewriter)' },
   donationBtnActive: { backgroundColor: 'var(--tin-rust)', color: 'white', borderColor: 'var(--tin-rust)' },
-  formRow: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '1rem' },
+  formRow: { marginBottom: '1rem' },
   formCol: { display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '1rem' },
   formLabel: { fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--koa-wood)' },
   formInput: { padding: '0.75rem', border: '1px solid var(--kraft-tan-dark)', borderRadius: '4px', fontSize: '0.95rem' },

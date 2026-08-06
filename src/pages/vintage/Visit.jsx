@@ -59,7 +59,7 @@ export default function Visit() {
       />
 
       <div style={styles.container}>
-        <div style={styles.contentGrid}>
+        <div className="content-sidebar-grid content-sidebar-grid--wide">
           {/* Main info tabs */}
           <div style={styles.leftCol}>
             {/* Tabs Navigation */}
@@ -225,7 +225,7 @@ export default function Visit() {
                     </p>
 
 
-                    <div style={styles.formRow}>
+                    <div className="form-row-responsive" style={styles.formRow}>
                       <div style={styles.formCol}>
                         <label style={styles.formLabel}>Organization or group name</label>
                         <input
@@ -250,7 +250,7 @@ export default function Visit() {
                       </div>
                     </div>
 
-                    <div style={styles.formRow}>
+                    <div className="form-row-responsive" style={styles.formRow}>
                       <div style={styles.formCol}>
                         <label style={styles.formLabel}>Estimated group size</label>
                         <input
@@ -283,7 +283,7 @@ export default function Visit() {
                       </div>
                     </div>
 
-                    <div style={styles.formRow}>
+                    <div className="form-row-responsive" style={styles.formRow}>
                       <div style={styles.formCol}>
                         <label style={styles.formLabel}>Preferred date</label>
                         <input
@@ -362,7 +362,7 @@ export default function Visit() {
           </div>
 
           {/* Right sidebar: Ticket CTA block */}
-          <div style={styles.rightCol}>
+          <div className="sticky-sidebar" style={styles.rightCol}>
             <div className="paper-card" style={styles.ctaCard}>
               <div style={styles.priceHeader}>
                 <Ticket size={22} color="var(--heritage-gold)" />
@@ -436,16 +436,6 @@ const styles = {
     maxWidth: '1180px',
     margin: '0 auto',
     padding: '0 clamp(1.25rem, 4vw, 2.5rem)'
-  },
-  contentGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'minmax(0, 1.7fr) minmax(280px, 1fr)',
-    gap: 'clamp(2rem, 5vw, 4rem)',
-    alignItems: 'start',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
   },
   leftCol: {
     display: 'flex',
@@ -548,9 +538,7 @@ const styles = {
   },
   rightCol: {
     display: 'flex',
-    flexDirection: 'column',
-    position: 'sticky',
-    top: '5.5rem'
+    flexDirection: 'column'
   },
   ctaCard: {
     padding: 'clamp(1.5rem, 3vw, 2rem)'
@@ -617,9 +605,6 @@ const styles = {
     marginBottom: '0.5rem'
   },
   formRow: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '12px',
     marginBottom: '1rem'
   },
   formCol: {
