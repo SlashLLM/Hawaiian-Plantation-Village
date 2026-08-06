@@ -76,7 +76,7 @@ export const DEFAULT_SITE_SETTINGS = {
       { value: '8', label: 'Cultures' },
       { value: '4', label: 'Free festivals' },
     ],
-    videoSrc: '/Plantation_life_documentary_video_202607131034.mp4',
+    videoSrc: '/gwr_video_mvp.mp4',
     posterSrc: '/digitized-photos/IMG_6805.jpeg',
   },
   seo: {

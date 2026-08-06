@@ -52,16 +52,28 @@ export default function SugarMakerPixi({
 
   useEffect(() => {
     let active = true;
+    let resizeObserver = null;
+    const DESIGN_W = 700;
+    const DESIGN_H = 400;
 
     // Initialize PixiJS Application
     const app = new Application();
+
+    function fitCanvas() {
+      const host = canvasRef.current;
+      if (!host || !appRef.current) return;
+      const width = host.clientWidth || DESIGN_W;
+      const scale = width / DESIGN_W;
+      app.renderer.resize(Math.max(1, Math.round(DESIGN_W * scale)), Math.max(1, Math.round(DESIGN_H * scale)));
+      app.stage.scale.set(scale);
+    }
 
     async function initPixi() {
       if (!canvasRef.current) return;
 
       await app.init({
-        width: 700,
-        height: 400,
+        width: DESIGN_W,
+        height: DESIGN_H,
         background: '#f2e5d5', // Muted paper tan
         resolution: window.devicePixelRatio || 1,
         autoDensity: true,
@@ -76,12 +88,19 @@ export default function SugarMakerPixi({
       appRef.current = app;
       canvasRef.current.appendChild(app.canvas);
       setupGame();
+      fitCanvas();
+      resizeObserver = new ResizeObserver(fitCanvas);
+      resizeObserver.observe(canvasRef.current);
     }
 
     initPixi();
 
     return () => {
       active = false;
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
       if (appRef.current) {
         appRef.current.destroy(
           { removeView: true, releaseGlobalResources: true },
@@ -776,14 +795,11 @@ export default function SugarMakerPixi({
   return (
     <div
       ref={canvasRef}
+      className="pixi-canvas-host"
       style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         border: '3px double var(--koa-wood)',
         borderRadius: '6px',
         backgroundColor: '#ebd7bc',
-        overflow: 'hidden',
         boxShadow: 'inset 0 0 15px rgba(0,0,0,0.1)',
         margin: '1.5rem auto'
       }}

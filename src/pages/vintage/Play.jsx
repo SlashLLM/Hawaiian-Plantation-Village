@@ -104,7 +104,7 @@ export default function Play() {
         <div style={styles.gameWrapper}>
           {/* Game Steps Map */}
           {activeStep < 4 && (
-            <div style={styles.stepsGrid}>
+            <div className="steps-grid-responsive">
               {GAME_STEPS.map((s, idx) => (
                 <div
                   key={s.step}
@@ -298,17 +298,11 @@ const styles = {
   container: {
     maxWidth: '1200px',
     margin: '0 auto',
-    padding: '0 1.5rem'
+    padding: '0 clamp(1rem, 4vw, 1.5rem)'
   },
   gameWrapper: {
     maxWidth: '800px',
     margin: '0 auto'
-  },
-  stepsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '12px',
-    marginBottom: '2rem'
   },
   stepNode: {
     display: 'flex',

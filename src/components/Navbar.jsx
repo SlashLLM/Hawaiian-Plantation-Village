@@ -39,11 +39,11 @@ export default function Navbar({ activePage }) {
   return (
     <nav style={styles.navContainer}>
       <div style={styles.navWrapper}>
-        <div style={styles.logoGroup} onClick={() => handleNavClick('home')}>
+        <div className="nav-logo-group" style={styles.logoGroup} onClick={() => handleNavClick('home')}>
           <img src={logo} alt="Hawaii's Plantation Village Logo" style={styles.logoImg} />
           <div style={styles.logoText}>
-            <span style={styles.brandTitle}>{brand.title ?? 'Hawaii\'s Plantation Village'}</span>
-            <span style={styles.brandSubtitle}>{brand.subtitle ?? 'Waipahu, Oʻahu, Hawaiʻi'}</span>
+            <span className="nav-brand-title" style={styles.brandTitle}>{brand.title ?? 'Hawaii\'s Plantation Village'}</span>
+            <span className="nav-brand-subtitle" style={styles.brandSubtitle}>{brand.subtitle ?? 'Waipahu, Oʻahu, Hawaiʻi'}</span>
           </div>
         </div>
 
@@ -124,34 +124,39 @@ const styles = {
   navWrapper: {
     maxWidth: '1180px',
     margin: '0 auto',
-    padding: '0.85rem clamp(1.25rem, 4vw, 2.5rem)',
+    padding: '0.85rem clamp(0.85rem, 4vw, 2.5rem)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: '1.5rem'
+    gap: 'clamp(0.5rem, 2vw, 1.5rem)'
   },
   logoGroup: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    minWidth: 0,
+    flex: '1 1 auto'
   },
   logoImg: {
     height: '42px',
     width: '42px',
-    objectFit: 'contain'
+    objectFit: 'contain',
+    flexShrink: 0
   },
   logoText: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    minWidth: 0
   },
   brandTitle: {
     fontFamily: 'var(--font-display)',
     fontWeight: '500',
     fontSize: '1.2rem',
     color: 'var(--plantation-ink)',
-    lineHeight: '1.1',
-    letterSpacing: '-0.01em'
+    lineHeight: '1.15',
+    letterSpacing: '-0.01em',
+    whiteSpace: 'normal'
   },
   brandSubtitle: {
     fontFamily: 'var(--font-sans)',
@@ -221,7 +226,8 @@ const styles = {
     border: 'none',
     color: 'var(--plantation-ink)',
     cursor: 'pointer',
-    padding: '4px'
+    padding: '4px',
+    flexShrink: 0
   },
   mobileMenu: {
     position: 'absolute',

@@ -216,7 +216,7 @@ export default function Learn() {
       <div style={styles.container}>
         {/* TAB: SCHOOL & GROUP VISITS */}
         {activeTab === 'school' && (
-          <div style={styles.contentGrid}>
+          <div className="content-sidebar-grid">
             {/* Left Col: Resources download */}
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Curriculum Resources</h2>
@@ -249,7 +249,7 @@ export default function Learn() {
             {/* Right Col: Request Form */}
             <div style={styles.rightCol}>
               {!complete ? (
-                <form className="paper-card" style={styles.requestCard} onSubmit={handleBookingSubmit}>
+                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleBookingSubmit}>
                   <h3 style={styles.requestCardTitle}>Request a Field Trip</h3>
                   <p style={styles.requestCardText}>
                     We host educational groups Tuesday through Friday. Please fill out details to submit a tour slot reservation inquiry.
@@ -385,7 +385,7 @@ export default function Learn() {
 
         {/* TAB: YOUTH INTERNSHIPS & VOLUNTEERING */}
         {activeTab === 'youth' && (
-          <div style={styles.contentGrid}>
+          <div className="content-sidebar-grid">
             {/* Left Col: Details */}
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Student Pathways</h2>
@@ -419,7 +419,7 @@ export default function Learn() {
             {/* Right Col: Inquiry Form */}
             <div style={styles.rightCol}>
               {!youthComplete ? (
-                <form className="paper-card" style={styles.requestCard} onSubmit={handleYouthSubmit}>
+                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleYouthSubmit}>
                   <h3 style={{ ...styles.requestCardTitle, color: 'var(--tin-rust)' }}>Join Student Programs</h3>
                   <p style={styles.requestCardText}>
                     Are you a student interested in making a difference? Apply or request more information about our internship and volunteer pathways.
@@ -458,7 +458,7 @@ export default function Learn() {
                     />
                   </div>
 
-                  <div style={styles.formRowGrid}>
+                  <div className="form-row-responsive" style={styles.formRowGrid}>
                     <div style={styles.formCol}>
                       <label style={styles.formLabel}>Current Grade</label>
                       <select
@@ -538,7 +538,7 @@ export default function Learn() {
 
         {/* TAB: FAMILY LEARNING */}
         {activeTab === 'family' && (
-          <div style={styles.contentGrid}>
+          <div className="content-sidebar-grid">
             {/* Left Col: Activities */}
             <div style={styles.leftCol}>
               <h2 style={styles.sectionHeaderTitle}>Family Learning & Activities</h2>
@@ -580,7 +580,7 @@ export default function Learn() {
             {/* Right Col: RSVP Form */}
             <div style={styles.rightCol}>
               {!familyComplete ? (
-                <form className="paper-card" style={styles.requestCard} onSubmit={handleFamilySubmit}>
+                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleFamilySubmit}>
                   <h3 style={{ ...styles.requestCardTitle, color: 'var(--ocean-teal)' }}>Reserve Workshop Spots</h3>
                   <p style={styles.requestCardText}>
                     Space in our Talk Story sessions and gardening workshops is limited to ensure a high-quality hands-on experience. Reserve your family's free spot today.
@@ -721,15 +721,6 @@ const styles = {
     position: 'relative',
     zIndex: 2,
   },
-  contentGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1.5fr 1fr',
-    gap: '3rem',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
-  },
   leftCol: {
     display: 'flex',
     flexDirection: 'column'
@@ -799,9 +790,7 @@ const styles = {
   },
   requestCard: {
     padding: '2rem',
-    borderRadius: '4px',
-    position: 'sticky',
-    top: '120px'
+    borderRadius: '4px'
   },
   requestCardTitle: {
     fontSize: '1.4rem',
@@ -821,13 +810,7 @@ const styles = {
     marginBottom: '1.25rem'
   },
   formRowGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '12px',
-    width: '100%',
-    '@media (max-width: 500px)': {
-      gridTemplateColumns: '1fr'
-    }
+    marginBottom: 0
   },
   formLabel: {
     fontSize: '0.85rem',

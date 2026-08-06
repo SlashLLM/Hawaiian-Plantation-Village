@@ -175,7 +175,7 @@ export default function Support() {
 
         {/* Type 1: Direct Donation */}
         {supportType === 'donate' && (
-          <div style={styles.donateLayout}>
+          <div className="content-sidebar-grid" style={{ maxWidth: '1000px', margin: '0 auto' }}>
             {!complete ? (
               <form className="paper-card animate-fade-in" style={styles.supportCard} onSubmit={handleSupportSubmit}>
                 <h3 style={styles.cardHeaderTitle}>{donateSection?.title ?? 'Make a tax-deductible gift'}</h3>
@@ -199,7 +199,7 @@ export default function Support() {
                 </div>
 
                 {/* Amount buttons */}
-                <div style={styles.amountGrid}>
+                <div className="amount-grid-responsive" style={styles.amountGrid}>
                   {presetAmounts.map((amt) => (
                     <button
                       key={amt}
@@ -252,7 +252,7 @@ export default function Support() {
 
                 {/* Payment Fields */}
                 <div className="ledger-header" style={{ marginTop: '2rem', marginBottom: '1rem' }}>PAYMENT</div>
-                <div style={styles.formRow}>
+                <div className="form-row-responsive" style={styles.formRow}>
                   <div style={styles.formCol}>
                     <label style={styles.formLabel}>Full name</label>
                     <input type="text" required style={styles.formInput} />
@@ -379,7 +379,7 @@ export default function Support() {
                     {membershipIntro?.description ?? 'Select a steward membership tier. Your pass will be registered, emailed with a QR code, and visible in the admin dashboard.'}
                   </p>
                 </div>
-                <div className="tiers-grid-responsive" style={styles.tiersGrid}>
+                <div className="tiers-grid-responsive">
                   {memberships.map((m) => (
                     <div key={m.slug ?? m.level} className="paper-card" style={styles.tierCard}>
                       <div style={{ ...styles.tierHeader, borderTop: `4px solid ${m.color}` }}>
@@ -443,18 +443,6 @@ const styles = {
     borderColor: 'var(--plantation-ink)',
     fontWeight: 600
   },
-  donateLayout: {
-    display: 'grid',
-    gridTemplateColumns: '1.6fr 1fr',
-    gap: '3rem',
-    maxWidth: '1000px',
-    margin: '0 auto',
-    alignItems: 'flex-start',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
-  },
   supportCard: {
     padding: 'clamp(1.5rem, 3vw, 2.25rem)'
   },
@@ -484,9 +472,6 @@ const styles = {
     borderColor: 'var(--terracotta-clay)'
   },
   amountGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '10px',
     marginBottom: '1.5rem'
   },
   amtBtn: {
@@ -554,9 +539,6 @@ const styles = {
     marginBottom: 0
   },
   formRow: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '12px',
     marginBottom: '1rem'
   },
   formCol: {
@@ -676,15 +658,6 @@ const styles = {
     fontSize: '1.9rem',
     fontWeight: 500,
     marginBottom: '0.75rem'
-  },
-  tiersGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: '2rem',
-    alignItems: 'stretch',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr'
-    }
   },
   tierCard: {
     padding: '2rem 1.5rem',

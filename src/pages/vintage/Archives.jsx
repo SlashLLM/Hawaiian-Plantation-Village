@@ -76,7 +76,7 @@ export default function Archives() {
             <p className="editorial-lede">{collectionsSection?.description}</p>
           </Reveal>
 
-          <div className="door-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          <div className="door-grid">
             {collections.map((collection) => (
               <button
                 key={collection.id}

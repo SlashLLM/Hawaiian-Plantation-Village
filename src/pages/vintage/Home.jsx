@@ -411,7 +411,7 @@ export default function Home() {
 const styles = {
   split: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
     gap: 'clamp(2rem, 5vw, 4.5rem)',
     alignItems: 'center',
   },
@@ -454,7 +454,7 @@ const styles = {
   },
   supportGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
     gap: 'clamp(2rem, 5vw, 4rem)',
     marginTop: '3rem',
   },
@@ -491,7 +491,7 @@ const styles = {
   },
   quoteGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
     gap: 'clamp(2rem, 4vw, 3rem)',
     marginTop: '3rem',
   },
@@ -528,7 +528,7 @@ const styles = {
     color: 'rgba(250, 246, 236, 0.55)',
   },
   partner: {
-    whiteSpace: 'nowrap',
+    whiteSpace: 'normal',
   },
   footer: {
     backgroundColor: 'var(--plantation-ink)',
@@ -537,7 +537,7 @@ const styles = {
   },
   footerGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
     gap: 'clamp(2rem, 5vw, 3.5rem)',
     marginBottom: '3rem',
   },

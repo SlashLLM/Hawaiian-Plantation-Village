@@ -232,7 +232,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           <div>
             {/* Mission statement */}
             <section style={styles.aboutSection}>
-              <div style={styles.twoColumnGrid}>
+              <div className="content-sidebar-grid content-sidebar-grid--mission">
                 <div style={styles.textCol}>
                   <span className="ledger-header" style={{ marginBottom: '0.5rem' }}>{mission?.stamp ?? 'MISSION & VISION'}</span>
                   <h2 style={styles.sectionTitle}>{mission?.title ?? 'Preserving the Roots of Modern Hawaiʻi'}</h2>
@@ -279,7 +279,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
             {leadership.length > 0 && (
             <section style={styles.aboutSection}>
               <h2 style={{ ...styles.sectionTitle, textAlign: 'center', marginBottom: '2.5rem' }}>{leadershipIntro?.title ?? 'Founders and builders'}</h2>
-              <div style={styles.boardGrid}>
+              <div className="fluid-card-grid">
                 {leadership.map((person) => (
                   <div key={person.name} className="paper-card" style={styles.boardCard}>
                     <h4 style={styles.boardName}>{person.name}</h4>
@@ -340,7 +340,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 </button>
               </div>
             ) : (
-              <div style={styles.newsGrid}>
+              <div className="fluid-card-grid">
                 {filteredArticles.map(article => (
                   <div key={article.id} className="paper-card" style={styles.newsCard}>
                     <div style={styles.newsCardImageWrapper}>
@@ -431,7 +431,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
 
                     {isExpanded && (
                       <div style={styles.jobDetails}>
-                        <div style={styles.jobDetailsGrid}>
+                        <div className="content-sidebar-grid content-sidebar-grid--job">
                           <div>
                             <h4 style={styles.jobDetailsSectionHeader}>Job Description</h4>
                             <p style={styles.bodyText}>{job.summary}</p>
@@ -504,7 +504,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                         {jobFormErrors.name && <span style={styles.errorText}>{jobFormErrors.name}</span>}
                       </div>
 
-                      <div style={styles.formGroupGrid}>
+                      <div className="form-row-responsive" style={styles.formGroupGrid}>
                         <div style={styles.formGroup}>
                           <label style={styles.formLabel}>Email Address</label>
                           <input 
@@ -610,7 +610,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
         {/* TAB 4: CONTACT US */}
         {activeTab === 'contact' && (
           <div style={styles.tabContentArea}>
-            <div style={styles.contactContainerGrid}>
+            <div className="content-sidebar-grid content-sidebar-grid--mission">
               
               {/* Left Column: Form */}
               <div className="paper-card" style={styles.contactFormCard}>
@@ -846,10 +846,8 @@ const styles = {
     overflowX: 'auto',
     gap: '4px',
     padding: '0.5rem 0 0 0',
-    scrollbarWidth: 'none', // Firefox
-    '&::-webkit-scrollbar': {
-      display: 'none' // Chrome/Safari
-    }
+    maxWidth: '100%',
+    scrollbarWidth: 'none'
   },
   tabButton: {
     background: 'none',
@@ -887,16 +885,6 @@ const styles = {
   tabContentArea: {
     padding: '1rem 0',
     animation: 'fadeIn 0.4s ease'
-  },
-  twoColumnGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1.2fr 1fr',
-    gap: '4rem',
-    alignItems: 'center',
-    '@media (max-width: 800px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
   },
   textCol: {
     display: 'flex',
@@ -943,11 +931,10 @@ const styles = {
   },
   // Timeline styles
   timelineSection: {
-    padding: '4rem 0',
+    padding: '4rem clamp(1.25rem, 4vw, 1.5rem)',
     backgroundColor: 'var(--paper-dark)',
-    margin: '3rem -1.5rem',
-    paddingLeft: '1.5rem',
-    paddingRight: '1.5rem'
+    margin: '3rem 0',
+    borderRadius: 'var(--border-radius-md)'
   },
   timelineList: {
     position: 'relative',
@@ -986,11 +973,6 @@ const styles = {
     margin: 0
   },
   // Board styles
-  boardGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: '2.5rem'
-  },
   boardCard: {
     padding: '1.75rem',
     borderRadius: '4px'
@@ -1030,12 +1012,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    alignItems: 'flex-end',
+    alignItems: 'stretch',
     width: '100%',
-    maxWidth: '500px',
-    '@media (max-width: 600px)': {
-      alignItems: 'stretch'
-    }
+    maxWidth: '500px'
   },
   searchWrapper: {
     position: 'relative',
@@ -1091,11 +1070,6 @@ const styles = {
     color: 'var(--text-muted)',
     fontSize: '1rem',
     margin: 0
-  },
-  newsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-    gap: '2.5rem'
   },
   newsCard: {
     borderRadius: '4px',
@@ -1285,15 +1259,6 @@ const styles = {
     padding: '2rem 1.75rem',
     backgroundColor: 'rgba(240, 234, 225, 0.3)'
   },
-  jobDetailsGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1.4fr 1fr',
-    gap: '2.5rem',
-    '@media (max-width: 768px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2rem'
-    }
-  },
   jobDetailsSectionHeader: {
     fontFamily: 'var(--font-typewriter)',
     fontSize: '0.8rem',
@@ -1380,12 +1345,7 @@ const styles = {
     marginBottom: '1rem'
   },
   formGroupGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1fr 1fr',
-    gap: '12px',
-    '@media (max-width: 500px)': {
-      gridTemplateColumns: '1fr'
-    }
+    marginBottom: 0
   },
   formLabel: {
     fontSize: '0.8rem',
@@ -1481,16 +1441,6 @@ const styles = {
   },
 
   // Contact Page Styles
-  contactContainerGrid: {
-    display: 'grid',
-    gridTemplateColumns: '1.2fr 1fr',
-    gap: '3.5rem',
-    alignItems: 'start',
-    '@media (max-width: 900px)': {
-      gridTemplateColumns: '1fr',
-      gap: '2.5rem'
-    }
-  },
   contactFormCard: {
     padding: '2.25rem',
     borderRadius: '4px'

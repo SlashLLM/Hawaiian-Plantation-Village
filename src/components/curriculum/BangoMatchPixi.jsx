@@ -29,15 +29,28 @@ export default function BangoMatchPixi({
   useEffect(() => {
     const pairsData = JSON.parse(pairsKey);
     let active = true;
+    let resizeObserver = null;
     const app = new Application();
     const matchedCountRef = { value: 0 };
+    const DESIGN_W = 700;
     const height = Math.max(400, 55 + pairsData.length * 82 + 20);
+
+    function fitCanvas() {
+      const host = canvasRef.current;
+      if (!host || !appRef.current) return;
+      const width = host.clientWidth || DESIGN_W;
+      const scale = width / DESIGN_W;
+      app.renderer.resize(Math.max(1, Math.round(DESIGN_W * scale)), Math.max(1, Math.round(height * scale)));
+      app.stage.scale.set(scale);
+    }
 
     async function initPixi() {
       if (!canvasRef.current) return;
 
+      canvasRef.current.style.aspectRatio = `${DESIGN_W} / ${height}`;
+
       await app.init({
-        width: 700,
+        width: DESIGN_W,
         height,
         background: '#f2e5d5',
         resolution: window.devicePixelRatio || 1,
@@ -52,6 +65,9 @@ export default function BangoMatchPixi({
 
       appRef.current = app;
       canvasRef.current.appendChild(app.canvas);
+      fitCanvas();
+      resizeObserver = new ResizeObserver(fitCanvas);
+      resizeObserver.observe(canvasRef.current);
 
       const root = new Container();
       app.stage.addChild(root);
@@ -269,6 +285,10 @@ export default function BangoMatchPixi({
 
     return () => {
       active = false;
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+        resizeObserver = null;
+      }
       if (appRef.current) {
         appRef.current.destroy(
           { removeView: true, releaseGlobalResources: true },
@@ -281,7 +301,11 @@ export default function BangoMatchPixi({
 
   return (
     <div style={styles.wrapper}>
-      <div ref={canvasRef} style={styles.canvasHost} />
+      <div
+        ref={canvasRef}
+        className="pixi-canvas-host"
+        style={styles.canvasHost}
+      />
       <p style={styles.hint}>Drag each worker name card to the matching bango tag number.</p>
     </div>
   );
@@ -293,12 +317,11 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: '0.75rem',
+    width: '100%',
   },
   canvasHost: {
     border: '2px dashed var(--kraft-tan-dark)',
     borderRadius: '4px',
-    overflow: 'hidden',
-    maxWidth: '100%',
   },
   hint: {
     fontFamily: 'var(--font-body)',
