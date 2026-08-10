@@ -9,6 +9,7 @@ import {
 import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
 import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
 import AnalyzePhotographForm from '../../components/archives/AnalyzePhotographForm.jsx';
+import SEO from '../../components/SEO.jsx';
 
 const collectionName = (id) =>
   PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? 'Archives';
@@ -48,6 +49,7 @@ export default function PhotographDetail() {
   if (!photo) {
     return (
       <section className="editorial-section">
+        <SEO title="Photograph Not Found" />
         <div className="editorial-shell">
           <h1 className="editorial-title">
             {loading ? 'Opening the archives…' : 'That photograph is not in the archives'}
@@ -66,6 +68,7 @@ export default function PhotographDetail() {
 
   return (
     <div>
+      <SEO title={photo.title} description={photo.caption || `Historical photograph: ${photo.title}`} />
       <section className="editorial-section" style={{ paddingBottom: 0 }}>
         <div className="editorial-shell">
           <button

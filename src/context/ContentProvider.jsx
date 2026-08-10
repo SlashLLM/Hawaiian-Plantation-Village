@@ -128,7 +128,7 @@ export function ContentProvider({ children }) {
           const mapper = COLLECTION_MAPPERS[type];
           const dbItems = rows?.length ? rows.map(mapper) : [];
           const fallbackItems = COLLECTION_FALLBACKS[type] || [];
-          const mapped = [...dbItems, ...fallbackItems];
+          const mapped = [...dbItems, ...fallbackItems.filter(item => !item.id || !new Set(dbItems.map(d => d.id).filter(Boolean)).has(item.id))];
           return [type, mapped];
         }),
       );

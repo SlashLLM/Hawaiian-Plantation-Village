@@ -7,6 +7,7 @@ import { isSupabaseConfigured } from '../../lib/supabase.js';
 import QRPass from '../../components/QRPass.jsx';
 import { usePageSection, useSiteSettings } from '../../context/ContentProvider.jsx';
 import { formatEventSchedule } from '../../lib/timeFormat.js';
+import SEO from '../../components/SEO.jsx';
 
 const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
 
@@ -210,6 +211,7 @@ export default function Tickets() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Book Tickets" description="Register your visit to Hawaii's Plantation Village." />
       <div style={styles.headerBlock}>
         <div style={styles.container}>
           <span className={`ink-stamp ${header?.stampClass ?? 'gold'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'REVENUE PLATFORM'}</span>

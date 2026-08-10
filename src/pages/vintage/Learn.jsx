@@ -18,6 +18,7 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useCurriculumModules } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
+import SEO from '../../components/SEO.jsx';
 
 export default function Learn() {
   const setActivePage = useAppNavigate();
@@ -171,6 +172,7 @@ export default function Learn() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Education & Field Trips" description="Bring history to life. Explore educational packages and request school visits." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.learn}
         stamp={headerDetails.stampText}

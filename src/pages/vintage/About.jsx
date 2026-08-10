@@ -8,6 +8,7 @@ import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useSiteSettings, usePageSection, usePageListSection, useContentCollection } from '../../context/ContentProvider.jsx';
 import { submitInquiry } from '../../lib/api.js';
+import SEO from '../../components/SEO.jsx';
 
 export default function About({ activeTab: propActiveTab, setActiveTab: propSetActiveTab }) {
   const { settings } = useSiteSettings();
@@ -176,6 +177,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="About Us" description="Built by plantation workers and their descendants. Learn about our history and mission." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.about}
         stamp={header?.stamp ?? 'Our story'}
@@ -246,6 +248,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                       src="/digitized-photos/IMG_6066.jpeg"
                       alt="Restored camp house at Hawaii's Plantation Village"
                       style={styles.featuredImg}
+                      loading="lazy"
                     />
                     <div style={styles.imgTextureOverlay} />
                   </div>
@@ -344,7 +347,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 {filteredArticles.map(article => (
                   <div key={article.id} className="paper-card" style={styles.newsCard}>
                     <div style={styles.newsCardImageWrapper}>
-                      <img src={article.image} alt={article.title} style={styles.newsCardImage} />
+                      <img src={article.image} alt={article.title} style={styles.newsCardImage} loading="lazy" />
                       <span className="ink-stamp gold" style={styles.newsCardStamp}>{article.category}</span>
                     </div>
                     <div style={styles.newsCardBody}>
@@ -378,7 +381,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     </div>
                     <h2 style={styles.modalTitle}>{selectedArticle.title}</h2>
                     <div style={styles.modalDivider} />
-                    <img src={selectedArticle.image} alt={selectedArticle.title} style={styles.modalImage} />
+                    <img src={selectedArticle.image} alt={selectedArticle.title} style={styles.modalImage} loading="lazy" />
                     <p style={styles.modalBodyText}>{selectedArticle.content}</p>
                   </div>
                 </div>

@@ -6,6 +6,7 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, useContent } from '../../context/ContentProvider.jsx';
 import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
+import SEO from '../../components/SEO.jsx';
 
 const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
 
@@ -51,6 +52,7 @@ export default function Visit() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Plan Your Visit" description="Hours, directions, admission, and everything else you need before you walk the village." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.visit}
         stamp={header?.stamp ?? 'Visitor guide'}

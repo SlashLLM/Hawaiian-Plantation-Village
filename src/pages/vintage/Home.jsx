@@ -6,6 +6,7 @@ import { ArrowRight, Mail } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
+import SEO from '../../components/SEO.jsx';
 
 const DEFAULT_CULTURES = [
   { name: 'Hawaiian', note: 'The land and people before the cane' },
@@ -82,6 +83,7 @@ export default function Home() {
 
   return (
     <div>
+      <SEO title="Home" description="Walk the camp houses where eight immigrant communities built a life together — and still gather today." />
       <HeroStage hero={settings?.hero} onPrimaryClick={handlePlanVisit} />
 
       {/* Eight cultures, one village */}
@@ -138,6 +140,7 @@ export default function Home() {
                 src={SITE_PHOTOS.homeWhyVisit}
                 alt="Restored plantation camp houses along the village path"
                 style={styles.plate}
+                loading="lazy"
               />
             </Reveal>
           </div>
@@ -153,6 +156,7 @@ export default function Home() {
                 src={SITE_PHOTOS.homeFeatured}
                 alt="Village buildings and gardens at Hawaii's Plantation Village"
                 style={styles.plate}
+                loading="lazy"
               />
             </Reveal>
             <Reveal>
@@ -230,7 +234,7 @@ export default function Home() {
         <div className="editorial-shell">
           <div style={styles.split}>
             <Reveal>
-              <img src={SITE_PHOTOS.homeEducators} alt="Furnished camp house interior for school tours" style={styles.plate} />
+              <img src={SITE_PHOTOS.homeEducators} alt="Furnished camp house interior for school tours" style={styles.plate} loading="lazy" />
             </Reveal>
             <Reveal>
               <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators'}</p>
