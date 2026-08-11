@@ -8,6 +8,7 @@ import CurriculumVideo from '../../components/curriculum/CurriculumVideo';
 import CurriculumQuiz from '../../components/curriculum/CurriculumQuiz';
 import BangoMatchPixi from '../../components/curriculum/BangoMatchPixi';
 import BellToBell from '../../components/BellToBell';
+import SEO from '../../components/SEO.jsx';
 import {
   DEFAULT_BANGO_PAIRS,
   DEFAULT_BANGO_TITLE,
@@ -71,6 +72,7 @@ export default function CurriculumModule() {
   if (!module) {
     return (
       <div style={styles.pageContainer}>
+        <SEO title="Lesson Not Found" />
         <div style={styles.fallbackContainer}>
           <p style={styles.bodyText}>Lesson not found.</p>
           <button type="button" className="btn-secondary" onClick={onBackToLearn}>
@@ -121,6 +123,7 @@ export default function CurriculumModule() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title={module.title} description="Interactive lesson about Hawaii's plantation history." />
       <div className="curriculum-layout" style={styles.layout}>
         <aside className="paper-card curriculum-sidebar" style={styles.sidebar}>
           <button type="button" className="btn-secondary" onClick={onBackToLearn} style={styles.backBtn}>

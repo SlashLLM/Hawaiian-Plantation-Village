@@ -5,6 +5,7 @@ import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { formatAudioLength } from '../../lib/content/collectionFormUtils.js';
+import SEO from '../../components/SEO.jsx';
 
 const parseLengthToSeconds = (lengthStr) => {
   if (!lengthStr) return 120;
@@ -186,6 +187,7 @@ export default function Stories() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Plantation Stories" description="The lives, struggles, and music of the eight immigrant communities that built Waipahu." />
       <style>{`
         @keyframes bouncing-bar {
           0% { height: 4px; }
@@ -204,7 +206,7 @@ export default function Stories() {
         <div style={styles.filterBar}>
           <span style={styles.filterLabel}>FILTER BY CAMP SECTION:</span>
           <div style={styles.filterBtns}>
-            {['all', ...camps.map((c) => c.culture.toLowerCase())].map((item) => (
+            {['all', ...new Set(camps.map((c) => c.culture.toLowerCase()))].map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(item)}
@@ -270,7 +272,7 @@ export default function Stories() {
               <div style={styles.drawerBody}>
                 {/* Photo Header */}
                 <div style={styles.photoContainer}>
-                  <img src={selectedCamp.image_url || SITE_PHOTOS.storiesFallback} alt={selectedCamp.title} style={styles.drawerPhoto} />
+                  <img src={selectedCamp.image_url || SITE_PHOTOS.storiesFallback} alt={selectedCamp.title} style={styles.drawerPhoto} loading="lazy" />
                   <div style={styles.photoCaption}>Historic {selectedCamp.culture} Camp Cottage Representation</div>
                 </div>
 

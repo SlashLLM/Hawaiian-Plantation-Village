@@ -7,6 +7,7 @@ import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/a
 import { isSupabaseConfigured } from '../../lib/supabase.js';
 import QRPass from '../../components/QRPass.jsx';
 import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
+import SEO from '../../components/SEO.jsx';
 
 export default function Support() {
   const { settings } = useSiteSettings();
@@ -149,6 +150,7 @@ export default function Support() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Support the Village" description="Help us preserve Oahu's plantation cottages and share immigration stories for future generations." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.support}
         stamp={header?.stamp ?? 'Support the village'}

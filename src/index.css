@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Inter:wght@400;500;600&display=swap');
+/* Fonts loaded via <link> in index.html for faster non-blocking delivery */
 
 :root {
   /* Brand palette — HPV creative brief 2026 */
@@ -171,7 +171,7 @@ button, input, select, textarea {
 
 .ink-stamp.green { color: var(--plantation-ink); }
 .ink-stamp.rust { color: var(--terracotta-clay); }
-.ink-stamp.teal { color: var(--muted-sage); }
+.ink-stamp.teal { color: var(--ocean-teal); }
 .ink-stamp.gold { color: var(--heritage-gold-ink); }
 
 /* Buttons — gold acts, clay gives, everything else is ghost */
@@ -226,14 +226,14 @@ button, input, select, textarea {
 }
 
 .btn-clay {
-  background-color: var(--terracotta-clay);
+  background-color: var(--terracotta-clay-deep);
   color: var(--sugarcane-cream);
-  border: 1px solid var(--terracotta-clay);
+  border: 1px solid var(--terracotta-clay-deep);
 }
 
 .btn-clay:hover {
-  background-color: var(--terracotta-clay-deep);
-  border-color: var(--terracotta-clay-deep);
+  background-color: var(--plantation-ink);
+  border-color: var(--plantation-ink);
 }
 
 /* Ghost button on ink backgrounds */

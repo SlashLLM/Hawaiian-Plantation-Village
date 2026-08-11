@@ -28,7 +28,7 @@ export default function HeroStage({ hero = {}, onPrimaryClick }) {
   const variants = shouldReduceMotion ? still : rise;
 
   const videoSrc = hero.videoSrc ?? '/gwr_video_mvp.mp4';
-  const posterSrc = hero.posterSrc ?? '/digitized-photos/IMG_6805.jpeg';
+  const posterSrc = hero.posterSrc ?? '/digitized-photos/IMG_6805.webp';
   const eyebrow = hero.eyebrow ?? hero.badge ?? 'Hawaiʻi\'s living museum · Waipahu, Oʻahu';
   const headline = hero.headline ?? hero.title ?? 'History didn\'t happen here. It still does.';
   const support =
@@ -71,7 +71,7 @@ export default function HeroStage({ hero = {}, onPrimaryClick }) {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="metadata"
         />
       </div>
       <div className="hero-scrim" aria-hidden="true" />

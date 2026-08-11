@@ -7,6 +7,7 @@ import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { usePageSection } from '../../context/ContentProvider.jsx';
 import { GAME_STEPS as DEFAULT_GAME_STEPS } from '../../lib/content/fallbacks.js';
+import SEO from '../../components/SEO.jsx';
 
 export default function Play() {
   const { section: header } = usePageSection('play', 'header', {});
@@ -90,6 +91,7 @@ export default function Play() {
 
   return (
     <div style={styles.pageContainer}>
+      <SEO title="Play Sugar Mill Tycoon" description="Cut the cane, crush it, boil it, spin it. Run the mill the way Waipahu once did." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.play}
         stamp={header?.stamp ?? 'Play'}

@@ -10,6 +10,7 @@ import {
 } from '../../context/ContentProvider.jsx';
 import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
+import SEO from '../../components/SEO.jsx';
 
 const collectionName = (id) =>
   PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? 'Archives';
@@ -61,6 +62,7 @@ export default function Archives() {
 
   return (
     <div>
+      <SEO title="Photograph Archives" description="Look closely at the historical record of Hawaii's Plantation Village." />
       <PageHeaderParallax
         image={lead?.imageUrl || SITE_PHOTOS.headers.visit}
         stamp={header?.stamp ?? 'Photograph archives'}

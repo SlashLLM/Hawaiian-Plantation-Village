@@ -126,7 +126,9 @@ export function ContentProvider({ children }) {
             return data ?? [];
           });
           const mapper = COLLECTION_MAPPERS[type];
-          const mapped = rows?.length ? rows.map(mapper) : COLLECTION_FALLBACKS[type];
+          const dbItems = rows?.length ? rows.map(mapper) : [];
+          const fallbackItems = COLLECTION_FALLBACKS[type] || [];
+          const mapped = [...dbItems, ...fallbackItems.filter(item => !item.id || !new Set(dbItems.map(d => d.id).filter(Boolean)).has(item.id))];
           return [type, mapped];
         }),
       );
