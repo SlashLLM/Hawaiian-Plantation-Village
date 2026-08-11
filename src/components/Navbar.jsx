@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.png';
+import logo from '../assets/logo.webp';
 import { Menu, X, Ticket, Heart } from 'lucide-react';
 import { pathFromPageId } from '../lib/navigation.js';
 import { useSiteSettings } from '../context/ContentProvider.jsx';

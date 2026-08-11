@@ -1,0 +1,21 @@
+# Hawaii's Plantation Village
+
+> A living history museum in Waipahu preserving the heritage and stories of Hawaii's immigrant plantation worker communities.
+
+## About
+Hawaii's Plantation Village focuses on the plantation worker—people from many cultures, natives and immigrants, who were promised a chance to better their lives. This site contains historical information, oral histories, and visitor information for the museum located in Waipahu, Oʻahu.
+
+## Main Pages
+- [Home](/) - The main landing page with overview and quick information.
+- [Visit](/visit) - Visitor guide, opening hours, directions, and admission rates.
+- [Stories](/stories) - Oral histories and plantation stories of immigrant communities.
+- [Archives](/archives) - Photograph archives and collections from the plantation era.
+- [Play & Learn](/play) - Interactive educational modules and activities.
+- [Learn](/learn) - Resources for educators, schools, and youth programs.
+- [Support](/support) - Information on donations, volunteering, and memberships.
+- [About](/about) - The history of the village, timeline, and leadership.
+- [Tickets](/tickets) - Booking engine for admission tickets and tours.
+
+## Contact
+- Phone: (808) 677-0110
+- Address: 94-695 Waipahu Street, Waipahu, Oʻahu, Hawaiʻi 96797

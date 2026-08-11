@@ -77,7 +77,7 @@ export const DEFAULT_SITE_SETTINGS = {
       { value: '4', label: 'Free festivals' },
     ],
     videoSrc: '/gwr_video_mvp.mp4',
-    posterSrc: '/digitized-photos/IMG_6805.jpeg',
+    posterSrc: '/digitized-photos/IMG_6805.webp',
   },
   seo: {
     title: 'Hawaii\'s Plantation Village | Plantation Heritage in Waipahu, Oʻahu',

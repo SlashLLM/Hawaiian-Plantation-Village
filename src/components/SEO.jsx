@@ -2,10 +2,17 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function SEO({ title, description, image = '/og-image.png' }) {
-  const location = useLocation();
+  let pathname = '';
+  try {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const location = useLocation();
+    pathname = location?.pathname || '';
+  } catch {
+    pathname = '';
+  }
   const siteTitle = "Hawaii's Plantation Village";
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
-  const canonicalUrl = `https://www.hawaiiplantationvillage.org${location.pathname}`;
+  const canonicalUrl = `https://www.hawaiiplantationvillage.org${pathname}`;
   
   return (
     <>

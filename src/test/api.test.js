@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { formatCents, createBooking } from '../lib/api.js';
 
 describe('formatCents', () => {
@@ -11,6 +11,8 @@ describe('formatCents', () => {
 
 describe('createBooking', () => {
   it('throws when booking request cannot complete', async () => {
+    vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('Network error')));
     await expect(createBooking({})).rejects.toThrow();
+    vi.unstubAllGlobals();
   });
 });
