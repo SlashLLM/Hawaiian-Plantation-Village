@@ -26,6 +26,14 @@ export function formatDateLabel(value) {
   return parsed.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 }
 
+/** Short calendar-badge label from an ISO date ("2026-08-15" -> "AUG 15"). */
+export function formatShortDateLabel(isoDate) {
+  if (!isoDate || typeof isoDate !== 'string') return '';
+  const parsed = new Date(`${isoDate}T12:00:00`);
+  if (Number.isNaN(parsed.getTime())) return '';
+  return parsed.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
+}
+
 /** Convert stored label ("10:00 AM") to HTML time input value ("10:00"). */
 export function timeLabelToInputValue(label) {
   if (!label || typeof label !== 'string') return '';
@@ -57,6 +65,24 @@ export function inputValueToTimeLabel(value) {
   hours = hours % 12;
   if (hours === 0) hours = 12;
   return `${hours}:${minutes} ${meridiem}`;
+}
+
+/** Split a stored time-range label ("5:00 PM - 9:00 PM") into HTML time input values. */
+export function timeRangeLabelToInputs(label) {
+  if (!label || typeof label !== 'string') return { startTime: '', endTime: '' };
+  const [start, end] = label.split(/\s*[-–]\s*/);
+  return {
+    startTime: timeLabelToInputValue(start ?? ''),
+    endTime: end ? timeLabelToInputValue(end) : '',
+  };
+}
+
+/** Combine HTML time input values ("17:00", "21:00") into a stored range label ("5:00 PM - 9:00 PM"). */
+export function inputsToTimeRangeLabel(startTime, endTime) {
+  const startLabel = inputValueToTimeLabel(startTime);
+  const endLabel = inputValueToTimeLabel(endTime);
+  if (startLabel && endLabel) return `${startLabel} - ${endLabel}`;
+  return startLabel || endLabel || '';
 }
 
 function formatEventDate(dateStr) {
@@ -98,6 +124,21 @@ export function toEventDate(item) {
   const explicit = typeof item.startDate === 'string' ? item.startDate.trim() : '';
   if (ISO_DATE_RE.test(explicit)) return explicit;
   return dateLabelToInputValue(item.date);
+}
+
+/**
+ * Display date range for a CMS event item ("AUG 15" or "AUG 15 - AUG 18").
+ * Derived from startDate/endDate; falls back to the stored `date` label
+ * when no startDate is set (e.g. seasonal events).
+ */
+export function formatEventDateRangeLabel(item) {
+  if (!item || typeof item !== 'object') return '';
+  const start = typeof item.startDate === 'string' ? item.startDate.trim() : '';
+  const end = typeof item.endDate === 'string' ? item.endDate.trim() : '';
+  if (!ISO_DATE_RE.test(start)) return item.date || '';
+  const startLabel = formatShortDateLabel(start);
+  if (!ISO_DATE_RE.test(end) || end === start) return startLabel;
+  return `${startLabel} - ${formatShortDateLabel(end)}`;
 }
 
 /** Resolve the optional ISO end date for a CMS event item. */

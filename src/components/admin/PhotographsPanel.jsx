@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import { isValidSlug, normalizeSlug } from '../../lib/content/validators.js';
@@ -60,6 +60,19 @@ export default function PhotographsPanel() {
   }, []);
 
   useEffect(() => { load(); }, [load]);
+
+  const customCollections = useMemo(() => {
+    const known = new Set(PHOTOGRAPH_COLLECTION_OPTIONS.map((option) => option.value));
+    const extra = [];
+    entries.forEach((entry) => {
+      const value = entry.metadata?.collection ?? entry.category;
+      if (value && !known.has(value)) {
+        known.add(value);
+        extra.push({ value, label: value });
+      }
+    });
+    return extra;
+  }, [entries]);
 
   function startEdit(entry) {
     setEditingId(entry.id);
@@ -199,7 +212,7 @@ export default function PhotographsPanel() {
                 onChange={(e) => setForm({ ...form, title: e.target.value })}
               />
             </div>
-            <PhotographFields form={form} setForm={setForm} />
+            <PhotographFields form={form} setForm={setForm} extraCollections={customCollections} />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
             <button type="submit" className="btn-primary" disabled={saving}>

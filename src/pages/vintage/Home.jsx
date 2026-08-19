@@ -7,6 +7,7 @@ import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
+import { formatEventDateRangeLabel } from '../../lib/timeFormat.js';
 
 const DEFAULT_CULTURES = [
   { name: 'Hawaiian', note: 'The land and people before the cane' },
@@ -217,7 +218,7 @@ export default function Home() {
           <div style={{ marginTop: '2.5rem', borderBottom: '1px solid var(--hairline)' }}>
             {events.map((event, index) => (
               <div key={event.slug ?? index} className="event-row">
-                <span className="event-date">{event.date}{event.time ? ` · ${event.time}` : ''}</span>
+                <span className="event-date">{formatEventDateRangeLabel(event)}{event.time ? ` · ${event.time}` : ''}</span>
                 <div>
                   <h3 className="event-title">{event.title}</h3>
                   <p className="event-note">{event.desc}</p>
