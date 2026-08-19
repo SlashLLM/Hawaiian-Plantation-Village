@@ -2,7 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import { isValidSlug, normalizeSlug } from '../../lib/content/validators.js';
-import { dateLabelToInputValue } from '../../lib/timeFormat.js';
+import {
+  dateLabelToInputValue,
+  formatShortDateLabel,
+  timeRangeLabelToInputs,
+  inputsToTimeRangeLabel,
+} from '../../lib/timeFormat.js';
 import {
   fetchAllPageSections,
   savePageSection,
@@ -23,7 +28,8 @@ const EMPTY_ITEM = {
   startDate: '',
   endDate: '',
   title: '',
-  time: '',
+  startTime: '',
+  endTime: '',
   desc: '',
   image: '',
 };
@@ -70,6 +76,7 @@ export default function CommunityProgramsPanel() {
 
   function startEdit(index) {
     const item = items[index];
+    const { startTime, endTime } = timeRangeLabelToInputs(item.time ?? '');
     setEditingIndex(index);
     setForm({
       slug: item.slug ?? '',
@@ -77,7 +84,8 @@ export default function CommunityProgramsPanel() {
       startDate: item.startDate || dateLabelToInputValue(item.date) || '',
       endDate: item.endDate ?? '',
       title: item.title ?? '',
-      time: item.time ?? '',
+      startTime,
+      endTime,
       desc: item.desc ?? '',
       image: item.image ?? '',
     });
@@ -114,11 +122,11 @@ export default function CommunityProgramsPanel() {
 
     const nextItem = {
       slug,
-      date: form.date.trim(),
+      date: form.startDate ? formatShortDateLabel(form.startDate.trim()) : '',
       startDate: form.startDate.trim(),
       endDate: form.endDate.trim(),
       title: form.title.trim(),
-      time: form.time.trim(),
+      time: inputsToTimeRangeLabel(form.startTime, form.endTime),
       desc: form.desc.trim(),
       image: form.image.trim(),
     };
@@ -221,16 +229,6 @@ export default function CommunityProgramsPanel() {
               />
             </div>
             <div className="admin-form-field">
-              <label className="admin-form-label">Date label</label>
-              <input
-                className="admin-form-input"
-                required
-                value={form.date}
-                onChange={(e) => setForm({ ...form, date: e.target.value })}
-                placeholder="AUG 15"
-              />
-            </div>
-            <div className="admin-form-field">
               <label className="admin-form-label">Calendar start date</label>
               <input
                 className="admin-form-input"
@@ -256,13 +254,22 @@ export default function CommunityProgramsPanel() {
               </small>
             </div>
             <div className="admin-form-field">
-              <label className="admin-form-label">Time</label>
+              <label className="admin-form-label">Start time</label>
               <input
                 className="admin-form-input"
+                type="time"
                 required
-                value={form.time}
-                onChange={(e) => setForm({ ...form, time: e.target.value })}
-                placeholder="5:00 PM - 9:00 PM"
+                value={form.startTime}
+                onChange={(e) => setForm({ ...form, startTime: e.target.value })}
+              />
+            </div>
+            <div className="admin-form-field">
+              <label className="admin-form-label">End time (optional)</label>
+              <input
+                className="admin-form-input"
+                type="time"
+                value={form.endTime}
+                onChange={(e) => setForm({ ...form, endTime: e.target.value })}
               />
             </div>
             <div className="admin-form-field full">

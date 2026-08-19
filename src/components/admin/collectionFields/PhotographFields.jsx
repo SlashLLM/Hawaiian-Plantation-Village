@@ -8,9 +8,10 @@ export const PHOTOGRAPH_COLLECTION_OPTIONS = [
   { value: 'fwcgp', label: 'Friends of Waipahu Cultural Garden Park' },
 ];
 
-export default function PhotographFields({ form, setForm }) {
+export default function PhotographFields({ form, setForm, extraCollections = [] }) {
   const meta = form.metadata ?? {};
   const relatedArkIds = getMetadataAt(meta, 'relatedArkIds', []);
+  const allCollectionOptions = [...PHOTOGRAPH_COLLECTION_OPTIONS, ...extraCollections];
 
   function setMeta(path, value) {
     setForm({ ...form, metadata: updateMetadata(meta, path, value) });
@@ -25,7 +26,7 @@ export default function PhotographFields({ form, setForm }) {
   }
 
   const currentCollection = getMetadataAt(meta, 'collection', form.category ?? 'fwcgp');
-  const isKnownCollection = PHOTOGRAPH_COLLECTION_OPTIONS.some((option) => option.value === currentCollection);
+  const isKnownCollection = allCollectionOptions.some((option) => option.value === currentCollection);
   const collectionSelectValue = isKnownCollection ? currentCollection : '__custom__';
 
   return (
@@ -48,7 +49,7 @@ export default function PhotographFields({ form, setForm }) {
           value={collectionSelectValue}
           onChange={(e) => setCollection(e.target.value === '__custom__' ? '' : e.target.value)}
         >
-          {PHOTOGRAPH_COLLECTION_OPTIONS.map((option) => (
+          {allCollectionOptions.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
           <option value="__custom__">Custom collection…</option>
