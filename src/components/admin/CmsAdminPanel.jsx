@@ -8,7 +8,7 @@ import CurriculumPanel from './CurriculumPanel.jsx';
 
 const TABS = [
   { id: 'stories', label: 'Stories' },
-  { id: 'photographs', label: 'Photographs' },
+  { id: 'photographs', label: 'Archives' },
   { id: 'events', label: 'Upcoming Events' },
   { id: 'news', label: 'News & Announcements' },
   { id: 'careers', label: 'Careers' },

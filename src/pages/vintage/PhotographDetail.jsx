@@ -12,7 +12,7 @@ import AnalyzePhotographForm from '../../components/archives/AnalyzePhotographFo
 import SEO from '../../components/SEO.jsx';
 
 const collectionName = (id) =>
-  PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? 'Archives';
+  PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? id ?? 'Archives';
 
 function MetaRow({ label, value }) {
   if (!value) return null;

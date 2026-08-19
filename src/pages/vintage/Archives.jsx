@@ -13,7 +13,7 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
 
 const collectionName = (id) =>
-  PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? 'Archives';
+  PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? id ?? 'Archives';
 
 function Reveal({ children, delay = 0 }) {
   const reduced = useReducedMotion();
@@ -45,6 +45,18 @@ export default function Archives() {
     'resources',
   );
   const [activeCollection, setActiveCollection] = useState('all');
+
+  const allCollections = useMemo(() => {
+    const known = new Set(collections.map((collection) => collection.id));
+    const extra = [];
+    photographs.forEach((photo) => {
+      if (photo.collection && !known.has(photo.collection)) {
+        known.add(photo.collection);
+        extra.push({ id: photo.collection, name: photo.collection, blurb: '' });
+      }
+    });
+    return [...collections, ...extra];
+  }, [collections, photographs]);
 
   const counts = useMemo(() => {
     const tally = { all: photographs.length };
@@ -79,7 +91,7 @@ export default function Archives() {
           </Reveal>
 
           <div className="door-grid">
-            {collections.map((collection) => (
+            {allCollections.map((collection) => (
               <button
                 key={collection.id}
                 type="button"
@@ -105,7 +117,7 @@ export default function Archives() {
           </Reveal>
 
           <div className="archive-filters">
-            {[{ id: 'all', name: 'All photographs' }, ...collections].map((option) => (
+            {[{ id: 'all', name: 'All photographs' }, ...allCollections].map((option) => (
               <button
                 key={option.id}
                 type="button"

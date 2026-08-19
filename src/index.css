@@ -1196,6 +1196,26 @@ button, input, select, textarea {
 }
 
 /* Editorial event list */
+.events-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border-top: 1px solid var(--hairline);
+  border-left: 1px solid var(--hairline);
+}
+
+.events-calendar-day {
+  transition: background-color 0.15s ease;
+}
+
+button.events-calendar-day:hover {
+  background-color: var(--sugarcane-cream);
+}
+
+button.events-calendar-day:focus-visible {
+  outline: 2px solid var(--heritage-gold);
+  outline-offset: -2px;
+}
+
 .event-row {
   display: grid;
   grid-template-columns: 160px 1fr auto;
@@ -1457,6 +1477,7 @@ button, input, select, textarea {
   .mosaic-grid { grid-template-columns: repeat(2, 1fr); }
   .door-grid { grid-template-columns: repeat(2, 1fr); }
   .event-row { grid-template-columns: 1fr; gap: 0.5rem; }
+  .events-calendar-day { min-height: 38px; font-size: 0.8rem; }
   .archive-grid { grid-template-columns: repeat(2, 1fr); }
   .archive-detail-grid { grid-template-columns: 1fr; }
 }

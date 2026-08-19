@@ -218,9 +218,11 @@ const SECTION_FORM_SCHEMAS = {
           objectList(
             'items',
             'Events',
-            { slug: '', date: '', title: '', time: '', desc: '', image: '' },
+            { slug: '', date: '', startDate: '', endDate: '', title: '', time: '', desc: '', image: '' },
             [
               { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'startDate', label: 'Calendar start date (YYYY-MM-DD)', type: 'text' },
+              { key: 'endDate', label: 'Calendar end date (YYYY-MM-DD, optional)', type: 'text' },
               { key: 'date', label: 'Date label', type: 'text' },
               { key: 'title', label: 'Title', type: 'text' },
               { key: 'time', label: 'Time', type: 'text' },

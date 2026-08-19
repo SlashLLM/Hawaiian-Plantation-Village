@@ -7,7 +7,7 @@ export const DEFAULT_CAMP_CULTURES = [
   'Korean',
   'Puerto Rican',
   'Okinawan',
-  'Spanish',
+  'Hawaiian',
 ];
 
 /** Build sorted unique culture options from defaults, existing entries, and current value. */
