@@ -41,7 +41,7 @@ export function mapCampStory(row) {
 export function mapPhotograph(row) {
   const meta = row.metadata ?? {};
   return {
-    arkId: meta.arkId ?? row.slug,
+    arkId: meta.arkId || row.slug,
     slug: row.slug,
     title: row.title,
     caption: row.summary ?? row.body ?? '',

@@ -24,6 +24,10 @@ export default function PhotographFields({ form, setForm }) {
     });
   }
 
+  const currentCollection = getMetadataAt(meta, 'collection', form.category ?? 'fwcgp');
+  const isKnownCollection = PHOTOGRAPH_COLLECTION_OPTIONS.some((option) => option.value === currentCollection);
+  const collectionSelectValue = isKnownCollection ? currentCollection : '__custom__';
+
   return (
     <>
       <div className="admin-form-field">
@@ -41,13 +45,24 @@ export default function PhotographFields({ form, setForm }) {
         <select
           id="photo-collection"
           className="admin-form-select"
-          value={getMetadataAt(meta, 'collection', form.category ?? 'fwcgp')}
-          onChange={(e) => setCollection(e.target.value)}
+          value={collectionSelectValue}
+          onChange={(e) => setCollection(e.target.value === '__custom__' ? '' : e.target.value)}
         >
           {PHOTOGRAPH_COLLECTION_OPTIONS.map((option) => (
             <option key={option.value} value={option.value}>{option.label}</option>
           ))}
+          <option value="__custom__">Custom collection…</option>
         </select>
+        {collectionSelectValue === '__custom__' && (
+          <input
+            id="photo-collection-custom"
+            className="admin-form-input"
+            style={{ marginTop: '0.5rem' }}
+            value={currentCollection === '__custom__' ? '' : currentCollection}
+            onChange={(e) => setCollection(e.target.value)}
+            placeholder="Enter a new collection name"
+          />
+        )}
       </div>
       <div className="admin-form-field">
         <label className="admin-form-label" htmlFor="photo-filing-category">Filing category</label>

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import { isValidSlug, normalizeSlug } from '../../lib/content/validators.js';
+import { dateLabelToInputValue } from '../../lib/timeFormat.js';
 import {
   fetchAllPageSections,
   savePageSection,
@@ -19,6 +20,8 @@ import AdminConfirmButton from './AdminConfirmButton.jsx';
 const EMPTY_ITEM = {
   slug: '',
   date: '',
+  startDate: '',
+  endDate: '',
   title: '',
   time: '',
   desc: '',
@@ -71,6 +74,8 @@ export default function CommunityProgramsPanel() {
     setForm({
       slug: item.slug ?? '',
       date: item.date ?? '',
+      startDate: item.startDate || dateLabelToInputValue(item.date) || '',
+      endDate: item.endDate ?? '',
       title: item.title ?? '',
       time: item.time ?? '',
       desc: item.desc ?? '',
@@ -110,6 +115,8 @@ export default function CommunityProgramsPanel() {
     const nextItem = {
       slug,
       date: form.date.trim(),
+      startDate: form.startDate.trim(),
+      endDate: form.endDate.trim(),
       title: form.title.trim(),
       time: form.time.trim(),
       desc: form.desc.trim(),
@@ -224,6 +231,31 @@ export default function CommunityProgramsPanel() {
               />
             </div>
             <div className="admin-form-field">
+              <label className="admin-form-label">Calendar start date</label>
+              <input
+                className="admin-form-input"
+                type="date"
+                value={form.startDate}
+                onChange={(e) => setForm({ ...form, startDate: e.target.value })}
+              />
+              <small style={{ color: 'var(--text-muted)' }}>
+                Set this to place the event on the Visit page calendar. Leave blank for seasonal or recurring events.
+              </small>
+            </div>
+            <div className="admin-form-field">
+              <label className="admin-form-label">Calendar end date (optional)</label>
+              <input
+                className="admin-form-input"
+                type="date"
+                min={form.startDate || undefined}
+                value={form.endDate}
+                onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+              />
+              <small style={{ color: 'var(--text-muted)' }}>
+                Only for multi-day events. The event is marked on every day in the range.
+              </small>
+            </div>
+            <div className="admin-form-field">
               <label className="admin-form-label">Time</label>
               <input
                 className="admin-form-input"
@@ -273,6 +305,7 @@ export default function CommunityProgramsPanel() {
               <tr>
                 <th>Title</th>
                 <th>Date</th>
+                <th>On calendar</th>
                 <th>Time</th>
                 <th />
               </tr>
@@ -282,6 +315,7 @@ export default function CommunityProgramsPanel() {
                 <tr key={item.slug ?? index}>
                   <td>{item.title}</td>
                   <td>{item.date || '—'}</td>
+                  <td>{item.startDate || dateLabelToInputValue(item.date) || 'Not scheduled'}</td>
                   <td>{item.time || '—'}</td>
                   <td style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                     {isAdmin && (

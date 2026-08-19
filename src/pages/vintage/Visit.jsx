@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone, CalendarDays } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { usePageSection, useContent } from '../../context/ContentProvider.jsx';
+import { usePageSection, usePageListSection, useContent } from '../../context/ContentProvider.jsx';
 import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
 import SEO from '../../components/SEO.jsx';
+import EventsCalendar from '../../components/EventsCalendar.jsx';
+import { toEventDate } from '../../lib/timeFormat.js';
 
 const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
 
@@ -19,7 +21,12 @@ export default function Visit() {
   const { section: groupSection } = usePageSection('visit', 'group', {});
   const { section: admissionSection } = usePageSection('visit', 'admission', {});
   const { section: faqSection } = usePageSection('visit', 'faq', {});
+  const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
+  const { items: allEvents } = usePageListSection('home', 'events');
   const { groupTickets, tourSlots } = useContent();
+
+  /** Only events with a resolvable date can be placed on the calendar. */
+  const datedEvents = useMemo(() => allEvents.filter((event) => toEventDate(event)), [allEvents]);
   const faqs = faqSection?.items?.length ? faqSection.items : VISIT_FAQS;
   const [activeTab, setActiveTab] = useState('hours');
 
@@ -89,6 +96,12 @@ export default function Visit() {
                 style={{ ...styles.tabButton, ...(activeTab === 'group' ? styles.tabButtonActive : {}) }}
               >
                 Group visits
+              </button>
+              <button
+                onClick={() => setActiveTab('events')}
+                style={{ ...styles.tabButton, ...(activeTab === 'events' ? styles.tabButtonActive : {}) }}
+              >
+                Upcoming events
               </button>
             </div>
 
@@ -345,6 +358,27 @@ export default function Visit() {
                       Send another inquiry
                     </button>
                   </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab: Upcoming Events */}
+            {activeTab === 'events' && (
+              <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
+                <h3 style={styles.tabTitle}>{eventsHeader?.title ?? 'Upcoming events'}</h3>
+                {datedEvents.length === 0 ? (
+                  <div style={styles.infoRow}>
+                    <CalendarDays size={20} color="var(--cane-green)" />
+                    <div>
+                      <p style={styles.infoValue}>No dated events are scheduled right now</p>
+                      <p style={styles.infoDesc}>
+                        Our seasonal festivals are listed on the home page — check back soon, or call
+                        the visitor center for the current schedule.
+                      </p>
+                    </div>
+                  </div>
+                ) : (
+                  <EventsCalendar events={datedEvents} />
                 )}
               </div>
             )}

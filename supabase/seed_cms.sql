@@ -366,15 +366,15 @@ values
     now()
   ),
   (
-    'spanish',
+    'hawaiian',
     'camp_story',
     'published',
-    'The Spanish Andalusian Casa',
-    'Arrived in 1907 from Andalusia, introducing the classical Spanish guitar, lace-making, and distinct culinary traditions.',
-    'Spanish contract laborers arrived in Hawaiʻi starting in 1907, primarily recruited from the Andalusia region. Those who remained in Waipahu contributed rich cultural elements, including classical Spanish guitar techniques, traditional lace-making, and Mediterranean culinary traditions.',
-    'Spanish',
+    'The Hawaiian Hale & Taro Patch',
+    'Native Hawaiian families lived on this land long before the plantation, tending loʻi kalo and sharing traditions with the immigrant camps that grew up around them.',
+    'Long before contract laborers arrived, Native Hawaiian families cultivated the ahupuaʻa of Waipahu, tending loʻi kalo (taro patches) fed by the ʻauwai (irrigation channels) that later shaped the plantation''s own ditch system. As the sugar era grew, Hawaiian families remained woven into camp life, teaching neighbors to fish, pound poi, and read the land, even as their own community was reshaped by the plantation around them.',
+    'Hawaiian',
     8,
-    '{"culture": "Spanish", "arrival": "1907", "oralHistory": {"narrator": "Isabel Delgado (Andalusian Immigrant Descendant)", "length": "2m 55s", "audioSimText": "Recording: Delgado oral archive, interviewed 1994.", "transcript": "My grandmother brought her Andalusian guitar all the way across two oceans. She said the fields were exhausting, but music was how they kept their dignity. When she played, the other workers would gather around. We did not speak the same words, but the strings understood each other."}}'::jsonb,
+    '{"culture": "Hawaiian", "arrival": "Before plantation era", "oralHistory": {"narrator": "Leimomi Kahale (Kupuna, Taro Patch Keeper)", "length": "3m 05s", "audioSimText": "Recording: Kahale ohana oral history, recorded 1996.", "transcript": "My tutu kept the loi going even after the ditch water was diverted for cane. She said the taro remembered this valley long before the mill whistle ever did. Workers from every camp came to trade for poi, and she taught their children the names of the wind and rain here. The plantation changed everything around us, but the kalo kept us rooted."}}'::jsonb,
     now()
   )
 on conflict (slug) do nothing;

@@ -1314,20 +1314,20 @@ export const CAMPS_DATA = [
     },
   },
   {
-    id: 'spanish',
-    culture: 'Spanish',
-    title: 'The Spanish Andalusian Casa',
-    arrival: '1907',
+    id: 'hawaiian',
+    culture: 'Hawaiian',
+    title: 'The Hawaiian Hale & Taro Patch',
+    arrival: 'Before plantation era',
     shortDesc:
-      'Arrived in 1907 from Andalusia, introducing the classical Spanish guitar, lace-making, and distinct culinary traditions.',
+      'Native Hawaiian families lived on this land long before the plantation, tending loʻi kalo and sharing traditions with the immigrant camps that grew up around them.',
     fullHistory:
-      'Spanish contract laborers arrived in Hawaiʻi starting in 1907, primarily recruited from the Andalusia region. Those who remained in Waipahu contributed rich cultural elements, including classical Spanish guitar techniques, traditional lace-making, and Mediterranean culinary traditions. Their guitars blended with Portuguese braguinhas and Okinawan sanshins during communal gatherings.',
+      'Long before contract laborers arrived, Native Hawaiian families cultivated the ahupuaʻa of Waipahu, tending loʻi kalo (taro patches) fed by the ʻauwai (irrigation channels) that later shaped the plantation\'s own ditch system. As the sugar era grew, Hawaiian families remained woven into camp life — teaching neighbors to fish, pound poi, and read the land — even as their own community was reshaped by the plantation around them.',
     oralHistory: {
-      narrator: 'Isabel Delgado (Andalusian Immigrant Descendant)',
-      length: '2m 55s',
-      audioSimText: 'Recording: Delgado oral archive, interviewed 1994.',
+      narrator: 'Leimomi Kahale (Kupuna, Taro Patch Keeper)',
+      length: '3m 05s',
+      audioSimText: 'Recording: Kahale ʻohana oral history, recorded 1996.',
       transcript:
-        '“My grandmother brought her Andalusian guitar all the way across two oceans. She said the fields were exhausting, but music was how they kept their dignity. When she played, the other workers would gather around. The Portuguese brought their braguinha, the Okinawan workers brought their sanshin, and they would all play together on the lanai. We didn\'t speak the same words, but the strings understood each other.”',
+        '“My tūtū kept the loʻi going even after the ditch water was diverted for cane. She said the taro remembered this valley long before the mill whistle ever did. Workers from every camp came to trade for poi, and she taught their children the names of the wind and rain here. The plantation changed everything around us, but the kalo kept us rooted.”',
     },
   },
 ];
@@ -1335,6 +1335,8 @@ export const CAMPS_DATA = [
 export const HOME_EVENTS = [
   {
     slug: 'lunar-new-year',
+    startDate: '',
+    endDate: '',
     date: 'Seasonal',
     title: 'Multi-ethnic Lunar New Year Celebration',
     time: '',
@@ -1342,6 +1344,8 @@ export const HOME_EVENTS = [
   },
   {
     slug: 'obon-in-the-village',
+    startDate: '',
+    endDate: '',
     date: 'Seasonal',
     title: 'Opening of Hawaiʻi\'s Obon season',
     time: 'Late afternoon',
@@ -1349,6 +1353,8 @@ export const HOME_EVENTS = [
   },
   {
     slug: 'portuguese-festa',
+    startDate: '',
+    endDate: '',
     date: 'Seasonal',
     title: 'Portuguese Festa',
     time: '',
@@ -1356,6 +1362,8 @@ export const HOME_EVENTS = [
   },
   {
     slug: 'harvest-festival',
+    startDate: '',
+    endDate: '',
     date: 'Seasonal',
     title: 'Harvest Festival',
     time: '',

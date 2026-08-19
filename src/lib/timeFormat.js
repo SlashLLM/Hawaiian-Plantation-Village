@@ -86,3 +86,62 @@ export function truncateText(text, max = 80) {
   if (trimmed.length <= max) return trimmed;
   return `${trimmed.slice(0, max - 1)}…`;
 }
+
+/**
+ * Resolve the calendar date for a CMS event item.
+ * Prefers the explicit ISO `startDate`; falls back to parsing the free-text
+ * `date` label. Returns '' for undated items (e.g. "Seasonal"), which is the
+ * single predicate for "can this event be placed on the calendar?".
+ */
+export function toEventDate(item) {
+  if (!item || typeof item !== 'object') return '';
+  const explicit = typeof item.startDate === 'string' ? item.startDate.trim() : '';
+  if (ISO_DATE_RE.test(explicit)) return explicit;
+  return dateLabelToInputValue(item.date);
+}
+
+/** Resolve the optional ISO end date for a CMS event item. */
+export function toEventEndDate(item) {
+  if (!item || typeof item !== 'object') return '';
+  const explicit = typeof item.endDate === 'string' ? item.endDate.trim() : '';
+  return ISO_DATE_RE.test(explicit) ? explicit : '';
+}
+
+/** Every ISO day from start through end inclusive; [start] when end is absent or invalid. */
+export function eachDateInRange(startISO, endISO) {
+  if (!ISO_DATE_RE.test(startISO ?? '')) return [];
+  if (!ISO_DATE_RE.test(endISO ?? '') || endISO < startISO) return [startISO];
+  const days = [];
+  const cursor = new Date(`${startISO}T12:00:00`);
+  const last = new Date(`${endISO}T12:00:00`);
+  while (cursor <= last && days.length < 366) {
+    days.push(`${cursor.getFullYear()}-${pad2(cursor.getMonth() + 1)}-${pad2(cursor.getDate())}`);
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return days;
+}
+
+/** ISO day string for a Date. */
+export function toISODate(date) {
+  return `${date.getFullYear()}-${pad2(date.getMonth() + 1)}-${pad2(date.getDate())}`;
+}
+
+/**
+ * Sunday-first 6x7 month grid of { iso, day, inMonth } cells,
+ * padded with the trailing/leading days of the adjacent months.
+ * `month` is 0-indexed.
+ */
+export function buildMonthGrid(year, month) {
+  const first = new Date(year, month, 1);
+  const start = new Date(year, month, 1 - first.getDay());
+  const cells = [];
+  for (let i = 0; i < 42; i += 1) {
+    const cursor = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+    cells.push({
+      iso: toISODate(cursor),
+      day: cursor.getDate(),
+      inMonth: cursor.getMonth() === month && cursor.getFullYear() === year,
+    });
+  }
+  return cells;
+}
