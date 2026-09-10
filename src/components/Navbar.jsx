@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.webp';
 import { Menu, X, Ticket, Heart } from 'lucide-react';
 import { pathFromPageId } from '../lib/navigation.js';
+import { isComingSoon } from '../lib/features.js';
+import ComingSoonBadge from './ComingSoonBadge.jsx';
 import { useSiteSettings } from '../context/ContentProvider.jsx';
 
 export default function Navbar({ activePage }) {
@@ -64,6 +66,9 @@ export default function Navbar({ activePage }) {
           ))}
         </ul>
 
+        {/* No "coming soon" badges in this row: three inline badges overflow the
+            1180px nav and force the brand and button to wrap. LaunchNotice carries
+            the message instead. The mobile menu below has room and keeps its badges. */}
         <div className="nav-desktop-ctas" style={styles.ctaGroup}>
           <button onClick={() => handleNavClick('support')} style={styles.donateLink}>
             <Heart size={15} /> Donate
@@ -97,11 +102,13 @@ export default function Navbar({ activePage }) {
             <li style={styles.mobileLinkItem}>
               <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--terracotta-clay-deep)' }}>
                 Donate
+                {isComingSoon('support') && <ComingSoonBadge style={styles.mobileBadge} />}
               </button>
             </li>
             <li style={styles.mobileLinkItem}>
               <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={{ width: '100%', marginTop: '10px' }}>
                 <Ticket size={16} /> Get tickets
+                {isComingSoon('tickets') && <ComingSoonBadge style={styles.ctaBadgeTone} />}
               </button>
             </li>
           </ul>
@@ -190,6 +197,15 @@ const styles = {
   },
   navButtonActive: {
     fontWeight: '600'
+  },
+  // The accent button already supplies its own flex gap, so no extra margin here.
+  ctaBadgeTone: {
+    color: 'var(--plantation-ink)',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    borderColor: 'rgba(0, 0, 0, 0.12)',
+  },
+  mobileBadge: {
+    marginLeft: '8px',
   },
   activeDot: {
     position: 'absolute',

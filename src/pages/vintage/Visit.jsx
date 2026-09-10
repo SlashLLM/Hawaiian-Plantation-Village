@@ -5,6 +5,8 @@ import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { usePageSection, usePageListSection, useContent } from '../../context/ContentProvider.jsx';
+import { paymentsEnabled, isComingSoon } from '../../lib/features.js';
+import ComingSoonBadge from '../../components/ComingSoonBadge.jsx';
 import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
 import SEO from '../../components/SEO.jsx';
 import EventsCalendar from '../../components/EventsCalendar.jsx';
@@ -23,7 +25,8 @@ export default function Visit() {
   const { section: faqSection } = usePageSection('visit', 'faq', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
   const { items: allEvents } = usePageListSection('home', 'events');
-  const { groupTickets, tourSlots } = useContent();
+  const { groupTickets, tourSlots, settings } = useContent();
+  const contact = settings?.contact ?? {};
 
   /** Only events with a resolvable date can be placed on the calendar. */
   const datedEvents = useMemo(() => allEvents.filter((event) => toEventDate(event)), [allEvents]);
@@ -207,12 +210,23 @@ export default function Visit() {
                 <div style={styles.infoRow}>
                   <Users size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>Group admission rates</p>
-                    <div style={{ ...styles.priceList, marginTop: '8px', width: '100%', maxWidth: '380px' }}>
-                      {(groupTickets ?? []).map((ticket) => (
-                        <div key={ticket.slug} style={styles.priceItem}><span>{ticket.label}</span><strong>{ticket.priceDisplay ?? `$${(ticket.priceCents / 100).toFixed(2)}`}</strong></div>
-                      ))}
-                    </div>
+                    {paymentsEnabled ? (
+                      <>
+                        <p style={styles.infoValue}>Group admission rates</p>
+                        <div style={{ ...styles.priceList, marginTop: '8px', width: '100%', maxWidth: '380px' }}>
+                          {(groupTickets ?? []).map((ticket) => (
+                            <div key={ticket.slug} style={styles.priceItem}><span>{ticket.label}</span><strong>{ticket.priceDisplay ?? `$${(ticket.priceCents / 100).toFixed(2)}`}</strong></div>
+                          ))}
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <p style={styles.infoValue}>Group admission rates</p>
+                        <p style={styles.infoDesc}>
+                          Submit the inquiry form below and our group booking coordinator will send you current rates along with scheduling options.
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -405,26 +419,41 @@ export default function Visit() {
                 <h3 style={styles.ctaCardTitle}>{admissionSection?.title ?? 'Admission'}</h3>
               </div>
               <p style={styles.ctaCardText}>
-                {admissionSection?.description ?? 'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.'}
+                {paymentsEnabled
+                  ? (admissionSection?.description ?? 'Secure your tickets online to guarantee your guided tour slot and skip the check-in queue at the visitor center desk.')
+                  : 'Online booking is not open yet. Admission is handled at the visitor center desk when you arrive — give us a call for current rates and guided tour times.'}
               </p>
-              
-              <div style={styles.priceList}>
-                {(admissionSection?.rates?.length
-                  ? admissionSection.rates
-                  : [
-                      { label: 'General Admission', price: '$25.00' },
-                      { label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price: '$20.00' },
-                      { label: 'Youth (11 – 17)', price: '$12.00' },
-                      { label: 'Children (5 – 10)', price: '$8.00' },
-                      { label: 'Children (4 & under)', price: 'Free' },
-                    ]
-                ).map((rate) => (
-                  <div key={rate.label} style={styles.priceItem}>
-                    <span>{rate.label}</span>
-                    <strong>{rate.price}</strong>
-                  </div>
-                ))}
-              </div>
+
+              {/* Rates stay hidden until online payment is live: the published figures
+                  have not been reconciled against a live checkout. */}
+              {paymentsEnabled ? (
+                <div style={styles.priceList}>
+                  {(admissionSection?.rates?.length
+                    ? admissionSection.rates
+                    : [
+                        { label: 'General Admission', price: '$25.00' },
+                        { label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price: '$20.00' },
+                        { label: 'Youth (11 – 17)', price: '$12.00' },
+                        { label: 'Children (5 – 10)', price: '$8.00' },
+                        { label: 'Children (4 & under)', price: 'Free' },
+                      ]
+                  ).map((rate) => (
+                    <div key={rate.label} style={styles.priceItem}>
+                      <span>{rate.label}</span>
+                      <strong>{rate.price}</strong>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                contact.phone && (
+                  <a
+                    href={contact.phoneHref ?? `tel:${String(contact.phone).replace(/\D/g, '')}`}
+                    style={styles.phoneLink}
+                  >
+                    <Phone size={16} color="var(--cane-green)" /> {contact.phone}
+                  </a>
+                )
+              )}
 
               <button
                 className="btn-accent"
@@ -432,6 +461,9 @@ export default function Visit() {
                 style={styles.bookBtn}
               >
                 {admissionSection?.buttonLabel ?? 'Get tickets'} <ArrowRight size={16} />
+                {isComingSoon(admissionSection?.buttonPage ?? 'tickets') && (
+                  <ComingSoonBadge compact style={styles.ctaBadgeTone} />
+                )}
               </button>
             </div>
 
@@ -612,6 +644,22 @@ const styles = {
   },
   bookBtn: {
     width: '100%'
+  },
+  ctaBadgeTone: {
+    color: 'var(--plantation-ink)',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    borderColor: 'rgba(0, 0, 0, 0.12)',
+  },
+  phoneLink: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    margin: '1rem 0 1.25rem',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '1.02rem',
+    fontWeight: 600,
+    color: 'var(--plantation-ink)',
+    textDecoration: 'none',
   },
   schoolTitle: {
     fontSize: '1.2rem',

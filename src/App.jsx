@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import PublicLayout from './layouts/PublicLayout.jsx';
 import AdminRoute from './components/admin/AdminRoute.jsx';
+import PaymentsComingSoon from './components/PaymentsComingSoon.jsx';
+import { paymentsEnabled } from './lib/features.js';
 
 // Home is eagerly loaded since it's the landing page / LCP route
 import VintageHome from './pages/vintage/Home.jsx';
@@ -44,9 +46,15 @@ export default function App() {
             <Route path="play" element={<VintagePlay />} />
             <Route path="learn" element={<VintageLearn />} />
             <Route path="learn/:moduleId" element={<CurriculumModule />} />
-            <Route path="support" element={<VintageSupport />} />
+            <Route
+              path="support"
+              element={paymentsEnabled ? <VintageSupport /> : <PaymentsComingSoon variant="support" />}
+            />
             <Route path="about" element={<VintageAbout />} />
-            <Route path="tickets" element={<VintageTickets />} />
+            <Route
+              path="tickets"
+              element={paymentsEnabled ? <VintageTickets /> : <PaymentsComingSoon variant="tickets" />}
+            />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />

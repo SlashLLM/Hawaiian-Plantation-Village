@@ -7,14 +7,17 @@ Hawaii's Plantation Village focuses on the plantation worker—people from many 
 
 ## Main Pages
 - [Home](/) - The main landing page with overview and quick information.
-- [Visit](/visit) - Visitor guide, opening hours, directions, and admission rates.
+- [Visit](/visit) - Visitor guide, opening hours, and directions.
 - [Stories](/stories) - Oral histories and plantation stories of immigrant communities.
 - [Archives](/archives) - Photograph archives and collections from the plantation era.
 - [Play & Learn](/play) - Interactive educational modules and activities.
 - [Learn](/learn) - Resources for educators, schools, and youth programs.
-- [Support](/support) - Information on donations, volunteering, and memberships.
+- [Support](/support) - Ways to support the museum. Online donations and membership sign-up are coming soon.
 - [About](/about) - The history of the village, timeline, and leadership.
-- [Tickets](/tickets) - Booking engine for admission tickets and tours.
+- [Tickets](/tickets) - Admission and visit information. Online ticket booking is coming soon.
+
+## Note
+Online ticketing, donations, and membership sign-up are not open yet. Admission is handled at the visitor center on arrival, and group visits are arranged through the inquiry form on the Visit page.
 
 ## Contact
 - Phone: (808) 677-0110

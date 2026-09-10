@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import confetti from 'canvas-confetti';
 import { Ticket, Award, RefreshCw, ChevronRight } from 'lucide-react';
 import { DEFAULT_BELL_SHIFTS } from '../lib/content/gameChallengeDefaults.js';
+import ComingSoonBadge from './ComingSoonBadge.jsx';
 
 export default function BellToBell({
   onVisitClick,
+  ctaComingSoon = false,
   shifts: shiftsProp,
   onComplete,
 }) {
@@ -152,6 +154,7 @@ export default function BellToBell({
                     <div style={styles.actionBtns}>
                       <button className="btn-accent" onClick={onVisitClick} style={styles.actionBtn}>
                         <Ticket size={16} /> Book Tickets
+                        {ctaComingSoon && <ComingSoonBadge compact style={styles.ctaBadge} />}
                       </button>
                       <button className="btn-secondary" onClick={handleReset} style={styles.actionBtn}>
                         <RefreshCw size={16} /> Try Again
@@ -370,6 +373,11 @@ const styles = {
     justifyContent: 'center',
     gap: '12px',
     flexWrap: 'wrap'
+  },
+  ctaBadge: {
+    color: 'var(--plantation-ink)',
+    backgroundColor: 'rgba(255, 255, 255, 0.45)',
+    borderColor: 'rgba(0, 0, 0, 0.12)',
   },
   actionBtn: {
     flex: '1',

@@ -8,6 +8,8 @@ import { useSiteSettings, usePageSection, usePageListSection } from '../../conte
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
 import { formatEventDateRangeLabel } from '../../lib/timeFormat.js';
+import { paymentsEnabled, isComingSoon, linkIsComingSoon } from '../../lib/features.js';
+import ComingSoonBadge from '../../components/ComingSoonBadge.jsx';
 
 const DEFAULT_CULTURES = [
   { name: 'Hawaiian', note: 'The land and people before the cane' },
@@ -72,6 +74,7 @@ export default function Home() {
   const donationPresets = settings?.donationPresets ?? [];
   const cultureTiles = cultures?.items?.length ? cultures.items : DEFAULT_CULTURES;
   const doors = planVisit?.items?.length ? planVisit.items : DEFAULT_DOORS;
+  const footerLinks = footer.ctaLinks ?? [];
 
   const goTo = (page) => {
     setActivePage(page);
@@ -202,7 +205,7 @@ export default function Home() {
             </p>
           </Reveal>
           <div style={{ marginTop: '2.5rem' }}>
-            <BellToBell onVisitClick={() => goTo('tickets')} />
+            <BellToBell onVisitClick={() => goTo('tickets')} ctaComingSoon={isComingSoon('tickets')} />
           </div>
         </div>
       </section>
@@ -268,15 +271,20 @@ export default function Home() {
             <Reveal style={styles.supportColumn}>
               <h3 style={styles.supportTitle}>{getInvolved?.donation?.title ?? 'Give directly'}</h3>
               <p style={styles.supportNote}>{getInvolved?.donation?.description}</p>
-              <ul style={styles.supportList}>
-                {donationPresets.map((preset) => (
-                  <li key={preset.amount}>
-                    <strong>${preset.amount}</strong> {preset.label.replace(/^\$\d+\s*/, '')}
-                  </li>
-                ))}
-              </ul>
+              {/* Preset amounts stay hidden until a payment provider is connected —
+                  the figures in the CMS have not been confirmed against a live checkout. */}
+              {paymentsEnabled && (
+                <ul style={styles.supportList}>
+                  {donationPresets.map((preset) => (
+                    <li key={preset.amount}>
+                      <strong>${preset.amount}</strong> {preset.label.replace(/^\$\d+\s*/, '')}
+                    </li>
+                  ))}
+                </ul>
+              )}
               <button className="btn-clay" onClick={() => goTo('support')} style={styles.supportBtn}>
                 Make a gift
+                {isComingSoon('support') && <ComingSoonBadge />}
               </button>
             </Reveal>
 
@@ -290,6 +298,7 @@ export default function Home() {
               </ul>
               <button className="btn-secondary" onClick={() => goTo('support')} style={styles.supportBtn}>
                 See membership
+                {isComingSoon('support') && <ComingSoonBadge />}
               </button>
             </Reveal>
           </div>
@@ -351,7 +360,10 @@ export default function Home() {
           <div className="door-grid">
             {doors.map((door) => (
               <button key={door.title} type="button" className="door" onClick={() => goTo(door.page)}>
-                <span className="door-title">{door.title} <ArrowRight size={15} /></span>
+                <span className="door-title">
+                  {door.title} <ArrowRight size={15} />
+                  {linkIsComingSoon(door) && <ComingSoonBadge compact style={styles.doorBadge} />}
+                </span>
                 <span className="door-note">{door.note}</span>
               </button>
             ))}
@@ -375,10 +387,11 @@ export default function Home() {
             <div>
               <h4 style={styles.footerHeader}>Go to</h4>
               <ul style={styles.footerLinks}>
-                {(footer.ctaLinks ?? []).map((link) => (
+                {footerLinks.map((link) => (
                   <li key={link.label}>
                     <button className="footer-link-btn" onClick={() => goTo(link.page)}>
                       {link.label}
+                      {linkIsComingSoon(link) && <ComingSoonBadge compact style={styles.footerBadge} />}
                     </button>
                   </li>
                 ))}
@@ -414,6 +427,12 @@ export default function Home() {
 }
 
 const styles = {
+  footerBadge: {
+    marginLeft: '8px',
+  },
+  doorBadge: {
+    marginLeft: '8px',
+  },
   split: {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',

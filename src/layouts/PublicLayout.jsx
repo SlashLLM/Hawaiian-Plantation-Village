@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../components/Navbar.jsx';
+import LaunchNotice from '../components/LaunchNotice.jsx';
 import { pageIdFromPath } from '../lib/navigation.js';
 import { ContentProvider, useSiteSettings } from '../context/ContentProvider.jsx';
 
@@ -24,6 +25,7 @@ function PublicLayoutInner() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--paper-light)' }}>
       <SeoHead />
+      <LaunchNotice />
       <Navbar activePage={pageIdFromPath(location.pathname)} />
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%', position: 'relative' }}>
         <AnimatePresence mode="wait">
