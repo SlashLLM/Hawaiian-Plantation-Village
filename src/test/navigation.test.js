@@ -13,4 +13,15 @@ describe('navigation', () => {
     expect(pathFromPageId('tickets')).toBe('/tickets');
     expect(pathFromPageId('learn-module', { moduleId: 'bango' })).toBe('/learn/bango');
   });
+
+  it('round-trips the explore, events and volunteer routes', () => {
+    for (const pageId of ['explore', 'events', 'volunteer']) {
+      expect(pageIdFromPath(pathFromPageId(pageId))).toBe(pageId);
+    }
+  });
+
+  it('keeps a culture detail page under explore', () => {
+    expect(pathFromPageId('explore-culture', { cultureId: 'japanese' })).toBe('/explore/japanese');
+    expect(pageIdFromPath('/explore/japanese')).toBe('explore');
+  });
 });

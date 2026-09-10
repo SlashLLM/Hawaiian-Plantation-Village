@@ -65,7 +65,9 @@ const SECTION_FORM_SCHEMAS = {
         fields: [
           text('eyebrow', 'Eyebrow'),
           text('title', 'Title'),
-          textarea('description', 'Description'),
+          textarea('description', 'Description (fallback for older payloads)'),
+          paragraphs(),
+          text('closing', 'Closing line'),
         ],
       },
       {
@@ -92,7 +94,9 @@ const SECTION_FORM_SCHEMAS = {
         fields: [
           text('eyebrow', 'Eyebrow'),
           text('title', 'Title'),
-          textarea('description', 'Description'),
+          textarea('description', 'Description (fallback for older payloads)'),
+          paragraphs(),
+          stringList('essentials', 'Essential information', 'Line'),
         ],
       },
       {
@@ -146,20 +150,28 @@ const SECTION_FORM_SCHEMAS = {
         title: 'Content',
         fields: [STAMP_HEADER_NO_SUB, textarea('description', 'Description')],
       },
+      { title: 'Call to action', fields: [cta('cta')] },
     ],
   },
   'home.educators': {
     groups: [
       { title: 'Header', fields: [STAMP_HEADER_NO_SUB] },
       { title: 'Body', fields: [paragraphs()] },
-      { title: 'Call to action', fields: [cta('cta')] },
+      {
+        title: 'Calls to action',
+        fields: [cta('cta', 'Primary CTA'), cta('secondaryCta', 'Secondary CTA')],
+      },
     ],
   },
   'home.getInvolved': {
     groups: [
       {
         title: 'Header',
-        fields: [STAMP_HEADER_NO_SUB, textarea('description', 'Description')],
+        fields: [
+          STAMP_HEADER_NO_SUB,
+          textarea('description', 'Description (fallback for older payloads)'),
+          paragraphs(),
+        ],
       },
       {
         title: 'Donation',
@@ -199,8 +211,21 @@ const SECTION_FORM_SCHEMAS = {
       },
     ],
   },
+  'home.volunteer': {
+    groups: [
+      { title: 'Header', fields: [STAMP_HEADER_NO_SUB] },
+      { title: 'Body', fields: [paragraphs()] },
+      { title: 'Call to action', fields: [cta('cta')] },
+    ],
+  },
   'home.eventsHeader': {
-    groups: [{ title: 'Header', fields: [STAMP_HEADER_NO_SUB] }],
+    groups: [
+      {
+        title: 'Header',
+        fields: [STAMP_HEADER_NO_SUB, textarea('description', 'Description')],
+      },
+      { title: 'Call to action', fields: [cta('cta')] },
+    ],
   },
   'home.testimonialsHeader': {
     groups: [
@@ -323,6 +348,7 @@ const SECTION_FORM_SCHEMAS = {
       {
         title: 'Safety & guidelines',
         fields: [
+          textarea('intro', 'Welcome line'),
           text('terrainTitle', 'Terrain title'),
           textarea('terrainDesc', 'Terrain description'),
           text('guidelinesTitle', 'Guidelines title'),
@@ -415,6 +441,20 @@ const SECTION_FORM_SCHEMAS = {
       {
         title: 'Mission',
         fields: [STAMP_TITLE_ONLY, paragraphs()],
+      },
+      {
+        title: 'Pull quote',
+        fields: [textarea('quote', 'Quote'), text('quoteCite', 'Citation')],
+      },
+    ],
+  },
+  'about.closing': {
+    groups: [
+      { title: 'Header', fields: [STAMP_HEADER_NO_SUB] },
+      { title: 'Body', fields: [paragraphs()] },
+      {
+        title: 'Calls to action',
+        fields: [cta('cta', 'Primary CTA'), cta('secondaryCta', 'Secondary CTA')],
       },
     ],
   },
@@ -839,6 +879,71 @@ const SECTION_FORM_SCHEMAS = {
   // --- Tickets ---
   'tickets.header': {
     groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+
+  // --- Explore ---
+  'explore.header': {
+    groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+  'explore.intro': {
+    groups: [
+      {
+        title: 'Intro',
+        fields: [paragraphs(), text('closing', 'Closing line')],
+      },
+    ],
+  },
+
+  // --- Events ---
+  'events.header': {
+    groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+  'events.intro': {
+    groups: [
+      { title: 'Intro', fields: [paragraphs()] },
+      { title: 'Call to action', fields: [cta('cta')] },
+    ],
+  },
+
+  // --- Volunteer ---
+  'volunteer.header': {
+    groups: [{ title: 'Header', fields: [STAMP_HEADER] }],
+  },
+  'volunteer.intro': {
+    groups: [
+      {
+        title: 'Intro',
+        fields: [paragraphs(), text('closing', 'Closing line')],
+      },
+    ],
+  },
+  'volunteer.ways': {
+    groups: [
+      {
+        title: 'Ways to help',
+        fields: [
+          text('title', 'Title'),
+          objectList(
+            'items',
+            'Volunteer roles',
+            { title: '', note: '' },
+            [
+              { key: 'title', label: 'Role', type: 'text' },
+              { key: 'note', label: 'Description', type: 'text' },
+            ],
+            'Role',
+          ),
+        ],
+      },
+    ],
+  },
+  'volunteer.cta': {
+    groups: [
+      {
+        title: 'Sign-up form',
+        fields: [text('title', 'Form title'), textarea('description', 'Form description')],
+      },
+    ],
   },
 };
 

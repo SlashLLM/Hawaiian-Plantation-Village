@@ -8,23 +8,24 @@ import { useSiteSettings, usePageSection, usePageListSection } from '../../conte
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
 import { formatEventDateRangeLabel } from '../../lib/timeFormat.js';
+import { cultureSlug } from '../../lib/cultures.js';
 
 const DEFAULT_CULTURES = [
-  { name: 'Hawaiian', note: 'The land and people before the cane' },
-  { name: 'Chinese', note: 'Contract labor roots and community life' },
-  { name: 'Japanese', note: 'Home life, celebrations, and tradition' },
-  { name: 'Filipino', note: 'Families, work culture, and gatherings' },
-  { name: 'Korean', note: 'A cultural celebration in the home' },
-  { name: 'Okinawan', note: 'Community memory in the camp' },
-  { name: 'Portuguese', note: 'Home, garden, and festa traditions' },
-  { name: 'Puerto Rican', note: 'Preparing for Christmas Eve' },
+  { name: 'Hawaiian', note: 'The land, her people and the world before sugar' },
+  { name: 'Chinese', note: 'Migration, family and community' },
+  { name: 'Japanese', note: 'Home, work, faith and tradition' },
+  { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
+  { name: 'Korean', note: 'Migration, community and cultural tradition' },
+  { name: 'Okinawan', note: 'Identity, memory and community' },
+  { name: 'Portuguese', note: 'Family, food, faith and celebration' },
+  { name: 'Puerto Rican', note: 'Home, tradition and island connections' },
 ];
 
 const DEFAULT_DOORS = [
-  { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
-  { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
-  { title: 'Schools', note: 'Student tours through furnished homes and gardens.', page: 'learn' },
-  { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
+  { title: 'Tickets & Hours', note: 'Everything you need to plan your day.', page: 'tickets' },
+  { title: 'Group Visits', note: 'Tours for community groups, organizations and travel partners.', page: 'visit' },
+  { title: 'School Visits', note: 'Bring Hawaiʻi\'s history beyond the classroom.', page: 'learn' },
+  { title: 'Accessibility', note: 'Information to help everyone feel welcome at the Village.', page: 'visit' },
 ];
 
 const reveal = {
@@ -61,6 +62,7 @@ export default function Home() {
   const { section: cultures } = usePageSection('home', 'cultures', {});
   const { section: educators } = usePageSection('home', 'educators', {});
   const { section: getInvolved } = usePageSection('home', 'getInvolved', {});
+  const { section: volunteer } = usePageSection('home', 'volunteer', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
   const { section: planVisit } = usePageSection('home', 'planVisit', {});
   const { section: testimonialsHeader } = usePageSection('home', 'testimonialsHeader', {});
@@ -84,21 +86,24 @@ export default function Home() {
 
   return (
     <div>
-      <SEO title="Home" description="Walk the camp houses where eight immigrant communities built a life together — and still gather today." />
+      <SEO
+        title="A Living Museum in Waipahu"
+        description="Come understand how Hawaiʻi became Hawaiʻi. Step inside the homes, gardens and cultural traditions of the people who lived and worked in Hawaiʻi's plantation communities."
+      />
       <HeroStage hero={settings?.hero} onPrimaryClick={handlePlanVisit} />
 
       {/* Eight cultures, one village */}
       <section className="editorial-section">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{cultures?.eyebrow ?? 'Ethnic homes and gardens'}</p>
+            <p className="editorial-eyebrow">{cultures?.eyebrow ?? 'Homes, gardens & cultural traditions'}</p>
             <h2 className="editorial-title">
-              {cultures?.title ?? 'Each group furnished a home to tell its story'}
+              {cultures?.title ?? 'Many journeys. Different cultures. One shared history.'}
             </h2>
-            <p className="editorial-lede">
-              {cultures?.description ??
-                'Ethnic historical groups planned the exhibits: furnishings, thematic celebrations, and gardens with plants specific to their culture. School and visitor tours walk these homes throughout the year.'}
-            </p>
+            {(cultures?.paragraphs ?? [cultures?.description]).filter(Boolean).map((paragraph, index) => (
+              <p key={index} className="editorial-lede">{paragraph}</p>
+            ))}
+            {cultures?.closing && <p style={styles.closingLine}>{cultures.closing}</p>}
           </Reveal>
 
           <div className="mosaic-grid">
@@ -107,7 +112,7 @@ export default function Home() {
                 key={culture.name}
                 type="button"
                 className="mosaic-tile"
-                onClick={() => goTo('stories')}
+                onClick={() => setActivePage('explore-culture', { cultureId: cultureSlug(culture) })}
               >
                 <span className="mosaic-name">{culture.name}</span>
                 <span className="mosaic-note">{culture.note}</span>
@@ -123,16 +128,16 @@ export default function Home() {
           <div style={styles.split}>
             <Reveal>
               <p className="editorial-eyebrow">{whyVisit?.stamp ?? 'The village'}</p>
-              <h2 className="editorial-title">{whyVisit?.title ?? 'A place to share the laborers\u2019 story'}</h2>
+              <h2 className="editorial-title">{whyVisit?.title ?? 'History has a home here.'}</h2>
               {(whyVisit?.paragraphs ?? []).map((paragraph, index) => (
                 <p key={index} style={styles.body}>{paragraph}</p>
               ))}
               <div style={styles.actions}>
                 <button className="btn-primary" onClick={() => goTo(whyVisit?.primaryCta?.page ?? 'about')}>
-                  {whyVisit?.primaryCta?.label ?? 'Read our story'}
+                  {whyVisit?.primaryCta?.label ?? 'Discover Our Story'}
                 </button>
                 <button className="btn-secondary" onClick={() => goTo(whyVisit?.secondaryCta?.page ?? 'visit')}>
-                  {whyVisit?.secondaryCta?.label ?? 'Plan your visit'}
+                  {whyVisit?.secondaryCta?.label ?? 'Plan Your Visit'}
                 </button>
               </div>
             </Reveal>
@@ -163,7 +168,7 @@ export default function Home() {
             <Reveal>
               <p className="editorial-eyebrow">{featuredBango?.stamp ?? 'Okada Education Center'}</p>
               <h2 className="editorial-title">
-                {featuredBango?.title ?? 'Orientation, galleries, and the archives'}
+                {featuredBango?.title ?? 'Where memory becomes history.'}
               </h2>
               {(featuredBango?.paragraphs ?? []).map((paragraph, index) => (
                 <p
@@ -182,7 +187,7 @@ export default function Home() {
               )}
               <div style={styles.actions}>
                 <button className="btn-accent" onClick={() => goTo(featuredBango?.cta?.page ?? 'archives')}>
-                  {featuredBango?.cta?.label ?? 'Explore the photograph archives'} <ArrowRight size={16} />
+                  {featuredBango?.cta?.label ?? 'Explore the Collections'} <ArrowRight size={16} />
                 </button>
               </div>
             </Reveal>
@@ -194,11 +199,11 @@ export default function Home() {
       <section className="editorial-section">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{bellToBell?.stamp ?? 'Interactive'}</p>
-            <h2 className="editorial-title">{bellToBell?.title ?? 'Step into their shoes'}</h2>
+            <p className="editorial-eyebrow">{bellToBell?.stamp ?? 'Interactive history'}</p>
+            <h2 className="editorial-title">{bellToBell?.title ?? 'A day in plantation life'}</h2>
             <p className="editorial-lede">
               {bellToBell?.description ??
-                'Live one day on the plantation. The morning whistle, the cane rows, and the camp at sunset.'}
+                'The whistle sounds before sunrise. What might an ordinary day have looked like for a plantation worker and family? Follow the rhythms of work, meals and community life through an interactive journey inspired by historical accounts and objects in our collection.'}
             </p>
           </Reveal>
           <div style={{ marginTop: '2.5rem' }}>
@@ -212,8 +217,11 @@ export default function Home() {
       <section className="editorial-section on-sand">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{eventsHeader?.stamp ?? 'Free village events'}</p>
-            <h2 className="editorial-title">{eventsHeader?.title ?? 'Festivals the community is invited to'}</h2>
+            <p className="editorial-eyebrow">{eventsHeader?.stamp ?? 'Events at the Village'}</p>
+            <h2 className="editorial-title">{eventsHeader?.title ?? 'Come explore our culture with us.'}</h2>
+            {eventsHeader?.description && (
+              <p className="editorial-lede">{eventsHeader.description}</p>
+            )}
           </Reveal>
           <div style={{ marginTop: '2.5rem', borderBottom: '1px solid var(--hairline)' }}>
             {events.map((event, index) => (
@@ -225,6 +233,11 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+          <div style={styles.actions}>
+            <button className="btn-primary" onClick={() => goTo(eventsHeader?.cta?.page ?? 'events')}>
+              {eventsHeader?.cta?.label ?? 'See All Events'} <ArrowRight size={16} />
+            </button>
           </div>
         </div>
       </section>
@@ -238,14 +251,19 @@ export default function Home() {
               <img src={SITE_PHOTOS.homeEducators} alt="Furnished camp house interior for school tours" style={styles.plate} loading="lazy" />
             </Reveal>
             <Reveal>
-              <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators'}</p>
-              <h2 className="editorial-title">{educators?.title ?? 'Curriculum and field trips'}</h2>
+              <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators & students'}</p>
+              <h2 className="editorial-title">
+                {educators?.title ?? 'History feels different when you can experience it'}
+              </h2>
               {(educators?.paragraphs ?? []).map((paragraph, index) => (
                 <p key={index} style={styles.body}>{paragraph}</p>
               ))}
               <div style={styles.actions}>
                 <button className="btn-primary" onClick={() => goTo(educators?.cta?.page ?? 'learn')}>
-                  {educators?.cta?.label ?? 'Bring a class'} <ArrowRight size={16} />
+                  {educators?.cta?.label ?? 'Plan a School Visit'} <ArrowRight size={16} />
+                </button>
+                <button className="btn-secondary" onClick={() => goTo(educators?.secondaryCta?.page ?? 'learn')}>
+                  {educators?.secondaryCta?.label ?? 'Educator Resources'}
                 </button>
               </div>
             </Reveal>
@@ -257,16 +275,20 @@ export default function Home() {
       <section className="editorial-section on-sand">
         <div className="editorial-shell">
           <Reveal>
-            <p className="editorial-eyebrow">{getInvolved?.stamp ?? 'Get involved'}</p>
+            <p className="editorial-eyebrow">{getInvolved?.stamp ?? 'Help us keep our stories alive'}</p>
             <h2 className="editorial-title">
-              {getInvolved?.title ?? 'Keep these houses standing'}
+              {getInvolved?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
             </h2>
-            <p className="editorial-lede">{getInvolved?.intro ?? getInvolved?.description}</p>
+            {(getInvolved?.paragraphs ?? [getInvolved?.intro ?? getInvolved?.description])
+              .filter(Boolean)
+              .map((paragraph, index) => (
+                <p key={index} className="editorial-lede">{paragraph}</p>
+              ))}
           </Reveal>
 
           <div style={styles.supportGrid}>
             <Reveal style={styles.supportColumn}>
-              <h3 style={styles.supportTitle}>{getInvolved?.donation?.title ?? 'Give directly'}</h3>
+              <h3 style={styles.supportTitle}>{getInvolved?.donation?.title ?? 'Make a gift'}</h3>
               <p style={styles.supportNote}>{getInvolved?.donation?.description}</p>
               <ul style={styles.supportList}>
                 {donationPresets.map((preset) => (
@@ -275,24 +297,53 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <button className="btn-clay" onClick={() => goTo('support')} style={styles.supportBtn}>
-                Make a gift
+              {getInvolved?.donation?.closing && (
+                <p style={styles.supportNote}>{getInvolved.donation.closing}</p>
+              )}
+              <button
+                className="btn-clay"
+                onClick={() => goTo(getInvolved?.donation?.cta?.page ?? 'support')}
+                style={styles.supportBtn}
+              >
+                {getInvolved?.donation?.cta?.label ?? 'Donate Today'}
               </button>
             </Reveal>
 
             <Reveal style={styles.supportColumn}>
-              <h3 style={styles.supportTitle}>{getInvolved?.membership?.title ?? 'Become a steward'}</h3>
+              <h3 style={styles.supportTitle}>{getInvolved?.membership?.title ?? 'Belong to the Village.'}</h3>
               <p style={styles.supportNote}>{getInvolved?.membership?.description}</p>
               <ul style={styles.supportList}>
                 {(getInvolved?.membership?.benefits ?? getInvolved?.membership?.items ?? []).map((benefit, index) => (
                   <li key={index}><strong>{benefit.label}</strong> {benefit.text}</li>
                 ))}
               </ul>
-              <button className="btn-secondary" onClick={() => goTo('support')} style={styles.supportBtn}>
-                See membership
+              <button
+                className="btn-secondary"
+                onClick={() => goTo(getInvolved?.membership?.cta?.page ?? 'support')}
+                style={styles.supportBtn}
+              >
+                {getInvolved?.membership?.cta?.label ?? 'Become a Member'}
               </button>
             </Reveal>
           </div>
+        </div>
+      </section>
+
+      {/* Volunteer */}
+      <section className="editorial-section">
+        <div className="editorial-shell">
+          <Reveal>
+            <p className="editorial-eyebrow">{volunteer?.stamp ?? 'Volunteer'}</p>
+            <h2 className="editorial-title">{volunteer?.title ?? 'History needs people – YOU.'}</h2>
+            {(volunteer?.paragraphs ?? []).map((paragraph, index) => (
+              <p key={index} style={styles.body}>{paragraph}</p>
+            ))}
+            <div style={styles.actions}>
+              <button className="btn-primary" onClick={() => goTo(volunteer?.cta?.page ?? 'volunteer')}>
+                {volunteer?.cta?.label ?? 'Volunteer With Us'} <ArrowRight size={16} />
+              </button>
+            </div>
+          </Reveal>
         </div>
       </section>
 
@@ -341,11 +392,21 @@ export default function Home() {
         <div className="editorial-shell">
           <Reveal>
             <p className="editorial-eyebrow">{planVisit?.eyebrow ?? 'Plan your visit'}</p>
-            <h2 className="editorial-title">{planVisit?.title ?? 'Walk in. Sit down. Stay a while.'}</h2>
-            <p className="editorial-lede">
-              {planVisit?.description ??
-                `${quickVisit?.hours?.primary ?? settings?.hours?.schedule} · ${contact?.address?.line1 ?? ''}, ${contact?.address?.line2 ?? ''}`}
-            </p>
+            <h2 className="editorial-title">{planVisit?.title ?? 'Come walk through history with us.'}</h2>
+            {(planVisit?.paragraphs ?? [planVisit?.description]).filter(Boolean).map((paragraph, index) => (
+              <p key={index} className="editorial-lede">{paragraph}</p>
+            ))}
+            <ul style={styles.essentials}>
+              {(planVisit?.essentials ?? [
+                quickVisit?.hours?.primary ?? settings?.hours?.schedule,
+                [contact?.address?.line1, contact?.address?.line2].filter(Boolean).join(' · '),
+                settings?.hours?.parking,
+              ])
+                .filter(Boolean)
+                .map((line, index) => (
+                  <li key={index}>{line}</li>
+                ))}
+            </ul>
           </Reveal>
 
           <div className="door-grid">
@@ -361,6 +422,23 @@ export default function Home() {
 
       <footer style={styles.footer}>
         <div className="editorial-shell">
+          {footer.invitation && (
+            <div style={styles.footerInvitation}>
+              <p style={styles.footerInvitationText}>{footer.invitation}</p>
+              <div style={styles.actions}>
+                {(footer.invitationLinks ?? []).map((link) => (
+                  <button
+                    key={link.label}
+                    className={link.page === 'tickets' ? 'btn-accent' : 'btn-secondary'}
+                    onClick={() => goTo(link.page)}
+                  >
+                    {link.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div style={styles.footerGrid}>
             <div>
               <h3 style={styles.footerBrand}>{footer.brand ?? settings?.brand?.title}</h3>
@@ -432,6 +510,26 @@ const styles = {
     flexWrap: 'wrap',
     gap: '0.75rem',
     marginTop: '1.75rem',
+  },
+  closingLine: {
+    fontFamily: 'var(--font-display)',
+    fontSize: 'clamp(1.05rem, 1.6vw, 1.25rem)',
+    lineHeight: 1.5,
+    color: 'var(--plantation-ink)',
+    maxWidth: '48ch',
+    margin: '1.25rem 0 0',
+  },
+  essentials: {
+    listStyle: 'none',
+    display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.4rem 1.5rem',
+    padding: 0,
+    margin: '1.25rem 0 0',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.9rem',
+    letterSpacing: '0.04em',
+    color: 'var(--muted-sage)',
   },
   plate: {
     width: '100%',
@@ -539,6 +637,19 @@ const styles = {
     backgroundColor: 'var(--plantation-ink)',
     color: 'rgba(250, 246, 236, 0.72)',
     paddingBlock: 'clamp(3rem, 6vw, 5rem) 2rem',
+  },
+  footerInvitation: {
+    borderBottom: '1px solid rgba(250, 246, 236, 0.16)',
+    paddingBottom: 'clamp(2rem, 4vw, 3rem)',
+    marginBottom: 'clamp(2.5rem, 5vw, 3.5rem)',
+  },
+  footerInvitationText: {
+    fontFamily: 'var(--font-display)',
+    fontSize: 'clamp(1.5rem, 3.2vw, 2.25rem)',
+    lineHeight: 1.3,
+    color: 'var(--sugarcane-cream)',
+    maxWidth: '22ch',
+    margin: 0,
   },
   footerGrid: {
     display: 'grid',

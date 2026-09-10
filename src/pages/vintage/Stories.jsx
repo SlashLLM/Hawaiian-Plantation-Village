@@ -187,7 +187,7 @@ export default function Stories() {
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Plantation Stories" description="The lives, struggles, and music of the eight immigrant communities that built Waipahu." />
+      <SEO title="Stories from the Village" description="Behind every photograph is a person. Meet the workers, families and community members whose experiences illuminate Hawaii's plantation past." />
       <style>{`
         @keyframes bouncing-bar {
           0% { height: 4px; }
@@ -196,9 +196,9 @@ export default function Stories() {
       `}</style>
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.stories}
-        stamp={header?.stamp ?? 'Oral histories'}
-        title={header?.title ?? 'Plantation stories'}
-        subtitle={header?.subtitle ?? 'The lives, struggles, and music of the eight immigrant communities that built Waipahu.'}
+        stamp={header?.stamp ?? 'Stories from the Village'}
+        title={header?.title ?? 'History is made of human lives.'}
+        subtitle={header?.subtitle ?? 'Behind every photograph is a person. Behind every object is a story. Behind every home are generations of memories.'}
       />
 
       <div style={styles.container}>

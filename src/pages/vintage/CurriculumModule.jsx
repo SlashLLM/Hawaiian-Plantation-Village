@@ -118,7 +118,7 @@ export default function CurriculumModule() {
   };
 
   const gameCompleteCopy = checkpoint.challenge?.gameId === 'bell-to-bell'
-    ? 'You finished the day log and collected passport stamps.'
+    ? 'You followed a day in plantation life and discovered every story along the way.'
     : 'You matched every worker to their bango tag. Plantation stores used these numbers to track purchases!';
 
   return (

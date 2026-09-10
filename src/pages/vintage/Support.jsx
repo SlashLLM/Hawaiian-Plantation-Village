@@ -12,22 +12,23 @@ import SEO from '../../components/SEO.jsx';
 export default function Support() {
   const { settings } = useSiteSettings();
   const { section: header } = usePageSection('support', 'header', {
-    stamp: 'SUPPORT MISSION',
-    stampClass: 'rust',
-    title: 'Support the Village',
-    subtitle: 'Help us preserve Oʻahu\'s plantation cottages and share immigration stories for future generations.',
+    stamp: 'Help us keep our stories alive',
+    stampClass: 'green',
+    title: 'What we preserve today becomes tomorrow’s legacy.',
+    subtitle: 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.',
   });
   const { section: donateSection } = usePageSection('support', 'donate', {
-    title: 'Make a Tax-Deductible Contribution',
+    title: 'Make a gift',
+    description: 'Every gift helps preserve a piece of Hawaiʻi’s shared history.',
     impactTitle: 'How Your Gift Helps',
-    impactTemplate: 'A gift of <strong>${amount}</strong> directly supports the preservation of timber frames and restoration of historical furnishings inside our represented ethnic camp cottages.',
+    impactTemplate: 'A gift of <strong>${amount}</strong> cares for historic homes and gardens, preserves photographs and artifacts, and sustains the cultural programs that keep these stories alive.',
   });
   const { section: membershipIntro } = usePageSection('support', 'membershipIntro', {
-    title: 'Preserve Heritage, Enjoy Benefits',
-    description: 'Select a steward membership tier. Your pass will be registered, emailed with a QR code, and visible in the admin dashboard.',
+    title: 'Belong to the Village.',
+    description: 'Membership is more than admission. It’s a way to stand behind a place that keeps Hawaiʻi’s stories alive.',
   });
   const { section: impactSidebar } = usePageSection('support', 'impactSidebar', {
-    title: 'Annual Support Impact',
+    title: 'Where your support goes',
   });
   const donationPresets = settings?.donationPresets ?? [];
   const presetAmounts = useMemo(
@@ -150,12 +151,12 @@ export default function Support() {
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Support the Village" description="Help us preserve Oahu's plantation cottages and share immigration stories for future generations." />
+      <SEO title="Support Us" description="What we preserve today becomes tomorrow's legacy. Help care for the historic homes, gardens, photographs and programs of Hawaii's Plantation Village." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.support}
-        stamp={header?.stamp ?? 'Support the village'}
-        title={header?.title ?? 'Keep these houses standing'}
-        subtitle={header?.subtitle ?? 'Your gift maintains the cottages, the gardens, and the stories told inside them.'}
+        stamp={header?.stamp ?? 'Help us keep our stories alive'}
+        title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
+        subtitle={header?.subtitle ?? 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.'}
       />
 
       <div style={styles.container}>
@@ -304,12 +305,12 @@ export default function Support() {
             {/* Sidebar impact info */}
             <div style={styles.impactSidebar}>
               <div className="paper-card" style={styles.sideImpactCard}>
-                <h3 style={styles.sideImpactTitle}>{impactSidebar?.title ?? 'Annual Support Impact'}</h3>
+                <h3 style={styles.sideImpactTitle}>{impactSidebar?.title ?? 'Where your support goes'}</h3>
                 <ul style={styles.impactList}>
                   {(donationPresets.length ? donationPresets : [
-                    { amount: 25, label: '$25 buys craft supplies and traditional fiber/straw elements for local Obon dance classes.' },
-                    { amount: 50, label: '$50 maintains the heritage vegetable gardens surrounding one ethnic camp house for three months.' },
-                    { amount: 100, label: '$100 funds free admission and guided worksheets for a class of 10 local public school students.' },
+                    { amount: 25, label: '$25 helps preserve and document photographs and artifacts.' },
+                    { amount: 50, label: '$50 supports collections care and archival work.' },
+                    { amount: 100, label: '$100 helps care for historic homes, gardens and exhibits.' },
                   ]).map((preset) => (
                     <li key={preset.amount} style={styles.impactListItem}>{preset.label}</li>
                   ))}

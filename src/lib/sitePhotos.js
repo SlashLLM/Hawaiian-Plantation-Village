@@ -16,9 +16,12 @@ export const SITE_PHOTOS = {
   newsFestival: digi('IMG_6103.webp'),
   headers: {
     visit: digi('IMG_6820.webp'),
+    explore: digi('IMG_6310.webp'),
     stories: digi('IMG_6103.webp'),
     learn: digi('IMG_6365.webp'),
+    events: digi('IMG_6350.webp'),
     support: digi('IMG_6222.webp'),
+    volunteer: digi('IMG_6400.webp'),
     play: digi('IMG_6066.webp'),
     about: digi('IMG_6825.webp'),
   },

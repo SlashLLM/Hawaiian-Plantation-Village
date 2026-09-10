@@ -54,16 +54,18 @@ export default function BellToBell({
     <div style={styles.container}>
       <div className="paper-card" style={styles.ledgerBook}>
         <div style={styles.ledgerHeader} className="ledger-header">
-          <span>WORKER LOG: DAILY SCHEDULE</span>
-          <span>PASSPORT NO: HPV-1900-24</span>
+          <span>A DAY IN PLANTATION LIFE</span>
+          <span>JOURNAL NO: HPV-1900-24</span>
         </div>
 
         <div className="content-sidebar-grid content-sidebar-grid--book">
-          {/* Left Page: Virtual Passport Stamps */}
+          {/* Left Page: the stories discovered so far */}
           <div className="passport-side">
-            <h3 style={styles.sideTitle}>IMMIGRATION PASSPORT</h3>
-            <p style={styles.sideSubtitle}>Stamps awarded for completing plantation tasks</p>
-            
+            <h3 style={styles.sideTitle}>PLANTATION LIFE JOURNAL</h3>
+            <p style={styles.sideSubtitle}>
+              Discover five moments from a day in plantation life.
+            </p>
+
             <div style={styles.stampGrid}>
               {[...Array(6)].map((_, index) => {
                 const stamp = passportStamps[index];
@@ -72,7 +74,7 @@ export default function BellToBell({
                     {stamp ? (
                       <div className="ink-stamp green animate-stamp" style={styles.stampInk}>
                         <div style={styles.stampLabel}>{stamp.label}</div>
-                        <div style={styles.stampVerify}>APPROVED</div>
+                        <div style={styles.stampVerify}>RECORDED</div>
                       </div>
                     ) : (
                       <span style={styles.stampPlaceholder}>EMPTY</span>
@@ -81,9 +83,9 @@ export default function BellToBell({
                 );
               })}
             </div>
-            
+
             <div style={styles.passportFooter}>
-              <span>TOTAL STAMPS: {passportStamps.length} / {shifts.length}</span>
+              <span>STORIES DISCOVERED: {passportStamps.length} / {shifts.length}</span>
             </div>
           </div>
 
@@ -127,8 +129,8 @@ export default function BellToBell({
                     <p style={styles.factText}>{selectedChoice.fact}</p>
                     <button className="btn-primary" onClick={handleNext} style={styles.nextBtn}>
                       {currentStep < shifts.length - 1
-                        ? <>Proceed to next shift <ChevronRight size={16} /></>
-                        : <>Finish day log <ChevronRight size={16} /></>}
+                        ? <>Continue the journey <ChevronRight size={16} /></>
+                        : <>Finish the journey <ChevronRight size={16} /></>}
                     </button>
                   </div>
                 )}
@@ -138,9 +140,9 @@ export default function BellToBell({
                 <div style={styles.completeBadge}>
                   <Award size={48} color="var(--sugar-gold)" />
                 </div>
-                <h3 style={styles.completeTitle}>Day Log Completed!</h3>
+                <h3 style={styles.completeTitle}>Journey Complete!</h3>
                 <p style={styles.completeText}>
-                  You have experienced one day in the life of a plantation worker. By collecting these stamps, you have explored the rich cultural heritage and resilience of Hawaii&apos;s immigrant communities.
+                  You have followed one day in the life of a plantation worker and family. The stories you discovered speak to the cultural heritage and resilience of Hawaii&apos;s plantation communities.
                 </p>
 
                 {onComplete ? (
