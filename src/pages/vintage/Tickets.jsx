@@ -5,8 +5,10 @@ import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { createBooking, fetchEventsWithTickets, formatCents } from '../../lib/api.js';
 import { isSupabaseConfigured } from '../../lib/supabase.js';
 import QRPass from '../../components/QRPass.jsx';
+import ComingSoon from '../../components/ComingSoon.jsx';
 import { usePageSection, useSiteSettings } from '../../context/ContentProvider.jsx';
 import { formatEventSchedule } from '../../lib/timeFormat.js';
+import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
 
 const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
@@ -68,7 +70,7 @@ export default function Tickets() {
   const { section: header } = usePageSection('tickets', 'header', {
     stamp: 'REVENUE PLATFORM',
     title: 'Book Tickets',
-    subtitle: 'Register your visit — payment is recorded as pending until Stripe or Zeffy is connected.',
+    subtitle: 'Reserve your guided tour of the Village.',
   });
   const { settings } = useSiteSettings();
   const donationPresets = settings?.donationPresets ?? [];
@@ -209,6 +211,37 @@ export default function Tickets() {
 
   const booking = confirmation?.booking;
 
+  // Online payments are not connected yet — the wizard below stays intact and
+  // comes back when PAYMENTS_ENABLED flips. See src/lib/paymentsConfig.js.
+  if (!PAYMENTS_ENABLED) {
+    return (
+      <div style={styles.pageContainer}>
+        <SEO
+          title="Tickets"
+          description="Tickets for Hawaii's Plantation Village. Online booking is coming soon — call (808) 677-0110 to reserve your guided tour."
+        />
+        <div style={styles.headerBlock}>
+          <div style={styles.container}>
+            <span className={`ink-stamp ${header?.stampClass ?? 'gold'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'Tickets'}</span>
+            <h1 style={styles.pageTitle}>{header?.title ?? 'Book Tickets'}</h1>
+            <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Reserve your guided tour of the Village.'}</p>
+          </div>
+        </div>
+
+        <div style={styles.container}>
+          <ComingSoon {...COMING_SOON_COPY.tickets}>
+            <button type="button" className="btn-secondary" onClick={() => setActivePage('visit')}>
+              Plan Your Visit
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => setActivePage('events')}>
+              See Upcoming Events
+            </button>
+          </ComingSoon>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.pageContainer}>
       <SEO title="Book Tickets" description="Register your visit to Hawaii's Plantation Village." />
@@ -216,7 +249,7 @@ export default function Tickets() {
         <div style={styles.container}>
           <span className={`ink-stamp ${header?.stampClass ?? 'gold'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'REVENUE PLATFORM'}</span>
           <h1 style={styles.pageTitle}>{header?.title ?? 'Book Tickets'}</h1>
-          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Register your visit — payment is recorded as pending until Stripe or Zeffy is connected.'}</p>
+          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Reserve your guided tour of the Village.'}</p>
         </div>
       </div>
 

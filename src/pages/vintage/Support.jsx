@@ -6,10 +6,14 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/api.js';
 import { isSupabaseConfigured } from '../../lib/supabase.js';
 import QRPass from '../../components/QRPass.jsx';
+import ComingSoon from '../../components/ComingSoon.jsx';
 import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
+import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
 
 export default function Support() {
+  const setActivePage = useAppNavigate();
   const { settings } = useSiteSettings();
   const { section: header } = usePageSection('support', 'header', {
     stamp: 'Help us keep our stories alive',
@@ -148,6 +152,40 @@ export default function Support() {
   const getActiveAmount = () => {
     return donateAmount === 'custom' ? customAmount : donateAmount;
   };
+
+  // Online payments are not connected yet — the gift and membership flows below
+  // stay intact and come back when PAYMENTS_ENABLED flips.
+  // See src/lib/paymentsConfig.js.
+  if (!PAYMENTS_ENABLED) {
+    return (
+      <div style={styles.pageContainer}>
+        <SEO
+          title="Support Us"
+          description="Support Hawaii's Plantation Village. Online giving is coming soon — call (808) 677-0110 to make a gift or join as a member."
+        />
+        <PageHeaderParallax
+          image={SITE_PHOTOS.headers.support}
+          stamp={header?.stamp ?? 'Help us keep our stories alive'}
+          title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
+          subtitle={header?.subtitle ?? 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.'}
+        />
+
+        <div style={styles.container}>
+          <ComingSoon
+            {...COMING_SOON_COPY.support}
+            note="In the meantime, you can still give through Foodland’s Give Aloha program — donations made at the register are matched, no online payment needed."
+          >
+            <button type="button" className="btn-accent" onClick={() => setActivePage('give-aloha')}>
+              Give through Give Aloha
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => setActivePage('volunteer')}>
+              Volunteer With Us
+            </button>
+          </ComingSoon>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={styles.pageContainer}>

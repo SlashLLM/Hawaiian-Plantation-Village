@@ -3,9 +3,10 @@ import { render, screen, waitFor, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Tickets from '../pages/vintage/Tickets.jsx';
 
-const { fetchEventsWithTickets, supabaseState } = vi.hoisted(() => ({
+const { fetchEventsWithTickets, supabaseState, paymentsState } = vi.hoisted(() => ({
   fetchEventsWithTickets: vi.fn(() => Promise.resolve([])),
   supabaseState: { isSupabaseConfigured: false },
+  paymentsState: { enabled: true },
 }));
 
 vi.mock('../hooks/useAppNavigate.js', () => ({
@@ -34,6 +35,25 @@ vi.mock('../context/ContentProvider.jsx', () => ({
 }));
 
 vi.mock('canvas-confetti', () => ({ default: vi.fn() }));
+
+// The booking wizard only renders while payments are switched on, so the suites
+// below opt in. See src/lib/paymentsConfig.js.
+vi.mock('../lib/paymentsConfig.js', () => ({
+  get PAYMENTS_ENABLED() {
+    return paymentsState.enabled;
+  },
+  COMING_SOON_COPY: {
+    tickets: {
+      eyebrow: 'Coming soon',
+      title: 'Online ticket booking is on its way',
+      body: 'We haven’t set up online payments yet.',
+    },
+  },
+}));
+
+beforeEach(() => {
+  paymentsState.enabled = true;
+});
 
 describe('Tickets event cards', () => {
   beforeEach(() => {
@@ -139,5 +159,23 @@ describe('Tickets catalog data from API', () => {
     expect(screen.getByLabelText('Visit date')).toHaveAttribute('readonly');
     expect(screen.getByRole('option', { name: '6:00 PM Guided Tour' })).toBeInTheDocument();
     expect(screen.queryByRole('option', { name: '9:00 AM Guided Tour' })).not.toBeInTheDocument();
+  });
+});
+
+describe('Tickets while payments are not connected', () => {
+  beforeEach(() => {
+    paymentsState.enabled = false;
+  });
+
+  it('shows the coming soon notice instead of the booking wizard', () => {
+    render(<Tickets />);
+    expect(screen.getByText('Online ticket booking is on its way')).toBeInTheDocument();
+    expect(screen.queryByText('1. Select Tour Experience')).not.toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /Next Step/i })).not.toBeInTheDocument();
+  });
+
+  it('offers the phone number as a tel: link so visitors can call', () => {
+    render(<Tickets />);
+    expect(screen.getByRole('link', { name: /\(808\) 677-0110/ })).toHaveAttribute('href', 'tel:8086770110');
   });
 });
