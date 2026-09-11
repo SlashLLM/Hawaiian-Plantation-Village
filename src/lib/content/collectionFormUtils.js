@@ -77,3 +77,20 @@ export function formatAudioLength(totalSeconds) {
   const s = Math.floor(totalSeconds % 60);
   return `${m}m ${s < 10 ? '0' : ''}${s}s`;
 }
+
+/**
+ * Determines whether a camp story is considered a placeholder (Coming Soon).
+ * Checks explicit flags (isPlaceholder, comingSoon) or absence of attached audio/video recording.
+ */
+export function isCampStoryPlaceholder(camp) {
+  if (!camp) return false;
+  if (typeof camp.isPlaceholder === 'boolean') return camp.isPlaceholder;
+  if (typeof camp.comingSoon === 'boolean') return camp.comingSoon;
+  if (typeof camp.metadata?.isPlaceholder === 'boolean') return camp.metadata.isPlaceholder;
+  if (typeof camp.metadata?.comingSoon === 'boolean') return camp.metadata.comingSoon;
+  const oral = camp.oralHistory ?? camp.metadata?.oralHistory;
+  const audio = oral?.audio_url;
+  const video = oral?.video_url;
+  return !audio && !video;
+}
+

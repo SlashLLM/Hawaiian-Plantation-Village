@@ -1423,6 +1423,7 @@ export const CAMPS_DATA = [
     culture: 'Filipino',
     title: 'The Filipino Single-Men Barracks',
     arrival: '1906',
+    isPlaceholder: true,
     shortDesc:
       'Arrived under the HSPA recruiting system, forming the backbone of late-era plantation field operations.',
     fullHistory:
@@ -1457,6 +1458,7 @@ export const CAMPS_DATA = [
     culture: 'Korean',
     title: 'The Korean Protestant Community Cottage',
     arrival: '1903',
+    isPlaceholder: true,
     shortDesc:
       'Formed tightly-knit communities centered around church gatherings, language schools, and independence movements.',
     fullHistory:
@@ -1474,6 +1476,7 @@ export const CAMPS_DATA = [
     culture: 'Puerto Rican',
     title: 'The Puerto Rican Casita',
     arrival: '1900',
+    isPlaceholder: true,
     shortDesc:
       'Arrived after hurricanes devastated their home island, introducing rich música jibara and pasteles to Hawaiʻi.',
     fullHistory:
@@ -1491,6 +1494,7 @@ export const CAMPS_DATA = [
     culture: 'Okinawan',
     title: 'The Okinawan Sanshin & Prefectural Club',
     arrival: '1900',
+    isPlaceholder: true,
     shortDesc:
       'Brought the traditional three-stringed sanshin, a unique Ryukyuan language, and deep mutual-aid networks.',
     fullHistory:
@@ -1508,6 +1512,7 @@ export const CAMPS_DATA = [
     culture: 'Hawaiian',
     title: 'The Hawaiian Hale & Taro Patch',
     arrival: 'Before plantation era',
+    isPlaceholder: true,
     shortDesc:
       'Native Hawaiian families lived on this land long before the plantation, tending loʻi kalo and sharing traditions with the immigrant camps that grew up around them.',
     fullHistory:

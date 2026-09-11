@@ -108,4 +108,58 @@ describe('Stories oral history playback', () => {
     expect(screen.getByText('ORAL HISTORY SOUND ARCHIVE')).toBeInTheDocument();
     expect(screen.getByLabelText(/play oral history recording/i)).toBeInTheDocument();
   });
+
+  it('displays COMING SOON tag for placeholder stories and does not open the side panel when clicked', async () => {
+    const user = userEvent.setup();
+    const PLACEHOLDER_CAMP = {
+      id: 'filipino',
+      culture: 'Filipino',
+      title: 'The Filipino Single-Men Barracks',
+      arrival: '1906',
+      shortDesc: 'Filipino Sakadas arrived starting in 1906.',
+      fullHistory: 'Full history of the Filipino camp.',
+      isPlaceholder: true,
+    };
+    campItems = [PLACEHOLDER_CAMP];
+    render(<Stories />);
+
+    // Tag is present
+    expect(screen.getByText('COMING SOON')).toBeInTheDocument();
+    expect(screen.getByText('ARRIVED 1906')).toBeInTheDocument();
+
+    // Button is disabled with coming soon label
+    const comingSoonBtn = screen.getByRole('button', { name: /oral history coming soon/i });
+    expect(comingSoonBtn).toBeDisabled();
+
+    // Attempting to click does NOT open the side panel drawer
+    await user.click(comingSoonBtn);
+    expect(screen.queryByText('Filipino Community Archive')).not.toBeInTheDocument();
+    expect(screen.queryByText('HISTORICAL RECORDS')).not.toBeInTheDocument();
+  });
+
+  it('auto-detects stories without audio or video as placeholder', async () => {
+    const user = userEvent.setup();
+    const NO_MEDIA_CAMP = {
+      id: 'korean',
+      culture: 'Korean',
+      title: 'The Korean Cottage',
+      arrival: '1903',
+      shortDesc: 'Korean immigrants arrived in 1903.',
+      oralHistory: {
+        narrator: 'Young-Hee Park',
+        length: '3m 50s',
+        transcript: 'We gathered at the camp chapel.',
+      },
+    };
+    campItems = [NO_MEDIA_CAMP];
+    render(<Stories />);
+
+    expect(screen.getByText('COMING SOON')).toBeInTheDocument();
+    const btn = screen.getByRole('button', { name: /oral history coming soon/i });
+    expect(btn).toBeDisabled();
+
+    await user.click(btn);
+    expect(screen.queryByText('Korean Community Archive')).not.toBeInTheDocument();
+  });
 });
+

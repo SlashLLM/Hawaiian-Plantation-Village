@@ -112,4 +112,21 @@ describe('CampStoryFields oral history media', () => {
     // The captured frame is the default; the camp photo stays free for another image.
     expect(screen.getByTestId('image-url')).toHaveTextContent('');
   });
+
+  it('allows marking a story as Coming Soon (placeholder)', async () => {
+    const user = userEvent.setup();
+    render(<Harness />);
+
+    const checkbox = screen.getByLabelText(/mark as coming soon/i);
+    expect(checkbox).not.toBeChecked();
+
+    await user.click(checkbox);
+    expect(checkbox).toBeChecked();
+    expect(metadata().isPlaceholder).toBe(true);
+
+    await user.click(checkbox);
+    expect(checkbox).not.toBeChecked();
+    expect(metadata().isPlaceholder).toBe(false);
+  });
 });
+
