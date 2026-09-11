@@ -10,6 +10,7 @@ export const ROUTES = {
   learn: '/learn',
   learnModule: '/learn/:moduleId',
   events: '/events',
+  eventPage: '/events/:slug',
   support: '/support',
   volunteer: '/volunteer',
   about: '/about',
@@ -39,6 +40,7 @@ export function pageIdFromPath(pathname) {
   if (pathname.startsWith('/learn/')) return 'learn';
   if (pathname.startsWith('/archives/')) return 'archives';
   if (pathname.startsWith('/explore/')) return 'explore';
+  if (pathname.startsWith('/events/')) return 'events';
   if (pathname.startsWith('/admin')) return 'admin';
   return PAGE_IDS[pathname] ?? 'home';
 }
@@ -56,6 +58,7 @@ export function pathFromPageId(pageId, params = {}) {
     case 'learn': return '/learn';
     case 'learn-module': return `/learn/${params.moduleId ?? ''}`;
     case 'events': return '/events';
+    case 'event-page': return `/events/${params.slug ?? ''}`;
     case 'support': return '/support';
     case 'volunteer': return '/volunteer';
     case 'about': return '/about';

@@ -8,6 +8,7 @@ import {
   toEventEndDate,
   toISODate,
 } from '../lib/timeFormat.js';
+import LearnMoreLink from './LearnMoreLink.jsx';
 
 const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -144,6 +145,10 @@ export default function EventsCalendar({ events = [] }) {
                 <h4 className="event-title">{event.title}</h4>
                 {event.time && <p style={styles.detailTime}>{event.time}</p>}
                 <p className="event-note">{event.desc}</p>
+                <LearnMoreLink
+                  link={event.learnMore}
+                  fallbackLabel={event.ctaLabel ?? 'Learn More'}
+                />
               </div>
             ))}
           </>

@@ -467,6 +467,19 @@ button, input, select, textarea {
   background: white;
 }
 
+/* Page-builder preview: the real page blocks, scaled down to fit the pane. */
+.page-preview {
+  --section-pad: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.page-preview .editorial-shell {
+  padding-inline: 1.25rem;
+}
+
+.page-preview .editorial-title {
+  font-size: clamp(1.3rem, 3vw, 1.8rem);
+}
+
 .admin-table {
   width: 100%;
   border-collapse: collapse;

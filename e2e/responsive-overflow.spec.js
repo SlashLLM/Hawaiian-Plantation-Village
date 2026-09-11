@@ -8,6 +8,7 @@ const ROUTES = [
   '/learn',
   '/play',
   '/events',
+  '/events/not-a-real-page',
   '/support',
   '/volunteer',
   '/tickets',

@@ -7,6 +7,7 @@ import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
+import LearnMoreLink from '../../components/LearnMoreLink.jsx';
 import { formatEventDateRangeLabel } from '../../lib/timeFormat.js';
 import { cultureSlug } from '../../lib/cultures.js';
 
@@ -229,6 +230,10 @@ export default function Home() {
                 <div>
                   <h3 className="event-title">{event.title}</h3>
                   <p className="event-note">{event.desc}</p>
+                  <LearnMoreLink
+                    link={event.learnMore}
+                    fallbackLabel={event.ctaLabel ?? 'Learn More'}
+                  />
                 </div>
               </div>
             ))}

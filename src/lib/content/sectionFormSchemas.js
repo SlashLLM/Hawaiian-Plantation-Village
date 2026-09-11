@@ -12,6 +12,8 @@
  * - objectList { path, label, itemLabel?, blankItem, fields: [{ key, label, type }] }
  */
 
+import { BLANK_LINK } from './links.js';
+
 const STAMP_HEADER = { type: 'stampHeader', includeSubtitle: true };
 const STAMP_HEADER_NO_SUB = { type: 'stampHeader', includeSubtitle: false };
 const STAMP_TITLE_ONLY = {
@@ -235,6 +237,9 @@ const SECTION_FORM_SCHEMAS = {
       },
     ],
   },
+  // The full editor for these items — including the Learn more button — is the
+  // Upcoming Events panel. `learnMore` rides along in the blank item so the raw
+  // JSON editor shows its shape; it has no guided field here.
   'home.events': {
     groups: [
       {
@@ -243,7 +248,10 @@ const SECTION_FORM_SCHEMAS = {
           objectList(
             'items',
             'Events',
-            { slug: '', date: '', startDate: '', endDate: '', title: '', time: '', desc: '', image: '' },
+            {
+              slug: '', date: '', startDate: '', endDate: '', title: '', time: '', desc: '', image: '',
+              learnMore: { ...BLANK_LINK },
+            },
             [
               { key: 'slug', label: 'Slug', type: 'text' },
               { key: 'startDate', label: 'Calendar start date (YYYY-MM-DD)', type: 'text' },

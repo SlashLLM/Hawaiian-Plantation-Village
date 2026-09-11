@@ -3,8 +3,11 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import EventsCalendar from '../../components/EventsCalendar.jsx';
+import LearnMoreLink from '../../components/LearnMoreLink.jsx';
 import SEO from '../../components/SEO.jsx';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { useAuth } from '../../hooks/useAuth.js';
+import { useEventPagePrefetch } from '../../hooks/useEventPagePrefetch.js';
 import { usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { formatEventDateRangeLabel, toEventDate } from '../../lib/timeFormat.js';
@@ -31,6 +34,11 @@ export default function Events() {
   // Single source of truth: the same `home.events` list the admin edits in the
   // Upcoming Events panel and the homepage strip renders.
   const { items: events } = usePageListSection('home', 'events');
+  const { isStaff } = useAuth();
+
+  // Warm the pages these events link to, so "Learn more" opens without a wait
+  // even on touch devices where there is no hover to react to.
+  useEventPagePrefetch(events, { preview: isStaff });
 
   /** Only events with a resolvable date can be placed on the calendar. */
   const datedEvents = useMemo(() => events.filter((event) => toEventDate(event)), [events]);
@@ -66,13 +74,10 @@ export default function Events() {
                   <div>
                     <h3 className="event-title">{event.title}</h3>
                     <p className="event-note">{event.desc}</p>
-                    <button
-                      className="footer-link-btn"
-                      style={styles.eventLink}
-                      onClick={() => setActivePage('tickets')}
-                    >
-                      {event.ctaLabel ?? 'Learn More'} <ArrowRight size={14} />
-                    </button>
+                    <LearnMoreLink
+                      link={event.learnMore}
+                      fallbackLabel={event.ctaLabel ?? 'Learn More'}
+                    />
                   </div>
                 </div>
               ))}
@@ -115,13 +120,5 @@ const styles = {
     flexWrap: 'wrap',
     gap: '0.75rem',
     marginTop: '2rem',
-  },
-  eventLink: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '6px',
-    color: 'var(--terracotta-clay-deep)',
-    padding: 0,
-    marginTop: '0.6rem',
   },
 };
