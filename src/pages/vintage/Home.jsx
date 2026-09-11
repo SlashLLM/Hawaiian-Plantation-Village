@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import HeroStage from '../../components/HeroStage';
 import BellToBell from '../../components/BellToBell';
-import { ArrowRight, Mail } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useSiteSettings, usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
@@ -69,7 +69,6 @@ export default function Home() {
   const { items: events } = usePageListSection('home', 'events');
   const { items: testimonials } = usePageListSection('home', 'testimonials');
   const { items: partners } = usePageListSection('home', 'partners');
-  const footer = settings?.footer ?? {};
   const contact = settings?.contact ?? {};
   const donationPresets = settings?.donationPresets ?? [];
   const cultureTiles = cultures?.items?.length ? cultures.items : DEFAULT_CULTURES;
@@ -420,73 +419,6 @@ export default function Home() {
         </div>
       </section>
 
-      <footer style={styles.footer}>
-        <div className="editorial-shell">
-          {footer.invitation && (
-            <div style={styles.footerInvitation}>
-              <p style={styles.footerInvitationText}>{footer.invitation}</p>
-              <div style={styles.actions}>
-                {(footer.invitationLinks ?? []).map((link) => (
-                  <button
-                    key={link.label}
-                    className={link.page === 'tickets' ? 'btn-accent' : 'btn-secondary'}
-                    onClick={() => goTo(link.page)}
-                  >
-                    {link.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div style={styles.footerGrid}>
-            <div>
-              <h3 style={styles.footerBrand}>{footer.brand ?? settings?.brand?.title}</h3>
-              <p style={styles.footerText}>{footer.text}</p>
-              <p style={styles.footerContact}>
-                {contact.phone}
-                <br />
-                {contact.email}
-              </p>
-            </div>
-
-            <div>
-              <h4 style={styles.footerHeader}>Go to</h4>
-              <ul style={styles.footerLinks}>
-                {(footer.ctaLinks ?? []).map((link) => (
-                  <li key={link.label}>
-                    <button className="footer-link-btn" onClick={() => goTo(link.page)}>
-                      {link.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 style={styles.footerHeader}>{footer.newsletter?.heading}</h4>
-              <p style={styles.footerText}>{footer.newsletter?.description}</p>
-              <form
-                style={styles.newsletterForm}
-                onSubmit={(event) => event.preventDefault()}
-              >
-                <label htmlFor="newsletter-email" style={styles.srOnly}>Email address</label>
-                <input
-                  id="newsletter-email"
-                  type="email"
-                  placeholder={footer.newsletter?.placeholder}
-                  style={styles.newsletterInput}
-                />
-                <button className="btn-accent" type="submit">
-                  <Mail size={16} /> {footer.newsletter?.buttonLabel ?? 'Join'}
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <p style={styles.footerBottom}>{footer.copyright}</p>
-        </div>
-      </footer>
     </div>
   );
 }
@@ -632,95 +564,5 @@ const styles = {
   },
   partner: {
     whiteSpace: 'normal',
-  },
-  footer: {
-    backgroundColor: 'var(--plantation-ink)',
-    color: 'rgba(250, 246, 236, 0.72)',
-    paddingBlock: 'clamp(3rem, 6vw, 5rem) 2rem',
-  },
-  footerInvitation: {
-    borderBottom: '1px solid rgba(250, 246, 236, 0.16)',
-    paddingBottom: 'clamp(2rem, 4vw, 3rem)',
-    marginBottom: 'clamp(2.5rem, 5vw, 3.5rem)',
-  },
-  footerInvitationText: {
-    fontFamily: 'var(--font-display)',
-    fontSize: 'clamp(1.5rem, 3.2vw, 2.25rem)',
-    lineHeight: 1.3,
-    color: 'var(--sugarcane-cream)',
-    maxWidth: '22ch',
-    margin: 0,
-  },
-  footerGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))',
-    gap: 'clamp(2rem, 5vw, 3.5rem)',
-    marginBottom: '3rem',
-  },
-  footerBrand: {
-    fontSize: '1.6rem',
-    fontWeight: 500,
-    color: 'var(--sugarcane-cream)',
-    margin: '0 0 1rem',
-  },
-  footerText: {
-    fontSize: '0.95rem',
-    lineHeight: 1.65,
-    marginBottom: '1.25rem',
-    maxWidth: '44ch',
-  },
-  footerContact: {
-    fontSize: '0.95rem',
-    lineHeight: 1.7,
-    color: 'var(--sugarcane-cream)',
-    margin: 0,
-  },
-  footerHeader: {
-    fontFamily: 'var(--font-sans)',
-    fontSize: '0.72rem',
-    fontWeight: 600,
-    letterSpacing: '0.16em',
-    textTransform: 'uppercase',
-    color: 'var(--heritage-gold)',
-    margin: '0 0 1rem',
-  },
-  footerLinks: {
-    listStyle: 'none',
-    padding: 0,
-    margin: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.75rem',
-  },
-  newsletterForm: {
-    display: 'flex',
-    gap: '0.5rem',
-    flexWrap: 'wrap',
-    maxWidth: '420px',
-  },
-  newsletterInput: {
-    flex: '1 1 200px',
-    padding: '0.75rem 1rem',
-    border: '1px solid var(--hairline-invert)',
-    borderRadius: 'var(--border-radius-md)',
-    backgroundColor: 'rgba(250, 246, 236, 0.06)',
-    color: 'var(--sugarcane-cream)',
-    fontSize: '0.95rem',
-    outline: 'none',
-  },
-  srOnly: {
-    position: 'absolute',
-    width: '1px',
-    height: '1px',
-    overflow: 'hidden',
-    clip: 'rect(0 0 0 0)',
-    whiteSpace: 'nowrap',
-  },
-  footerBottom: {
-    borderTop: '1px solid var(--hairline-invert)',
-    paddingTop: '1.5rem',
-    fontSize: '0.85rem',
-    color: 'rgba(250, 246, 236, 0.5)',
-    margin: 0,
   },
 };

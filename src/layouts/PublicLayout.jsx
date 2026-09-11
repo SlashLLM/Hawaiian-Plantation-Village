@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from '../components/Navbar.jsx';
+import SiteFooter from '../components/SiteFooter.jsx';
 import { pageIdFromPath } from '../lib/navigation.js';
 import { ContentProvider } from '../context/ContentProvider.jsx';
 
@@ -34,6 +35,7 @@ function PublicLayoutInner() {
           </motion.div>
         </AnimatePresence>
       </main>
+      <SiteFooter />
     </div>
   );
 }
