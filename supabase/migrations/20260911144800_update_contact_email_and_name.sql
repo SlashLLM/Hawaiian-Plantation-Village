@@ -1,4 +1,4 @@
--- Migration: 20260911120000_update_contact_email_and_name.sql
+-- Migration: 20260911144800_update_contact_email_and_name.sql
 -- Updates contact email to lchen.hpv@gmail.com in site_settings
 -- Standardizes all occurrences of "Hawaiʻi's Plantation Village" to "Hawaii's Plantation Village" in CMS sections
 
