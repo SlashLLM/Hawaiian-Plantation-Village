@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight } from 'lucide-react';
+import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight, Maximize, Video } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
-import { formatAudioLength } from '../../lib/content/collectionFormUtils.js';
+import { formatAudioLength, resolveOralMediaType } from '../../lib/content/collectionFormUtils.js';
 import SEO from '../../components/SEO.jsx';
 
 const parseLengthToSeconds = (lengthStr) => {
@@ -60,6 +60,7 @@ export default function Stories() {
   const { items: camps } = useContentCollection('camp_story');
   const { section: header } = usePageSection('stories', 'header', {});
   const audioRef = useRef(null);
+  const videoRef = useRef(null);
   const [selectedCamp, setSelectedCamp] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
@@ -67,8 +68,16 @@ export default function Stories() {
   const [filter, setFilter] = useState('all');
 
   const oralHistory = selectedCamp?.oralHistory ?? null;
-  const audioUrl = oralHistory?.audio_url || '';
+  const mediaType = resolveOralMediaType(oralHistory);
+  const videoUrl = oralHistory?.video_url || '';
+  const isVideoStory = mediaType === 'video' && Boolean(videoUrl);
+  const allowFullscreen = oralHistory?.allowFullscreen !== false;
+  const audioUrl = isVideoStory ? '' : (oralHistory?.audio_url || '');
   const hasRealAudio = Boolean(audioUrl);
+  // The top image defaults to a frame captured from the video, unless a camp photo is set.
+  const topImage = selectedCamp?.image_url
+    || (isVideoStory ? oralHistory?.posterUrl : '')
+    || SITE_PHOTOS.storiesFallback;
 
   const filteredCamps = filter === 'all'
     ? camps
@@ -94,21 +103,23 @@ export default function Stories() {
     setIsPlaying((prev) => !prev);
   }, [hasRealAudio]);
 
+  const stopMedia = () => {
+    [audioRef.current, videoRef.current].forEach((el) => {
+      if (!el) return;
+      el.pause();
+      el.currentTime = 0;
+    });
+  };
+
   const handleCloseCamp = () => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
+    stopMedia();
     setSelectedCamp(null);
     setIsPlaying(false);
     setCurrentTime(0);
   };
 
   const handleOpenCamp = (camp) => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
-    }
+    stopMedia();
     setSelectedCamp(camp);
     setIsPlaying(false);
     setCurrentTime(0);
@@ -181,13 +192,24 @@ export default function Stories() {
     }
   };
 
+  const handleFullscreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (typeof video.requestFullscreen === 'function') {
+      video.requestFullscreen().catch(() => {});
+    } else if (typeof video.webkitEnterFullscreen === 'function') {
+      // iOS Safari only exposes fullscreen on the video element itself.
+      video.webkitEnterFullscreen();
+    }
+  };
+
   const progressPercent = totalDuration > 0 ? (currentTime / totalDuration) * 100 : 0;
   const durationLabel = oralHistory?.length
     || (hasRealAudio && totalDuration > 0 ? formatAudioLength(totalDuration) : formatTime(totalDuration));
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Plantation Stories" description="The lives, struggles, and music of the eight immigrant communities that built Waipahu." />
+      <SEO title="Stories from the Village" description="Behind every photograph is a person. Meet the workers, families and community members whose experiences illuminate Hawaii's plantation past." />
       <style>{`
         @keyframes bouncing-bar {
           0% { height: 4px; }
@@ -196,9 +218,9 @@ export default function Stories() {
       `}</style>
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.stories}
-        stamp={header?.stamp ?? 'Oral histories'}
-        title={header?.title ?? 'Plantation stories'}
-        subtitle={header?.subtitle ?? 'The lives, struggles, and music of the eight immigrant communities that built Waipahu.'}
+        stamp={header?.stamp ?? 'Stories from the Village'}
+        title={header?.title ?? 'History is made of human lives.'}
+        subtitle={header?.subtitle ?? 'Behind every photograph is a person. Behind every object is a story. Behind every home are generations of memories.'}
       />
 
       <div style={styles.container}>
@@ -272,8 +294,12 @@ export default function Stories() {
               <div style={styles.drawerBody}>
                 {/* Photo Header */}
                 <div style={styles.photoContainer}>
-                  <img src={selectedCamp.image_url || SITE_PHOTOS.storiesFallback} alt={selectedCamp.title} style={styles.drawerPhoto} loading="lazy" />
-                  <div style={styles.photoCaption}>Historic {selectedCamp.culture} Camp Cottage Representation</div>
+                  <img src={topImage} alt={selectedCamp.title} style={styles.drawerPhoto} loading="lazy" />
+                  <div style={styles.photoCaption}>
+                    {!selectedCamp.image_url && isVideoStory && oralHistory?.posterUrl
+                      ? `Still frame from the ${selectedCamp.culture} oral history recording`
+                      : `Historic ${selectedCamp.culture} Camp Cottage Representation`}
+                  </div>
                 </div>
 
                 <h2 style={styles.drawerTitle}>{selectedCamp.title}</h2>
@@ -283,8 +309,10 @@ export default function Stories() {
                 {oralHistory && (
                   <div className="paper-card" style={styles.audioCard}>
                     <div style={styles.audioHeader}>
-                      <BookOpen size={18} color="var(--tin-rust)" />
-                      <span style={styles.audioLabel}>ORAL HISTORY SOUND ARCHIVE</span>
+                      {isVideoStory ? <Video size={18} color="var(--tin-rust)" /> : <BookOpen size={18} color="var(--tin-rust)" />}
+                      <span style={styles.audioLabel}>
+                        {isVideoStory ? 'ORAL HISTORY FILM ARCHIVE' : 'ORAL HISTORY SOUND ARCHIVE'}
+                      </span>
                     </div>
 
                     {hasRealAudio && (
@@ -293,6 +321,44 @@ export default function Stories() {
                       </audio>
                     )}
 
+                    {isVideoStory && (
+                      <div style={styles.videoBlock}>
+                        <video
+                          ref={videoRef}
+                          src={videoUrl}
+                          poster={topImage}
+                          controls
+                          controlsList={allowFullscreen ? undefined : 'nofullscreen nodownload'}
+                          disablePictureInPicture={!allowFullscreen}
+                          preload="metadata"
+                          style={styles.video}
+                        >
+                          <track kind="captions" />
+                        </video>
+                        <div style={styles.videoMeta}>
+                          <span style={styles.narratorName}>{oralHistory.narrator}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                            {oralHistory.length && <span style={styles.trackLength}>{oralHistory.length}</span>}
+                            {allowFullscreen && (
+                              <button
+                                type="button"
+                                onClick={handleFullscreen}
+                                style={styles.fullscreenBtn}
+                                aria-label="Play this oral history full screen"
+                              >
+                                <Maximize size={14} /> Full screen
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                        <div style={styles.audioSubText}>
+                          <Volume2 size={12} style={{ marginRight: '4px' }} />
+                          <span>{oralHistory.audioSimText || 'Archive recording'}</span>
+                        </div>
+                      </div>
+                    )}
+
+                    {!isVideoStory && (
                     <div style={styles.playerContainer}>
                       <button
                         onClick={togglePlay}
@@ -336,6 +402,7 @@ export default function Stories() {
                         </div>
                       </div>
                     </div>
+                    )}
 
                     {oralHistory.transcript && (
                       <div style={styles.transcriptBox}>
@@ -542,6 +609,44 @@ const styles = {
     fontSize: '0.75rem',
     fontWeight: 'bold',
     color: 'var(--tin-rust)'
+  },
+  videoBlock: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+    backgroundColor: 'var(--paper-dark)',
+    padding: '1rem',
+    borderRadius: '4px',
+    marginBottom: '1.5rem'
+  },
+  video: {
+    width: '100%',
+    maxWidth: '100%',
+    maxHeight: '320px',
+    backgroundColor: '#000',
+    borderRadius: '3px',
+    display: 'block'
+  },
+  videoMeta: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '12px',
+    flexWrap: 'wrap',
+    fontSize: '0.85rem'
+  },
+  fullscreenBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '6px',
+    background: 'none',
+    border: '1px solid var(--kraft-tan-dark)',
+    borderRadius: '4px',
+    padding: '4px 10px',
+    fontFamily: 'var(--font-typewriter)',
+    fontSize: '0.75rem',
+    color: 'var(--koa-wood)',
+    cursor: 'pointer'
   },
   playerContainer: {
     display: 'flex',

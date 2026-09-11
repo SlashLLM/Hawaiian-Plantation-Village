@@ -20,6 +20,7 @@ export function invalidateCmsCache(scope = 'all') {
     clearCache('tour-slots');
   }
   if (scope === 'all' || scope === 'curriculum') clearCache('curriculum');
+  if (scope === 'all' || scope === 'customPages') clearCache('custom-pages');
 }
 
 export async function saveSiteSettings(payload) {
@@ -108,6 +109,47 @@ export async function setPageSectionStatus(id, status) {
   assertNoError(error, 'Failed to update section status');
   invalidateCmsCache('sections');
   notifyCmsUpdated('sections');
+}
+
+export async function fetchCustomPages() {
+  const { data, error } = await supabase
+    .from('custom_pages')
+    .select('*')
+    .order('updated_at', { ascending: false });
+  assertNoError(error, 'Failed to load pages');
+  return data ?? [];
+}
+
+export async function saveCustomPage(record, editingId = null) {
+  const payload = {
+    ...record,
+    published_at: record.status === 'published' ? new Date().toISOString() : null,
+  };
+  const query = editingId
+    ? supabase.from('custom_pages').update(payload).eq('id', editingId).select().maybeSingle()
+    : supabase.from('custom_pages').insert(payload).select().maybeSingle();
+  const { data, error } = await query;
+  assertNoError(error, 'Failed to save page');
+  invalidateCmsCache('customPages');
+  notifyCmsUpdated('customPages');
+  return data ?? null;
+}
+
+export async function setCustomPageStatus(id, status) {
+  const { error } = await supabase.from('custom_pages').update({
+    status,
+    published_at: status === 'published' ? new Date().toISOString() : null,
+  }).eq('id', id);
+  assertNoError(error, 'Failed to update page status');
+  invalidateCmsCache('customPages');
+  notifyCmsUpdated('customPages');
+}
+
+export async function deleteCustomPage(id) {
+  const { error } = await supabase.from('custom_pages').delete().eq('id', id);
+  assertNoError(error, 'Failed to delete page');
+  invalidateCmsCache('customPages');
+  notifyCmsUpdated('customPages');
 }
 
 export async function fetchCatalogData() {

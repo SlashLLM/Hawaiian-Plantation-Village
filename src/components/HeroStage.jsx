@@ -3,10 +3,10 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Play, X } from 'lucide-react';
 
 const DEFAULT_STATS = [
-  { value: '1992', label: 'Opened' },
-  { value: '8', label: 'Cultures' },
-  { value: '30', label: 'Structures' },
-  { value: '25k+', label: 'Students a year' },
+  { value: '1973', label: 'Our story began' },
+  { value: '1992', label: 'The Village opened' },
+  { value: '8', label: 'Cultural traditions' },
+  { value: '4', label: 'Free community festivals' },
 ];
 
 const rise = {
@@ -29,14 +29,14 @@ export default function HeroStage({ hero = {}, onPrimaryClick }) {
 
   const videoSrc = hero.videoSrc ?? '/gwr_video_mvp.mp4';
   const posterSrc = hero.posterSrc ?? '/digitized-photos/IMG_6805.webp';
-  const eyebrow = hero.eyebrow ?? hero.badge ?? 'Hawaiʻi\'s living museum · Waipahu, Oʻahu';
-  const headline = hero.headline ?? hero.title ?? 'History didn\'t happen here. It still does.';
+  const eyebrow = hero.eyebrow ?? hero.badge ?? 'Waipahu, Oʻahu · A living museum';
+  const headline = hero.headline ?? hero.title ?? 'Experience the stories that shaped Hawaiʻi.';
   const support =
     hero.support ??
     hero.subtitle ??
-    'Walk the camp houses where eight immigrant communities built a life together — and still gather today.';
-  const primaryLabel = hero.primaryCta?.label ?? hero.ctaLabel ?? 'Plan your visit';
-  const secondaryLabel = hero.secondaryCta?.label ?? 'Watch the story';
+    'Discover the homes, gardens, traditions and stories of the people who lived and worked in Hawaiʻi\'s plantation communities and the cultures they carried.';
+  const primaryLabel = hero.primaryCta?.label ?? hero.ctaLabel ?? 'Plan Your Visit';
+  const secondaryLabel = hero.secondaryCta?.label ?? 'Discover the Village';
   const stats = hero.stats?.length ? hero.stats : DEFAULT_STATS;
 
   useEffect(() => {

@@ -13,7 +13,10 @@ import {
   savePageSection,
   setPageSectionStatus,
 } from '../../lib/content/cmsAdminApi.js';
+import { fetchPublishedCustomPages } from '../../lib/content/cmsApi.js';
 import { getStarterPayload } from '../../lib/content/sectionKeys.js';
+import { BLANK_LINK, describeLinkTarget, isSafeExternalUrl, normalizeLink } from '../../lib/content/links.js';
+import LinkFields from './LinkFields.jsx';
 import StatusBadge from './StatusBadge.jsx';
 import MediaUploadField from './MediaUploadField.jsx';
 import AdminReadOnlyNotice from './AdminReadOnlyNotice.jsx';
@@ -32,13 +35,15 @@ const EMPTY_ITEM = {
   endTime: '',
   desc: '',
   image: '',
+  learnMore: { ...BLANK_LINK },
 };
 
-export default function CommunityProgramsPanel() {
+export default function CommunityProgramsPanel({ onBuildPage }) {
   const { isAdmin, isStaff } = useAuth();
   const formRef = useRef(null);
   const [section, setSection] = useState(null);
   const [items, setItems] = useState([]);
+  const [customPages, setCustomPages] = useState([]);
   const [form, setForm] = useState(EMPTY_ITEM);
   const [editingIndex, setEditingIndex] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -64,9 +69,18 @@ export default function CommunityProgramsPanel() {
 
   useEffect(() => { load(); }, [load]);
 
+  // Target choices for a Learn more button that points at a CMS-built page.
+  useEffect(() => {
+    let cancelled = false;
+    fetchPublishedCustomPages()
+      .then((pages) => { if (!cancelled) setCustomPages(pages); })
+      .catch(() => { if (!cancelled) setCustomPages([]); });
+    return () => { cancelled = true; };
+  }, []);
+
   function resetForm() {
     setEditingIndex(null);
-    setForm(EMPTY_ITEM);
+    setForm({ ...EMPTY_ITEM, learnMore: { ...BLANK_LINK } });
   }
 
   function handleAddNew() {
@@ -88,6 +102,12 @@ export default function CommunityProgramsPanel() {
       endTime,
       desc: item.desc ?? '',
       image: item.image ?? '',
+      // Events saved before Learn more existed carry no link — start from blank,
+      // and keep any legacy ctaLabel as the button text.
+      learnMore: {
+        ...normalizeLink(item.learnMore),
+        ...(item.learnMore?.label ? {} : { label: item.ctaLabel || BLANK_LINK.label }),
+      },
     });
     scrollIntoViewIfSupported(formRef.current, { behavior: 'smooth', block: 'start' });
   }
@@ -120,6 +140,22 @@ export default function CommunityProgramsPanel() {
       return;
     }
 
+    const learnMore = normalizeLink(form.learnMore);
+    if (learnMore.enabled) {
+      if (learnMore.kind === 'page' && !learnMore.pageSlug) {
+        setError('Choose a page for the Learn more button, or turn the button off.');
+        return;
+      }
+      if (learnMore.kind === 'site' && !learnMore.sitePage) {
+        setError('Choose a site page for the Learn more button, or turn the button off.');
+        return;
+      }
+      if (learnMore.kind === 'external' && !isSafeExternalUrl(learnMore.url)) {
+        setError('Enter a full article address starting with http:// or https://');
+        return;
+      }
+    }
+
     const nextItem = {
       slug,
       date: form.startDate ? formatShortDateLabel(form.startDate.trim()) : '',
@@ -129,6 +165,11 @@ export default function CommunityProgramsPanel() {
       time: inputsToTimeRangeLabel(form.startTime, form.endTime),
       desc: form.desc.trim(),
       image: form.image.trim(),
+      learnMore: {
+        ...learnMore,
+        label: learnMore.label.trim() || BLANK_LINK.label,
+        url: learnMore.url.trim(),
+      },
     };
 
     const nextItems = [...items];
@@ -287,6 +328,17 @@ export default function CommunityProgramsPanel() {
               value={form.image ? { url: form.image, alt: form.title || 'Event image' } : null}
               onChange={(media) => setForm({ ...form, image: media?.url ?? '' })}
             />
+            <LinkFields
+              value={form.learnMore}
+              onChange={(learnMore) => setForm({ ...form, learnMore })}
+              customPages={customPages}
+              idPrefix="event-learn-more"
+              onCreatePage={
+                onBuildPage
+                  ? () => onBuildPage({ title: form.title, slug: form.slug })
+                  : undefined
+              }
+            />
           </div>
           <div style={{ display: 'flex', gap: '0.5rem', marginTop: '1rem' }}>
             <button type="submit" className="btn-primary" disabled={saving}>
@@ -314,6 +366,7 @@ export default function CommunityProgramsPanel() {
                 <th>Date</th>
                 <th>On calendar</th>
                 <th>Time</th>
+                <th>Learn more</th>
                 <th />
               </tr>
             </thead>
@@ -324,6 +377,7 @@ export default function CommunityProgramsPanel() {
                   <td>{item.date || '—'}</td>
                   <td>{item.startDate || dateLabelToInputValue(item.date) || 'Not scheduled'}</td>
                   <td>{item.time || '—'}</td>
+                  <td>{describeLinkTarget(item.learnMore) || 'Off'}</td>
                   <td style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                     {isAdmin && (
                       <>

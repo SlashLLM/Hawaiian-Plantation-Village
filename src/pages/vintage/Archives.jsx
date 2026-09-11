@@ -74,11 +74,11 @@ export default function Archives() {
 
   return (
     <div>
-      <SEO title="Photograph Archives" description="Look closely at the historical record of Hawaii's Plantation Village." />
+      <SEO title="Collections & Archives" description="Photographs, documents, artifacts and oral histories that preserve the experiences of Hawaii's plantation communities across generations." />
       <PageHeaderParallax
         image={lead?.imageUrl || SITE_PHOTOS.headers.visit}
-        stamp={header?.stamp ?? 'Photograph archives'}
-        title={header?.title ?? 'Look closely at the record'}
+        stamp={header?.stamp ?? 'Collections & archives'}
+        title={header?.title ?? 'What families saved, Hawaiʻi remembers.'}
         subtitle={header?.subtitle}
       />
 

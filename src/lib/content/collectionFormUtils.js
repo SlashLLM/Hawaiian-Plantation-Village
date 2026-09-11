@@ -61,6 +61,15 @@ export function getMetadataAt(metadata, path, fallback = '') {
   return cursor === undefined || cursor === null ? fallback : cursor;
 }
 
+/**
+ * An oral history is recorded either as audio or as video.
+ * Older entries have no mediaType, so fall back to whichever file is present.
+ */
+export function resolveOralMediaType(oral) {
+  if (oral?.mediaType === 'video' || oral?.mediaType === 'audio') return oral.mediaType;
+  return oral?.video_url ? 'video' : 'audio';
+}
+
 /** Format seconds as "Xm Ys" for oral history length labels. */
 export function formatAudioLength(totalSeconds) {
   if (!Number.isFinite(totalSeconds) || totalSeconds < 0) return '';

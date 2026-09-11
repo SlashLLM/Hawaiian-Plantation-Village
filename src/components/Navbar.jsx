@@ -12,13 +12,14 @@ export default function Navbar({ activePage }) {
   const location = useLocation();
 
   const navLinks = settings?.nav ?? [
-    { id: 'home', label: 'Home' },
     { id: 'visit', label: 'Visit' },
+    { id: 'explore', label: 'Explore' },
     { id: 'stories', label: 'Stories' },
-    { id: 'archives', label: 'Archives' },
+    { id: 'archives', label: 'Collections' },
     { id: 'play', label: 'Play & Learn' },
-    { id: 'learn', label: 'Learn' },
-    { id: 'support', label: 'Support' },
+    { id: 'learn', label: 'Education' },
+    { id: 'events', label: 'Events' },
+    { id: 'support', label: 'Support Us' },
     { id: 'about', label: 'About' }
   ];
 
@@ -33,6 +34,7 @@ export default function Navbar({ activePage }) {
   const isActive = (linkId) => {
     if (linkId === 'learn' && location.pathname.startsWith('/learn')) return true;
     if (linkId === 'archives' && location.pathname.startsWith('/archives')) return true;
+    if (linkId === 'explore' && location.pathname.startsWith('/explore')) return true;
     return activePage === linkId;
   };
 
@@ -122,21 +124,24 @@ const styles = {
     width: '100%'
   },
   navWrapper: {
-    maxWidth: '1180px',
+    // Wider than the 1180px editorial shell: nine nav items plus the brand and
+    // two CTAs need ~1230px, and capping at 1180 crushed the brand column.
+    maxWidth: '1320px',
     margin: '0 auto',
-    padding: '0.85rem clamp(0.85rem, 4vw, 2.5rem)',
+    padding: '0.85rem clamp(0.85rem, 4vw, 2rem)',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: 'clamp(0.5rem, 2vw, 1.5rem)'
+    gap: 'clamp(0.75rem, 1.5vw, 1.25rem)'
   },
   logoGroup: {
     display: 'flex',
     alignItems: 'center',
     gap: '12px',
-    cursor: 'pointer',
-    minWidth: 0,
-    flex: '1 1 auto'
+    cursor: 'pointer'
+    // flex/min-width live in index.css (.nav-logo-group): rigid in desktop mode
+    // so the brand never gets crushed by the nav row, shrinkable in mobile mode
+    // so it cannot push the menu toggle off a narrow screen.
   },
   logoImg: {
     height: '42px',
@@ -146,30 +151,33 @@ const styles = {
   },
   logoText: {
     display: 'flex',
-    flexDirection: 'column',
-    minWidth: 0
+    flexDirection: 'column'
   },
   brandTitle: {
     fontFamily: 'var(--font-display)',
     fontWeight: '500',
-    fontSize: '1.2rem',
+    fontSize: '1.15rem',
     color: 'var(--plantation-ink)',
-    lineHeight: '1.15',
-    letterSpacing: '-0.01em',
-    whiteSpace: 'normal'
+    lineHeight: '1.2',
+    letterSpacing: '-0.01em'
+    // white-space lives in index.css (.nav-brand-title) so narrow-screen
+    // overrides can win over it.
   },
   brandSubtitle: {
     fontFamily: 'var(--font-sans)',
-    fontSize: '0.72rem',
-    letterSpacing: '0.12em',
+    fontSize: '0.68rem',
+    letterSpacing: '0.1em',
     color: 'var(--muted-sage)',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap'
   },
   navLinksList: {
     display: 'flex',
     listStyle: 'none',
-    gap: 'clamp(12px, 1.7vw, 24px)',
+    gap: 'clamp(10px, 1.15vw, 20px)',
     alignItems: 'center',
+    justifyContent: 'center',
+    flex: '1 1 auto',
     margin: 0,
     padding: 0
   },
@@ -180,7 +188,7 @@ const styles = {
     background: 'none',
     border: 'none',
     fontFamily: 'var(--font-sans)',
-    fontSize: '0.92rem',
+    fontSize: '0.88rem',
     fontWeight: '500',
     color: 'var(--plantation-ink)',
     cursor: 'pointer',
@@ -202,23 +210,26 @@ const styles = {
   ctaGroup: {
     display: 'flex',
     alignItems: 'center',
-    gap: '18px'
+    gap: '14px',
+    flex: '0 0 auto'
   },
   donateLink: {
     background: 'none',
     border: 'none',
     fontFamily: 'var(--font-sans)',
-    fontSize: '0.95rem',
+    fontSize: '0.9rem',
     fontWeight: '500',
     color: 'var(--terracotta-clay-deep)',
     cursor: 'pointer',
     display: 'flex',
     alignItems: 'center',
-    gap: '6px'
+    gap: '6px',
+    whiteSpace: 'nowrap'
   },
   ticketBtn: {
-    padding: '0.55rem 1.1rem',
-    fontSize: '0.9rem'
+    padding: '0.55rem 1.05rem',
+    fontSize: '0.88rem',
+    whiteSpace: 'nowrap'
   },
   mobileToggle: {
     display: 'none',

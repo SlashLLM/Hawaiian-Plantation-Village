@@ -45,6 +45,31 @@ export async function fetchContentBySlug(slug) {
   return data;
 }
 
+/**
+ * A CMS-built page by slug. Staff pass `preview` to see drafts; RLS is what
+ * actually enforces it, the filter just keeps the public query honest.
+ */
+export async function fetchCustomPageBySlug(slug, { preview = false } = {}) {
+  if (!supabase || !slug) return null;
+  let query = supabase.from('custom_pages').select('*').eq('slug', slug);
+  if (!preview) query = query.eq('status', 'published');
+  const { data, error } = await query.maybeSingle();
+  if (error) throw error;
+  return data ?? null;
+}
+
+/** Published pages only — used by the Learn more target picker. */
+export async function fetchPublishedCustomPages() {
+  if (!supabase) return [];
+  const { data, error } = await supabase
+    .from('custom_pages')
+    .select('id, slug, title, status')
+    .eq('status', 'published')
+    .order('title');
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function fetchGroupTicketTypes() {
   if (!supabase) return [];
   const { data, error } = await supabase.from('group_ticket_types').select('*').eq('is_active', true).order('sort_order');

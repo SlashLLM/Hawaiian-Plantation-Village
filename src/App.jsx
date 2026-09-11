@@ -17,6 +17,12 @@ const VintageSupport = React.lazy(() => import('./pages/vintage/Support.jsx'));
 const VintageAbout = React.lazy(() => import('./pages/vintage/About.jsx'));
 const VintageTickets = React.lazy(() => import('./pages/vintage/Tickets.jsx'));
 const VintagePlay = React.lazy(() => import('./pages/vintage/Play.jsx'));
+const VintageExplore = React.lazy(() => import('./pages/vintage/Explore.jsx'));
+const VintageExploreCulture = React.lazy(() => import('./pages/vintage/ExploreCulture.jsx'));
+const VintageEvents = React.lazy(() => import('./pages/vintage/Events.jsx'));
+const CustomEventPage = React.lazy(() => import('./pages/vintage/CustomEventPage.jsx'));
+const VintageVolunteer = React.lazy(() => import('./pages/vintage/Volunteer.jsx'));
+const VintageGiveAloha = React.lazy(() => import('./pages/vintage/GiveAloha.jsx'));
 
 const AdminLogin = React.lazy(() => import('./pages/admin/AdminLogin.jsx'));
 const AdminDashboard = React.lazy(() => import('./pages/admin/AdminDashboard.jsx'));
@@ -38,15 +44,21 @@ export default function App() {
           <Route element={<PublicLayout />}>
             <Route index element={<VintageHome />} />
             <Route path="visit" element={<VintageVisit />} />
+            <Route path="explore" element={<VintageExplore />} />
+            <Route path="explore/:cultureId" element={<VintageExploreCulture />} />
             <Route path="stories" element={<VintageStories />} />
             <Route path="archives" element={<VintageArchives />} />
             <Route path="archives/:arkId" element={<VintagePhotographDetail />} />
             <Route path="play" element={<VintagePlay />} />
             <Route path="learn" element={<VintageLearn />} />
             <Route path="learn/:moduleId" element={<CurriculumModule />} />
+            <Route path="events" element={<VintageEvents />} />
+            <Route path="events/:slug" element={<CustomEventPage />} />
             <Route path="support" element={<VintageSupport />} />
+            <Route path="volunteer" element={<VintageVolunteer />} />
             <Route path="about" element={<VintageAbout />} />
             <Route path="tickets" element={<VintageTickets />} />
+            <Route path="give-aloha" element={<VintageGiveAloha />} />
           </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />

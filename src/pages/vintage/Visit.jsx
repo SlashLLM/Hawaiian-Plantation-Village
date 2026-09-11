@@ -59,12 +59,12 @@ export default function Visit() {
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Plan Your Visit" description="Hours, directions, admission, and everything else you need before you walk the village." />
+      <SEO title="Plan Your Visit" description="Come walk through history with us. Hours, directions, admission and accessibility for Hawaii's Plantation Village in Waipahu, Oʻahu." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.visit}
-        stamp={header?.stamp ?? 'Visitor guide'}
-        title={header?.title ?? 'Plan your visit'}
-        subtitle={header?.subtitle ?? 'Hours, directions, admission, and everything else you need before you walk the village.'}
+        stamp={header?.stamp ?? 'Plan your visit'}
+        title={header?.title ?? 'Come walk through history with us.'}
+        subtitle={header?.subtitle ?? 'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions.'}
       />
 
       <div style={styles.container}>
@@ -171,12 +171,15 @@ export default function Visit() {
             {activeTab === 'safety' && (
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
                 <h3 style={styles.tabTitle}>Accessibility support</h3>
+                <p style={styles.accessibilityIntro}>
+                  {safetySection?.intro ?? 'We thought about you. You are welcome here.'}
+                </p>
                 <div style={styles.infoRow}>
                   <Footprints size={20} color="var(--cane-green)" />
                   <div>
                     <p style={styles.infoValue}>{safetySection?.terrainTitle ?? 'Terrain & Navigation'}</p>
                     <p style={styles.infoDesc}>
-                      {safetySection?.terrainDesc ?? 'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.'}
+                      {safetySection?.terrainDesc ?? 'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. Service animals are welcome throughout the Village.'}
                     </p>
                   </div>
                 </div>
@@ -372,14 +375,21 @@ export default function Visit() {
                     <div>
                       <p style={styles.infoValue}>No dated events are scheduled right now</p>
                       <p style={styles.infoDesc}>
-                        Our seasonal festivals are listed on the home page — check back soon, or call
-                        the visitor center for the current schedule.
+                        Our seasonal festivals are listed on the events page — check back soon, or
+                        call the visitor center for the current schedule.
                       </p>
                     </div>
                   </div>
                 ) : (
                   <EventsCalendar events={datedEvents} />
                 )}
+                <button
+                  className="btn-secondary"
+                  style={{ marginTop: '1.5rem' }}
+                  onClick={() => setActivePage('events')}
+                >
+                  See all events <ArrowRight size={16} />
+                </button>
               </div>
             )}
 
@@ -509,6 +519,13 @@ const styles = {
     fontSize: '1.45rem',
     fontWeight: 500,
     marginBottom: '1rem'
+  },
+  accessibilityIntro: {
+    fontFamily: 'var(--font-display)',
+    fontSize: '1.15rem',
+    lineHeight: 1.5,
+    color: 'var(--plantation-ink)',
+    marginBottom: '1.5rem'
   },
   infoRow: {
     display: 'flex',

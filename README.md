@@ -35,6 +35,32 @@ Public pages load content in this order:
 
 Staff signed into `/admin` can preview draft content via RLS (`is_staff()` policies).
 
+### Editing site copy
+
+`src/lib/content/fallbacks.js` is the authoring source of truth for editorial
+copy. Edit it, then regenerate the SQL:
+
+```bash
+node scripts/sync-home-about-seed.mjs     # rewrites supabase/seed_cms.sql (fresh databases)
+node scripts/generate-copy-migration.mjs  # emits a migration that updates a LIVE database
+```
+
+Both read the same rows. The distinction matters: `seed_cms.sql` inserts
+page sections with `on conflict do nothing`, so it only ever populates an empty
+database — it cannot change a row that already exists. To push changed copy to
+a database that is already seeded, apply the generated migration, which upserts
+with `do update`.
+
+The migration deliberately **excludes admin-owned record lists** (events, news,
+careers, timeline, leadership, testimonials, partners — see
+`ADMIN_DATA_SECTIONS` in `scripts/lib/cmsSeedRows.mjs`). Those rows hold real
+entries created by staff in `/admin`; overwriting them with code defaults would
+be data loss rather than a copy change. Everything else it does overwrite, so
+confirm no pending CMS edits before applying.
+
+Page titles and meta descriptions are **not** part of this pipeline — each page
+sets its own via the `<SEO>` component.
+
 ### Data model
 
 | Table | Purpose |
@@ -81,6 +107,12 @@ Hooks: `useSiteSettings`, `usePageSection`, `usePageListSection`, `useContentCol
 
 - If Supabase is unreachable, the site renders fallback content from `src/lib/content/fallbacks.js`.
 - Re-run `supabase/seed_cms.sql` to restore default published content after schema changes.
+- **`site_settings` returning `42703: column site_settings.payload does not exist`**
+  means a leftover Payload CMS table of the same name is squatting the name, so
+  `create table if not exists` in `20260714100000_cms_full.sql` silently did
+  nothing. Every settings read then 400s and the site falls back to code for
+  nav, hero, footer and SEO. The generated copy migration detects and repairs
+  this before upserting.
 - Abandoned Storage uploads can be removed from the `cms-media` bucket and `media_assets` table manually.
 
 See `.env.example` and `supabase/` for deployment details.

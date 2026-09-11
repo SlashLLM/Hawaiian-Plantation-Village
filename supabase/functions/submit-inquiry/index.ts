@@ -10,7 +10,8 @@ type InquiryType =
   | 'career'
   | 'field_trip'
   | 'youth_program'
-  | 'workshop_rsvp';
+  | 'workshop_rsvp'
+  | 'volunteer';
 
 const TYPE_LABELS: Record<InquiryType, string> = {
   contact: 'Contact Inquiry',
@@ -18,6 +19,7 @@ const TYPE_LABELS: Record<InquiryType, string> = {
   field_trip: 'Field Trip Request',
   youth_program: 'Student Program Inquiry',
   workshop_rsvp: 'Workshop RSVP',
+  volunteer: 'Volunteer Inquiry',
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -190,6 +192,25 @@ Deno.serve(async (req) => {
       summaryLines = buildFields([
         ['Workshop', trim(body.workshop)],
         ['Attendees', trim(body.attendeeCount)],
+      ]);
+    } else if (type === 'volunteer') {
+      const missing = requireFields(body, ['name', 'email']);
+      if (missing) return jsonResponse({ error: missing }, 400);
+      const email = trim(body.email).toLowerCase();
+      const emailErr = validateEmail(email);
+      if (emailErr) return jsonResponse({ error: emailErr }, 400);
+
+      submitterEmail = email;
+      recipientName = trim(body.name);
+      fields = buildFields([
+        ['Name', recipientName],
+        ['Email', email],
+        ['Phone', trim(body.phone)],
+        ['Interest Area', trim(body.interest)],
+        ['Message', trim(body.message)],
+      ]);
+      summaryLines = buildFields([
+        ['Interest Area', trim(body.interest)],
       ]);
     }
 

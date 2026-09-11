@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import CampStoriesPanel from './CampStoriesPanel.jsx';
 import PhotographsPanel from './PhotographsPanel.jsx';
 import CommunityProgramsPanel from './CommunityProgramsPanel.jsx';
+import CustomPagesPanel from './CustomPagesPanel.jsx';
 import NewsPanel from './NewsPanel.jsx';
 import CareersPanel from './CareersPanel.jsx';
 import CurriculumPanel from './CurriculumPanel.jsx';
@@ -10,6 +11,7 @@ const TABS = [
   { id: 'stories', label: 'Stories' },
   { id: 'photographs', label: 'Archives' },
   { id: 'events', label: 'Upcoming Events' },
+  { id: 'pages', label: 'Event Pages' },
   { id: 'news', label: 'News & Announcements' },
   { id: 'careers', label: 'Careers' },
   { id: 'curriculum', label: 'Curriculum' },
@@ -17,6 +19,14 @@ const TABS = [
 
 export default function CmsAdminPanel() {
   const [tab, setTab] = useState('stories');
+  // Set when an event asks for a page to be built, so the Pages tab opens the
+  // builder pre-filled with that event's title.
+  const [pageSeed, setPageSeed] = useState(null);
+
+  const handleBuildPage = useCallback((seed) => {
+    setPageSeed(seed ?? {});
+    setTab('pages');
+  }, []);
 
   return (
     <div>
@@ -35,7 +45,10 @@ export default function CmsAdminPanel() {
       </div>
       {tab === 'stories' && <CampStoriesPanel />}
       {tab === 'photographs' && <PhotographsPanel />}
-      {tab === 'events' && <CommunityProgramsPanel />}
+      {tab === 'events' && <CommunityProgramsPanel onBuildPage={handleBuildPage} />}
+      {tab === 'pages' && (
+        <CustomPagesPanel seed={pageSeed} onSeedConsumed={() => setPageSeed(null)} />
+      )}
       {tab === 'news' && <NewsPanel />}
       {tab === 'careers' && <CareersPanel />}
       {tab === 'curriculum' && <CurriculumPanel />}

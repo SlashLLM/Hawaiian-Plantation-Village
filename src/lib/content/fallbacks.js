@@ -14,29 +14,35 @@ export const DEFAULT_SITE_SETTINGS = {
     title: 'Hawaii\'s Plantation Village',
     subtitle: 'Waipahu, Oʻahu, Hawaiʻi',
     tagline:
-      'A living plantation village built so future generations can recognize today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.',
+      'A living museum that preserves and shares the stories of the people, cultures, communities and legacies that shaped Hawaiʻi\'s plantation era and the islands today.',
     estBadge: 'EST. 1992',
   },
   nav: [
-    { id: 'home', label: 'Home' },
     { id: 'visit', label: 'Visit' },
+    { id: 'explore', label: 'Explore' },
     { id: 'stories', label: 'Stories' },
-    { id: 'archives', label: 'Archives' },
+    { id: 'archives', label: 'Collections' },
     { id: 'play', label: 'Play & Learn' },
-    { id: 'learn', label: 'Learn' },
-    { id: 'support', label: 'Support' },
+    { id: 'learn', label: 'Education' },
+    { id: 'events', label: 'Events' },
+    { id: 'support', label: 'Support Us' },
     { id: 'about', label: 'About' },
   ],
   footer: {
     brand: 'Hawaii\'s Plantation Village',
+    invitation: 'There is more to the story. Come discover with us.',
+    invitationLinks: [
+      { label: 'Plan Your Visit', page: 'visit' },
+      { label: 'Get Tickets', page: 'tickets' },
+    ],
     text:
-      'Founded by plantation workers and their descendants to preserve plantation heritage and legacy through authentic homes, gardens, and community memory.',
+      'A living museum that preserves and shares the stories of the people, cultures, communities and legacies that shaped Hawaiʻi\'s plantation era and the islands today.',
     copyright: '© 2026 Hawaii\'s Plantation Village. All rights reserved.',
     ctaLinks: [
       { label: 'Get tickets', page: 'tickets' },
       { label: 'Become a member', page: 'support' },
       { label: 'Make a gift', page: 'support' },
-      { label: 'Volunteer with us', page: 'support' },
+      { label: 'Volunteer with us', page: 'volunteer' },
     ],
     newsletter: {
       heading: 'Village updates',
@@ -64,25 +70,26 @@ export const DEFAULT_SITE_SETTINGS = {
     parking: 'Free Visitor Parking Onsite',
   },
   hero: {
-    eyebrow: 'Waipahu, Oʻahu · Living plantation village',
-    headline: 'The story of the plantation worker',
+    eyebrow: 'Waipahu, Oʻahu · A living museum',
+    headline: 'Experience the stories that shaped Hawaiʻi.',
     support:
-      'Homes, furnishings, and gardens for the major ethnic groups who worked Hawaiʻi\'s plantations — built so later generations can walk that heritage.',
-    primaryCta: { label: 'Plan your visit' },
-    secondaryCta: { label: 'Watch the story' },
+      'Discover the homes, gardens, traditions and stories of the people who lived and worked in Hawaiʻi\'s plantation communities and the cultures they carried.',
+    rotatingLine: 'History isn\'t only something we remember. It\'s something we live.',
+    primaryCta: { label: 'Plan Your Visit' },
+    secondaryCta: { label: 'Discover the Village' },
     stats: [
-      { value: '1973', label: 'Friends founded' },
-      { value: '1992', label: 'Village opened' },
-      { value: '8', label: 'Cultures' },
-      { value: '4', label: 'Free festivals' },
+      { value: '1973', label: 'Our story began' },
+      { value: '1992', label: 'The Village opened' },
+      { value: '8', label: 'Cultural traditions' },
+      { value: '4', label: 'Free community festivals' },
     ],
     videoSrc: '/gwr_video_mvp.mp4',
     posterSrc: '/digitized-photos/IMG_6805.webp',
   },
   seo: {
-    title: 'Hawaii\'s Plantation Village | Plantation Heritage in Waipahu, Oʻahu',
+    title: 'Hawaii\'s Plantation Village | A Living Museum in Waipahu, Oʻahu',
     description:
-      'Walk a living plantation village in Waipahu: ethnic camp homes, gardens, school tours, and free festivals that honor Hawaiʻi\'s plantation workers and immigrant communities.',
+      'Come understand how Hawaiʻi became Hawaiʻi. Step inside historic homes, gardens and cultural traditions at a living museum in Waipahu, Oʻahu, and meet the people who shaped the islands.',
     keywords: [
       'Hawaii\'s Plantation Village',
       'Waipahu history',
@@ -92,9 +99,9 @@ export const DEFAULT_SITE_SETTINGS = {
     ],
   },
   donationPresets: [
-    { amount: 25, label: '$25 helps process artifact and photograph donations.' },
-    { amount: 50, label: '$50 supports volunteer work in the collections archives.' },
-    { amount: 100, label: '$100 helps furnish and care for ethnic camp homes.' },
+    { amount: 25, label: '$25 helps preserve and document photographs and artifacts.' },
+    { amount: 50, label: '$50 supports collections care and archival work.' },
+    { amount: 100, label: '$100 helps care for historic homes, gardens and exhibits.' },
   ],
 };
 
@@ -147,102 +154,149 @@ export const DEFAULT_PAGE_SECTIONS = {
       },
     },
     cultures: {
-      eyebrow: 'Ethnic homes and gardens',
-      title: 'Each group furnished a home to tell its story',
+      eyebrow: 'Homes, gardens & cultural traditions',
+      title: 'Many journeys. Different cultures. One shared history.',
       description:
-        'Ethnic historical groups planned the exhibits: furnishings, thematic celebrations, and gardens with plants specific to their culture. School and visitor tours walk these homes throughout the year.',
+        'People came to Hawaiʻi from across Asia, Europe, the Pacific and the Americas, bringing languages, foods, faiths, celebrations, skills and memories of home.',
+      paragraphs: [
+        'People came to Hawaiʻi from across Asia, Europe, the Pacific and the Americas, bringing languages, foods, faiths, celebrations, skills and memories of home.',
+        'At the Village, historic homes, community spaces, artifacts and gardens reveal how families lived, worked, celebrated and built community across generations.',
+      ],
+      closing: 'Step inside. Look closely. Every home has a unique story to tell.',
       items: [
-        { name: 'Hawaiian', note: 'The land and people before the cane' },
-        { name: 'Chinese', note: 'Contract labor roots and community life' },
-        { name: 'Japanese', note: 'Home life, celebrations, and tradition' },
-        { name: 'Filipino', note: 'Families, work culture, and gatherings' },
-        { name: 'Korean', note: 'A cultural celebration in the home' },
-        { name: 'Okinawan', note: 'Community memory in the camp' },
-        { name: 'Portuguese', note: 'Home, garden, and festa traditions' },
-        { name: 'Puerto Rican', note: 'Preparing for Christmas Eve' },
+        { name: 'Hawaiian', note: 'The land, her people and the world before sugar' },
+        { name: 'Chinese', note: 'Migration, family and community' },
+        { name: 'Japanese', note: 'Home, work, faith and tradition' },
+        { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
+        { name: 'Korean', note: 'Migration, community and cultural tradition' },
+        { name: 'Okinawan', note: 'Identity, memory and community' },
+        { name: 'Portuguese', note: 'Family, food, faith and celebration' },
+        { name: 'Puerto Rican', note: 'Home, tradition and island connections' },
       ],
     },
     planVisit: {
       eyebrow: 'Plan your visit',
-      title: 'Walk the homes and gardens',
+      title: 'Come walk through history with us.',
       description:
-        'Tuesday to Saturday, 9:00 AM to 2:00 PM. 94-695 Waipahu Street, Waipahu, Oʻahu. Free parking onsite.',
+        'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them.',
+      paragraphs: [
+        'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them.',
+        'Whether Hawaiʻi is home or you\'re discovering the islands for the first time, a visit to Hawaiʻi\'s Plantation Village offers a deeper understanding of the people and cultures that continue to shape this unique gem in Waipahu.',
+      ],
+      essentials: [
+        'Tuesday–Saturday · 9:00 AM–2:00 PM',
+        '94-695 Waipahu Street · Waipahu, Oʻahu',
+        'Free on-site parking',
+      ],
       items: [
-        { title: 'Tickets & hours', note: 'Self-guided and docent-led, Tuesday to Saturday.', page: 'tickets' },
-        { title: 'Group tours', note: 'Motorcoach, custom rates, and private group scheduling.', page: 'visit' },
-        { title: 'Schools', note: 'Student tours through furnished homes and gardens.', page: 'learn' },
-        { title: 'Accessibility', note: 'Paved paths, ADA restrooms, and quieter sensory hours.', page: 'visit' },
+        { title: 'Tickets & Hours', note: 'Everything you need to plan your day.', page: 'tickets' },
+        { title: 'Group Visits', note: 'Tours for community groups, organizations and travel partners.', page: 'visit' },
+        { title: 'School Visits', note: 'Bring Hawaiʻi\'s history beyond the classroom.', page: 'learn' },
+        { title: 'Accessibility', note: 'Information to help everyone feel welcome at the Village.', page: 'visit' },
       ],
     },
     whyVisit: {
       stamp: 'The village',
       stampClass: 'green',
-      title: 'A place to share the laborers\' story',
+      title: 'History has a home here.',
       paragraphs: [
-        'Hawaii\'s Plantation Village focuses on the plantation worker — people from many cultures, natives and immigrants, who were promised a chance to better their lives. The long-range goal has been a collection of structures typifying a plantation village, with each major ethnic group represented by buildings, furnishings, and gardens.',
-        'Instead of hiring professionals to plan every exhibit, the village worked with ethnic historical groups to furnish each home with a thematic plan and to design gardens with plants specific to their culture. Docents guide students, teachers, and visitors through the hardships and life-affirming experiences of plantation camp life.',
+        'Hawaii\'s Plantation Village was created by visionaries who understood that an important part of Hawaii\'s story could disappear if no one chose to preserve it.',
+        'Beginning in the 1970s, former plantation workers, descendants and community members came together to save the buildings, belongings, photographs, gardens and memories of plantation life.',
+        'Rather than telling these stories from a distance, they helped create a place where future generations could walk through a living museum.',
+        'Today, visitors can enter historic homes and community structures, encounter objects from everyday life and explore our lush gardens with a plethora of local foods and plants connected to the unique plantation cultures represented here.',
+        'Our docents bring these stories to life through animated anecdotes of work and hardship, family and faith, struggle and solidarity, celebration and change.',
+        'Together, we experience how people from diverse regions helped shape the Hawaiʻi we know today.',
       ],
-      primaryCta: { label: 'Read our story', page: 'about' },
-      secondaryCta: { label: 'Plan your visit', page: 'visit' },
+      primaryCta: { label: 'Discover Our Story', page: 'about' },
+      secondaryCta: { label: 'Plan Your Visit', page: 'visit' },
     },
     featuredBango: {
       stamp: 'Okada Education Center',
       stampClass: 'rust',
-      title: 'Orientation, galleries, and the archives',
+      title: 'Where memory becomes history.',
       paragraphs: [
-        'The Okada Education Center — named after Hideo “Major” Okada, a former sugar worker, labor union organizer, and one of the village founders — houses the main office, meeting room, three exhibit galleries, collections archives and workroom, and gift shop.',
-        'Gallery exhibits introduce immigration, plantation work culture, and WWII internment at Honouliuli. Artifact and archives assistants — all volunteers — help process donations that continue to arrive from plantation-era households.',
+        'Every photograph has a story. Every object carries a memory. Together, these help us understand lives that may otherwise be forgotten.',
+        'The Okada Education Center is named after Hideo “Major” Okada, a former sugar worker, labor organizer and one of the founders of Hawaii\'s Plantation Village.',
+        'Here, visitors explore exhibitions on immigration, plantation life and labor, as well as the history of World War II incarceration at Honouliuli.',
+        'Behind the scenes, volunteers care for a growing collection of photographs, documents and artifacts donated by families across Hawaiʻi.',
+        'These are not simply records of the past but treasured pieces of familial history, entrusted to us for the future.',
       ],
       quote: '',
       quoteCite: '',
-      cta: { label: 'Explore the photograph archives', page: 'archives' },
+      cta: { label: 'Explore the Collections', page: 'archives' },
     },
     bellToBell: {
-      stamp: 'Interactive',
+      stamp: 'Interactive history',
       stampClass: 'rust',
-      title: 'Step into their shoes',
+      title: 'A day in plantation life',
       description:
-        'Simulate one day on the plantation. Hear the morning whistle, complete tasks in the cane rows, and gather in the community camp at sunset.',
+        'The whistle sounds before sunrise. What might an ordinary day have looked like for a plantation worker and family? Follow the rhythms of work, meals and community life through an interactive journey inspired by historical accounts and objects in our collection.',
+      cta: { label: 'Begin the Journey' },
     },
     educators: {
-      stamp: 'For educators',
+      stamp: 'For educators & students',
       stampClass: 'teal',
-      title: 'School and visitor tours',
+      title: 'History feels different when you can experience it',
       paragraphs: [
-        'School and visitor tours are scheduled throughout the year. Students, teachers, and visitors are guided through the furnished homes and survey the gardens around them.',
-        'Docents share both the hardships and the life-affirming experiences of living in plantation camps during Hawaiʻi\'s plantation era — a foundation for classroom work before and after the visit.',
+        'Bring learning beyond the classroom.',
+        'At Hawaiʻi\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
+        'Guided experiences invite students to explore migration, labor, cultural exchange, family, community and change through the lives of real people.',
+        'A visit can complement classroom learning before, during and after your field trip and give students something no textbook can: a sense of place.',
       ],
-      cta: { label: 'Bring a class', page: 'learn' },
+      cta: { label: 'Plan a School Visit', page: 'learn' },
+      secondaryCta: { label: 'Educator Resources', page: 'learn' },
     },
     getInvolved: {
-      stamp: 'Get involved',
+      stamp: 'Help us keep our stories alive',
       stampClass: 'green',
-      title: 'Help keep the collections growing',
+      title: 'What we preserve today becomes tomorrow\'s legacy.',
       description:
-        'Volunteers process artifact and photograph donations, care for the village, and make plantation-themed crafts sold in the gift shop to support tours and programs.',
+        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
+      paragraphs: [
+        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered.',
+        'You can help us carry this important work forward.',
+        'Your support cares for historic homes and gardens, preserves photographs and artifacts, welcomes students, sustains cultural programs and helps ensure that future generations can discover the people who helped shape Hawaiʻi.',
+      ],
       donation: {
-        title: 'Give directly',
-        description:
-          'Your gift supports the village homes, gardens, galleries, and the collections archives where donations are processed and stored.',
+        title: 'Make a gift',
+        description: 'Every gift helps preserve a piece of Hawaiʻi\'s shared history.',
         items: DEFAULT_SITE_SETTINGS.donationPresets,
-        cta: { label: 'Make a gift', page: 'support' },
+        closing: 'Every gift matters.',
+        cta: { label: 'Donate Today', page: 'support' },
       },
       membership: {
-        title: 'Become a steward',
+        title: 'Belong to the Village.',
         description:
-          'Belong to the village. Membership helps sustain tours, free festivals, and the work of volunteer archives assistants.',
+          'Membership is more than admission. It\'s a way to stand behind a place that keeps Hawaiʻi\'s stories alive. Members help sustain exhibitions, educational programs, community festivals, collections care and the historic Village itself—while enjoying opportunities to return throughout the year.',
         items: [
-          { label: 'Free admission', text: 'for you and your guests all year.' },
-          { label: 'Gift shop support', text: 'volunteer crafts fund village programs.' },
-          { label: 'Village updates', text: 'festivals, tours, and volunteer days.' },
+          { label: 'Visit often', text: 'Enjoy admission throughout your membership year.' },
+          { label: 'Bring someone with you', text: 'Share the Village with your loved ones, family and friends.*' },
+          { label: 'Stay connected', text: 'Receive news about our programs, festivals and Village life.' },
+          { label: 'Make an impact', text: 'Help preserve these stories for generations to come.' },
         ],
-        cta: { label: 'See membership', page: 'support' },
+        cta: { label: 'Become a Member', page: 'support' },
       },
     },
-    eventsHeader: {
-      stamp: 'Free village events',
+    volunteer: {
+      stamp: 'Volunteer',
       stampClass: 'gold',
-      title: 'Festivals the community is invited to',
+      title: 'History needs people – YOU.',
+      paragraphs: [
+        'The Village exists because people showed up.',
+        'They preserved buildings, donated family photographs, planted gardens, recorded memories, led tours, made repairs and shared traditions.',
+        'This spirit continues today.',
+        'Whether you love history, gardening, education, archives, cultural programs or simply working with the community, there is a place for you at Hawaii\'s Plantation Village.',
+        'You do not need to be a historian. You just need to care that these stories survive.',
+      ],
+      cta: { label: 'Volunteer With Us', page: 'volunteer' },
+    },
+    eventsHeader: {
+      stamp: 'Events at the Village',
+      stampClass: 'gold',
+      title: 'Come explore our culture with us.',
+      description:
+        'Throughout the year, Hawaii\'s Plantation Village comes alive with music, food, dance, storytelling, cultural traditions and community celebrations. Come experience traditions passed from one generation to the next and make some memories of your own.',
+      cta: { label: 'See All Events', page: 'events' },
     },
     testimonialsHeader: {
       stamp: 'From our visitors',
@@ -258,15 +312,17 @@ export const DEFAULT_PAGE_SECTIONS = {
           date: 'Seasonal',
           title: 'Multi-ethnic Lunar New Year Celebration',
           time: '',
-          desc: 'A free village festival with cultural entertainment, food, games, and displays — including Chinese lion blessings and student performers.',
+          desc: 'Ring in the new year with lion blessings, student performers, food and games across the Village.',
+          ctaLabel: 'Festival Details',
           image: '',
         },
         {
           slug: 'obon-in-the-village',
           date: 'Seasonal',
-          title: 'Opening of Hawaiʻi\'s Obon season',
+          title: 'Obon in the Village',
           time: 'Late afternoon',
-          desc: 'Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.',
+          desc: 'Dance with us as lanterns light the Village and taiko drums carry Hawaiʻi\'s Obon season into the evening.',
+          ctaLabel: 'Festival Details',
           image: '',
         },
         {
@@ -274,7 +330,8 @@ export const DEFAULT_PAGE_SECTIONS = {
           date: 'Seasonal',
           title: 'Portuguese Festa',
           time: '',
-          desc: 'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
+          desc: 'Sweet bread from the forno, music on the Village stage and a community celebration everyone is welcome to join.',
+          ctaLabel: 'Festival Details',
           image: '',
         },
         {
@@ -282,7 +339,8 @@ export const DEFAULT_PAGE_SECTIONS = {
           date: 'Seasonal',
           title: 'Harvest Festival',
           time: '',
-          desc: 'A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.',
+          desc: 'Celebrate Hawaiʻi\'s harvest traditions with food, culture, family activities and community at the Village.',
+          ctaLabel: 'Festival Details',
           image: '',
         },
       ],
@@ -296,10 +354,11 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   visit: {
     header: {
-      stamp: 'Visitor guide',
+      stamp: 'Plan your visit',
       stampClass: 'green',
-      title: 'Plan your visit',
-      subtitle: 'Hours, directions, admission, and everything else you need before you walk the village.',
+      title: 'Come walk through history with us.',
+      subtitle:
+        'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them.',
     },
     hours: {
       title: 'Opening hours',
@@ -324,9 +383,10 @@ export const DEFAULT_PAGE_SECTIONS = {
         'We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.',
     },
     safety: {
+      intro: 'We thought about you. You are welcome here.',
       terrainTitle: 'Terrain and navigation',
       terrainDesc:
-        'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard.',
+        'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. Service animals are welcome throughout the Village.',
       guidelinesTitle: 'Preserving cultural heritage',
       guidelinesDesc:
         'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaii\'s Plantation Village is a smoke-free facility.',
@@ -397,29 +457,94 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   about: {
     header: {
-      stamp: 'Our story',
+      stamp: 'About Hawaiʻi\'s Plantation Village',
       stampClass: 'green',
-      title: 'Built by plantation workers and their descendants',
+      title: 'Built by community. Preserved for generations.',
       subtitle:
-        'The Friends of Waipahu Cultural Garden Park incorporated in 1973 so future generations would acknowledge today\'s multiethnic society as rooted in Hawaiʻi\'s plantation era and lifestyle.',
+        'Hawaiʻi\'s Plantation Village began with a simple but urgent idea: don\'t let these stories disappear.',
     },
     mission: {
       stamp: 'MISSION',
-      title: 'A village for plantation heritage and legacy',
+      title: 'What emerged was more than a collection. It became a Village.',
       paragraphs: [
-        'From its inception, the long-range goal has been a collection of structures typifying a plantation village — each major ethnic group who worked the plantations represented with buildings, furnishings, and gardens that portray an authentic, culturally informed everyday life.',
-        'Much of the capital raised came from outside Waipahu. The committee changed the project name to include all of Hawaiʻi\'s plantations rather than focusing only on Waipahu. Hawaii\'s Plantation Village focuses on the plantation worker: natives and immigrants promised a chance to better their lives, whose differing cultural values and traditions form the basis of our multiethnic society today.',
+        'In 1973, former plantation workers, descendants and community members began working to preserve the history of plantation life in Hawaiʻi.',
+        'Historic structures were gathered and restored. Families donated furniture, photographs and personal belongings. Cultural organizations helped furnish homes and plant gardens. Volunteers shared knowledge that could not always be found in history books.',
+        'Hawaiʻi\'s Plantation Village opened to the public in 1992.',
+        'Today, we continue that community-led mission: preserving the places, objects and memories of Hawaiʻi\'s plantation era while creating opportunities for new generations to encounter, question and understand that history.',
       ],
+      quote: 'A living museum, for the people by the people.',
+      quoteCite: '',
+    },
+    closing: {
+      stamp: 'Join us',
+      stampClass: 'gold',
+      title: 'History lives when people engage with it.',
+      paragraphs: [
+        'Through exhibitions, guided tours, education, festivals, cultural programs, oral histories and community partnerships, we connect the past with the Hawaiʻi of today.',
+        'The Village was built so these stories would survive. Our responsibility now is to make sure they continue to matter.',
+        'It really does take a village — so do join us today.',
+      ],
+      cta: { label: 'Plan Your Visit', page: 'visit' },
+      secondaryCta: { label: 'Volunteer With Us', page: 'volunteer' },
     },
     timelineIntro: {
       stamp: 'CHRONICLES',
       stampClass: 'rust',
       title: 'From camps to village',
       description:
-        'Immigration waves that shaped plantation Hawaiʻi, and the founding of the Friends and the village that tells their story.',
+        'Immigration waves that shaped plantation Hawaiʻi, and the founding of the Friends and the Village that tells their story.',
     },
     leadershipIntro: {
       title: 'Founders and builders',
+    },
+    teamIntro: {
+      stamp: 'OUR PEOPLE',
+      title: 'Staff & Board Leadership',
+      description:
+        'HPV runs on institutional knowledge carried by the people who’ve stayed — some for decades — alongside new leadership and governance rebuilding the systems around them.',
+      staffLabel: 'Staff',
+      boardLabel: 'Board of Directors',
+      note:
+        'Plus a dedicated corps of docents and volunteers — several with decades of service — who lead tours, run programs, and keep the Village open every week.',
+    },
+    staff: {
+      items: [
+        {
+          slug: 'loretta-chen',
+          name: 'Dr. Loretta Chen',
+          role: 'Executive Director — leading the organizational turnaround',
+        },
+        {
+          slug: 'derrick-iwata',
+          name: 'Derrick Iwata',
+          role: 'Education & Programs Manager — schools, events, tours, volunteers',
+        },
+        {
+          slug: 'mil-holliday',
+          name: 'Mil Holliday',
+          role: 'Administration Manager — front-of-house & operations',
+        },
+        {
+          slug: 'michi-lacar',
+          name: 'Michi Lacar',
+          role: 'Programs Coordinator — docents, museum curation',
+        },
+      ],
+    },
+    board: {
+      items: [
+        { slug: 'kats-gustafson', name: 'Dr. Kats Gustafson', role: 'Board President' },
+        { slug: 'clement-bautista', name: 'Clement Bautista', role: 'Board Treasurer' },
+        { slug: 'william-rol', name: 'William Rol', role: 'Board Member' },
+        { slug: 'john-shockley', name: 'John Shockley', role: 'Board Member' },
+        { slug: 'carol-takahashi', name: 'Carol Takahashi', role: 'Board Member' },
+        {
+          slug: 'yoshiko-yamauchi',
+          name: 'Yoshiko Yamauchi',
+          role: 'Board Member; Founding Volunteer, 1976',
+        },
+        { slug: 'stephen-yuen', name: 'Stephen Yuen', role: 'Board Member' },
+      ],
     },
     newsIntro: {
       stamp: 'NEWS',
@@ -519,27 +644,29 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   stories: {
     header: {
-      stamp: 'Oral histories',
+      stamp: 'Stories from the Village',
       stampClass: 'green',
-      title: 'Plantation stories',
+      title: 'History is made of human lives.',
       subtitle:
-        'The lives, struggles, and music of the eight immigrant communities that built Waipahu.',
+        'Behind every photograph is a person. Behind every object is a story. Behind every home are generations of memories. Meet the workers, families, cultural practitioners and community members whose experiences illuminate Hawaiʻi\'s plantation past and its continuing legacy.',
     },
   },
   archives: {
     header: {
-      stamp: 'Photograph archives',
+      stamp: 'Collections & archives',
       stampClass: 'green',
-      title: 'Engaging photographs in the archives',
+      title: 'What families saved, Hawaiʻi remembers.',
       subtitle:
-        'Most old photographs have little significance to others unless you bring context. Ask what you see, what dates or places the image hints at, whether it matches what you know, and how the elements interact — then look for more context.',
+        'Photographs tucked into albums. Letters carried across oceans. Work tools worn smooth by use. Clothing saved for decades. Objects from kitchens, bedrooms and places of worship. Individually, they may seem ordinary. Together, they tell an extraordinary story.',
     },
     collections: {
       eyebrow: 'Three collections',
       title: 'Photograph collections',
       description:
-        'Photographs donated to Hawaii\'s Plantation Village are organized into three primary collections. Knowing who kept an image, and why, changes how you read it.',
+        'Hawaiʻi\'s Plantation Village cares for photographs, documents, artifacts and oral histories that preserve the experiences of plantation communities across generations. Knowing who kept an image, and why, changes how you read it.',
       items: PHOTOGRAPH_COLLECTIONS,
+      cta: { label: 'Explore the Collection', page: 'archives' },
+      secondaryCta: { label: 'Donate an Object or Photograph', page: 'about' },
     },
     howToLook: {
       eyebrow: 'Looking at photographs',
@@ -685,10 +812,11 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   learn: {
     school: {
-      stamp: 'For educators',
+      stamp: 'For educators & students',
       stampClass: 'green',
-      title: 'Education and field trips',
-      subtitle: 'Curriculum packages, classroom lessons, and school visit requests.',
+      title: 'History feels different when you can experience it',
+      subtitle:
+        'Bring learning beyond the classroom. At Hawaiʻi\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
       resourcesIntro:
         'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:',
       fieldTripNote:
@@ -795,28 +923,28 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   support: {
     header: {
-      stamp: 'Support the village',
+      stamp: 'Help us keep our stories alive',
       stampClass: 'green',
-      title: 'Keep these houses standing',
+      title: 'What we preserve today becomes tomorrow\'s legacy.',
       subtitle:
-        'Your gift maintains the cottages, the gardens, and the stories told inside them.',
+        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
     },
     donate: {
-      title: 'Make a tax-deductible gift',
+      title: 'Make a gift',
       description:
-        'Every dollar of a direct gift goes to site preservation and educational outreach.',
+        'Every gift helps preserve a piece of Hawaiʻi\'s shared history.',
     },
     membershipIntro: {
-      title: 'Become a member',
+      title: 'Belong to the Village.',
       description:
-        'Join as a steward for year-round benefits while you keep Waipahu heritage standing.',
+        'Membership is more than admission. It\'s a way to stand behind a place that keeps Hawaiʻi\'s stories alive.',
     },
     impactSidebar: {
-      title: 'Where it goes',
+      title: 'Where your support goes',
       items: [
-        'Maintains 25 historic camp cottages',
-        'Funds school field trip scholarships',
-        'Preserves oral history archives',
+        'Cares for historic homes and gardens',
+        'Preserves photographs and artifacts',
+        'Welcomes students and sustains cultural programs',
       ],
     },
   },
@@ -827,6 +955,68 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'Tickets and reservations',
       subtitle:
         'Reserve a guided tour slot and skip the check-in queue at the visitor center.',
+    },
+  },
+  explore: {
+    header: {
+      stamp: 'Homes, gardens & cultural traditions',
+      stampClass: 'green',
+      title: 'Many journeys. Different cultures. One shared history.',
+      subtitle:
+        'People came to Hawaiʻi from across Asia, Europe, the Pacific and the Americas, bringing languages, foods, faiths, celebrations, skills and memories of home.',
+    },
+    intro: {
+      paragraphs: [
+        'At the Village, historic homes, community spaces, artifacts and gardens reveal how families lived, worked, celebrated and built community across generations.',
+      ],
+      closing: 'Step inside. Look closely. Every home has a unique story to tell.',
+    },
+  },
+  events: {
+    header: {
+      stamp: 'Events at the Village',
+      stampClass: 'gold',
+      title: 'Come explore our culture with us.',
+      subtitle:
+        'Throughout the year, Hawaii\'s Plantation Village comes alive with music, food, dance, storytelling, cultural traditions and community celebrations.',
+    },
+    intro: {
+      paragraphs: [
+        'Come experience traditions passed from one generation to the next and make some memories of your own.',
+      ],
+      cta: { label: 'Plan Your Visit', page: 'visit' },
+    },
+  },
+  volunteer: {
+    header: {
+      stamp: 'Volunteer',
+      stampClass: 'gold',
+      title: 'History needs people – YOU.',
+      subtitle: 'The Village exists because people showed up.',
+    },
+    intro: {
+      paragraphs: [
+        'They preserved buildings, donated family photographs, planted gardens, recorded memories, led tours, made repairs and shared traditions.',
+        'This spirit continues today.',
+        'Whether you love history, gardening, education, archives, cultural programs or simply working with the community, there is a place for you at Hawaii\'s Plantation Village.',
+      ],
+      closing: 'You do not need to be a historian. You just need to care that these stories survive.',
+    },
+    ways: {
+      title: 'Where you can help',
+      items: [
+        { title: 'Docents & tours', note: 'Walk visitors through the homes and share the stories behind them.' },
+        { title: 'Gardens & grounds', note: 'Plant, tend and harvest the cultural gardens that surround the Village.' },
+        { title: 'Collections & archives', note: 'Help process photographs, documents and artifacts entrusted to us by families.' },
+        { title: 'Festivals & programs', note: 'Set up, welcome and celebrate alongside the community at our free festivals.' },
+        { title: 'Repairs & preservation', note: 'Keep the historic structures standing with carpentry, painting and maintenance.' },
+        { title: 'Office & welcome desk', note: 'Greet visitors, answer questions and keep the day running.' },
+      ],
+    },
+    cta: {
+      title: 'Volunteer With Us',
+      description:
+        'Tell us a little about yourself and what you would like to help with. We will be in touch about upcoming volunteer days and orientations.',
     },
   },
 };
