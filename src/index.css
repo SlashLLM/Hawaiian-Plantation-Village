@@ -1056,6 +1056,10 @@ button, input, select, textarea {
   max-width: 20ch;
 }
 
+.editorial-title:not(:last-child) {
+  margin-bottom: 1.25rem;
+}
+
 .editorial-lede {
   font-size: 1.05rem;
   line-height: 1.7;

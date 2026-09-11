@@ -484,6 +484,9 @@ const SECTION_FORM_SCHEMAS = {
         fields: [
           STAMP_TITLE_ONLY,
           textarea('description', 'Description'),
+          text('staffPhoto', 'Staff photo URL'),
+          text('staffPhotoAlt', 'Staff photo alt text'),
+          text('staffPhotoCaption', 'Staff photo caption'),
           text('staffLabel', 'Staff column label'),
           text('boardLabel', 'Board column label'),
           textarea('note', 'Closing note'),

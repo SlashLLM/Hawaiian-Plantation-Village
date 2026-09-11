@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
 import { 
-  Compass, BookOpen, Users, Calendar, ArrowRight, Briefcase, Mail, 
+  BookOpen, Users, Calendar, ArrowRight, Briefcase, Mail, 
   Search, MapPin, Phone, Clock, FileText, CheckCircle, X, 
-  ChevronRight, ChevronDown, Send, Printer, User, AlertCircle
+  ChevronRight, ChevronDown, Send, Printer, AlertCircle, Maximize2
 } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
@@ -46,6 +46,9 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const [localActiveTab, setLocalActiveTab] = useState('history');
   const activeTab = propActiveTab || localActiveTab;
   const setActiveTab = propSetActiveTab || setLocalActiveTab;
+
+  // Photo Lightbox State
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   // News State
   const [newsSearch, setNewsSearch] = useState('');
@@ -186,11 +189,11 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
       <SEO title="About Us" description="Built by community. Preserved for generations. The story of how Hawaii's Plantation Village came to be, and the mission that keeps it going." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.about}
-        stamp={header?.stamp ?? 'About Hawaiʻi’s Plantation Village'}
+        stamp={header?.stamp ?? 'About Hawaii\'s Plantation Village'}
         title={header?.title ?? 'Built by community. Preserved for generations.'}
         subtitle={
           header?.subtitle ??
-          'Hawaiʻi\'s Plantation Village began with a simple but urgent idea: don\'t let these stories disappear.'
+          'Hawaii\'s Plantation Village began with a simple but urgent idea: don\'t let these stories disappear.'
         }
       />
 
@@ -354,6 +357,39 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 {staff.length > 0 && (
                   <div>
                     <h3 style={styles.teamColumnHeading}>{teamIntro?.staffLabel ?? 'Staff'}</h3>
+                    <div style={styles.staffPhotoContainer}>
+                      <div 
+                        style={styles.staffPhotoFrame}
+                        onClick={() => setSelectedPhoto(teamIntro?.staffPhoto || SITE_PHOTOS.aboutStaff)}
+                        role="button"
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            setSelectedPhoto(teamIntro?.staffPhoto || SITE_PHOTOS.aboutStaff);
+                          }
+                        }}
+                        aria-label="Enlarge photo of Hawaii's Plantation Village staff"
+                      >
+                        <img
+                          src={teamIntro?.staffPhoto || SITE_PHOTOS.aboutStaff}
+                          alt={
+                            teamIntro?.staffPhotoAlt ??
+                            "Hawaii's Plantation Village staff and team members gathered before the village sugarcane fields"
+                          }
+                          style={styles.staffPhoto}
+                          loading="lazy"
+                        />
+                        <div style={styles.imgTextureOverlay} />
+                        <span style={styles.expandBadge}>
+                          <Maximize2 size={12} style={{ marginRight: 4 }} />
+                          Enlarge
+                        </span>
+                      </div>
+                      <p style={styles.staffPhotoCaption}>
+                        {teamIntro?.staffPhotoCaption ??
+                          "The Hawaii's Plantation Village team and docents at the village grounds in Waipahu."}
+                      </p>
+                    </div>
                     <ul style={styles.teamList}>
                       {staff.map((person, idx) => (
                         <li key={person.slug ?? `${person.name}-${idx}`} style={styles.teamListItem}>
@@ -867,7 +903,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Electronic Mailing Address</h5>
                       <p style={styles.infoText}>
-                        <a href={contact.emailHref ?? 'mailto:info@hawaiianplantationvillage.org'} style={styles.contactAnchor}>{contact.email ?? 'info@hawaiianplantationvillage.org'}</a>
+                        <a href={contact.emailHref ?? 'mailto:lchen.hpv@gmail.com'} style={styles.contactAnchor}>{contact.email ?? 'lchen.hpv@gmail.com'}</a>
                       </p>
                     </div>
                   </div>
@@ -910,6 +946,38 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           </div>
         )}
       </div>
+
+      {/* Enlarged Photo Modal */}
+      {selectedPhoto && (
+        <div 
+          style={styles.photoModalBackdrop}
+          onClick={() => setSelectedPhoto(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Enlarged staff photo"
+        >
+          <div style={styles.photoModalContent} onClick={(e) => e.stopPropagation()}>
+            <button 
+              onClick={() => setSelectedPhoto(null)} 
+              style={styles.photoModalCloseBtn}
+              aria-label="Close enlarged preview"
+            >
+              <X size={18} />
+            </button>
+            <div style={styles.photoModalImgWrapper}>
+              <img 
+                src={selectedPhoto} 
+                alt={teamIntro?.staffPhotoAlt ?? "Hawaii's Plantation Village staff"} 
+                style={styles.photoModalImg} 
+              />
+              <div style={styles.imgTextureOverlay} />
+            </div>
+            <p style={styles.photoModalCaption}>
+              {teamIntro?.staffPhotoCaption ?? "The Hawaii's Plantation Village team and docents at the historic village grounds in Waipahu."}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -1106,6 +1174,114 @@ const styles = {
     lineHeight: 1.6,
     color: 'var(--muted-sage)',
     marginTop: '2rem'
+  },
+  // Staff photo styles
+  staffPhotoContainer: {
+    marginTop: '0.85rem',
+    marginBottom: '1.25rem'
+  },
+  staffPhotoFrame: {
+    position: 'relative',
+    borderRadius: '4px',
+    border: '3px solid var(--koa-wood)',
+    padding: '4px',
+    backgroundColor: 'var(--paper-light)',
+    boxShadow: 'var(--shadow-md)',
+    overflow: 'hidden',
+    cursor: 'pointer',
+    transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+  },
+  staffPhoto: {
+    width: '100%',
+    height: 'auto',
+    aspectRatio: '4 / 3',
+    objectFit: 'cover',
+    display: 'block',
+    borderRadius: '2px'
+  },
+  expandBadge: {
+    position: 'absolute',
+    bottom: '8px',
+    right: '8px',
+    backgroundColor: 'rgba(26, 20, 16, 0.8)',
+    color: 'var(--paper-light)',
+    fontSize: '0.72rem',
+    fontFamily: 'var(--font-sans)',
+    padding: '3px 8px',
+    borderRadius: '3px',
+    display: 'inline-flex',
+    alignItems: 'center',
+    letterSpacing: '0.04em',
+    pointerEvents: 'none'
+  },
+  staffPhotoCaption: {
+    fontFamily: 'var(--font-display)',
+    fontStyle: 'italic',
+    fontSize: '0.85rem',
+    lineHeight: 1.5,
+    color: 'var(--muted-sage)',
+    marginTop: '0.5rem'
+  },
+  // Photo Lightbox Modal styles
+  photoModalBackdrop: {
+    position: 'fixed',
+    inset: 0,
+    backgroundColor: 'rgba(15, 23, 42, 0.82)',
+    backdropFilter: 'blur(4px)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    zIndex: 1000,
+    padding: '1.5rem',
+    animation: 'fadeIn 0.2s ease'
+  },
+  photoModalContent: {
+    position: 'relative',
+    maxWidth: '960px',
+    width: '100%',
+    backgroundColor: 'var(--paper-light)',
+    borderRadius: '6px',
+    border: '3px solid var(--koa-wood)',
+    padding: '0.75rem',
+    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+  },
+  photoModalCloseBtn: {
+    position: 'absolute',
+    top: '-12px',
+    right: '-12px',
+    width: '32px',
+    height: '32px',
+    borderRadius: '50%',
+    backgroundColor: 'var(--koa-wood)',
+    color: '#fff',
+    border: '2px solid var(--paper-light)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    cursor: 'pointer',
+    boxShadow: 'var(--shadow-md)',
+    zIndex: 10
+  },
+  photoModalImgWrapper: {
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: '4px'
+  },
+  photoModalImg: {
+    width: '100%',
+    maxHeight: '75vh',
+    objectFit: 'contain',
+    display: 'block',
+    backgroundColor: '#000'
+  },
+  photoModalCaption: {
+    fontFamily: 'var(--font-display)',
+    fontStyle: 'italic',
+    fontSize: '0.95rem',
+    lineHeight: 1.5,
+    color: 'var(--plantation-ink)',
+    marginTop: '0.65rem',
+    textAlign: 'center'
   },
   // Timeline styles
   timelineSection: {

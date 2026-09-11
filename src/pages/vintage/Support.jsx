@@ -19,7 +19,7 @@ export default function Support() {
     stamp: 'Help us keep our stories alive',
     stampClass: 'green',
     title: 'What we preserve today becomes tomorrow’s legacy.',
-    subtitle: 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.',
+    subtitle: 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.',
   });
   const { section: donateSection } = usePageSection('support', 'donate', {
     title: 'Make a gift',
@@ -167,7 +167,7 @@ export default function Support() {
           image={SITE_PHOTOS.headers.support}
           stamp={header?.stamp ?? 'Help us keep our stories alive'}
           title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
-          subtitle={header?.subtitle ?? 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.'}
+          subtitle={header?.subtitle ?? 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.'}
         />
 
         <div style={styles.container}>
@@ -194,7 +194,7 @@ export default function Support() {
         image={SITE_PHOTOS.headers.support}
         stamp={header?.stamp ?? 'Help us keep our stories alive'}
         title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
-        subtitle={header?.subtitle ?? 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.'}
+        subtitle={header?.subtitle ?? 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.'}
       />
 
       <div style={styles.container}>

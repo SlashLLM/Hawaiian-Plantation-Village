@@ -18,7 +18,7 @@ export default function ComingSoon({ eyebrow, title, body, note, children }) {
 
   const phone = contact.phone ?? '(808) 677-0110';
   const phoneHref = contact.phoneHref ?? 'tel:8086770110';
-  const email = contact.email ?? 'info@hawaiianplantationvillage.org';
+  const email = contact.email ?? 'lchen.hpv@gmail.com';
   const emailHref = contact.emailHref ?? `mailto:${email}`;
   const schedule = hours.schedule ?? 'Tuesday – Saturday: 9:00 AM – 2:00 PM';
 

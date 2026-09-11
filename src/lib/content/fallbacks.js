@@ -54,8 +54,8 @@ export const DEFAULT_SITE_SETTINGS = {
   contact: {
     phone: '(808) 677-0110',
     phoneHref: 'tel:8086770110',
-    email: 'info@hawaiianplantationvillage.org',
-    emailHref: 'mailto:info@hawaiianplantationvillage.org',
+    email: 'lchen.hpv@gmail.com',
+    emailHref: 'mailto:lchen.hpv@gmail.com',
     address: {
       line1: '94-695 Waipahu Street',
       line2: 'Waipahu, Oʻahu, Hawaiʻi 96797',
@@ -181,7 +181,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them.',
       paragraphs: [
         'Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them.',
-        'Whether Hawaiʻi is home or you\'re discovering the islands for the first time, a visit to Hawaiʻi\'s Plantation Village offers a deeper understanding of the people and cultures that continue to shape this unique gem in Waipahu.',
+        'Whether Hawaiʻi is home or you\'re discovering the islands for the first time, a visit to Hawaii\'s Plantation Village offers a deeper understanding of the people and cultures that continue to shape this unique gem in Waipahu.',
       ],
       essentials: [
         'Tuesday–Saturday · 9:00 AM–2:00 PM',
@@ -239,7 +239,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'History feels different when you can experience it',
       paragraphs: [
         'Bring learning beyond the classroom.',
-        'At Hawaiʻi\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
+        'At Hawaii\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
         'Guided experiences invite students to explore migration, labor, cultural exchange, family, community and change through the lives of real people.',
         'A visit can complement classroom learning before, during and after your field trip and give students something no textbook can: a sense of place.',
       ],
@@ -251,9 +251,9 @@ export const DEFAULT_PAGE_SECTIONS = {
       stampClass: 'green',
       title: 'What we preserve today becomes tomorrow\'s legacy.',
       description:
-        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
+        'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
       paragraphs: [
-        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered.',
+        'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.',
         'You can help us carry this important work forward.',
         'Your support cares for historic homes and gardens, preserves photographs and artifacts, welcomes students, sustains cultural programs and helps ensure that future generations can discover the people who helped shape Hawaiʻi.',
       ],
@@ -457,11 +457,11 @@ export const DEFAULT_PAGE_SECTIONS = {
   },
   about: {
     header: {
-      stamp: 'About Hawaiʻi\'s Plantation Village',
+      stamp: 'About Hawaii\'s Plantation Village',
       stampClass: 'green',
       title: 'Built by community. Preserved for generations.',
       subtitle:
-        'Hawaiʻi\'s Plantation Village began with a simple but urgent idea: don\'t let these stories disappear.',
+        'Hawaii\'s Plantation Village began with a simple but urgent idea: don\'t let these stories disappear.',
     },
     mission: {
       stamp: 'MISSION',
@@ -469,7 +469,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       paragraphs: [
         'In 1973, former plantation workers, descendants and community members began working to preserve the history of plantation life in Hawaiʻi.',
         'Historic structures were gathered and restored. Families donated furniture, photographs and personal belongings. Cultural organizations helped furnish homes and plant gardens. Volunteers shared knowledge that could not always be found in history books.',
-        'Hawaiʻi\'s Plantation Village opened to the public in 1992.',
+        'Hawaii\'s Plantation Village opened to the public in 1992.',
         'Today, we continue that community-led mission: preserving the places, objects and memories of Hawaiʻi\'s plantation era while creating opportunities for new generations to encounter, question and understand that history.',
       ],
       quote: 'A living museum, for the people by the people.',
@@ -502,6 +502,11 @@ export const DEFAULT_PAGE_SECTIONS = {
       title: 'Staff & Board Leadership',
       description:
         'HPV runs on institutional knowledge carried by the people who’ve stayed — some for decades — alongside new leadership and governance rebuilding the systems around them.',
+      staffPhoto: '/images/Staffphotos/staff-group.jpg',
+      staffPhotoAlt:
+        "Hawaii's Plantation Village staff and team members gathered before the village sugarcane fields",
+      staffPhotoCaption:
+        "The Hawaii's Plantation Village team and docents at the historic village grounds in Waipahu.",
       staffLabel: 'Staff',
       boardLabel: 'Board of Directors',
       note:
@@ -663,7 +668,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       eyebrow: 'Three collections',
       title: 'Photograph collections',
       description:
-        'Hawaiʻi\'s Plantation Village cares for photographs, documents, artifacts and oral histories that preserve the experiences of plantation communities across generations. Knowing who kept an image, and why, changes how you read it.',
+        'Hawaii\'s Plantation Village cares for photographs, documents, artifacts and oral histories that preserve the experiences of plantation communities across generations. Knowing who kept an image, and why, changes how you read it.',
       items: PHOTOGRAPH_COLLECTIONS,
       cta: { label: 'Explore the Collection', page: 'archives' },
       secondaryCta: { label: 'Donate an Object or Photograph', page: 'about' },
@@ -816,7 +821,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       stampClass: 'green',
       title: 'History feels different when you can experience it',
       subtitle:
-        'Bring learning beyond the classroom. At Hawaiʻi\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
+        'Bring learning beyond the classroom. At Hawaii\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
       resourcesIntro:
         'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:',
       fieldTripNote:
@@ -927,7 +932,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       stampClass: 'green',
       title: 'What we preserve today becomes tomorrow\'s legacy.',
       subtitle:
-        'Hawaiʻi\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
+        'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered. You can help us carry this important work forward.',
     },
     donate: {
       title: 'Make a gift',

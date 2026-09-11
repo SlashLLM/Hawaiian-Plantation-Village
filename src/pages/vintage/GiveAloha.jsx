@@ -121,11 +121,11 @@ export default function GiveAloha() {
             </div>
 
             <h1 style={styles.heroTitle}>
-              Support Hawaii’s Plantation Village Through <span style={styles.titleHighlight}>Give Aloha!</span>
+              Support Hawaii's Plantation Village Through <span style={styles.titleHighlight}>Give Aloha!</span>
             </h1>
 
             <p style={styles.heroLead}>
-              Shop at any <strong>Foodland</strong>, <strong>Sack N Save</strong>, or <strong>Foodland Farms</strong> and make a donation to Hawaii’s Plantation Village at checkout. <strong>Foodland will match a portion of your gift!</strong>
+              Shop at any <strong>Foodland</strong>, <strong>Sack N Save</strong>, or <strong>Foodland Farms</strong> and make a donation to Hawaii's Plantation Village at checkout. <strong>Foodland will match a portion of your gift!</strong>
             </p>
 
             {/* Quick Code Copy Card */}
@@ -214,7 +214,7 @@ export default function GiveAloha() {
               </div>
               <div style={styles.posterFooter}>
                 <div style={styles.posterFooterItem}>
-                  <strong>Beneficiary:</strong> Hawaii’s Plantation Village
+                  <strong>Beneficiary:</strong> Hawaii's Plantation Village
                 </div>
                 <div style={styles.posterFooterItem}>
                   <strong>Code:</strong> <span style={{ color: 'var(--terracotta-clay)', fontWeight: 700 }}>{ORG_CODE}</span>
@@ -327,7 +327,7 @@ export default function GiveAloha() {
 
                   <div style={styles.quoteBox}>
                     <p style={styles.quoteText}>
-                      “I’d like to make a <strong>$_____</strong> donation to <span style={styles.quoteOrg}>Hawaii’s Plantation Village</span>, code <span style={styles.quoteCode}>#79102</span>.”
+                      “I’d like to make a <strong>$_____</strong> donation to <span style={styles.quoteOrg}>Hawaii's Plantation Village</span>, code <span style={styles.quoteCode}>#79102</span>.”
                     </p>
                     <button 
                       onClick={handleCopyCode} 
@@ -357,7 +357,7 @@ export default function GiveAloha() {
                     Review your printed receipt before leaving the register to confirm that:
                   </p>
                   <ul style={styles.receiptChecklist}>
-                    <li><strong>Hawaii’s Plantation Village</strong> (or code 79102) is shown on the receipt slip.</li>
+                    <li><strong>Hawaii's Plantation Village</strong> (or code 79102) is shown on the receipt slip.</li>
                     <li>Your desired donation amount was properly charged.</li>
                   </ul>
                   <div style={styles.stepMahalo}>
@@ -455,7 +455,7 @@ export default function GiveAloha() {
 
             <div style={styles.recapRow}>
               <span style={styles.recapLabel}>Beneficiary</span>
-              <strong style={styles.recapValue}>Hawaii’s Plantation Village</strong>
+              <strong style={styles.recapValue}>Hawaii's Plantation Village</strong>
             </div>
 
             <div style={styles.recapRow}>
@@ -611,7 +611,7 @@ export default function GiveAloha() {
                 style={styles.modalImg} 
               />
               <div style={styles.modalCaption}>
-                <span>Hawaii’s Plantation Village • Give Aloha Code <strong>{ORG_CODE}</strong></span>
+                <span>Hawaii's Plantation Village • Give Aloha Code <strong>{ORG_CODE}</strong></span>
                 <a 
                   href={activeModalImg} 
                   download="give-aloha-hpv.jpg" 

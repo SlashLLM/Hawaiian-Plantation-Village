@@ -11,6 +11,7 @@ export const SITE_PHOTOS = {
   homeFeatured: digi('IMG_6420.webp'),
   homeEducators: digi('IMG_6330.webp'),
   aboutMission: digi('IMG_6066.webp'),
+  aboutStaff: '/images/Staffphotos/staff-group.jpg',
   storiesFallback: digi('IMG_6122.webp'),
   newsSmokestack: digi('IMG_6810.webp'),
   newsFestival: digi('IMG_6103.webp'),

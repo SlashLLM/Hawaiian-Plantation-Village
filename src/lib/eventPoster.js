@@ -13,7 +13,7 @@ export const ACTIVE_POSTER = {
   id: 'harvest-moon-2026',
   src: '/images/harvest-moon-festival-2026.jpg',
   alt:
-    'Hawaii’s Plantation Village 4th Annual Harvest Moon Festival — Saturday, September 26, 2026, 9:00 a.m. to 2:00 p.m. Free admission and on-site parking.',
+    'Hawaii\'s Plantation Village 4th Annual Harvest Moon Festival — Saturday, September 26, 2026, 9:00 a.m. to 2:00 p.m. Free admission and on-site parking.',
   caption: 'Saturday, September 26, 2026 · 9:00 a.m. – 2:00 p.m. · Free admission & parking',
   /** Last day the popup appears, inclusive. After this it stops on its own. */
   showUntil: '2026-09-26',
