@@ -770,6 +770,11 @@ button, input, select, textarea {
   gap: 2.5rem;
 }
 
+.content-sidebar-grid--team {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 3.5rem);
+}
+
 .two-col-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -898,7 +903,8 @@ button, input, select, textarea {
   .content-sidebar-grid--wide,
   .content-sidebar-grid--mission,
   .content-sidebar-grid--job,
-  .content-sidebar-grid--book {
+  .content-sidebar-grid--book,
+  .content-sidebar-grid--team {
     grid-template-columns: 1fr;
     gap: 2.5rem;
   }

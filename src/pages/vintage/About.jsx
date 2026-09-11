@@ -19,6 +19,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const { section: closing } = usePageSection('about', 'closing', {});
   const { section: timelineIntro } = usePageSection('about', 'timelineIntro', {});
   const { section: leadershipIntro } = usePageSection('about', 'leadershipIntro', {});
+  const { section: teamIntro } = usePageSection('about', 'teamIntro', {});
   const { section: newsIntro } = usePageSection('about', 'newsIntro', {});
   const { section: careersIntro } = usePageSection('about', 'careersIntro', {});
   const { section: contactIntro } = usePageSection('about', 'contactIntro', {});
@@ -26,6 +27,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const { items: careersList } = useContentCollection('career');
   const { items: timeline } = usePageListSection('about', 'timeline');
   const { items: leadership } = usePageListSection('about', 'leadership');
+  const { items: staff } = usePageListSection('about', 'staff');
+  const { items: board } = usePageListSection('about', 'board');
 
   const contact = settings?.contact ?? {};
   const hours = settings?.hours ?? {};
@@ -203,6 +206,14 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
               <span>History and mission</span>
               {activeTab === 'history' && <div style={styles.tabIndicator} />}
             </button>
+            <button
+              onClick={() => setActiveTab('team')}
+              style={{ ...styles.tabButton, ...(activeTab === 'team' ? styles.tabButtonActive : {}) }}
+            >
+              <Users size={16} />
+              <span>Team</span>
+              {activeTab === 'team' && <div style={styles.tabIndicator} />}
+            </button>
             <button 
               onClick={() => setActiveTab('news')}
               style={{ ...styles.tabButton, ...(activeTab === 'news' ? styles.tabButtonActive : {}) }}
@@ -329,7 +340,51 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           </div>
         )}
 
-        {/* TAB 2: NEWS & ANNOUNCEMENTS */}
+        {/* TAB 2: TEAM */}
+        {activeTab === 'team' && (
+          <div style={styles.tabContentArea}>
+            <section style={styles.aboutSection}>
+              <span className="ledger-header" style={styles.teamStamp}>{teamIntro?.stamp ?? 'OUR PEOPLE'}</span>
+              <h2 style={styles.sectionTitle}>{teamIntro?.title ?? 'Staff & Board Leadership'}</h2>
+              {teamIntro?.description && (
+                <p style={styles.teamIntroText}>{teamIntro.description}</p>
+              )}
+
+              <div className="content-sidebar-grid content-sidebar-grid--team" style={styles.teamGrid}>
+                {staff.length > 0 && (
+                  <div>
+                    <h3 style={styles.teamColumnHeading}>{teamIntro?.staffLabel ?? 'Staff'}</h3>
+                    <ul style={styles.teamList}>
+                      {staff.map((person, idx) => (
+                        <li key={person.slug ?? `${person.name}-${idx}`} style={styles.teamListItem}>
+                          <span style={styles.teamName}>{person.name}</span>
+                          {person.role && <span style={styles.teamRole}>{person.role}</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {board.length > 0 && (
+                  <div>
+                    <h3 style={styles.teamColumnHeading}>{teamIntro?.boardLabel ?? 'Board of Directors'}</h3>
+                    <ul style={styles.teamList}>
+                      {board.map((person, idx) => (
+                        <li key={person.slug ?? `${person.name}-${idx}`} style={styles.teamListItem}>
+                          <span style={styles.teamName}>{person.name}</span>
+                          {person.role && <span style={styles.teamRole}>{person.role}</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {teamIntro?.note && <p style={styles.teamNote}>{teamIntro.note}</p>}
+            </section>
+          </div>
+        )}
+
+        {/* TAB 3: NEWS & ANNOUNCEMENTS */}
         {activeTab === 'news' && (
           <div style={styles.tabContentArea}>
             <div style={styles.ledgerHeaderRow}>
@@ -423,7 +478,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           </div>
         )}
 
-        {/* TAB 3: CAREERS */}
+        {/* TAB 4: CAREERS */}
         {activeTab === 'careers' && (
           <div style={styles.tabContentArea}>
             <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -643,7 +698,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
           </div>
         )}
 
-        {/* TAB 4: CONTACT US */}
+        {/* TAB 5: CONTACT US */}
         {activeTab === 'contact' && (
           <div style={styles.tabContentArea}>
             <div className="content-sidebar-grid content-sidebar-grid--mission">
@@ -990,6 +1045,67 @@ const styles = {
     inset: 0,
     backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.85\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\' opacity=\'0.03\'/%3E%3C/svg%3E")',
     pointerEvents: 'none'
+  },
+  // Team (staff & board) styles
+  teamStamp: {
+    display: 'inline-block',
+    border: 'none',
+    padding: 0,
+    color: 'var(--heritage-gold-ink)',
+    marginBottom: '0.75rem'
+  },
+  teamIntroText: {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+    color: 'var(--muted-sage)',
+    marginBottom: '2rem'
+  },
+  teamGrid: {
+    marginTop: '1rem'
+  },
+  teamColumnHeading: {
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    fontWeight: 600,
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+    color: 'var(--heritage-gold-ink)',
+    borderBottom: '1px solid var(--hairline)',
+    paddingBottom: '0.5rem',
+    marginBottom: '0.25rem'
+  },
+  teamList: {
+    listStyle: 'none',
+    margin: 0,
+    padding: 0
+  },
+  teamListItem: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.3rem',
+    padding: '0.9rem 0',
+    borderBottom: '1px solid var(--hairline)'
+  },
+  teamName: {
+    fontFamily: 'var(--font-display)',
+    fontSize: '1.05rem',
+    fontWeight: 600,
+    color: 'var(--plantation-ink)'
+  },
+  teamRole: {
+    fontFamily: 'var(--font-display)',
+    fontStyle: 'italic',
+    fontSize: '0.9rem',
+    lineHeight: 1.5,
+    color: 'var(--muted-sage)'
+  },
+  teamNote: {
+    fontFamily: 'var(--font-display)',
+    fontStyle: 'italic',
+    fontSize: '0.95rem',
+    lineHeight: 1.6,
+    color: 'var(--muted-sage)',
+    marginTop: '2rem'
   },
   // Timeline styles
   timelineSection: {

@@ -477,6 +477,60 @@ const SECTION_FORM_SCHEMAS = {
   'about.leadershipIntro': {
     groups: [{ title: 'Leadership', fields: [text('title', 'Title')] }],
   },
+  'about.teamIntro': {
+    groups: [
+      {
+        title: 'Team intro',
+        fields: [
+          STAMP_TITLE_ONLY,
+          textarea('description', 'Description'),
+          text('staffLabel', 'Staff column label'),
+          text('boardLabel', 'Board column label'),
+          textarea('note', 'Closing note'),
+        ],
+      },
+    ],
+  },
+  'about.staff': {
+    groups: [
+      {
+        title: 'Staff',
+        fields: [
+          objectList(
+            'items',
+            'Staff members',
+            { slug: '', name: '', role: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'name', label: 'Name', type: 'text' },
+              { key: 'role', label: 'Role', type: 'textarea' },
+            ],
+            'Staff member',
+          ),
+        ],
+      },
+    ],
+  },
+  'about.board': {
+    groups: [
+      {
+        title: 'Board of directors',
+        fields: [
+          objectList(
+            'items',
+            'Board members',
+            { slug: '', name: '', role: '' },
+            [
+              { key: 'slug', label: 'Slug', type: 'text' },
+              { key: 'name', label: 'Name', type: 'text' },
+              { key: 'role', label: 'Role', type: 'textarea' },
+            ],
+            'Board member',
+          ),
+        ],
+      },
+    ],
+  },
   'about.newsIntro': {
     groups: [
       {

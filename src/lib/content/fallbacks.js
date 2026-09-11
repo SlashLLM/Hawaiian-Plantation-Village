@@ -497,6 +497,55 @@ export const DEFAULT_PAGE_SECTIONS = {
     leadershipIntro: {
       title: 'Founders and builders',
     },
+    teamIntro: {
+      stamp: 'OUR PEOPLE',
+      title: 'Staff & Board Leadership',
+      description:
+        'HPV runs on institutional knowledge carried by the people who’ve stayed — some for decades — alongside new leadership and governance rebuilding the systems around them.',
+      staffLabel: 'Staff',
+      boardLabel: 'Board of Directors',
+      note:
+        'Plus a dedicated corps of docents and volunteers — several with decades of service — who lead tours, run programs, and keep the Village open every week.',
+    },
+    staff: {
+      items: [
+        {
+          slug: 'loretta-chen',
+          name: 'Dr. Loretta Chen',
+          role: 'Executive Director — leading the organizational turnaround',
+        },
+        {
+          slug: 'derrick-iwata',
+          name: 'Derrick Iwata',
+          role: 'Education & Programs Manager — schools, events, tours, volunteers',
+        },
+        {
+          slug: 'mil-holliday',
+          name: 'Mil Holliday',
+          role: 'Administration Manager — front-of-house & operations',
+        },
+        {
+          slug: 'michi-lacar',
+          name: 'Michi Lacar',
+          role: 'Programs Coordinator — docents, museum curation',
+        },
+      ],
+    },
+    board: {
+      items: [
+        { slug: 'kats-gustafson', name: 'Dr. Kats Gustafson', role: 'Board President' },
+        { slug: 'clement-bautista', name: 'Clement Bautista', role: 'Board Treasurer' },
+        { slug: 'william-rol', name: 'William Rol', role: 'Board Member' },
+        { slug: 'john-shockley', name: 'John Shockley', role: 'Board Member' },
+        { slug: 'carol-takahashi', name: 'Carol Takahashi', role: 'Board Member' },
+        {
+          slug: 'yoshiko-yamauchi',
+          name: 'Yoshiko Yamauchi',
+          role: 'Board Member; Founding Volunteer, 1976',
+        },
+        { slug: 'stephen-yuen', name: 'Stephen Yuen', role: 'Board Member' },
+      ],
+    },
     newsIntro: {
       stamp: 'NEWS',
       title: 'What is happening here',
