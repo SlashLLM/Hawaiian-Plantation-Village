@@ -913,9 +913,9 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Hours of Operation</h5>
                       <p style={styles.infoText}>
-                        {hours.schedule ?? 'Tuesday through Saturday'}<br />
+                        {hours.schedule ?? 'Monday through Saturday'}<br />
                         {hours.toursNote ?? 'Guided tours at 10:00 AM & 12:00 PM'}<br />
-                        <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>{hours.closedNote ?? '*Closed Sundays, Mondays & Major Holidays'}</span>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>{hours.closedNote ?? '*Closed Sundays & Major State Holidays'}</span>
                       </p>
                     </div>
                   </div>

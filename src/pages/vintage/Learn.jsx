@@ -172,7 +172,7 @@ export default function Learn() {
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Education" description="History feels different when you can experience it. Field trips, curriculum resources and youth programs at Hawaii's Plantation Village." />
+      <SEO title="Education" description="History feels different when you experience it. Field trips, curriculum resources and youth programs at Hawaii's Plantation Village." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.learn}
         stamp={headerDetails.stampText}

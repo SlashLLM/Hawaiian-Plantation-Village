@@ -64,9 +64,9 @@ export const DEFAULT_SITE_SETTINGS = {
       'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3719.141857904033!2d-158.00941912384777!3d21.38428548035626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x7c0065961d6fbcd7%3A0x7d27e7f6e2b17a19!2sHawaii%27s%20Plantation%20Village!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus',
   },
   hours: {
-    schedule: 'Tuesday – Saturday: 9:00 AM – 2:00 PM',
+    schedule: 'Monday – Saturday: 9:00 AM – 2:00 PM',
     toursNote: 'Guided tours at 10:00 AM & 12:00 PM',
-    closedNote: 'Closed on Sundays, Mondays, and major state holidays.',
+    closedNote: 'Closed on Sundays and major state holidays.',
     parking: 'Free Visitor Parking Onsite',
   },
   hero: {
@@ -139,7 +139,7 @@ export const DEFAULT_PAGE_SECTIONS = {
     quickVisit: {
       hours: {
         title: 'HOURS OF OPERATION',
-        primary: 'Tuesday – Saturday: 9:00 AM – 2:00 PM',
+        primary: 'Monday – Saturday: 9:00 AM – 2:00 PM',
         secondary: 'Guided tours at 10:00 AM & 12:00 PM',
       },
       location: {
@@ -166,12 +166,12 @@ export const DEFAULT_PAGE_SECTIONS = {
       items: [
         { name: 'Hawaiian', note: 'The land, her people and the world before sugar' },
         { name: 'Chinese', note: 'Migration, family and community' },
-        { name: 'Japanese', note: 'Home, work, faith and tradition' },
-        { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
-        { name: 'Korean', note: 'Migration, community and cultural tradition' },
-        { name: 'Okinawan', note: 'Identity, memory and community' },
         { name: 'Portuguese', note: 'Family, food, faith and celebration' },
+        { name: 'Japanese', note: 'Home, work, faith and tradition' },
+        { name: 'Okinawan', note: 'Identity, memory and community' },
         { name: 'Puerto Rican', note: 'Home, tradition and island connections' },
+        { name: 'Korean', note: 'Migration, community and cultural tradition' },
+        { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
       ],
     },
     planVisit: {
@@ -184,7 +184,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         'Whether Hawaiʻi is home or you\'re discovering the islands for the first time, a visit to Hawaii\'s Plantation Village offers a deeper understanding of the people and cultures that continue to shape this unique gem in Waipahu.',
       ],
       essentials: [
-        'Tuesday–Saturday · 9:00 AM–2:00 PM',
+        'Monday–Saturday · 9:00 AM–2:00 PM',
         '94-695 Waipahu Street · Waipahu, Oʻahu',
         'Free on-site parking',
       ],
@@ -236,7 +236,7 @@ export const DEFAULT_PAGE_SECTIONS = {
     educators: {
       stamp: 'For educators & students',
       stampClass: 'teal',
-      title: 'History feels different when you can experience it',
+      title: 'History feels different when you experience it',
       paragraphs: [
         'Bring learning beyond the classroom.',
         'At Hawaii\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
@@ -362,8 +362,8 @@ export const DEFAULT_PAGE_SECTIONS = {
     },
     hours: {
       title: 'Opening hours',
-      schedule: 'Tuesday – Saturday: 9:00 AM – 2:00 PM',
-      closedNote: 'Closed on Sundays, Mondays, and major state holidays.',
+      schedule: 'Monday – Saturday: 9:00 AM – 2:00 PM',
+      closedNote: 'Closed on Sundays and major state holidays.',
       toursIntro:
         'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:',
       tourSlots: [
@@ -383,10 +383,10 @@ export const DEFAULT_PAGE_SECTIONS = {
         'We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.',
     },
     safety: {
-      intro: 'We thought about you. You are welcome here.',
+      intro: 'We care about you. You are welcomed here.',
       terrainTitle: 'Terrain and navigation',
       terrainDesc:
-        'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. Service animals are welcome throughout the Village.',
+        'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. We do encounter dogs and wildlife like ducks and native birds on the property. Service animals on leash are welcomed.',
       guidelinesTitle: 'Preserving cultural heritage',
       guidelinesDesc:
         'Please do not climb on historical structures or touch displays marked with preservation tags. Hawaii\'s Plantation Village is a smoke-free facility.',
@@ -450,7 +450,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         },
         {
           q: 'Is the village open in the rain?',
-          a: 'Yes, we are open rain or shine! Hawaii weather can be tropical; we suggest bringing an umbrella or light rain jacket as tours walk outdoors between buildings.',
+          a: 'Yes, we are open rain or shine! Hawaii weather can be tropical; we suggest bringing an umbrella or light rain jacket as tours walk outdoors between buildings. The only exception is when the City issues a closure of City buildings and services during a tropical storm.',
         },
       ],
     },
@@ -534,11 +534,17 @@ export const DEFAULT_PAGE_SECTIONS = {
           name: 'Michi Lacar',
           role: 'Programs Coordinator — docents, museum curation',
         },
+        {
+          slug: 'eli-flores',
+          name: 'Eli Flores',
+          role: 'Museum Technician',
+        },
       ],
     },
     board: {
       items: [
         { slug: 'kats-gustafson', name: 'Dr. Kats Gustafson', role: 'Board President' },
+        { slug: 'steven-yuen', name: 'Steven Yuen', role: 'Board Vice President' },
         { slug: 'clement-bautista', name: 'Clement Bautista', role: 'Board Treasurer' },
         { slug: 'william-rol', name: 'William Rol', role: 'Board Member' },
         { slug: 'john-shockley', name: 'John Shockley', role: 'Board Member' },
@@ -548,7 +554,6 @@ export const DEFAULT_PAGE_SECTIONS = {
           name: 'Yoshiko Yamauchi',
           role: 'Board Member; Founding Volunteer, 1976',
         },
-        { slug: 'stephen-yuen', name: 'Stephen Yuen', role: 'Board Member' },
       ],
     },
     newsIntro: {
@@ -819,7 +824,7 @@ export const DEFAULT_PAGE_SECTIONS = {
     school: {
       stamp: 'For educators & students',
       stampClass: 'green',
-      title: 'History feels different when you can experience it',
+      title: 'History feels different when you experience it',
       subtitle:
         'Bring learning beyond the classroom. At Hawaii\'s Plantation Village, students enter historic homes, explore cultural gardens, encounter everyday objects and hear stories that connect Hawaiʻi\'s plantation era to the islands they know today.',
       resourcesIntro:
@@ -1390,6 +1395,24 @@ export const PHOTOGRAPHS = [
 
 export const CAMPS_DATA = [
   {
+    id: 'hawaiian',
+    culture: 'Hawaiian',
+    title: 'The Hawaiian Hale & Taro Patch',
+    arrival: 'Before plantation era',
+    isPlaceholder: true,
+    shortDesc:
+      'Native Hawaiian families lived on this land long before the plantation, tending loʻi kalo and sharing traditions with the immigrant camps that grew up around them.',
+    fullHistory:
+      'Long before contract laborers arrived, Native Hawaiian families cultivated the ahupuaʻa of Waipahu, tending loʻi kalo (taro patches) fed by the ʻauwai (irrigation channels) that later shaped the plantation\'s own ditch system. As the sugar era grew, Hawaiian families remained woven into camp life — teaching neighbors to fish, pound poi, and read the land — even as their own community was reshaped by the plantation around them.',
+    oralHistory: {
+      narrator: 'Leimomi Kahale (Kupuna, Taro Patch Keeper)',
+      length: '3m 05s',
+      audioSimText: 'Recording: Kahale ʻohana oral history, recorded 1996.',
+      transcript:
+        '“My tūtū kept the loʻi going even after the ditch water was diverted for cane. She said the taro remembered this valley long before the mill whistle ever did. Workers from every camp came to trade for poi, and she taught their children the names of the wind and rain here. The plantation changed everything around us, but the kalo kept us rooted.”',
+    },
+  },
+  {
     id: 'chinese',
     culture: 'Chinese',
     title: 'The Chinese Society Cookhouse',
@@ -1404,41 +1427,6 @@ export const CAMPS_DATA = [
       audioSimText: 'Recording: Chang family oral archive, interviewed 1994.',
       transcript:
         '“My grandfather came in 1888. He told me the kitchen fires in the Chinese camp section never went out. They baked buns, boiled tea, and exchanged news. The bango system was tight, but workers pooled their credit slips to buy bulk ingredients directly from Honolulu merchants. That cookhouse kept our community alive.”',
-    },
-  },
-  {
-    id: 'japanese',
-    culture: 'Japanese',
-    title: 'The Japanese Furo & Cottage',
-    arrival: '1885',
-    shortDesc:
-      'Brought traditional bathing customs and established large camp structures, bringing rich family traditions and shrines.',
-    fullHistory:
-      'Japanese workers arrived under the Government-Contract system in 1885. They constructed traditional furo (hot water baths) which became cultural nodes where workers of different nations interacted. Many cottages represent the post-contract family settlements.',
-    oralHistory: {
-      narrator: 'Kiyoshi Tanaka (Retired Sugar Mill Stoker)',
-      length: '3m 12s',
-      audioSimText: 'Recording: Tanaka oral history, interviewed 1989.',
-      transcript:
-        '“At the end of a 10-hour shift in the boiling sugar house, covered in black dust, the furo bath was heaven. We sat in the hot water and talked. Language didn\'t matter much. We shared cigarettes and laughed. It was where we stopped being contract numbers and became friends.”',
-    },
-  },
-  {
-    id: 'filipino',
-    culture: 'Filipino',
-    title: 'The Filipino Single-Men Barracks',
-    arrival: '1906',
-    isPlaceholder: true,
-    shortDesc:
-      'Arrived under the HSPA recruiting system, forming the backbone of late-era plantation field operations.',
-    fullHistory:
-      'Filipino Sakadas arrived starting in 1906. Initially living in single-men barracks, they brought a rich history of labor organizing, music, and cuisine. They were the largest labor force during the final decades of the sugar era.',
-    oralHistory: {
-      narrator: 'Espiridion "Pedro" Ramos (Sakada Field Guide)',
-      length: '4m 05s',
-      audioSimText: 'Recording: Sakada oral archive, interviewed 1991.',
-      transcript:
-        '“We lived six men to a room in the Waipahu barracks. We brought our guitars, and on Saturday nights, we sang kundiman (love songs) on the porch. The Luna was strict, but when the music started, the fields felt far away. We became brothers in those rooms.”',
     },
   },
   {
@@ -1459,39 +1447,20 @@ export const CAMPS_DATA = [
     },
   },
   {
-    id: 'korean',
-    culture: 'Korean',
-    title: 'The Korean Protestant Community Cottage',
-    arrival: '1903',
-    isPlaceholder: true,
+    id: 'japanese',
+    culture: 'Japanese',
+    title: 'The Japanese Furo & Cottage',
+    arrival: '1885',
     shortDesc:
-      'Formed tightly-knit communities centered around church gatherings, language schools, and independence movements.',
+      'Brought traditional bathing customs and established large camp structures, bringing rich family traditions and shrines.',
     fullHistory:
-      'Korean immigrants arrived in 1903, seeking relief from political turmoil. They established active language schools and churches. Korean camp cottages often had small gardens for making fermented vegetables, introducing kimchi to the local diet.',
+      'Japanese workers arrived under the Government-Contract system in 1885. They constructed traditional furo (hot water baths) which became cultural nodes where workers of different nations interacted. Many cottages represent the post-contract family settlements.',
     oralHistory: {
-      narrator: 'Young-Hee Park (Language School Educator)',
-      length: '3m 50s',
-      audioSimText: 'Recording: Park family archive, recorded 1995.',
+      narrator: 'Kiyoshi Tanaka (Retired Sugar Mill Stoker)',
+      length: '3m 12s',
+      audioSimText: 'Recording: Tanaka oral history, interviewed 1989.',
       transcript:
-        '“We gathered at the camp chapel on Sundays. It wasn\'t just for church services; it was where we taught our children the Korean alphabet and gathered funds to support the independence movement in Seoul. The cottage garden always had chili pepper stalks growing in the red dirt.”',
-    },
-  },
-  {
-    id: 'puerto_rican',
-    culture: 'Puerto Rican',
-    title: 'The Puerto Rican Casita',
-    arrival: '1900',
-    isPlaceholder: true,
-    shortDesc:
-      'Arrived after hurricanes devastated their home island, introducing rich música jibara and pasteles to Hawaiʻi.',
-    fullHistory:
-      'Following the devastation of Hurricane San Ciriaco in 1899, over 5,000 Puerto Ricans migrated to Hawaiʻi in 1900. They introduced dynamic rhythms, string ensembles, and food traditions like pasteles (similar to tamales, wrapped in banana leaves).',
-    oralHistory: {
-      narrator: 'Roberto Morales (Cane Hauler & Musician)',
-      length: '3m 30s',
-      audioSimText: 'Recording: Morales music archives, recorded 1990.',
-      transcript:
-        '“We brought the cuatro guitar and the güiro scraper. When we played music at the camp borders, the other workers would stand and listen. We blended our rhythms with Portuguese tunes and Hawaiian chants. That\'s how Cachi Cachi music was born in Waipahu.”',
+        '“At the end of a 10-hour shift in the boiling sugar house, covered in black dust, the furo bath was heaven. We sat in the hot water and talked. Language didn\'t matter much. We shared cigarettes and laughed. It was where we stopped being contract numbers and became friends.”',
     },
   },
   {
@@ -1513,21 +1482,57 @@ export const CAMPS_DATA = [
     },
   },
   {
-    id: 'hawaiian',
-    culture: 'Hawaiian',
-    title: 'The Hawaiian Hale & Taro Patch',
-    arrival: 'Before plantation era',
+    id: 'puerto_rican',
+    culture: 'Puerto Rican',
+    title: 'The Puerto Rican Casita',
+    arrival: '1900',
     isPlaceholder: true,
     shortDesc:
-      'Native Hawaiian families lived on this land long before the plantation, tending loʻi kalo and sharing traditions with the immigrant camps that grew up around them.',
+      'Arrived after hurricanes devastated their home island, introducing rich música jibara and pasteles to Hawaiʻi.',
     fullHistory:
-      'Long before contract laborers arrived, Native Hawaiian families cultivated the ahupuaʻa of Waipahu, tending loʻi kalo (taro patches) fed by the ʻauwai (irrigation channels) that later shaped the plantation\'s own ditch system. As the sugar era grew, Hawaiian families remained woven into camp life — teaching neighbors to fish, pound poi, and read the land — even as their own community was reshaped by the plantation around them.',
+      'Following the devastation of Hurricane San Ciriaco in 1899, over 5,000 Puerto Ricans migrated to Hawaiʻi in 1900. They introduced dynamic rhythms, string ensembles, and food traditions like pasteles (similar to tamales, wrapped in banana leaves).',
     oralHistory: {
-      narrator: 'Leimomi Kahale (Kupuna, Taro Patch Keeper)',
-      length: '3m 05s',
-      audioSimText: 'Recording: Kahale ʻohana oral history, recorded 1996.',
+      narrator: 'Roberto Morales (Cane Hauler & Musician)',
+      length: '3m 30s',
+      audioSimText: 'Recording: Morales music archives, recorded 1990.',
       transcript:
-        '“My tūtū kept the loʻi going even after the ditch water was diverted for cane. She said the taro remembered this valley long before the mill whistle ever did. Workers from every camp came to trade for poi, and she taught their children the names of the wind and rain here. The plantation changed everything around us, but the kalo kept us rooted.”',
+        '“We brought the cuatro guitar and the güiro scraper. When we played music at the camp borders, the other workers would stand and listen. We blended our rhythms with Portuguese tunes and Hawaiian chants. That\'s how Cachi Cachi music was born in Waipahu.”',
+    },
+  },
+  {
+    id: 'korean',
+    culture: 'Korean',
+    title: 'The Korean Protestant Community Cottage',
+    arrival: '1903',
+    isPlaceholder: true,
+    shortDesc:
+      'Formed tightly-knit communities centered around church gatherings, language schools, and independence movements.',
+    fullHistory:
+      'Korean immigrants arrived in 1903, seeking relief from political turmoil. They established active language schools and churches. Korean camp cottages often had small gardens for making fermented vegetables, introducing kimchi to the local diet.',
+    oralHistory: {
+      narrator: 'Young-Hee Park (Language School Educator)',
+      length: '3m 50s',
+      audioSimText: 'Recording: Park family archive, recorded 1995.',
+      transcript:
+        '“We gathered at the camp chapel on Sundays. It wasn\'t just for church services; it was where we taught our children the Korean alphabet and gathered funds to support the independence movement in Seoul. The cottage garden always had chili pepper stalks growing in the red dirt.”',
+    },
+  },
+  {
+    id: 'filipino',
+    culture: 'Filipino',
+    title: 'The Filipino Single-Men Barracks',
+    arrival: '1906',
+    isPlaceholder: true,
+    shortDesc:
+      'Arrived under the HSPA recruiting system, forming the backbone of late-era plantation field operations.',
+    fullHistory:
+      'Filipino Sakadas arrived starting in 1906. Initially living in single-men barracks, they brought a rich history of labor organizing, music, and cuisine. They were the largest labor force during the final decades of the sugar era.',
+    oralHistory: {
+      narrator: 'Espiridion "Pedro" Ramos (Sakada Field Guide)',
+      length: '4m 05s',
+      audioSimText: 'Recording: Sakada oral archive, interviewed 1991.',
+      transcript:
+        '“We lived six men to a room in the Waipahu barracks. We brought our guitars, and on Saturday nights, we sang kundiman (love songs) on the porch. The Luna was strict, but when the music started, the fields felt far away. We became brothers in those rooms.”',
     },
   },
 ];
@@ -1590,7 +1595,7 @@ export const VISIT_FAQS = [
   },
   {
     q: 'Is the village open in the rain?',
-    a: 'Yes, we are open rain or shine! Hawaii weather can be tropical; we suggest bringing an umbrella or light rain jacket as tours walk outdoors between buildings.',
+    a: 'Yes, we are open rain or shine! Hawaii weather can be tropical; we suggest bringing an umbrella or light rain jacket as tours walk outdoors between buildings. The only exception is when the City issues a closure of City buildings and services during a tropical storm.',
   },
 ];
 

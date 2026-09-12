@@ -113,8 +113,8 @@ export default function Visit() {
                 <div style={styles.infoRow}>
                   <Clock size={20} color="var(--cane-green)" />
                   <div>
-                    <p style={styles.infoValue}>{hoursSection?.schedule ?? 'Tuesday – Saturday: 9:00 AM – 2:00 PM'}</p>
-                    <p style={styles.infoDesc}>{hoursSection?.closedNote ?? 'Closed on Sundays, Mondays, and major state holidays.'}</p>
+                    <p style={styles.infoValue}>{hoursSection?.schedule ?? 'Monday – Saturday: 9:00 AM – 2:00 PM'}</p>
+                    <p style={styles.infoDesc}>{hoursSection?.closedNote ?? 'Closed on Sundays and major state holidays.'}</p>
                     <p style={styles.infoDesc}>
                       {hoursSection?.lastEntryNote ?? 'Last entry for self-tour is at 1:00 PM.'}
                     </p>
@@ -172,14 +172,14 @@ export default function Visit() {
               <div className="paper-card animate-fade-in" style={styles.tabContentCard}>
                 <h3 style={styles.tabTitle}>Accessibility support</h3>
                 <p style={styles.accessibilityIntro}>
-                  {safetySection?.intro ?? 'We thought about you. You are welcome here.'}
+                  {safetySection?.intro ?? 'We care about you. You are welcomed here.'}
                 </p>
                 <div style={styles.infoRow}>
                   <Footprints size={20} color="var(--cane-green)" />
                   <div>
                     <p style={styles.infoValue}>{safetySection?.terrainTitle ?? 'Terrain & Navigation'}</p>
                     <p style={styles.infoDesc}>
-                      {safetySection?.terrainDesc ?? 'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. Service animals are welcome throughout the Village.'}
+                      {safetySection?.terrainDesc ?? 'The Village path is a dirt/gravel trail approximately 0.5 miles long. Comfortable walking shoes are highly recommended. Restrooms are fully ADA-compliant and located in the main visitor courtyard. We do encounter dogs and wildlife like ducks and native birds on the property. Service animals on leash are welcomed.'}
                     </p>
                   </div>
                 </div>

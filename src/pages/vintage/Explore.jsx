@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
@@ -6,7 +6,7 @@ import SEO from '../../components/SEO.jsx';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
-import { cultureSlug } from '../../lib/cultures.js';
+import { cultureSlug, sortCampsChronologically } from '../../lib/cultures.js';
 
 function Reveal({ children, delay = 0 }) {
   const reduced = useReducedMotion();
@@ -29,6 +29,8 @@ export default function Explore() {
   const { section: intro } = usePageSection('explore', 'intro', {});
   const { items: camps } = useContentCollection('camp_story');
   const { section: cultures } = usePageSection('home', 'cultures', {});
+
+  const sortedCamps = useMemo(() => sortCampsChronologically(camps), [camps]);
 
   // The homepage tiles carry the short cultural taglines; the camp records carry
   // the longer history. Match them by slug so each card shows both.
@@ -61,7 +63,7 @@ export default function Explore() {
           </Reveal>
 
           <div className="door-grid" style={{ marginTop: '2.5rem' }}>
-            {camps.map((camp) => (
+            {sortedCamps.map((camp) => (
               <button
                 key={camp.id}
                 type="button"

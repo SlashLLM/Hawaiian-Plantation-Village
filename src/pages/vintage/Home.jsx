@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import HeroStage from '../../components/HeroStage';
 import BellToBell from '../../components/BellToBell';
@@ -9,17 +9,17 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
 import LearnMoreLink from '../../components/LearnMoreLink.jsx';
 import { formatEventDateRangeLabel } from '../../lib/timeFormat.js';
-import { cultureSlug } from '../../lib/cultures.js';
+import { cultureSlug, sortCampsChronologically } from '../../lib/cultures.js';
 
 const DEFAULT_CULTURES = [
   { name: 'Hawaiian', note: 'The land, her people and the world before sugar' },
   { name: 'Chinese', note: 'Migration, family and community' },
-  { name: 'Japanese', note: 'Home, work, faith and tradition' },
-  { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
-  { name: 'Korean', note: 'Migration, community and cultural tradition' },
-  { name: 'Okinawan', note: 'Identity, memory and community' },
   { name: 'Portuguese', note: 'Family, food, faith and celebration' },
+  { name: 'Japanese', note: 'Home, work, faith and tradition' },
+  { name: 'Okinawan', note: 'Identity, memory and community' },
   { name: 'Puerto Rican', note: 'Home, tradition and island connections' },
+  { name: 'Korean', note: 'Migration, community and cultural tradition' },
+  { name: 'Filipino', note: 'Sakada journeys, family and resilience' },
 ];
 
 const DEFAULT_DOORS = [
@@ -72,7 +72,10 @@ export default function Home() {
   const { items: partners } = usePageListSection('home', 'partners');
   const contact = settings?.contact ?? {};
   const donationPresets = settings?.donationPresets ?? [];
-  const cultureTiles = cultures?.items?.length ? cultures.items : DEFAULT_CULTURES;
+  const cultureTiles = useMemo(() => {
+    const raw = cultures?.items?.length ? cultures.items : DEFAULT_CULTURES;
+    return sortCampsChronologically(raw);
+  }, [cultures?.items]);
   const doors = planVisit?.items?.length ? planVisit.items : DEFAULT_DOORS;
 
   const goTo = (page) => {
@@ -257,7 +260,7 @@ export default function Home() {
             <Reveal>
               <p className="editorial-eyebrow">{educators?.stamp ?? 'For educators & students'}</p>
               <h2 className="editorial-title">
-                {educators?.title ?? 'History feels different when you can experience it'}
+                {educators?.title ?? 'History feels different when you experience it'}
               </h2>
               {(educators?.paragraphs ?? []).map((paragraph, index) => (
                 <p key={index} style={styles.body}>{paragraph}</p>

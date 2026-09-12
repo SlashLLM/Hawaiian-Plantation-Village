@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight, Maximize, Video } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { formatAudioLength, isCampStoryPlaceholder, resolveOralMediaType } from '../../lib/content/collectionFormUtils.js';
+import { sortCampsChronologically } from '../../lib/cultures.js';
 import SEO from '../../components/SEO.jsx';
 
 const parseLengthToSeconds = (lengthStr) => {
@@ -67,6 +68,8 @@ export default function Stories() {
   const [totalDuration, setTotalDuration] = useState(120);
   const [filter, setFilter] = useState('all');
 
+  const sortedCamps = useMemo(() => sortCampsChronologically(camps), [camps]);
+
   const oralHistory = selectedCamp?.oralHistory ?? null;
   const mediaType = resolveOralMediaType(oralHistory);
   const videoUrl = oralHistory?.video_url || '';
@@ -80,8 +83,8 @@ export default function Stories() {
     || SITE_PHOTOS.storiesFallback;
 
   const filteredCamps = filter === 'all'
-    ? camps
-    : camps.filter(c => c.culture.toLowerCase() === filter.toLowerCase());
+    ? sortedCamps
+    : sortedCamps.filter(c => c.culture.toLowerCase() === filter.toLowerCase());
 
   const seekTo = useCallback((seconds) => {
     const next = Math.max(0, Math.min(totalDuration, seconds));
@@ -229,7 +232,7 @@ export default function Stories() {
         <div style={styles.filterBar}>
           <span style={styles.filterLabel}>FILTER BY CAMP SECTION:</span>
           <div style={styles.filterBtns}>
-            {['all', ...new Set(camps.map((c) => c.culture.toLowerCase()))].map((item) => (
+            {['all', ...new Set(sortedCamps.map((c) => c.culture.toLowerCase()))].map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(item)}
