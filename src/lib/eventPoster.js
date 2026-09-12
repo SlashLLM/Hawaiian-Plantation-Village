@@ -10,16 +10,16 @@
  * Set `ACTIVE_POSTER` to `null` to turn the popup off entirely.
  */
 export const ACTIVE_POSTER = {
-  id: 'harvest-moon-2026',
-  src: '/images/harvest-moon-festival-2026.jpg',
+  id: 'give-aloha-2026',
+  src: '/images/give-aloha-poster.jpg',
   alt:
-    'Hawaii\'s Plantation Village 4th Annual Harvest Moon Festival — Saturday, September 26, 2026, 9:00 a.m. to 2:00 p.m. Free admission and on-site parking.',
-  caption: 'Saturday, September 26, 2026 · 9:00 a.m. – 2:00 p.m. · Free admission & parking',
+    'Hawaii\'s Plantation Village Give Aloha 2026 — Shop at Foodland and make a donation to Hawaii\'s Plantation Village (Code: 79102). Foodland will match a portion of your gift now through September 30.',
+  caption: 'Now through September 30 · Foodland Org Code: 79102 · Matching gifts program',
   /** Last day the popup appears, inclusive. After this it stops on its own. */
-  showUntil: '2026-09-26',
+  showUntil: '2026-09-30',
   /** Where the "See event details" button goes — a page id from `navigation.js`. */
-  ctaPage: 'events',
-  ctaLabel: 'See event details',
+  ctaPage: 'give-aloha',
+  ctaLabel: 'Learn how to give',
 };
 
 const STORAGE_PREFIX = 'hpv:poster-seen:';

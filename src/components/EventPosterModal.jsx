@@ -129,7 +129,12 @@ export default function EventPosterModal() {
             </button>
 
             {/* Already decoded by the preload above, so this renders from cache. */}
-            <img src={ACTIVE_POSTER.src} alt={ACTIVE_POSTER.alt} style={styles.poster} />
+            <img
+              src={ACTIVE_POSTER.src}
+              alt={ACTIVE_POSTER.alt}
+              style={styles.poster}
+              onClick={handleCta}
+            />
 
             <div style={styles.footer}>
               {ACTIVE_POSTER.caption && (
@@ -203,6 +208,7 @@ const styles = {
     maxHeight: 'min(68vh, 820px)',
     margin: '0 auto',
     objectFit: 'contain',
+    cursor: 'pointer',
   },
   footer: {
     padding: 'clamp(0.9rem, 3vw, 1.25rem)',
