@@ -54,8 +54,8 @@ export const DEFAULT_SITE_SETTINGS = {
   contact: {
     phone: '(808) 677-0110',
     phoneHref: 'tel:8086770110',
-    email: 'lchen.hpv@gmail.com',
-    emailHref: 'mailto:lchen.hpv@gmail.com',
+    email: 'Waipahu.hpv@gmail.com',
+    emailHref: 'mailto:Waipahu.hpv@gmail.com',
     address: {
       line1: '94-695 Waipahu Street',
       line2: 'Waipahu, Oʻahu, Hawaiʻi 96797',

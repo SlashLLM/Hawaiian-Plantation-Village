@@ -903,7 +903,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                     <div>
                       <h5 style={styles.infoLabel}>Electronic Mailing Address</h5>
                       <p style={styles.infoText}>
-                        <a href={contact.emailHref ?? 'mailto:lchen.hpv@gmail.com'} style={styles.contactAnchor}>{contact.email ?? 'lchen.hpv@gmail.com'}</a>
+                        <a href={contact.emailHref ?? 'mailto:Waipahu.hpv@gmail.com'} style={styles.contactAnchor}>{contact.email ?? 'Waipahu.hpv@gmail.com'}</a>
                       </p>
                     </div>
                   </div>
