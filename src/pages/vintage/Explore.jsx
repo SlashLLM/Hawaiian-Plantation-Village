@@ -7,6 +7,7 @@ import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { cultureSlug, sortCampsChronologically } from '../../lib/cultures.js';
+import { VILLAGE_BUILDINGS, VILLAGE_LAYOUT } from '../../data/brochureContent.js';
 
 function Reveal({ children, delay = 0 }) {
   const reduced = useReducedMotion();
@@ -88,6 +89,50 @@ export default function Explore() {
       <section className="editorial-section on-sand">
         <div className="editorial-shell">
           <Reveal>
+            <p className="editorial-eyebrow">The Village grounds</p>
+            <h2 className="editorial-title">Buildings from Hawaiʻi's plantation camps.</h2>
+            {VILLAGE_LAYOUT.map((paragraph) => (
+              <p key={paragraph} style={styles.body}>{paragraph}</p>
+            ))}
+          </Reveal>
+
+          <ul className="door-grid" style={styles.buildingGrid}>
+            {VILLAGE_BUILDINGS.map((building) => {
+              const content = (
+                <>
+                  <span className="door-title">
+                    {building.name}
+                    {building.cultureId && <ArrowRight size={15} />}
+                  </span>
+                  {building.year && <span className="archive-card-meta">{building.year}</span>}
+                </>
+              );
+              return (
+                <li key={building.name} style={styles.buildingItem}>
+                  {building.cultureId ? (
+                    <button
+                      type="button"
+                      className="door"
+                      style={styles.buildingDoor}
+                      onClick={() => setActivePage('explore-culture', { cultureId: building.cultureId })}
+                    >
+                      {content}
+                    </button>
+                  ) : (
+                    <div className="door" style={{ ...styles.buildingDoor, cursor: 'default' }}>
+                      {content}
+                    </div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+
+      <section className="editorial-section">
+        <div className="editorial-shell">
+          <Reveal>
             <p className="editorial-eyebrow">Hear them in their own words</p>
             <h2 className="editorial-title">Every home has a voice behind it.</h2>
             <p className="editorial-lede">
@@ -117,6 +162,27 @@ const styles = {
     color: 'var(--plantation-ink)',
     maxWidth: '48ch',
     margin: '1.25rem 0 0',
+  },
+  body: {
+    fontSize: '1.02rem',
+    lineHeight: 1.7,
+    color: 'var(--muted-sage)',
+    maxWidth: '62ch',
+    margin: '1.1rem 0 0',
+  },
+  buildingGrid: {
+    listStyle: 'none',
+    padding: 0,
+    margin: '2.5rem 0 0',
+  },
+  buildingItem: {
+    minWidth: 0,
+  },
+  buildingDoor: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.35rem',
   },
   actions: {
     display: 'flex',

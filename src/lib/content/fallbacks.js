@@ -367,17 +367,17 @@ export const DEFAULT_PAGE_SECTIONS = {
       toursIntro:
         'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:',
       tourSlots: [
-        { label: 'Morning tour', time: '10:00 AM daily' },
-        { label: 'Midday tour', time: '12:00 PM daily' },
+        { label: 'Morning tour', time: '10:00 AM Mon – Sat' },
+        { label: 'Midday tour', time: '12:00 PM Mon – Sat' },
       ],
       lastEntryNote: 'Last entry for self-tour is at 1:00 PM.',
       walkInNote:
-        '*Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.',
+        'Call (808) 677-0110 to reserve a guided tour. Self-tours are also available.',
     },
     parking: {
       address: '94-695 Waipahu Street, Waipahu, HI 96797',
       directions:
-        'Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to Exit 8B (Farrington Hwy), then turn right onto Waipahu Depo Road and right onto Waipahu Street.',
+        'Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to exit #7 (Waikele/Waipahu). Coming off H1, turn left at the stoplight onto Paiwa St, then turn right at the 5th traffic signal onto Waipahu St. Entrance is on your left.',
       parkingTitle: 'Free visitor parking onsite',
       parkingDesc:
         'We offer free designated parking for passenger cars, school buses, and tour vans inside our secure lot.',

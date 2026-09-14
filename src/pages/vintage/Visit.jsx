@@ -9,8 +9,7 @@ import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
 import SEO from '../../components/SEO.jsx';
 import EventsCalendar from '../../components/EventsCalendar.jsx';
 import { toEventDate } from '../../lib/timeFormat.js';
-
-const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
+import { TOUR_NOTE, TOUR_SLOTS, VISIT_DIRECTIONS } from '../../data/brochureContent.js';
 
 export default function Visit() {
   const setActivePage = useAppNavigate();
@@ -23,7 +22,7 @@ export default function Visit() {
   const { section: faqSection } = usePageSection('visit', 'faq', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
   const { items: allEvents } = usePageListSection('home', 'events');
-  const { groupTickets, tourSlots } = useContent();
+  const { groupTickets } = useContent();
 
   /** Only events with a resolvable date can be placed on the calendar. */
   const datedEvents = useMemo(() => allEvents.filter((event) => toEventDate(event)), [allEvents]);
@@ -49,13 +48,6 @@ export default function Visit() {
     });
     setGroupComplete(true);
   };
-
-  const tourSlotEntries = hoursSection?.tourSlots?.length
-    ? hoursSection.tourSlots
-    : (tourSlots ?? []).map((slot, idx) => ({
-        label: idx === 0 ? 'Morning Tour' : 'Midday Tour',
-        time: `${slotLabel(slot)} daily`,
-      }));
 
   return (
     <div style={styles.pageContainer}>
@@ -128,13 +120,11 @@ export default function Visit() {
                   {hoursSection?.toursIntro ?? 'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:'}
                 </p>
                 <ul style={styles.tourList}>
-                  {tourSlotEntries.map((slot) => (
+                  {TOUR_SLOTS.map((slot) => (
                     <li key={`${slot.label}-${slot.time}`}><strong>{slot.label}:</strong> {slot.time}</li>
                   ))}
                 </ul>
-                <p style={styles.infoDesc}>
-                  {hoursSection?.walkInNote ?? '*Walk-ins are accommodated based on availability. To guarantee your spot, please book tickets online in advance.'}
-                </p>
+                <p style={styles.infoDesc}>{TOUR_NOTE}</p>
               </div>
             )}
 
@@ -146,9 +136,12 @@ export default function Visit() {
                   <MapPin size={20} color="var(--cane-green)" />
                   <div>
                     <p style={styles.infoValue}>{parkingSection?.address ?? '94-695 Waipahu Street, Waipahu, HI 96797'}</p>
-                    <p style={styles.infoDesc}>
-                      {parkingSection?.directions ?? 'Located approximately 30 minutes from Waikīkī and Honolulu. Take H1 West to Exit 8B (Farrington Hwy), then turn right onto Waipahu Depo Road and right onto Waipahu Street.'}
-                    </p>
+                    <p style={styles.infoDesc}>{VISIT_DIRECTIONS.intro}</p>
+                    <ol style={styles.directionsList}>
+                      {VISIT_DIRECTIONS.steps.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
                   </div>
                 </div>
 
@@ -543,6 +536,13 @@ const styles = {
     fontSize: '0.95rem',
     color: 'var(--muted-sage)',
     lineHeight: '1.65'
+  },
+  directionsList: {
+    fontSize: '0.95rem',
+    color: 'var(--muted-sage)',
+    lineHeight: '1.65',
+    paddingLeft: '1.25rem',
+    margin: '0.5rem 0 0',
   },
   tourList: {
     listStyle: 'none',

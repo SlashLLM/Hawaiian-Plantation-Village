@@ -8,6 +8,7 @@ import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { cultureSlug, findCampBySlug } from '../../lib/cultures.js';
+import { buildingsForCulture } from '../../data/brochureContent.js';
 
 function Reveal({ children, delay = 0 }) {
   const reduced = useReducedMotion();
@@ -43,6 +44,7 @@ export default function ExploreCulture() {
     (item) => cultureSlug(item.name) === cultureSlug(camp),
   );
   const others = camps.filter((item) => cultureSlug(item) !== cultureSlug(camp));
+  const buildings = buildingsForCulture(cultureSlug(camp));
 
   return (
     <div>
@@ -71,6 +73,14 @@ export default function ExploreCulture() {
             </p>
             <h2 className="editorial-title">{camp.culture} life at the Village</h2>
             <p style={styles.body}>{camp.fullHistory ?? camp.shortDesc}</p>
+            {buildings.length > 0 && (
+              <p style={styles.body}>
+                <strong style={styles.atVillageLabel}>At the Village: </strong>
+                {buildings
+                  .map((building) => (building.year ? `${building.name} (${building.year})` : building.name))
+                  .join(' · ')}
+              </p>
+            )}
           </Reveal>
 
           {camp.oralHistory?.transcript && (
@@ -127,6 +137,10 @@ const styles = {
     color: 'var(--muted-sage)',
     maxWidth: '62ch',
     marginBottom: '1.1rem',
+  },
+  atVillageLabel: {
+    color: 'var(--plantation-ink)',
+    fontWeight: 600,
   },
   quote: {
     fontFamily: 'var(--font-display)',

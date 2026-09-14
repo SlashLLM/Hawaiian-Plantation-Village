@@ -10,6 +10,7 @@ import { useSiteSettings, usePageSection, usePageListSection, useContentCollecti
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { submitInquiry } from '../../lib/api.js';
 import SEO from '../../components/SEO.jsx';
+import { MISSION_STATEMENT, mergeTimeline } from '../../data/brochureContent.js';
 
 export default function About({ activeTab: propActiveTab, setActiveTab: propSetActiveTab }) {
   const { settings } = useSiteSettings();
@@ -25,7 +26,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
   const { section: contactIntro } = usePageSection('about', 'contactIntro', {});
   const { items: newsArticles } = useContentCollection('news');
   const { items: careersList } = useContentCollection('career');
-  const { items: timeline } = usePageListSection('about', 'timeline');
+  const { items: cmsTimeline } = usePageListSection('about', 'timeline');
+  const timeline = useMemo(() => mergeTimeline(cmsTimeline), [cmsTimeline]);
   const { items: leadership } = usePageListSection('about', 'leadership');
   const { items: staff } = usePageListSection('about', 'staff');
   const { items: board } = usePageListSection('about', 'board');
@@ -258,6 +260,11 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                   {(mission?.paragraphs ?? []).map((paragraph, idx) => (
                     <p key={idx} style={styles.bodyText}>{paragraph}</p>
                   ))}
+                  <div style={styles.missionStatement}>
+                    <span className="ledger-header" style={{ marginBottom: '0.5rem' }}>Our mission</span>
+                    <p style={styles.missionStatementText}>{MISSION_STATEMENT.statement}</p>
+                    <p style={{ ...styles.bodyText, marginBottom: 0 }}>{MISSION_STATEMENT.operations}</p>
+                  </div>
                   {mission?.quote && (
                     <blockquote style={styles.pullQuote}>
                       {mission.quote}
@@ -1060,6 +1067,19 @@ const styles = {
     lineHeight: '1.7',
     color: 'var(--muted-sage)',
     marginBottom: '1.25rem'
+  },
+  missionStatement: {
+    borderTop: '1px solid var(--hairline-strong)',
+    borderBottom: '1px solid var(--hairline-strong)',
+    padding: '1.5rem 0',
+    margin: '1.75rem 0 0',
+  },
+  missionStatementText: {
+    fontFamily: 'var(--font-display)',
+    fontSize: 'clamp(1.1rem, 1.8vw, 1.3rem)',
+    lineHeight: 1.55,
+    color: 'var(--plantation-ink)',
+    margin: '0 0 1rem',
   },
   pullQuote: {
     fontFamily: 'var(--font-display)',
