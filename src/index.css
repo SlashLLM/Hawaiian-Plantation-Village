@@ -1491,6 +1491,117 @@ button.events-calendar-day:focus-visible {
   outline-offset: 1px;
 }
 
+/* Newsletter archive */
+.newsletter-grid {
+  list-style: none;
+  padding: 0;
+  margin: 2.5rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+.newsletter-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--border-radius-sm);
+  background: var(--paper-light);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.newsletter-card:hover,
+.newsletter-card:focus-visible {
+  border-color: var(--heritage-gold);
+  transform: translateY(-2px);
+}
+
+.newsletter-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 52px;
+  border-radius: 2px;
+  background: var(--sand);
+  color: var(--terracotta-clay-deep);
+}
+
+.newsletter-body {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.newsletter-arrow {
+  flex: 0 0 auto;
+  color: var(--muted-sage);
+}
+
+/* Navbar dropdown */
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 190px;
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  background: var(--sugarcane-cream);
+  border: 1px solid var(--hairline);
+  border-radius: var(--border-radius-sm);
+  box-shadow: 0 12px 28px rgba(28, 43, 34, 0.12);
+  z-index: 110;
+}
+
+/* Invisible bridge so the pointer can travel from the tab to the menu. */
+.nav-dropdown-menu::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -12px;
+  height: 12px;
+}
+
+.nav-dropdown-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  border-radius: 2px;
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--plantation-ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.nav-dropdown-item:hover,
+.nav-dropdown-item:focus-visible,
+.nav-dropdown-item[aria-current='page'] {
+  background: var(--sand);
+}
+
+.nav-dropdown-item[aria-current='page'] {
+  font-weight: 600;
+}
+
 .resource-list {
   list-style: none;
   padding: 0;
@@ -1529,6 +1640,7 @@ button.events-calendar-day:focus-visible {
   .event-row { grid-template-columns: 1fr; gap: 0.5rem; }
   .events-calendar-day { min-height: 38px; font-size: 0.8rem; }
   .archive-grid { grid-template-columns: repeat(2, 1fr); }
+  .newsletter-grid { grid-template-columns: repeat(2, 1fr); }
   .archive-detail-grid { grid-template-columns: 1fr; }
 }
 
@@ -1537,6 +1649,7 @@ button.events-calendar-day:focus-visible {
   .door-grid { grid-template-columns: 1fr; }
   .hero-stats { gap: 1.25rem 2rem; }
   .archive-grid { grid-template-columns: 1fr; }
+  .newsletter-grid { grid-template-columns: 1fr; }
   .meta-list div { grid-template-columns: 1fr; gap: 0.2rem; }
 }
 

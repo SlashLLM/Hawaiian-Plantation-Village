@@ -5,6 +5,7 @@ export const ROUTES = {
   exploreCulture: '/explore/:cultureId',
   stories: '/stories',
   archives: '/archives',
+  newsletters: '/archives/newsletters',
   archivePhoto: '/archives/:arkId',
   play: '/play',
   learn: '/learn',
@@ -53,6 +54,7 @@ export function pathFromPageId(pageId, params = {}) {
     case 'explore-culture': return `/explore/${params.cultureId ?? ''}`;
     case 'stories': return '/stories';
     case 'archives': return '/archives';
+    case 'newsletters': return '/archives/newsletters';
     case 'archive-photo': return `/archives/${params.arkId ?? ''}`;
     case 'play': return '/play';
     case 'learn': return '/learn';

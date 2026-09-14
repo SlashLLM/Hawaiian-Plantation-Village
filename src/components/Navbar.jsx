@@ -1,13 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/logo.webp';
-import { Menu, X, Ticket, Heart } from 'lucide-react';
+import { Menu, X, Ticket, Heart, ChevronDown } from 'lucide-react';
 import { pathFromPageId } from '../lib/navigation.js';
 import { useSiteSettings } from '../context/ContentProvider.jsx';
+
+// Nav items that open a dropdown instead of navigating. Keyed by nav id so the
+// submenu still attaches when the nav list comes from CMS settings.
+const NAV_SUBMENUS = {
+  archives: [
+    { id: 'archives', label: 'Photographs' },
+    { id: 'newsletters', label: 'Newsletters' },
+  ],
+};
+
+const isNewslettersPath = (pathname) => pathname.startsWith('/archives/newsletters');
 
 export default function Navbar({ activePage }) {
   const { settings } = useSiteSettings();
   const [isOpen, setIsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const dropdownRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -28,8 +41,33 @@ export default function Navbar({ activePage }) {
   const handleNavClick = (pageId) => {
     navigate(pathFromPageId(pageId));
     setIsOpen(false);
+    setOpenDropdown(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  const isSubActive = (itemId) => {
+    if (itemId === 'newsletters') return isNewslettersPath(location.pathname);
+    if (itemId === 'archives') {
+      return location.pathname.startsWith('/archives') && !isNewslettersPath(location.pathname);
+    }
+    return activePage === itemId;
+  };
+
+  useEffect(() => {
+    if (!openDropdown) return undefined;
+    const handlePointer = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) setOpenDropdown(null);
+    };
+    const handleKey = (event) => {
+      if (event.key === 'Escape') setOpenDropdown(null);
+    };
+    document.addEventListener('mousedown', handlePointer);
+    document.addEventListener('keydown', handleKey);
+    return () => {
+      document.removeEventListener('mousedown', handlePointer);
+      document.removeEventListener('keydown', handleKey);
+    };
+  }, [openDropdown]);
 
   const isActive = (linkId) => {
     if (linkId === 'learn' && location.pathname.startsWith('/learn')) return true;
@@ -50,20 +88,73 @@ export default function Navbar({ activePage }) {
         </div>
 
         <ul className="nav-desktop-links" style={styles.navLinksList}>
-          {navLinks.map((link) => (
-            <li key={link.id} style={styles.navLinkItem}>
-              <button
-                onClick={() => handleNavClick(link.id)}
-                style={{
-                  ...styles.navButton,
-                  ...(isActive(link.id) ? styles.navButtonActive : {})
-                }}
+          {navLinks.map((link) => {
+            const submenu = NAV_SUBMENUS[link.id];
+            if (!submenu) {
+              return (
+                <li key={link.id} style={styles.navLinkItem}>
+                  <button
+                    onClick={() => handleNavClick(link.id)}
+                    style={{
+                      ...styles.navButton,
+                      ...(isActive(link.id) ? styles.navButtonActive : {})
+                    }}
+                  >
+                    {link.label}
+                    {isActive(link.id) && <span style={styles.activeDot} />}
+                  </button>
+                </li>
+              );
+            }
+            const expanded = openDropdown === link.id;
+            return (
+              <li
+                key={link.id}
+                ref={expanded ? dropdownRef : undefined}
+                className="nav-dropdown"
+                style={styles.navLinkItem}
+                onMouseEnter={() => setOpenDropdown(link.id)}
+                onMouseLeave={() => setOpenDropdown(null)}
               >
-                {link.label}
-                {isActive(link.id) && <span style={styles.activeDot} />}
-              </button>
-            </li>
-          ))}
+                <button
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={expanded}
+                  aria-controls={`nav-submenu-${link.id}`}
+                  onClick={() => setOpenDropdown(expanded ? null : link.id)}
+                  style={{
+                    ...styles.navButton,
+                    ...styles.navDropdownButton,
+                    ...(isActive(link.id) ? styles.navButtonActive : {})
+                  }}
+                >
+                  {link.label}
+                  <ChevronDown
+                    size={14}
+                    aria-hidden="true"
+                    style={{ transition: 'transform 0.2s ease', transform: expanded ? 'rotate(180deg)' : 'none' }}
+                  />
+                  {isActive(link.id) && <span style={styles.activeDot} />}
+                </button>
+                {expanded && (
+                  <ul id={`nav-submenu-${link.id}`} className="nav-dropdown-menu">
+                    {submenu.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          type="button"
+                          className="nav-dropdown-item"
+                          aria-current={isSubActive(item.id) ? 'page' : undefined}
+                          onClick={() => handleNavClick(item.id)}
+                        >
+                          {item.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
 
         <div className="nav-desktop-ctas" style={styles.ctaGroup}>
@@ -83,19 +174,46 @@ export default function Navbar({ activePage }) {
       {isOpen && (
         <div style={styles.mobileMenu}>
           <ul style={styles.mobileLinksList}>
-            {navLinks.map((link) => (
-              <li key={link.id} style={styles.mobileLinkItem}>
-                <button
-                  onClick={() => handleNavClick(link.id)}
-                  style={{
-                    ...styles.mobileNavButton,
-                    ...(isActive(link.id) ? styles.mobileNavButtonActive : {})
-                  }}
-                >
-                  {link.label}
-                </button>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const submenu = NAV_SUBMENUS[link.id];
+              if (!submenu) {
+                return (
+                  <li key={link.id} style={styles.mobileLinkItem}>
+                    <button
+                      onClick={() => handleNavClick(link.id)}
+                      style={{
+                        ...styles.mobileNavButton,
+                        ...(isActive(link.id) ? styles.mobileNavButtonActive : {})
+                      }}
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                );
+              }
+              return (
+                <li key={link.id} style={styles.mobileLinkItem}>
+                  <span style={styles.mobileGroupLabel}>{link.label}</span>
+                  <ul style={styles.mobileSubList}>
+                    {submenu.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          onClick={() => handleNavClick(item.id)}
+                          aria-current={isSubActive(item.id) ? 'page' : undefined}
+                          style={{
+                            ...styles.mobileNavButton,
+                            ...styles.mobileSubButton,
+                            ...(isSubActive(item.id) ? styles.mobileNavButtonActive : {})
+                          }}
+                        >
+                          {item.label}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
             <li style={styles.mobileLinkItem}>
               <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--terracotta-clay-deep)' }}>
                 Donate
@@ -199,6 +317,11 @@ const styles = {
   navButtonActive: {
     fontWeight: '600'
   },
+  navDropdownButton: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '3px'
+  },
   activeDot: {
     position: 'absolute',
     bottom: '-6px',
@@ -270,6 +393,27 @@ const styles = {
     width: '100%',
     textAlign: 'left',
     padding: '8px 0'
+  },
+  mobileGroupLabel: {
+    display: 'block',
+    fontFamily: 'var(--font-sans)',
+    fontSize: '0.72rem',
+    fontWeight: '600',
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+    color: 'var(--muted-sage)',
+    padding: '8px 0 2px'
+  },
+  mobileSubList: {
+    listStyle: 'none',
+    margin: 0,
+    padding: '0 0 0 14px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px'
+  },
+  mobileSubButton: {
+    fontSize: '1rem'
   },
   mobileNavButtonActive: {
     fontWeight: '600',

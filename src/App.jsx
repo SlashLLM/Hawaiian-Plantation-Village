@@ -10,6 +10,7 @@ import VintageHome from './pages/vintage/Home.jsx';
 const VintageVisit = React.lazy(() => import('./pages/vintage/Visit.jsx'));
 const VintageStories = React.lazy(() => import('./pages/vintage/Stories.jsx'));
 const VintageArchives = React.lazy(() => import('./pages/vintage/Archives.jsx'));
+const VintageNewsletters = React.lazy(() => import('./pages/vintage/Newsletters.jsx'));
 const VintagePhotographDetail = React.lazy(() => import('./pages/vintage/PhotographDetail.jsx'));
 const VintageLearn = React.lazy(() => import('./pages/vintage/Learn.jsx'));
 const CurriculumModule = React.lazy(() => import('./pages/vintage/CurriculumModule.jsx'));
@@ -48,6 +49,7 @@ export default function App() {
             <Route path="explore/:cultureId" element={<VintageExploreCulture />} />
             <Route path="stories" element={<VintageStories />} />
             <Route path="archives" element={<VintageArchives />} />
+            <Route path="archives/newsletters" element={<VintageNewsletters />} />
             <Route path="archives/:arkId" element={<VintagePhotographDetail />} />
             <Route path="play" element={<VintagePlay />} />
             <Route path="learn" element={<VintageLearn />} />
