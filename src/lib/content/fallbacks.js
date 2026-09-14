@@ -517,22 +517,22 @@ export const DEFAULT_PAGE_SECTIONS = {
         {
           slug: 'loretta-chen',
           name: 'Dr. Loretta Chen',
-          role: 'Executive Director — leading the organizational turnaround',
+          role: 'Executive Director',
         },
         {
           slug: 'derrick-iwata',
           name: 'Derrick Iwata',
-          role: 'Education & Programs Manager — schools, events, tours, volunteers',
+          role: 'Education & Programs Manager',
         },
         {
           slug: 'mil-holliday',
           name: 'Mil Holliday',
-          role: 'Administration Manager — front-of-house & operations',
+          role: 'Administration Manager',
         },
         {
           slug: 'michi-lacar',
           name: 'Michi Lacar',
-          role: 'Programs Coordinator — docents, museum curation',
+          role: 'Programs Coordinator',
         },
         {
           slug: 'eli-flores',
@@ -552,8 +552,9 @@ export const DEFAULT_PAGE_SECTIONS = {
         {
           slug: 'yoshiko-yamauchi',
           name: 'Yoshiko Yamauchi',
-          role: 'Board Member; Founding Volunteer, 1976',
+          role: 'Board Member',
         },
+        { slug: 'paul-nishimura', name: 'Paul Nishimura', role: 'Board Member' },
       ],
     },
     newsIntro: {
