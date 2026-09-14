@@ -142,7 +142,7 @@ export default function Tickets() {
   const hasSelectedTickets = ticketTypes.some((tt) => (quantities[tt.slug] || 0) > 0);
 
   const donationCents = addDonation ? Math.round(Number(donationAmount) * 100) : 0;
-  const membershipCents = joinMembership ? 4500 : 0;
+  const membershipCents = joinMembership ? 3500 : 0;
   const totalCents = subtotalCents + donationCents + membershipCents;
 
   const setQty = (key, val) => setQuantities((q) => ({ ...q, [key]: Math.max(0, val) }));
@@ -374,7 +374,7 @@ export default function Tickets() {
                     <label style={styles.checkboxLabel}>
                       <input type="checkbox" checked={joinMembership} onChange={(e) => setJoinMembership(e.target.checked)} style={styles.checkboxInput} />
                       <div>
-                        <strong style={{ color: 'var(--koa-wood)' }}>Become a Member (+$45.00)</strong>
+                        <strong style={{ color: 'var(--koa-wood)' }}>Become a Member (+$35.00)</strong>
                         <p style={styles.optionText}>Individual level — free admission for 1 year and gift shop discount.</p>
                       </div>
                     </label>
@@ -486,7 +486,7 @@ export default function Tickets() {
                         <span>{formatCents(tt.price_cents * quantities[tt.slug])}</span>
                       </div>
                     ))}
-                    {joinMembership && <div style={styles.summaryRow}><span>Individual Membership (1yr)</span><strong>$45.00</strong></div>}
+                    {joinMembership && <div style={styles.summaryRow}><span>Individual Membership (1yr)</span><strong>$35.00</strong></div>}
                     {addDonation && <div style={styles.summaryRow}><span>Mission Donation</span><strong>{formatCents(donationCents)}</strong></div>}
                   </div>
                   <div className="ledger-divider" style={{ margin: '1rem 0' }} />

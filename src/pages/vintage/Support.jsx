@@ -55,46 +55,38 @@ export default function Support() {
   const [memConfirmation, setMemConfirmation] = useState(null);
   const [tiersFromDb, setTiersFromDb] = useState([]);
 
+  // Mirrors the printed membership form. The live list comes from the
+  // membership_tiers table when Supabase is configured.
+  const MEMBER_BENEFITS = [
+    'Free admission and guided tours for one year',
+    'Members-only invitations to special events, exhibits & cultural heritage celebrations',
+    '10% off at the gift shop',
+  ];
   const FALLBACK_TIERS = [
     {
       slug: 'individual',
       level: 'Individual',
-      price: '$45',
+      price: '$35',
       period: 'per year',
       color: 'var(--cane-green)',
-      benefits: [
-        'Free admission for one named adult member',
-        '10% discount on all gift shop items',
-        'Invitations to annual meetings and archives showcase',
-        'Subscription to the print Ledger journal'
-      ]
+      benefits: ['Membership for one adult', ...MEMBER_BENEFITS],
     },
     {
-      slug: 'household',
-      level: 'Household',
-      price: '$75',
+      slug: 'senior',
+      level: 'Senior',
+      price: '$30',
       period: 'per year',
       color: 'var(--ocean-teal)',
-      benefits: [
-        'Free admission for two named adults and up to four children',
-        '2 complimentary guest passes per year',
-        '10% discount on all gift shop items',
-        'Exclusive advance tour bookings for festivals'
-      ]
+      benefits: ['For members age 62 & above', ...MEMBER_BENEFITS],
     },
     {
-      slug: 'steward',
-      level: 'Steward',
-      price: '$150',
+      slug: 'family',
+      level: 'Family',
+      price: '$60',
       period: 'per year',
       color: 'var(--tin-rust)',
-      benefits: [
-        'All Household membership benefits',
-        'Invitation to private reception with the Museum Director',
-        '1 hour private research archive consultation',
-        '4 complimentary guest passes per year'
-      ]
-    }
+      benefits: ['Two adults & children under 18', ...MEMBER_BENEFITS],
+    },
   ];
 
   useEffect(() => {
@@ -131,7 +123,7 @@ export default function Support() {
         firstName: memFirstName,
         lastName: memLastName,
         email: memEmail,
-        householdNote: selectedTier.slug === 'household' || selectedTier.slug === 'steward' ? householdNote : undefined,
+        householdNote: ['family', 'household', 'steward'].includes(selectedTier.slug) ? householdNote : undefined,
       });
       confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
       setMemConfirmation(result);
@@ -171,6 +163,41 @@ export default function Support() {
         />
 
         <div style={styles.container}>
+          <section style={styles.membershipSection} aria-labelledby="membership-heading">
+            <div style={styles.membershipIntro}>
+              <h2 id="membership-heading" style={styles.subHeadingTitle}>{membershipIntro?.title ?? 'Belong to the Village.'}</h2>
+              <p style={styles.bodyText}>
+                {membershipIntro?.description ?? 'Membership is more than admission. It’s a way to stand behind a place that keeps Hawaiʻi’s stories alive.'}
+              </p>
+            </div>
+            <div className="tiers-grid-responsive">
+              {memberships.map((m) => (
+                <div key={m.slug ?? m.level} className="paper-card" style={styles.tierCard}>
+                  <div style={{ ...styles.tierHeader, borderTop: `4px solid ${m.color}` }}>
+                    <h3 style={styles.tierLevel}>{m.level}</h3>
+                    <div style={styles.priceBlock}>
+                      <span style={styles.tierPrice}>{m.price}</span>
+                      <span style={styles.tierPeriod}>{m.period}</span>
+                    </div>
+                  </div>
+                  <div className="ledger-divider" />
+                  <ul style={{ ...styles.benefitsList, marginBottom: 0 }}>
+                    {m.benefits.map((b, bIdx) => (
+                      <li key={bIdx} style={styles.benefitItem}><span>✓</span> {b}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div style={styles.joinNote}>
+              <p style={styles.noteTitle}>How to join</p>
+              <p style={styles.noteDesc}>
+                Call or email us to sign up, or stop by the Village. Payment by check or credit card — please make checks
+                payable to <strong>Hawaii’s Plantation Village</strong>, 94-695 Waipahu St, Waipahu, HI 96797.
+              </p>
+            </div>
+          </section>
+
           <ComingSoon
             {...COMING_SOON_COPY.support}
             note="In the meantime, you can still give through Foodland’s Give Aloha program — donations made at the register are matched, no online payment needed."
@@ -402,7 +429,7 @@ export default function Support() {
                   <label style={styles.formLabel}>Email</label>
                   <input className="admin-form-input" type="email" required value={memEmail} onChange={(e) => setMemEmail(e.target.value)} />
                 </div>
-                {(selectedTier.slug === 'household' || selectedTier.slug === 'steward') && (
+                {(['family', 'household', 'steward'].includes(selectedTier.slug)) && (
                   <div style={styles.formCol}>
                     <label style={styles.formLabel}>Household members (optional note)</label>
                     <textarea className="admin-form-textarea" value={householdNote} onChange={(e) => setHouseholdNote(e.target.value)} placeholder="Names of adults and children covered" />
@@ -694,6 +721,21 @@ const styles = {
   membershipIntro: {
     textAlign: 'center',
     marginBottom: '3rem'
+  },
+  bodyText: {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+    color: 'var(--muted-sage)',
+    maxWidth: '56ch',
+    margin: '0 auto'
+  },
+  joinNote: {
+    backgroundColor: 'var(--sand)',
+    borderLeft: '2px solid var(--terracotta-clay)',
+    borderRadius: 'var(--border-radius-md)',
+    padding: '1rem 1.25rem',
+    maxWidth: '640px',
+    margin: '2rem auto clamp(3rem, 6vw, 4rem)'
   },
   subHeadingTitle: {
     fontSize: '1.9rem',
