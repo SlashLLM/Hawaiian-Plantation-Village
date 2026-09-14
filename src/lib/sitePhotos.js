@@ -4,6 +4,8 @@
  */
 
 const digi = (name) => `/digitized-photos/${name}`;
+// Web-sized header copies (from public/images/Staffphotos and public/digitized-photos originals).
+const staffHeader = (page) => `/images/Staffphotos/headers/${page}.webp`;
 
 export const SITE_PHOTOS = {
   heroPoster: digi('IMG_6805.webp'),
@@ -16,14 +18,31 @@ export const SITE_PHOTOS = {
   newsSmokestack: digi('IMG_6810.webp'),
   newsFestival: digi('IMG_6103.webp'),
   headers: {
-    visit: digi('IMG_6820.webp'),
-    explore: digi('IMG_6310.webp'),
-    stories: digi('IMG_6103.webp'),
-    learn: digi('IMG_6365.webp'),
-    events: digi('IMG_6350.webp'),
-    support: digi('IMG_6222.webp'),
-    volunteer: digi('IMG_6400.webp'),
-    play: digi('IMG_6066.webp'),
-    about: digi('IMG_6825.webp'),
+    visit: staffHeader('visit'),
+    explore: staffHeader('explore'),
+    stories: staffHeader('stories'),
+    learn: staffHeader('learn'),
+    events: staffHeader('events'),
+    support: staffHeader('support'),
+    volunteer: staffHeader('volunteer'),
+    play: staffHeader('play'),
+    about: staffHeader('about'),
+    archives: staffHeader('archives'),
   },
 };
+
+// Vertical focal point (object-position) per header so group photos crop around faces.
+const HEADER_FOCUS = {
+  [SITE_PHOTOS.headers.play]: 'center 48%',
+  [SITE_PHOTOS.headers.learn]: 'center 62%',
+  [SITE_PHOTOS.headers.visit]: 'center 50%',
+  [SITE_PHOTOS.headers.explore]: 'center 50%',
+  [SITE_PHOTOS.headers.stories]: 'center 55%',
+  [SITE_PHOTOS.headers.events]: 'center 50%',
+  [SITE_PHOTOS.headers.support]: 'center 40%',
+  [SITE_PHOTOS.headers.volunteer]: 'center 45%',
+  [SITE_PHOTOS.headers.about]: 'center 22%',
+  [SITE_PHOTOS.headers.archives]: 'center 38%',
+};
+
+export const headerImagePosition = (src) => HEADER_FOCUS[src] ?? 'center';

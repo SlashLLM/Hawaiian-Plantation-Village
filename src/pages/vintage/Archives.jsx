@@ -76,7 +76,7 @@ export default function Archives() {
     <div>
       <SEO title="Collections & Archives" description="Photographs, documents, artifacts and oral histories that preserve the experiences of Hawaii's plantation communities across generations." />
       <PageHeaderParallax
-        image={lead?.imageUrl || SITE_PHOTOS.headers.visit}
+        image={SITE_PHOTOS.headers.archives}
         stamp={header?.stamp ?? 'Collections & archives'}
         title={header?.title ?? 'What families saved, Hawaiʻi remembers.'}
         subtitle={header?.subtitle}
