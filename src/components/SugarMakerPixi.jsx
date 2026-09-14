@@ -1,5 +1,19 @@
 import React, { useEffect, useRef } from 'react';
-import { Application, Container, Graphics, Color } from 'pixi.js';
+import { Application, Container, Graphics, Color, Rectangle, Circle } from 'pixi.js';
+
+// Fixed design-space size; the stage is scaled to fit the host width.
+const DESIGN_W = 700;
+const DESIGN_H = 400;
+
+// Removes destroyed items from a particle array while iterating safely.
+const updateParticles = (list, step) => {
+  for (let i = list.length - 1; i >= 0; i--) {
+    if (step(list[i])) {
+      list[i].destroy();
+      list.splice(i, 1);
+    }
+  }
+};
 
 export default function SugarMakerPixi({
   activeStep,
@@ -53,8 +67,6 @@ export default function SugarMakerPixi({
   useEffect(() => {
     let active = true;
     let resizeObserver = null;
-    const DESIGN_W = 700;
-    const DESIGN_H = 400;
 
     // Initialize PixiJS Application
     const app = new Application();
@@ -234,20 +246,39 @@ export default function SugarMakerPixi({
     scene.addChild(trail);
     stateRef.current.swipeTrail = trail;
 
-    // Enable interactive swiping on scene
+    // Enable interactive swiping on scene (hit area in design units, not screen px)
     scene.eventMode = 'static';
-    scene.hitArea = appRef.current.screen;
+    scene.hitArea = new Rectangle(0, 0, DESIGN_W, DESIGN_H);
+
+    const cutStalk = (stalk) => {
+      stalk.cut = true;
+      stalk.guideline.visible = false;
+      setScore(s => s + 10);
+      onProgressUpdate('harvest', 1); // Notify parent of a cut stalk
+      spawnLeafParticles(stalk.x, stalk.cutY);
+    };
+
+    // Tolerance grows as the canvas shrinks so fingers can hit the cut line on phones
+    const cutTolerance = () => Math.max(25, 12 / (appRef.current?.stage.scale.y || 1));
 
     scene.on('pointerdown', (e) => {
+      const point = scene.toLocal(e.global);
       stateRef.current.isSwiping = true;
-      stateRef.current.swipePoints = [e.global.clone()];
+      stateRef.current.swipePoints = [point];
+
+      const tolerance = cutTolerance();
+      stateRef.current.stalks.forEach((stalk) => {
+        if (!stalk.cut && Math.abs(point.x - stalk.x) < 12 && Math.abs(point.y - stalk.cutY) < tolerance) {
+          cutStalk(stalk);
+        }
+      });
     });
 
     scene.on('globalpointermove', (e) => {
       if (!stateRef.current.isSwiping) return;
 
       const points = stateRef.current.swipePoints;
-      points.push(e.global.clone());
+      points.push(scene.toLocal(e.global));
       if (points.length > 15) points.shift(); // keep it short
 
       // Check intersections with uncut guidelines
@@ -255,21 +286,18 @@ export default function SugarMakerPixi({
       const curr = points[points.length - 1];
 
       if (prev && curr) {
+        const tolerance = cutTolerance();
         stateRef.current.stalks.forEach((stalk) => {
-          if (!stalk.cut) {
-            // Check if pointer line crosses the stalk's cut segment
-            const crossedX = (prev.x <= stalk.x && curr.x >= stalk.x) || (prev.x >= stalk.x && curr.x <= stalk.x);
-            const crossedY = Math.abs(curr.y - stalk.cutY) < 25;
+          if (stalk.cut) return;
+          // Does the swipe segment cross the stalk's x position?
+          const crossedX = (prev.x <= stalk.x && curr.x >= stalk.x) || (prev.x >= stalk.x && curr.x <= stalk.x);
+          if (!crossedX) return;
 
-            if (crossedX && crossedY) {
-              stalk.cut = true;
-              stalk.guideline.visible = false;
-              setScore(s => s + 10);
-              onProgressUpdate('harvest', 1); // Notify parent of a cut stalk
-
-              // Spawn particles
-              spawnLeafParticles(stalk.x, stalk.cutY);
-            }
+          // Interpolate the segment's y at the stalk so sparse touch moves still register
+          const dx = curr.x - prev.x;
+          const yAtStalk = dx === 0 ? curr.y : prev.y + ((stalk.x - prev.x) / dx) * (curr.y - prev.y);
+          if (Math.abs(yAtStalk - stalk.cutY) < tolerance) {
+            cutStalk(stalk);
           }
         });
       }
@@ -282,6 +310,7 @@ export default function SugarMakerPixi({
 
     scene.on('pointerup', stopSwipe);
     scene.on('pointerupoutside', stopSwipe);
+    scene.on('pointercancel', stopSwipe);
   };
 
   const spawnLeafParticles = (x, y) => {
@@ -305,7 +334,7 @@ export default function SugarMakerPixi({
   const buildCrushScene = (scene) => {
     // Configure scene interactivity
     scene.eventMode = 'static';
-    scene.hitArea = appRef.current.screen;
+    scene.hitArea = new Rectangle(0, 0, DESIGN_W, DESIGN_H);
 
     // Draw background wooden table / mill deck
     const deck = new Graphics();
@@ -405,14 +434,21 @@ export default function SugarMakerPixi({
     // Drag-wheel controls
     flywheel.eventMode = 'static';
     flywheel.cursor = 'pointer';
+    // Generous grab area so the wheel is easy to catch with a finger
+    flywheel.hitArea = new Circle(0, 0, 100);
+
+    // Juice progress (%) added per radian turned: ~2.5 full turns fill the tank
+    const JUICE_PER_RADIAN = 100 / (2.5 * Math.PI * 2);
 
     let dragging = false;
     let startAngle = 0;
+    let lastAngle = 0;
 
     flywheel.on('pointerdown', (e) => {
       dragging = true;
       const local = scene.toLocal(e.global);
-      startAngle = Math.atan2(local.y - flywheel.y, local.x - flywheel.x) - stateRef.current.crankAngle;
+      lastAngle = Math.atan2(local.y - flywheel.y, local.x - flywheel.x);
+      startAngle = lastAngle - stateRef.current.crankAngle;
     });
 
     flywheel.on('globalpointermove', (e) => {
@@ -421,6 +457,12 @@ export default function SugarMakerPixi({
       const angle = Math.atan2(local.y - flywheel.y, local.x - flywheel.x);
       const newAngle = angle - startAngle;
 
+      // Angular change since the last move, wrapped into (-PI, PI]
+      let delta = angle - lastAngle;
+      if (delta > Math.PI) delta -= Math.PI * 2;
+      else if (delta <= -Math.PI) delta += Math.PI * 2;
+      lastAngle = angle;
+
       stateRef.current.crankAngle = newAngle;
       flywheel.rotation = newAngle;
 
@@ -428,9 +470,9 @@ export default function SugarMakerPixi({
       gear1.rotation = newAngle * 1.5;
       gear2.rotation = -newAngle * 1.5;
 
-      // Extract juice if not full
-      if (stateRef.current.juiceLevel < 100) {
-        onProgressUpdate('crush', 0.8); // add juice progress
+      // Extract juice if not full, proportional to how far the wheel actually turned
+      if (stateRef.current.juiceLevel < 100 && delta !== 0) {
+        onProgressUpdate('crush', Math.abs(delta) * JUICE_PER_RADIAN);
         if (Math.random() < 0.35) {
           spawnJuiceDrip();
         }
@@ -440,6 +482,7 @@ export default function SugarMakerPixi({
     const stopDrag = () => { dragging = false; };
     flywheel.on('pointerup', stopDrag);
     flywheel.on('pointerupoutside', stopDrag);
+    flywheel.on('pointercancel', stopDrag);
 
     // Sugarcane stalks on conveyor (Organic bamboo nodes look)
     const conveyorStalks = [];
@@ -521,6 +564,7 @@ export default function SugarMakerPixi({
       scum.addChild(g);
       scum.eventMode = 'static';
       scum.cursor = 'pointer';
+      scum.hitArea = new Circle(0, 0, 38); // larger than the drawn blob for touch
 
       scum.on('pointerdown', () => {
         if (stateRef.current.heatLevel === 0) return; // Burner must be on
@@ -568,6 +612,7 @@ export default function SugarMakerPixi({
     spinBtn.y = 200;
     spinBtn.eventMode = 'static';
     spinBtn.cursor = 'pointer';
+    spinBtn.hitArea = new Circle(0, 0, 100); // whole drum is tappable
 
     const btnGraphic = new Graphics();
     btnGraphic.circle(0, 0, 40).fill(0x356e63).stroke({ width: 4, color: 0xffffff });
@@ -646,16 +691,12 @@ export default function SugarMakerPixi({
       });
 
       // Leaf physics
-      sRef.leafParticles.forEach((p, index) => {
+      updateParticles(sRef.leafParticles, (p) => {
         p.x += p.vx * ticker.deltaTime;
         p.y += p.vy * ticker.deltaTime;
         p.vy += 0.2 * ticker.deltaTime; // gravity
         p.rotation += p.vr * ticker.deltaTime;
-
-        if (p.y > 400) {
-          p.destroy();
-          sRef.leafParticles.splice(index, 1);
-        }
+        return p.y > 400;
       });
     }
 
@@ -678,15 +719,10 @@ export default function SugarMakerPixi({
       });
 
       // Juice drips physics
-      sRef.drips.forEach((d, index) => {
+      updateParticles(sRef.drips, (d) => {
         d.y += d.vy * ticker.deltaTime;
         d.vy += 0.2 * ticker.deltaTime; // gravity
-
-        // If it lands in the bucket (y >= 300)
-        if (d.y >= 300) {
-          d.destroy();
-          sRef.drips.splice(index, 1);
-        }
+        return d.y >= 300; // landed in the bucket
       });
 
       // Update liquid level in the bucket
@@ -752,12 +788,9 @@ export default function SugarMakerPixi({
         sRef.boilBubbles.push(bubble);
       }
 
-      sRef.boilBubbles.forEach((b, index) => {
+      updateParticles(sRef.boilBubbles, (b) => {
         b.y += b.vy * ticker.deltaTime;
-        if (b.y < 120) {
-          b.destroy();
-          sRef.boilBubbles.splice(index, 1);
-        }
+        return b.y < 120;
       });
     }
 
@@ -777,17 +810,13 @@ export default function SugarMakerPixi({
       }
 
       // Molasses spray particles physics
-      sRef.molassesParticles.forEach((p, index) => {
+      updateParticles(sRef.molassesParticles, (p) => {
         p.x += p.vx * ticker.deltaTime;
         p.y += p.vy * ticker.deltaTime;
         p.vx *= 0.97;
         p.vy *= 0.97;
         p.alpha -= 0.03 * ticker.deltaTime;
-
-        if (p.alpha <= 0) {
-          p.destroy();
-          sRef.molassesParticles.splice(index, 1);
-        }
+        return p.alpha <= 0;
       });
     }
   };

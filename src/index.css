@@ -857,12 +857,22 @@ button, input, select, textarea {
   font-size: 0.85rem;
 }
 
+.play-arena-card {
+  padding: 2.5rem 2rem;
+}
+
 .pixi-canvas-host {
   width: 100%;
   max-width: 700px;
   aspect-ratio: 7 / 4;
   margin-inline: auto;
   overflow: hidden;
+  /* Touch gestures drive the game: no scrolling, text selection or tap flash on the canvas */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .pixi-canvas-host canvas {
@@ -951,10 +961,6 @@ button, input, select, textarea {
     grid-template-columns: 1fr;
   }
 
-  .steps-grid-responsive {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .wizard-steps-bar {
     margin-bottom: 2rem;
     gap: 0.15rem;
@@ -974,8 +980,14 @@ button, input, select, textarea {
 }
 
 @media (max-width: 560px) {
+  /* Keep the 4 game stages on one compact row so the canvas stays above the fold */
   .steps-grid-responsive {
-    grid-template-columns: 1fr;
+    gap: 6px;
+    margin-bottom: 1.25rem;
+  }
+
+  .play-arena-card {
+    padding: 1.25rem 0.75rem;
   }
 
   .nav-brand-subtitle {

@@ -124,7 +124,7 @@ export default function Play() {
           )}
 
           {/* Interactive Game Arena */}
-          <div className="paper-card" style={styles.arenaCard}>
+          <div className="paper-card play-arena-card" style={styles.arenaCard}>
             <div style={styles.arenaHeader}>
               <h3 style={styles.arenaTitle}>{activeStep < 4 ? GAME_STEPS[activeStep].title : 'Mill Champion!'}</h3>
               <div style={styles.scoreContainer}>
@@ -340,12 +340,13 @@ const styles = {
     fontWeight: '600'
   },
   arenaCard: {
-    padding: '2.5rem 2rem',
     borderRadius: '8px',
     border: '2px solid var(--koa-wood)'
   },
   arenaHeader: {
     display: 'flex',
+    flexWrap: 'wrap',
+    gap: '0.5rem 1rem',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '0.5rem',
@@ -385,7 +386,8 @@ const styles = {
     width: '100%',
     maxWidth: '280px',
     justifyContent: 'center',
-    marginTop: '0.5rem'
+    marginTop: '0.5rem',
+    touchAction: 'manipulation'
   },
   progressContainer: {
     width: '100%',
@@ -425,6 +427,7 @@ const styles = {
   },
   boilerControls: {
     display: 'flex',
+    flexWrap: 'wrap',
     alignItems: 'center',
     justifyContent: 'center',
     gap: '12px'
@@ -437,15 +440,20 @@ const styles = {
   },
   heatBtns: {
     display: 'flex',
-    gap: '6px'
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: '8px'
   },
   heatBtn: {
     border: '1px solid var(--kraft-tan-dark)',
     backgroundColor: 'white',
-    padding: '4px 10px',
+    padding: '8px 12px',
+    minHeight: '44px',
+    minWidth: '56px',
     cursor: 'pointer',
     fontFamily: 'var(--font-typewriter)',
-    fontSize: '0.8rem'
+    fontSize: '0.85rem',
+    touchAction: 'manipulation'
   },
   heatBtnActive: {
     backgroundColor: 'var(--tin-rust)',
