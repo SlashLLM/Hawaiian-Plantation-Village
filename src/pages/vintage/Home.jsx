@@ -163,7 +163,7 @@ export default function Home() {
             <Reveal>
               <img
                 src={SITE_PHOTOS.homeFeatured}
-                alt="Village buildings and gardens at Hawaii's Plantation Village"
+                alt="Students and educators gathered on the steps of the Okada Education Center"
                 style={styles.plate}
                 loading="lazy"
               />

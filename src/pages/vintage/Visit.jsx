@@ -118,7 +118,7 @@ export default function Visit() {
 
                 <h3 style={styles.tabTitle}>Guided tour schedule</h3>
                 <p style={styles.bodyText}>
-                  {hoursSection?.toursIntro ?? 'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:'}
+                  {hoursSection?.toursIntro ?? 'To experience the stories fully, we highly recommend taking our daily guided tour led by resident docents:'}
                 </p>
                 <ul style={styles.tourList}>
                   {TOUR_SLOTS.map((slot) => (

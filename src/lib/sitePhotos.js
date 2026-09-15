@@ -10,9 +10,9 @@ const staffHeader = (page) => `/images/Staffphotos/headers/${page}.webp`;
 export const SITE_PHOTOS = {
   heroPoster: digi('IMG_6805.webp'),
   homeWhyVisit: digi('IMG_6115.webp'),
-  homeFeatured: digi('IMG_6420.webp'),
+  homeFeatured: '/images/about/okada-education-center-group.webp',
   homeEducators: digi('IMG_6330.webp'),
-  aboutMission: digi('IMG_6066.webp'),
+  aboutMission: '/images/about/hele-mai-foods-exhibit.webp',
   aboutStaff: '/images/Staffphotos/staff-group.jpg',
   storiesFallback: digi('IMG_6122.webp'),
   newsSmokestack: digi('IMG_6810.webp'),

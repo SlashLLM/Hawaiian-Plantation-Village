@@ -275,8 +275,8 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                 <div style={styles.imgCol}>
                   <div style={styles.imgWrapper}>
                     <img
-                      src="/digitized-photos/IMG_6066.jpeg"
-                      alt="Restored camp house at Hawaii's Plantation Village"
+                      src={SITE_PHOTOS.aboutMission}
+                      alt="Hele Mai: Let's Eat Hawaii's Foods exhibit, with Adapt, Adopt, Retain and Contribute banners above displays of plantation-era dishes"
                       style={styles.featuredImg}
                       loading="lazy"
                     />
@@ -921,7 +921,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
                       <h5 style={styles.infoLabel}>Hours of Operation</h5>
                       <p style={styles.infoText}>
                         {hours.schedule ?? 'Monday through Saturday'}<br />
-                        {hours.toursNote ?? 'Guided tours at 10:00 AM & 12:00 PM'}<br />
+                        {hours.toursNote ?? 'Guided tour at 10:00 AM'}<br />
                         <span style={{ fontSize: '0.75rem', color: 'var(--tin-rust)', fontWeight: 'bold' }}>{hours.closedNote ?? '*Closed Sundays & Major State Holidays'}</span>
                       </p>
                     </div>

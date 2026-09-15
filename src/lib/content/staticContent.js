@@ -69,7 +69,7 @@ export const DEFAULT_SITE_SETTINGS = {
   },
   hours: {
     schedule: 'Monday – Saturday: 9:00 AM – 2:00 PM',
-    toursNote: 'Guided tours at 10:00 AM & 12:00 PM',
+    toursNote: 'Guided tour at 10:00 AM',
     closedNote: 'Closed on Sundays and major state holidays.',
     parking: 'Free Visitor Parking Onsite',
   },
@@ -144,7 +144,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       hours: {
         title: 'HOURS OF OPERATION',
         primary: 'Monday – Saturday: 9:00 AM – 2:00 PM',
-        secondary: 'Guided tours at 10:00 AM & 12:00 PM',
+        secondary: 'Guided tour at 10:00 AM',
       },
       location: {
         title: 'LOCATION',
@@ -369,10 +369,9 @@ export const DEFAULT_PAGE_SECTIONS = {
       schedule: 'Monday – Saturday: 9:00 AM – 2:00 PM',
       closedNote: 'Closed on Sundays and major state holidays.',
       toursIntro:
-        'To experience the stories fully, we highly recommend taking one of our daily guided tours led by resident docents:',
+        'To experience the stories fully, we highly recommend taking our daily guided tour led by resident docents:',
       tourSlots: [
         { label: 'Morning tour', time: '10:00 AM Mon – Sat' },
-        { label: 'Midday tour', time: '12:00 PM Mon – Sat' },
       ],
       lastEntryNote: 'Last entry for self-tour is at 1:00 PM.',
       walkInNote:
@@ -684,10 +683,10 @@ export const DEFAULT_PAGE_SECTIONS = {
       secondaryCta: { label: 'Donate an Object or Photograph', page: 'about' },
     },
     howToLook: {
-      eyebrow: 'Looking at photographs',
-      title: 'Questions that open an image',
+      eyebrow: 'Reading a photograph',
+      title: 'Questions That Help Us Look Closer',
       description:
-        'When viewing and interacting with photographs from the archives, these questions help develop a broader understanding of the image. All one needs is more context.',
+        'Photographs can tell us far more than what we see at first glance. When exploring images from our archives, use these questions to look more closely, notice details, consider context and uncover the stories an image may hold.',
       steps: [
         {
           title: 'What does one see?',

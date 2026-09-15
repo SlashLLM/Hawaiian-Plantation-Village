@@ -24,7 +24,6 @@ export const EVENTS = [
     ],
     tour_time_slots: [
       { id: 'slot-am', label: '10:00 AM', sort_order: 1 },
-      { id: 'slot-noon', label: '12:00 PM', sort_order: 2 },
     ],
   },
   {

@@ -70,7 +70,7 @@ describe('Tickets event cards', () => {
     const timeSelect = screen.getByLabelText('Guided tour time');
     expect(timeSelect).toHaveValue('10:00 AM');
     expect(screen.getByRole('option', { name: '10:00 AM Guided Tour' })).toBeInTheDocument();
-    expect(screen.getByRole('option', { name: '12:00 PM Guided Tour' })).toBeInTheDocument();
+    expect(screen.queryByRole('option', { name: '12:00 PM Guided Tour' })).not.toBeInTheDocument();
   });
 });
 

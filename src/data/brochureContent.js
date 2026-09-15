@@ -17,11 +17,10 @@ export const VISIT_DIRECTIONS = {
 
 export const TOUR_SLOTS = [
   { label: 'Morning tour', time: '10:00 AM, Monday – Saturday' },
-  { label: 'Midday tour', time: '12:00 PM, Monday – Saturday' },
 ];
 
 export const TOUR_NOTE =
-  'Guided tours run Monday – Saturday at 10:00 AM & 12:00 PM, led by bilingual guides who "talk story." Call (808) 677-0110 to reserve. Self-tours are also available.';
+  'Guided tours run Monday – Saturday at 10:00 AM, led by bilingual guides who "talk story." Call (808) 677-0110 to reserve. Self-tours are also available.';
 
 export const MISSION_STATEMENT = {
   statement:
