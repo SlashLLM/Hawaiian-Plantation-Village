@@ -566,8 +566,8 @@ where content_type = 'camp_story'
 
 insert into public.page_sections (page_key, section_key, status, sort_order, payload, published_at)
 values
-  ('archives', 'header', 'published', 1, '{"stamp":"Photograph archives","stampClass":"green","title":"Engaging photographs in the archives","subtitle":"Most old photographs have little significance to others unless you bring context. Ask what you see, what dates or places the image hints at, whether it matches what you know, and how the elements interact — then look for more context."}'::jsonb, now()),
-  ('archives', 'collections', 'published', 2, '{"eyebrow":"Three collections","title":"Photograph collections","description":"Photographs donated to Hawaii''s Plantation Village are organized into three primary collections. Knowing who kept an image, and why, changes how you read it.","items":[{"id":"oahu_sugar","name":"Oahu Sugar Company","blurb":"Mainly from the 1940s to 1950s: sugar cane cultivation and harvesting, finances, mill operations, water systems, housing, and medical services. R.H. “Harry” Lodge, division overseer, and Ernest Malterre, Jr., housing supervisor, are credited for most of the collection. Lodge’s photographs of Honouliuli Internment Camp remain a constant resource for researchers."},{"id":"murakoshi","name":"Murakoshi Collection","blurb":"Mae Okada’s collection of father-and-son photographers Nobunosuke and Henry Murakoshi. Nobunosuke’s photographs are primarily studio work; Henry’s give a peek into everyday Waipahu — school activities, picnics, celebrations, community events, camp homes, businesses, and locations."},{"id":"fwcgp","name":"Friends of Waipahu Cultural Garden Park","blurb":"The largest collection in the HPV Photograph Archives: individual donations of family, work culture, WWII induction, group photos, education and recreation from plantation life. There is some overlap with Lodge, Malterre, and Nobunosuke Murakoshi. Includes panoramic class pictures, graduations, recognition and awards, and funeral photos."}]}'::jsonb, now()),
+  ('archives', 'header', 'published', 1, '{"stamp":"Collections & archives","stampClass":"green","title":"What families saved, Hawaiʻi remembers.","subtitle":"Photographs tucked into albums. Letters carried across oceans. Work tools worn smooth by use. Clothing saved for decades. Objects from kitchens, bedrooms and places of worship. Individually, they may seem ordinary. Together, they tell an extraordinary story."}'::jsonb, now()),
+  ('archives', 'collections', 'published', 2, '{"eyebrow":"Three collections","title":"Photograph collections","description":"Hawaii''s Plantation Village cares for photographs, documents, artifacts and oral histories that preserve the experiences of plantation communities across generations. Knowing who kept an image, and why, changes how you read it.","items":[{"id":"oahu_sugar","name":"Oahu Sugar Company","blurb":"Mainly from the 1940s to 1950s: sugar cane cultivation and harvesting, finances, mill operations, water systems, housing, and medical services. R.H. “Harry” Lodge, division overseer, and Ernest Malterre, Jr., housing supervisor, are credited for most of the collection. Lodge’s photographs of Honouliuli Internment Camp remain a constant resource for researchers."},{"id":"murakoshi","name":"Murakoshi Collection","blurb":"Mae Okada’s collection of father-and-son photographers Nobunosuke and Henry Murakoshi. Nobunosuke’s photographs are primarily studio work; Henry’s give a peek into everyday Waipahu — school activities, picnics, celebrations, community events, camp homes, businesses, and locations."},{"id":"fwcgp","name":"Friends of Waipahu Cultural Garden Park","blurb":"The largest collection in the HPV Photograph Archives: individual donations of family, work culture, WWII induction, group photos, education and recreation from plantation life. There is some overlap with Lodge, Malterre, and Nobunosuke Murakoshi. Includes panoramic class pictures, graduations, recognition and awards, and funeral photos."}],"cta":{"label":"Explore the Collection","page":"archives"},"secondaryCta":{"label":"Donate an Object or Photograph","page":"about"}}'::jsonb, now()),
   ('archives', 'howToLook', 'published', 3, '{"eyebrow":"Looking at photographs","title":"Questions that open an image","description":"When viewing and interacting with photographs from the archives, these questions help develop a broader understanding of the image. All one needs is more context.","steps":[{"title":"What does one see?","note":"What are you able to identify in the image to indicate who or what is being captured in the photograph?"},{"title":"When or where?","note":"Is there anything in the photograph that indicates when or where the photograph was taken?"},{"title":"Match, reinforce, or conflict?","note":"Does the photograph match, reinforce, or conflict with your own knowledge of what has been captured in the image?"},{"title":"How do the elements interact?","note":"Finally, how do the elements identified in the image interact with each other?"}]}'::jsonb, now()),
   ('archives', 'samples', 'published', 4, '{"eyebrow":"Worked examples","title":"How related frames build context","description":"The study guide reads plantation-era prints with accession cards and backs. Use the same method on the digitized village slides below: observe first, then ask what a second frame confirms or complicates.","items":[{"label":"Sample 1","title":"Outside, then inside the same house","arkIds":["img_6115","img_6330"],"note":"In the study guide, Sample 1 uses metadata — filing category, subject, donor, accession year — and clues such as vehicles to date an undated street scene. Here, an exterior and an interior of camp housing work the same way: read what is visible in each frame, then ask what the pair can tell you that either image alone cannot."},{"label":"Sample 2","title":"A building, then the people and objects inside it","arkIds":["img_6820","img_6420"],"note":"Study Guide Sample 2 shows how a group event photograph can contradict assumptions — for example, that the Filipino community was primarily male by 1937. When people and named businesses appear in a frame, ask whether they are the subject or the evidence of when the shutter opened, and what the group composition challenges in your prior knowledge."}]}'::jsonb, now()),
   ('archives', 'analyze', 'published', 5, '{"eyebrow":"Analyze a photograph","title":"Work through one image","description":"Based on the National Archives and Records Administration “Analyze an Artifact” form. Your responses save in this browser only; you can print or export the finished worksheet.","prompts":[{"id":"meet","heading":"Meet the photo","questions":["What do you notice when you first looked at the photograph?","How would you describe the photograph (portrait, landscape, event, posed, candid, documentary, or other)?","Is there a caption?"]},{"id":"observe","heading":"Observe its parts","questions":["List and describe the people, objects, and activities you see.","Write one sentence summarizing this photo."]},{"id":"sense","heading":"Try to make sense of it","questions":["Look at any scans that accompany the image (back, accession card). Who? Where? When?","What was happening at the time in history this photo was taken?","Why was it taken? List evidence from the image or accompanying materials."]},{"id":"evidence","heading":"Use it as historical evidence","questions":["What did you find out from this photo that you might not learn anywhere else?","What other documents, photos, or historical evidence are you going to use to help you understand this event or topic?"]}]}'::jsonb, now()),
@@ -586,9 +586,9 @@ values
     'Site paths and plantings date this as museum-era documentation of the living village rather than a plantation-era street scene.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6805.jpeg',
+    '/digitized-photos/IMG_6805.webp',
     1,
-    '{"arkId":"img_6805","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Paved path lined with restored cottages, palms, and tropical plantings","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6805.jpeg","imageUrl":"/digitized-photos/IMG_6805.jpeg","relatedArkIds":["img_6115","img_6820"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Site paths and plantings date this as museum-era documentation of the living village rather than a plantation-era street scene.","provisional":true}'::jsonb,
+    '{"arkId":"img_6805","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Paved path lined with restored cottages, palms, and tropical plantings","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6805.webp","imageUrl":"/digitized-photos/IMG_6805.webp","relatedArkIds":["img_6115","img_6820"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Site paths and plantings date this as museum-era documentation of the living village rather than a plantation-era street scene.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -601,9 +601,9 @@ values
     'The plaque in the foreground is museum evidence: this structure is being read as heritage, not as occupied housing.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6115.jpeg',
+    '/digitized-photos/IMG_6115.webp',
     2,
-    '{"arkId":"img_6115","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Single-wall camp cottage with dark siding, white porch railings, and an interpretive plaque","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6115.jpeg","imageUrl":"/digitized-photos/IMG_6115.jpeg","relatedArkIds":["img_6122","img_6330"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"The plaque in the foreground is museum evidence: this structure is being read as heritage, not as occupied housing.","provisional":true}'::jsonb,
+    '{"arkId":"img_6115","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Single-wall camp cottage with dark siding, white porch railings, and an interpretive plaque","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6115.webp","imageUrl":"/digitized-photos/IMG_6115.webp","relatedArkIds":["img_6122","img_6330"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"The plaque in the foreground is museum evidence: this structure is being read as heritage, not as occupied housing.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -616,9 +616,9 @@ values
     'Porch depth, rail detail, and door hardware are the kind of construction clues the study guide asks viewers to inventory before guessing date or culture.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6122.jpeg',
+    '/digitized-photos/IMG_6122.webp',
     3,
-    '{"arkId":"img_6122","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Long porch with lace curtains, screen door, and horseshoe above the doorway","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6122.jpeg","imageUrl":"/digitized-photos/IMG_6122.jpeg","relatedArkIds":["img_6115","img_6365"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Porch depth, rail detail, and door hardware are the kind of construction clues the study guide asks viewers to inventory before guessing date or culture.","provisional":true}'::jsonb,
+    '{"arkId":"img_6122","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Long porch with lace curtains, screen door, and horseshoe above the doorway","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6122.webp","imageUrl":"/digitized-photos/IMG_6122.webp","relatedArkIds":["img_6115","img_6365"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Porch depth, rail detail, and door hardware are the kind of construction clues the study guide asks viewers to inventory before guessing date or culture.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -631,9 +631,9 @@ values
     'Pair this interior with the cottage exterior to practice reading what one frame confirms or complicates about the other.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6330.jpeg',
+    '/digitized-photos/IMG_6330.webp',
     4,
-    '{"arkId":"img_6330","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Camp house interior with open double doors, woven hats, and a historical group photograph","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6330.jpeg","imageUrl":"/digitized-photos/IMG_6330.jpeg","relatedArkIds":["img_6115","img_6365"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Pair this interior with the cottage exterior to practice reading what one frame confirms or complicates about the other.","provisional":true}'::jsonb,
+    '{"arkId":"img_6330","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Camp house interior with open double doors, woven hats, and a historical group photograph","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6330.webp","imageUrl":"/digitized-photos/IMG_6330.webp","relatedArkIds":["img_6115","img_6365"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Pair this interior with the cottage exterior to practice reading what one frame confirms or complicates about the other.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -646,9 +646,9 @@ values
     'Domestic objects — trunks, quilts, books — are clues to how ethnic historical groups chose to furnish these exhibits.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6365.jpeg',
+    '/digitized-photos/IMG_6365.webp',
     5,
-    '{"arkId":"img_6365","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Corner of a furnished camp room with trunks, a three-legged stool, and open books","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6365.jpeg","imageUrl":"/digitized-photos/IMG_6365.jpeg","relatedArkIds":["img_6330","img_6122"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Domestic objects — trunks, quilts, books — are clues to how ethnic historical groups chose to furnish these exhibits.","provisional":true}'::jsonb,
+    '{"arkId":"img_6365","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Corner of a furnished camp room with trunks, a three-legged stool, and open books","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6365.webp","imageUrl":"/digitized-photos/IMG_6365.webp","relatedArkIds":["img_6330","img_6122"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Domestic objects — trunks, quilts, books — are clues to how ethnic historical groups chose to furnish these exhibits.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -661,9 +661,9 @@ values
     'Faith objects and room adjacencies help identify which ethnic home this exhibit represents and how family life was organized in a small footprint.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6400.jpeg',
+    '/digitized-photos/IMG_6400.webp',
     6,
-    '{"arkId":"img_6400","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Religious altar with Virgin Mary statue flanked by doorways into adjoining rooms","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6400.jpeg","imageUrl":"/digitized-photos/IMG_6400.jpeg","relatedArkIds":["img_6330","img_6350"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Faith objects and room adjacencies help identify which ethnic home this exhibit represents and how family life was organized in a small footprint.","provisional":true}'::jsonb,
+    '{"arkId":"img_6400","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Religious altar with Virgin Mary statue flanked by doorways into adjoining rooms","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6400.webp","imageUrl":"/digitized-photos/IMG_6400.webp","relatedArkIds":["img_6330","img_6350"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Faith objects and room adjacencies help identify which ethnic home this exhibit represents and how family life was organized in a small footprint.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -676,9 +676,9 @@ values
     'Work surfaces and containers are evidence of daily labor inside the home — cooking, washing, food storage — not only ceremonial display.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6350.jpeg',
+    '/digitized-photos/IMG_6350.webp',
     7,
-    '{"arkId":"img_6350","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Historic kitchen or workroom with ceramic sink, enamel bowls, and woven baskets","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6350.jpeg","imageUrl":"/digitized-photos/IMG_6350.jpeg","relatedArkIds":["img_6310","img_6400"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Work surfaces and containers are evidence of daily labor inside the home — cooking, washing, food storage — not only ceremonial display.","provisional":true}'::jsonb,
+    '{"arkId":"img_6350","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Historic kitchen or workroom with ceramic sink, enamel bowls, and woven baskets","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6350.webp","imageUrl":"/digitized-photos/IMG_6350.webp","relatedArkIds":["img_6310","img_6400"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Work surfaces and containers are evidence of daily labor inside the home — cooking, washing, food storage — not only ceremonial display.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -691,9 +691,9 @@ values
     'Garden and wash tools document the outdoor labor that supported camp households as much as furniture does indoors.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6310.jpeg',
+    '/digitized-photos/IMG_6310.webp',
     8,
-    '{"arkId":"img_6310","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Utility shed interior with long-spout watering cans, glass jars, and a washboard","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6310.jpeg","imageUrl":"/digitized-photos/IMG_6310.jpeg","relatedArkIds":["img_6350","img_6380"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Garden and wash tools document the outdoor labor that supported camp households as much as furniture does indoors.","provisional":true}'::jsonb,
+    '{"arkId":"img_6310","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Utility shed interior with long-spout watering cans, glass jars, and a washboard","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6310.webp","imageUrl":"/digitized-photos/IMG_6310.webp","relatedArkIds":["img_6350","img_6380"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Garden and wash tools document the outdoor labor that supported camp households as much as furniture does indoors.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -706,9 +706,9 @@ values
     'Floor material and roof structure are dating and use clues: packed earth and corrugated roofing point to utility space, not a furnished parlor.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6380.jpeg',
+    '/digitized-photos/IMG_6380.webp',
     9,
-    '{"arkId":"img_6380","collection":"fwcgp","filingCategory":"Village site documentation","subject":"White-painted wooden outbuilding with dirt floor and open cubby shelving","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6380.jpeg","imageUrl":"/digitized-photos/IMG_6380.jpeg","relatedArkIds":["img_6310","img_6820"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Floor material and roof structure are dating and use clues: packed earth and corrugated roofing point to utility space, not a furnished parlor.","provisional":true}'::jsonb,
+    '{"arkId":"img_6380","collection":"fwcgp","filingCategory":"Village site documentation","subject":"White-painted wooden outbuilding with dirt floor and open cubby shelving","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6380.webp","imageUrl":"/digitized-photos/IMG_6380.webp","relatedArkIds":["img_6310","img_6820"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Floor material and roof structure are dating and use clues: packed earth and corrugated roofing point to utility space, not a furnished parlor.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -721,9 +721,9 @@ values
     'Paint color and roof material help distinguish structures when matching exteriors to interiors across related frames.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6820.jpeg',
+    '/digitized-photos/IMG_6820.webp',
     10,
-    '{"arkId":"img_6820","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Small green wooden building with red metal roof and white porch steps under a shade tree","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6820.jpeg","imageUrl":"/digitized-photos/IMG_6820.jpeg","relatedArkIds":["img_6805","img_6420"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Paint color and roof material help distinguish structures when matching exteriors to interiors across related frames.","provisional":true}'::jsonb,
+    '{"arkId":"img_6820","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Small green wooden building with red metal roof and white porch steps under a shade tree","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6820.webp","imageUrl":"/digitized-photos/IMG_6820.webp","relatedArkIds":["img_6805","img_6420"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Paint color and roof material help distinguish structures when matching exteriors to interiors across related frames.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -736,9 +736,9 @@ values
     'Named businesses and date ranges on exhibit signage are explicit captions — rare in undated field photographs, common in museum interpretation.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6420.jpeg',
+    '/digitized-photos/IMG_6420.webp',
     11,
-    '{"arkId":"img_6420","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Interior exhibit for Shiroma Saimin 1932–1954 with noodle machine and family photographs","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6420.jpeg","imageUrl":"/digitized-photos/IMG_6420.jpeg","relatedArkIds":["img_6820","img_6810"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Named businesses and date ranges on exhibit signage are explicit captions — rare in undated field photographs, common in museum interpretation.","provisional":true}'::jsonb,
+    '{"arkId":"img_6420","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Interior exhibit for Shiroma Saimin 1932–1954 with noodle machine and family photographs","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6420.webp","imageUrl":"/digitized-photos/IMG_6420.webp","relatedArkIds":["img_6820","img_6810"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Named businesses and date ranges on exhibit signage are explicit captions — rare in undated field photographs, common in museum interpretation.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -751,9 +751,9 @@ values
     'Medical equipment and pharmacy bottles document plantation company services — housing was only one part of camp infrastructure.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6810.jpeg',
+    '/digitized-photos/IMG_6810.webp',
     12,
-    '{"arkId":"img_6810","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Restored medical or dental office with vintage chair, amber bottles, and white cabinets","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6810.jpeg","imageUrl":"/digitized-photos/IMG_6810.jpeg","relatedArkIds":["img_6420","img_6350"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Medical equipment and pharmacy bottles document plantation company services — housing was only one part of camp infrastructure.","provisional":true}'::jsonb,
+    '{"arkId":"img_6810","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Restored medical or dental office with vintage chair, amber bottles, and white cabinets","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6810.webp","imageUrl":"/digitized-photos/IMG_6810.webp","relatedArkIds":["img_6420","img_6350"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Medical equipment and pharmacy bottles document plantation company services — housing was only one part of camp infrastructure.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -766,9 +766,9 @@ values
     'Architectural style and paint color are primary clues when identifying which ethnic community''s sacred or communal building this is.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6103.jpeg',
+    '/digitized-photos/IMG_6103.webp',
     13,
-    '{"arkId":"img_6103","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Bright red wooden temple or shrine porch with geometric railing","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6103.jpeg","imageUrl":"/digitized-photos/IMG_6103.jpeg","relatedArkIds":["img_6066","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Architectural style and paint color are primary clues when identifying which ethnic community''s sacred or communal building this is.","provisional":true}'::jsonb,
+    '{"arkId":"img_6103","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Bright red wooden temple or shrine porch with geometric railing","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6103.webp","imageUrl":"/digitized-photos/IMG_6103.webp","relatedArkIds":["img_6066","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Architectural style and paint color are primary clues when identifying which ethnic community''s sacred or communal building this is.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -781,9 +781,9 @@ values
     'Memorial landscapes ask different questions than furnished homes: whose names are present, who is absent, and when the markers were installed.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6066.jpeg',
+    '/digitized-photos/IMG_6066.webp',
     14,
-    '{"arkId":"img_6066","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Upright memorial stones on concrete plinths beneath a leafy tree","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6066.jpeg","imageUrl":"/digitized-photos/IMG_6066.jpeg","relatedArkIds":["img_6103","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Memorial landscapes ask different questions than furnished homes: whose names are present, who is absent, and when the markers were installed.","provisional":true}'::jsonb,
+    '{"arkId":"img_6066","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Upright memorial stones on concrete plinths beneath a leafy tree","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6066.webp","imageUrl":"/digitized-photos/IMG_6066.webp","relatedArkIds":["img_6103","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Memorial landscapes ask different questions than furnished homes: whose names are present, who is absent, and when the markers were installed.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -796,9 +796,9 @@ values
     'Yard spaces between houses are where work, play, and neighbor life happened — look for fences, lamps, and shared open ground.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6222.jpeg',
+    '/digitized-photos/IMG_6222.webp',
     15,
-    '{"arkId":"img_6222","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Outdoor yard between camp buildings with lamp post, fence, and grassy patch","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6222.jpeg","imageUrl":"/digitized-photos/IMG_6222.jpeg","relatedArkIds":["img_6805","img_6103"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Yard spaces between houses are where work, play, and neighbor life happened — look for fences, lamps, and shared open ground.","provisional":true}'::jsonb,
+    '{"arkId":"img_6222","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Outdoor yard between camp buildings with lamp post, fence, and grassy patch","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6222.webp","imageUrl":"/digitized-photos/IMG_6222.webp","relatedArkIds":["img_6805","img_6103"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Yard spaces between houses are where work, play, and neighbor life happened — look for fences, lamps, and shared open ground.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -811,9 +811,9 @@ values
     'Repair and reconstruction frames document the museum as a working site — preservation is ongoing, not finished.',
     'oahu_sugar',
     'ca. 2020s',
-    '/digitized-photos/IMG_6271.jpeg',
+    '/digitized-photos/IMG_6271.webp',
     16,
-    '{"arkId":"img_6271","collection":"oahu_sugar","filingCategory":"Village site documentation","subject":"Open timber frame of a small building with debris and a stepladder","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6271.jpeg","imageUrl":"/digitized-photos/IMG_6271.jpeg","relatedArkIds":["img_6298"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Repair and reconstruction frames document the museum as a working site — preservation is ongoing, not finished.","provisional":true}'::jsonb,
+    '{"arkId":"img_6271","collection":"oahu_sugar","filingCategory":"Village site documentation","subject":"Open timber frame of a small building with debris and a stepladder","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6271.webp","imageUrl":"/digitized-photos/IMG_6271.webp","relatedArkIds":["img_6298"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Repair and reconstruction frames document the museum as a working site — preservation is ongoing, not finished.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -826,9 +826,9 @@ values
     'Compare framing stages across related construction photos to see how quickly plantation-style structures go up.',
     'oahu_sugar',
     'ca. 2020s',
-    '/digitized-photos/IMG_6298.jpeg',
+    '/digitized-photos/IMG_6298.webp',
     17,
-    '{"arkId":"img_6298","collection":"oahu_sugar","filingCategory":"Village site documentation","subject":"Elevated lumber frame with partial corrugated roofing","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6298.jpeg","imageUrl":"/digitized-photos/IMG_6298.jpeg","relatedArkIds":["img_6271"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Compare framing stages across related construction photos to see how quickly plantation-style structures go up.","provisional":true}'::jsonb,
+    '{"arkId":"img_6298","collection":"oahu_sugar","filingCategory":"Village site documentation","subject":"Elevated lumber frame with partial corrugated roofing","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6298.webp","imageUrl":"/digitized-photos/IMG_6298.webp","relatedArkIds":["img_6271"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Compare framing stages across related construction photos to see how quickly plantation-style structures go up.","provisional":true}'::jsonb,
     now()
   ),
   (
@@ -841,9 +841,9 @@ values
     'Use this frame with the path and yard photographs to map how plantings and circulation connect the ethnic homes.',
     'fwcgp',
     'ca. 2020s',
-    '/digitized-photos/IMG_6435.jpeg',
+    '/digitized-photos/IMG_6435.webp',
     18,
-    '{"arkId":"img_6435","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Garden and path documentation within the village grounds","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/IMG_6435.jpeg","imageUrl":"/digitized-photos/IMG_6435.jpeg","relatedArkIds":["img_6805","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Use this frame with the path and yard photographs to map how plantings and circulation connect the ethnic homes.","provisional":true}'::jsonb,
+    '{"arkId":"img_6435","collection":"fwcgp","filingCategory":"Village site documentation","subject":"Garden and path documentation within the village grounds","donor":"Friends of Waipahu Cultural Garden Park","accessionNumber":"","circaDate":"ca. 2020s","photographer":"","thumbnailUrl":"/digitized-photos/thumbs/IMG_6435.webp","imageUrl":"/digitized-photos/IMG_6435.webp","relatedArkIds":["img_6805","img_6222"],"backImageUrl":null,"accessionCardUrl":null,"studyNotes":"Use this frame with the path and yard photographs to map how plantings and circulation connect the ethnic homes.","provisional":true}'::jsonb,
     now()
   )
 on conflict (slug) do nothing;

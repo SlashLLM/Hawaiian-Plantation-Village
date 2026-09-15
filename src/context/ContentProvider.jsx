@@ -38,6 +38,9 @@ const COLLECTION_FALLBACKS = {
   career: careersList,
 };
 
+/** Identity used to drop static fallbacks the database already provides (photographs have no id). */
+const itemKey = (item) => item.id ?? item.arkId ?? item.slug;
+
 const COLLECTION_MAPPERS = {
   camp_story: mapCampStory,
   photograph: mapPhotograph,
@@ -107,7 +110,11 @@ export function ContentProvider({ children }) {
           const mapper = COLLECTION_MAPPERS[type];
           const dbItems = rows?.length ? rows.map(mapper) : [];
           const fallbackItems = COLLECTION_FALLBACKS[type] || [];
-          const mapped = [...dbItems, ...fallbackItems.filter(item => !item.id || !new Set(dbItems.map(d => d.id).filter(Boolean)).has(item.id))];
+          const dbKeys = new Set(dbItems.map(itemKey).filter(Boolean));
+          const mapped = [
+            ...dbItems,
+            ...fallbackItems.filter((item) => !itemKey(item) || !dbKeys.has(itemKey(item))),
+          ];
           return [type, mapped];
         }),
       );

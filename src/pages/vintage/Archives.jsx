@@ -66,6 +66,11 @@ export default function Archives() {
     return tally;
   }, [photographs]);
 
+  const photosByArkId = useMemo(
+    () => new Map(photographs.map((photo) => [photo.arkId, photo])),
+    [photographs],
+  );
+
   const visible = activeCollection === 'all'
     ? photographs
     : photographs.filter((photo) => photo.collection === activeCollection);
@@ -139,7 +144,7 @@ export default function Archives() {
                 onClick={() => navigate(`/archives/${photo.arkId}`)}
               >
                 <span className="archive-figure">
-                  <img src={photo.thumbnailUrl || photo.imageUrl} alt={photo.title} loading="lazy" />
+                  <img src={photo.thumbnailUrl || photo.imageUrl} alt={photo.title} loading="lazy" decoding="async" />
                 </span>
                 <span className="archive-card-meta">{collectionName(photo.collection)}</span>
                 <span className="archive-card-title">{photo.title}</span>
@@ -195,7 +200,7 @@ export default function Archives() {
 
           {samples.map((sample, index) => {
             const frames = (sample.arkIds ?? [])
-              .map((id) => photographs.find((photo) => photo.arkId === id))
+              .map((id) => photosByArkId.get(id))
               .filter(Boolean);
             return (
               <Reveal key={sample.label} delay={index * 0.08}>
@@ -215,7 +220,7 @@ export default function Archives() {
                         onClick={() => navigate(`/archives/${frame.arkId}`)}
                       >
                         <span className="archive-figure">
-                          <img src={frame.thumbnailUrl || frame.imageUrl} alt={frame.title} loading="lazy" />
+                          <img src={frame.thumbnailUrl || frame.imageUrl} alt={frame.title} loading="lazy" decoding="async" />
                         </span>
                         <span className="archive-card-title" style={{ color: 'var(--sugarcane-cream)' }}>
                           {frame.title}

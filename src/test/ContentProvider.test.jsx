@@ -7,6 +7,7 @@ import {
   newsArticles,
   CAMPS_DATA,
   careersList,
+  PHOTOGRAPHS,
 } from '../lib/content/staticContent.js';
 
 function ContentProbe({ useContent }) {
@@ -99,5 +100,60 @@ describe('ContentProvider with Supabase', () => {
     await waitFor(() => expect(queried).toContain('content_entries'));
     expect(new Set(queried)).toEqual(new Set(['page_sections', 'curriculum_modules', 'content_entries']));
     expect(queried).not.toContain('site_settings');
+  });
+
+  it('does not repeat fallback photographs the database already has', async () => {
+    const [dbPhoto] = PHOTOGRAPHS;
+    const photographRow = {
+      slug: dbPhoto.arkId,
+      content_type: 'photograph',
+      title: 'From the CMS',
+      image_url: dbPhoto.imageUrl,
+      metadata: { arkId: dbPhoto.arkId, thumbnailUrl: dbPhoto.thumbnailUrl },
+    };
+
+    vi.doMock('../lib/supabase.js', () => ({
+      isSupabaseConfigured: true,
+      supabase: {
+        from: (table) => {
+          const filters = {};
+          const chain = {
+            select: () => chain,
+            order: () => chain,
+            or: () => chain,
+            eq: (col, val) => { filters[col] = val; return chain; },
+            maybeSingle: () => Promise.resolve({ data: null, error: null }),
+            then: (resolve) => Promise.resolve({
+              data: table === 'content_entries' && filters.content_type === 'photograph' ? [photographRow] : [],
+              error: null,
+            }).then(resolve),
+          };
+          return chain;
+        },
+      },
+    }));
+    vi.doMock('../hooks/useAuth.js', () => ({ useAuth: () => ({ isStaff: false }) }));
+
+    function PhotoProbe({ useContent }) {
+      const photos = useContent().getCollection('photograph');
+      return (
+        <div>
+          <span data-testid="photo-count">{photos.length}</span>
+          <span data-testid="photo-matches">{photos.filter((p) => p.arkId === dbPhoto.arkId).length}</span>
+          <span data-testid="photo-title">{photos.find((p) => p.arkId === dbPhoto.arkId)?.title}</span>
+        </div>
+      );
+    }
+
+    const { ContentProvider, useContent } = await import('../context/ContentProvider.jsx');
+    render(
+      <ContentProvider>
+        <PhotoProbe useContent={useContent} />
+      </ContentProvider>,
+    );
+
+    await waitFor(() => expect(screen.getByTestId('photo-title')).toHaveTextContent('From the CMS'));
+    expect(screen.getByTestId('photo-matches')).toHaveTextContent('1');
+    expect(Number(screen.getByTestId('photo-count').textContent)).toBe(PHOTOGRAPHS.length);
   });
 });
