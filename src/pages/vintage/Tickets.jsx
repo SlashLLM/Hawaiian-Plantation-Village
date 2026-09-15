@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronRight, Check, ArrowLeft, ShieldAlert, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { createBooking, fetchEventsWithTickets, formatCents } from '../../lib/api.js';
-import { isSupabaseConfigured } from '../../lib/supabase.js';
+import { createBooking, formatCents } from '../../lib/api.js';
+import { EVENTS } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
 import ComingSoon from '../../components/ComingSoon.jsx';
 import { usePageSection, useSiteSettings } from '../../context/ContentProvider.jsx';
@@ -20,47 +20,6 @@ const todayISO = () => {
   const day = String(d.getDate()).padStart(2, '0');
   return `${y}-${m}-${day}`;
 };
-
-const FALLBACK_EVENTS = [
-  {
-    slug: 'guided-tour',
-    title: 'Daily Guided Tour',
-    description: 'Walk the village trails with a resident guide.',
-    is_special: false,
-    start_time: '10:00 AM',
-    end_time: '12:00 PM',
-    ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
-      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
-      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
-    ],
-    tour_time_slots: [
-      { id: 'slot-am', label: '10:00 AM', sort_order: 1 },
-      { id: 'slot-noon', label: '12:00 PM', sort_order: 2 },
-    ],
-  },
-  {
-    slug: 'obon-festival',
-    title: 'Obon Festival & Bon Dance (August 15)',
-    description: 'Special event entry with performances and food vouchers.',
-    is_special: true,
-    event_date: '2026-08-15',
-    start_time: '5:00 PM',
-    end_time: '9:00 PM',
-    ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
-      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
-      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
-    ],
-    tour_time_slots: [
-      { id: 'slot-obon', label: '5:00 PM', sort_order: 1 },
-    ],
-  },
-];
 
 const emptyQuantities = (types) =>
   Object.fromEntries((types ?? []).map((t) => [t.slug, 0]));
@@ -79,11 +38,11 @@ export default function Tickets() {
     [donationPresets],
   );
   const [step, setStep] = useState(1);
-  const [events, setEvents] = useState(FALLBACK_EVENTS);
+  const events = EVENTS;
   const [eventSlug, setEventSlug] = useState('guided-tour');
   const [selectedDate, setSelectedDate] = useState(todayISO);
-  const [selectedTime, setSelectedTime] = useState(() => slotLabel(FALLBACK_EVENTS[0].tour_time_slots[0]));
-  const [quantities, setQuantities] = useState(() => emptyQuantities(FALLBACK_EVENTS[0].ticket_types));
+  const [selectedTime, setSelectedTime] = useState(() => slotLabel(EVENTS[0].tour_time_slots[0]));
+  const [quantities, setQuantities] = useState(() => emptyQuantities(EVENTS[0].ticket_types));
   const [addDonation, setAddDonation] = useState(false);
   const [donationAmount, setDonationAmount] = useState(10);
   const [joinMembership, setJoinMembership] = useState(false);
@@ -93,13 +52,6 @@ export default function Tickets() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [confirmation, setConfirmation] = useState(null);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured) return;
-    fetchEventsWithTickets()
-      .then((data) => { if (data?.length) setEvents(data); })
-      .catch(() => {});
-  }, []);
 
   const selectedEvent = useMemo(
     () => events.find((e) => e.slug === eventSlug) ?? events[0],
@@ -181,7 +133,7 @@ export default function Tickets() {
       const items = ticketTypes
         .filter((tt) => (quantities[tt.slug] || 0) > 0)
         .map((tt) => ({
-          ticketTypeId: tt.id,
+          ticketTypeSlug: tt.slug,
           quantity: quantities[tt.slug],
         }));
 

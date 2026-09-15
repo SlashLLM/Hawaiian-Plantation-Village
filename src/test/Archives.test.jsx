@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Archives from '../pages/vintage/Archives.jsx';
 import PhotographDetail from '../pages/vintage/PhotographDetail.jsx';
-import { DEFAULT_PAGE_SECTIONS, PHOTOGRAPHS } from '../lib/content/fallbacks.js';
+import { DEFAULT_PAGE_SECTIONS, PHOTOGRAPHS } from '../lib/content/staticContent.js';
 
 vi.mock('../context/ContentProvider.jsx', () => ({
   useContentCollection: () => ({ items: PHOTOGRAPHS, loading: false }),

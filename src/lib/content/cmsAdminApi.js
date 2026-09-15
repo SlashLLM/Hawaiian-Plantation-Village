@@ -12,22 +12,10 @@ export function notifyCmsUpdated(scope = 'all') {
 }
 
 export function invalidateCmsCache(scope = 'all') {
-  if (scope === 'all' || scope === 'settings') clearCache('settings');
-  if (scope === 'all' || scope === 'sections') clearCache('sections');
+  if (scope === 'all' || scope === 'sections') clearCache('home-events');
   if (scope === 'all' || scope === 'collections') clearCache('collection:');
-  if (scope === 'all' || scope === 'catalog') {
-    clearCache('group-tickets');
-    clearCache('tour-slots');
-  }
   if (scope === 'all' || scope === 'curriculum') clearCache('curriculum');
   if (scope === 'all' || scope === 'customPages') clearCache('custom-pages');
-}
-
-export async function saveSiteSettings(payload) {
-  const { error } = await supabase.from('site_settings').upsert({ id: 'default', payload });
-  assertNoError(error, 'Failed to save settings');
-  invalidateCmsCache('settings');
-  notifyCmsUpdated('settings');
 }
 
 export async function fetchAllContentEntries({ pageKey, contentType } = {}) {
@@ -150,110 +138,6 @@ export async function deleteCustomPage(id) {
   assertNoError(error, 'Failed to delete page');
   invalidateCmsCache('customPages');
   notifyCmsUpdated('customPages');
-}
-
-export async function fetchCatalogData() {
-  const [ev, mt, gt, ts] = await Promise.all([
-    supabase.from('events').select('*, ticket_types(*)').order('title'),
-    supabase.from('membership_tiers').select('*').order('sort_order'),
-    supabase.from('group_ticket_types').select('*').order('sort_order'),
-    supabase.from('tour_time_slots').select('*, events(slug, title)').order('sort_order'),
-  ]);
-  assertNoError(ev.error, 'Failed to load events');
-  assertNoError(mt.error, 'Failed to load membership tiers');
-  assertNoError(gt.error, 'Failed to load group tickets');
-  assertNoError(ts.error, 'Failed to load tour slots');
-  return {
-    events: ev.data ?? [],
-    tiers: mt.data ?? [],
-    groupTickets: gt.data ?? [],
-    tourSlots: ts.data ?? [],
-  };
-}
-
-export async function saveEvent(record, editingId = null) {
-  const query = editingId
-    ? supabase.from('events').update(record).eq('id', editingId)
-    : supabase.from('events').insert(record);
-  const { error } = await query;
-  assertNoError(error, 'Failed to save event');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function setEventActive(id, isActive) {
-  const { error } = await supabase.from('events').update({ is_active: isActive }).eq('id', id);
-  assertNoError(error, 'Failed to update event');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function saveTicketType(record, editingId = null) {
-  const query = editingId
-    ? supabase.from('ticket_types').update(record).eq('id', editingId)
-    : supabase.from('ticket_types').insert(record);
-  const { error } = await query;
-  assertNoError(error, 'Failed to save ticket type');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function setTicketTypeActive(id, isActive) {
-  const { error } = await supabase.from('ticket_types').update({ is_active: isActive }).eq('id', id);
-  assertNoError(error, 'Failed to update ticket type');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function saveMembershipTier(record, editingId = null) {
-  const query = editingId
-    ? supabase.from('membership_tiers').update(record).eq('id', editingId)
-    : supabase.from('membership_tiers').insert(record);
-  const { error } = await query;
-  assertNoError(error, 'Failed to save membership tier');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function setMembershipTierActive(id, isActive) {
-  const { error } = await supabase.from('membership_tiers').update({ is_active: isActive }).eq('id', id);
-  assertNoError(error, 'Failed to update membership tier');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function saveGroupTicketType(record, editingId = null) {
-  const query = editingId
-    ? supabase.from('group_ticket_types').update(record).eq('id', editingId)
-    : supabase.from('group_ticket_types').insert(record);
-  const { error } = await query;
-  assertNoError(error, 'Failed to save group ticket');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function setGroupTicketActive(id, isActive) {
-  const { error } = await supabase.from('group_ticket_types').update({ is_active: isActive }).eq('id', id);
-  assertNoError(error, 'Failed to update group ticket');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function saveTourSlot(record, editingId = null) {
-  const query = editingId
-    ? supabase.from('tour_time_slots').update(record).eq('id', editingId)
-    : supabase.from('tour_time_slots').insert(record);
-  const { error } = await query;
-  assertNoError(error, 'Failed to save tour slot');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
-}
-
-export async function setTourSlotActive(id, isActive) {
-  const { error } = await supabase.from('tour_time_slots').update({ is_active: isActive }).eq('id', id);
-  assertNoError(error, 'Failed to update tour slot');
-  invalidateCmsCache('catalog');
-  notifyCmsUpdated('catalog');
 }
 
 export async function fetchCurriculumModulesAdmin() {

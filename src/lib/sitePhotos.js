@@ -1,6 +1,6 @@
 /**
  * Curated public paths from public/digitized-photos for page imagery.
- * Archives catalog entries live separately in fallbacks.js PHOTOGRAPHS.
+ * Archives catalog entries live separately in staticContent.js PHOTOGRAPHS.
  */
 
 const digi = (name) => `/digitized-photos/${name}`;

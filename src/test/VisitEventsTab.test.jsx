@@ -2,12 +2,11 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
-import { DEFAULT_PAGE_SECTIONS } from '../lib/content/fallbacks.js';
+import { DEFAULT_PAGE_SECTIONS } from '../lib/content/staticContent.js';
 
 const listItems = { current: DEFAULT_PAGE_SECTIONS.home.events.items };
 
 vi.mock('../context/ContentProvider.jsx', () => ({
-  useContent: () => ({ groupTickets: [], tourSlots: [] }),
   usePageSection: (pageKey, sectionKey) => ({
     section: DEFAULT_PAGE_SECTIONS[pageKey]?.[sectionKey] ?? {},
     loading: false,

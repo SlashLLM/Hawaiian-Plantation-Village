@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Stories from '../pages/vintage/Stories.jsx';
-import { DEFAULT_PAGE_SECTIONS } from '../lib/content/fallbacks.js';
+import { DEFAULT_PAGE_SECTIONS } from '../lib/content/staticContent.js';
 
 const VIDEO_CAMP = {
   id: 'chinese',

@@ -6,7 +6,7 @@ import SugarMakerPixi from '../../components/SugarMakerPixi';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { usePageSection } from '../../context/ContentProvider.jsx';
-import { GAME_STEPS as DEFAULT_GAME_STEPS } from '../../lib/content/fallbacks.js';
+import { GAME_STEPS as DEFAULT_GAME_STEPS } from '../../lib/content/staticContent.js';
 import SEO from '../../components/SEO.jsx';
 
 export default function Play() {

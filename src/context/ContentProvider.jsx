@@ -1,10 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import {
-  fetchSiteSettings,
-  fetchGroupTicketTypes,
-  fetchTourTimeSlots,
-  fetchCurriculumModules,
-} from '../lib/content/cmsApi.js';
+import { fetchCurriculumModules, fetchHomeEventsSection } from '../lib/content/cmsApi.js';
 import {
   DEFAULT_SITE_SETTINGS,
   DEFAULT_PAGE_SECTIONS,
@@ -13,27 +8,29 @@ import {
   newsArticles,
   careersList,
   CURRICULUM_MODULES,
-  GROUP_TICKET_TYPES,
-  TOUR_TIME_SLOTS,
-} from '../lib/content/fallbacks.js';
+} from '../lib/content/staticContent.js';
 import {
   mapCampStory,
   mapPhotograph,
   mapNewsArticle,
   mapCareer,
   mapCurriculumModule,
-  mapGroupTicketType,
   sectionsToMap,
   getSection,
 } from '../lib/content/mappers.js';
-import { mergeWithFallback, mergeSectionPayload } from '../lib/content/validators.js';
+import { mergeSectionPayload } from '../lib/content/validators.js';
 import { cachedFetch } from '../lib/content/cache.js';
 import { useAuth } from '../hooks/useAuth.js';
 import { supabase } from '../lib/supabase.js';
 
 const ContentContext = createContext(null);
 
-/** Admin-managed item lists live in content_entries; page copy stays in page_sections. */
+/**
+ * Site settings and page copy are static (staticContent.js). Only what the
+ * Content CMS tabs manage is loaded from Supabase: the content_entries
+ * collections below, curriculum modules, and the home.events section.
+ * Event pages (custom_pages) load on their own route.
+ */
 const COLLECTION_FALLBACKS = {
   camp_story: CAMPS_DATA,
   photograph: PHOTOGRAPHS,
@@ -48,15 +45,25 @@ const COLLECTION_MAPPERS = {
   career: mapCareer,
 };
 
+/** Static sections with the CMS-managed home.events row merged over its default. */
+function withHomeEvents(eventsRow) {
+  const remote = sectionsToMap(eventsRow ? [eventsRow] : []).home?.events;
+  if (!remote) return DEFAULT_PAGE_SECTIONS;
+  return {
+    ...DEFAULT_PAGE_SECTIONS,
+    home: {
+      ...DEFAULT_PAGE_SECTIONS.home,
+      events: mergeSectionPayload(DEFAULT_PAGE_SECTIONS.home?.events ?? {}, remote),
+    },
+  };
+}
+
 export function ContentProvider({ children }) {
   const { isStaff } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [settings, setSettings] = useState(DEFAULT_SITE_SETTINGS);
   const [sectionsMap, setSectionsMap] = useState(DEFAULT_PAGE_SECTIONS);
   const [collections, setCollections] = useState({});
-  const [groupTickets, setGroupTickets] = useState(GROUP_TICKET_TYPES);
-  const [tourSlots, setTourSlots] = useState(TOUR_TIME_SLOTS);
   const [curriculum, setCurriculum] = useState(CURRICULUM_MODULES);
 
   const preview = isStaff;
@@ -66,40 +73,12 @@ export function ContentProvider({ children }) {
     setError(null);
     try {
       const previewKey = preview ? ':preview' : '';
-      const [remoteSettings, sectionRows, groupRows, slotRows, curriculumRows] = await Promise.all([
-        cachedFetch(`settings${previewKey}`, () => fetchSiteSettings().catch(() => null)),
-        cachedFetch(`sections${previewKey}`, async () => {
-          if (!supabase) return [];
-          let query = supabase.from('page_sections').select('*').order('sort_order');
-          if (!preview) query = query.eq('status', 'published');
-          const { data, error: qErr } = await query;
-          if (qErr) throw qErr;
-          return data ?? [];
-        }),
-        cachedFetch('group-tickets', () => fetchGroupTicketTypes().catch(() => [])),
-        cachedFetch('tour-slots', () => fetchTourTimeSlots().catch(() => [])),
+      const [eventsRow, curriculumRows] = await Promise.all([
+        cachedFetch(`home-events${previewKey}`, () => fetchHomeEventsSection({ preview })),
         cachedFetch('curriculum', () => fetchCurriculumModules().catch(() => [])),
       ]);
 
-      setSettings(mergeWithFallback(remoteSettings, DEFAULT_SITE_SETTINGS));
-
-      const remoteSections = sectionsToMap(sectionRows);
-      const mergedSections = { ...DEFAULT_PAGE_SECTIONS };
-      Object.keys(remoteSections).forEach((pageKey) => {
-        const defaultPage = DEFAULT_PAGE_SECTIONS[pageKey] ?? {};
-        const remotePage = remoteSections[pageKey] ?? {};
-        mergedSections[pageKey] = { ...defaultPage };
-        Object.keys(remotePage).forEach((sectionKey) => {
-          mergedSections[pageKey][sectionKey] = mergeSectionPayload(
-            defaultPage[sectionKey] ?? {},
-            remotePage[sectionKey] ?? {},
-          );
-        });
-      });
-      setSectionsMap(mergedSections);
-
-      setGroupTickets(groupRows?.length ? groupRows.map(mapGroupTicketType) : GROUP_TICKET_TYPES);
-      setTourSlots(slotRows?.length ? slotRows.map((s) => s.label) : TOUR_TIME_SLOTS);
+      setSectionsMap(withHomeEvents(eventsRow));
 
       if (curriculumRows?.length) {
         setCurriculum(curriculumRows.map((m) => mapCurriculumModule(m, m.curriculum_checkpoints)));
@@ -136,11 +115,8 @@ export function ContentProvider({ children }) {
     } catch (err) {
       console.error('CMS load failed, using fallbacks', err);
       setError(err.message);
-      setSettings(DEFAULT_SITE_SETTINGS);
       setSectionsMap(DEFAULT_PAGE_SECTIONS);
       setCollections(COLLECTION_FALLBACKS);
-      setGroupTickets(GROUP_TICKET_TYPES);
-      setTourSlots(TOUR_TIME_SLOTS);
       setCurriculum(CURRICULUM_MODULES);
     } finally {
       setLoading(false);
@@ -163,17 +139,15 @@ export function ContentProvider({ children }) {
     loading,
     error,
     preview,
-    settings,
+    settings: DEFAULT_SITE_SETTINGS,
     sectionsMap,
     collections,
-    groupTickets,
-    tourSlots,
     curriculum,
     reload: loadGlobal,
     getSection: (pageKey, sectionKey, fallback = {}) =>
       getSection(sectionsMap, pageKey, sectionKey, fallback),
     getCollection: (type) => collections[type] ?? COLLECTION_FALLBACKS[type] ?? [],
-  }), [loading, error, preview, settings, sectionsMap, collections, groupTickets, tourSlots, curriculum, loadGlobal]);
+  }), [loading, error, preview, sectionsMap, collections, curriculum, loadGlobal]);
 
   return <ContentContext.Provider value={value}>{children}</ContentContext.Provider>;
 }

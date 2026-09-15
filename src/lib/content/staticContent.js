@@ -1,6 +1,10 @@
 /**
- * Offline fallback content for the HPV CMS.
- * Mirrors hardcoded data from Home, Visit, Stories, About, Learn, Play, and Tickets pages.
+ * Static site content. This file is the source of truth for site settings and
+ * page copy: edit here and redeploy. Supabase is not read for these.
+ *
+ * The exceptions are the Content CMS tabs, which are still loaded at runtime:
+ * stories, archives, upcoming events (home.events), event pages, news, careers
+ * and curriculum. For those, the lists below are only the offline fallback.
  */
 
 export { CURRICULUM_MODULES } from '../../data/curriculumModules.js';
@@ -1700,29 +1704,6 @@ export const WORKSHOPS = [
     desc: 'Connect with peers and plantation heritage during weekend volunteer days. Guild members participate in historic cottage restoration, maintain our traditional gardens, and host seasonal heritage festivals.',
     schedule: 'Saturday mornings • Grades 9-12 • Service hour certification',
   },
-];
-
-// ---------------------------------------------------------------------------
-// Ticketing
-// ---------------------------------------------------------------------------
-
-export const ADMISSION_TICKET_TYPES = [
-  { slug: 'adult', label: 'General Admission', priceCents: 2500, priceDisplay: '$25.00' },
-  { slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', priceCents: 2000, priceDisplay: '$20.00', requiresId: true },
-  { slug: 'youth', label: 'Youth (11 – 17)', priceCents: 1200, priceDisplay: '$12.00' },
-  { slug: 'children', label: 'Children (5 – 10)', priceCents: 800, priceDisplay: '$8.00' },
-  { slug: 'child', label: 'Children (4 & under)', priceCents: 0, priceDisplay: 'Free' },
-];
-
-export const GROUP_TICKET_TYPES = [
-  { slug: 'group-adult', label: 'Group Adults (10+)', priceCents: 1400, priceDisplay: '$14.00' },
-  { slug: 'group-senior-military', label: 'Group Seniors / Military', priceCents: 1000, priceDisplay: '$10.00' },
-  { slug: 'group-youth', label: 'Group Youth (5-12)', priceCents: 600, priceDisplay: '$6.00' },
-];
-
-export const TOUR_TIME_SLOTS = [
-  { label: '10:00 AM', description: 'Morning Tour', sortOrder: 1 },
-  { label: '12:00 PM', description: 'Midday Tour', sortOrder: 2 },
 ];
 
 // Keep page-section list payloads in sync with legacy collection exports

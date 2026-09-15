@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SECTIONS } from './fallbacks.js';
+import { DEFAULT_PAGE_SECTIONS } from './staticContent.js';
 
 export const PAGE_KEYS = [
   'home',

@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
-import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/api.js';
-import { isSupabaseConfigured } from '../../lib/supabase.js';
+import { createMembership } from '../../lib/api.js';
+import { MEMBERSHIP_TIERS } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
 import ComingSoon from '../../components/ComingSoon.jsx';
 import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
@@ -53,58 +53,7 @@ export default function Support() {
   const [memSubmitting, setMemSubmitting] = useState(false);
   const [memError, setMemError] = useState('');
   const [memConfirmation, setMemConfirmation] = useState(null);
-  const [tiersFromDb, setTiersFromDb] = useState([]);
-
-  // Mirrors the printed membership form. The live list comes from the
-  // membership_tiers table when Supabase is configured.
-  const MEMBER_BENEFITS = [
-    'Free admission and guided tours for one year',
-    'Members-only invitations to special events, exhibits & cultural heritage celebrations',
-    '10% off at the gift shop',
-  ];
-  const FALLBACK_TIERS = [
-    {
-      slug: 'individual',
-      level: 'Individual',
-      price: '$35',
-      period: 'per year',
-      color: 'var(--cane-green)',
-      benefits: ['Membership for one adult', ...MEMBER_BENEFITS],
-    },
-    {
-      slug: 'senior',
-      level: 'Senior',
-      price: '$30',
-      period: 'per year',
-      color: 'var(--ocean-teal)',
-      benefits: ['For members age 62 & above', ...MEMBER_BENEFITS],
-    },
-    {
-      slug: 'family',
-      level: 'Family',
-      price: '$60',
-      period: 'per year',
-      color: 'var(--tin-rust)',
-      benefits: ['Two adults & children under 18', ...MEMBER_BENEFITS],
-    },
-  ];
-
-  useEffect(() => {
-    if (!isSupabaseConfigured) return;
-    fetchMembershipTiers()
-      .then((data) => { if (data?.length) setTiersFromDb(data); })
-      .catch(() => {});
-  }, []);
-
-  const memberships = (tiersFromDb.length ? tiersFromDb : FALLBACK_TIERS).map((t) => ({
-    slug: t.slug,
-    level: t.level,
-    price: t.price_cents != null ? formatCents(t.price_cents) : t.price,
-    priceCents: t.price_cents ?? parseInt(String(t.price).replace(/\D/g, ''), 10),
-    period: t.period_label ?? t.period ?? 'per year',
-    color: t.accent_color ?? t.color ?? 'var(--cane-green)',
-    benefits: Array.isArray(t.benefits) ? t.benefits : t.benefits,
-  }));
+  const memberships = MEMBERSHIP_TIERS;
 
   const handleSupportSubmit = (e) => {
     e.preventDefault();

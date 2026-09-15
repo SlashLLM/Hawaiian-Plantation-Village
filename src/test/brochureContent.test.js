@@ -5,7 +5,7 @@ import {
   buildingsForCulture,
   mergeTimeline,
 } from '../data/brochureContent.js';
-import { CAMPS_DATA } from '../lib/content/fallbacks.js';
+import { CAMPS_DATA } from '../lib/content/staticContent.js';
 
 describe('brochure content', () => {
   it('merges brochure milestones into the timeline in year order', () => {

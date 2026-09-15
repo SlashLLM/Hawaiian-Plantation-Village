@@ -6,7 +6,7 @@ import {
   usePageSection,
   usePageListSection,
 } from '../../context/ContentProvider.jsx';
-import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
+import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/staticContent.js';
 import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
 import AnalyzePhotographForm from '../../components/archives/AnalyzePhotographForm.jsx';
 import SEO from '../../components/SEO.jsx';

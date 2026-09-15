@@ -1,7 +1,7 @@
 /**
  * Clears invented news/careers/partners/testimonials content_entries and
  * updates programs, timeline, and leadership to match study-guide fallbacks.
- * Run after sync-home-about-seed.mjs
+ * One-off seed cleanup; page copy itself is static (src/lib/content/staticContent.js).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

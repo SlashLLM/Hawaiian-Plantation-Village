@@ -4,8 +4,9 @@ import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { usePageSection, usePageListSection, useContent } from '../../context/ContentProvider.jsx';
-import { VISIT_FAQS } from '../../lib/content/fallbacks.js';
+import { usePageSection, usePageListSection } from '../../context/ContentProvider.jsx';
+import { VISIT_FAQS } from '../../lib/content/staticContent.js';
+import { GROUP_TICKET_TYPES } from '../../data/ticketing.js';
 import SEO from '../../components/SEO.jsx';
 import EventsCalendar from '../../components/EventsCalendar.jsx';
 import { toEventDate } from '../../lib/timeFormat.js';
@@ -22,7 +23,7 @@ export default function Visit() {
   const { section: faqSection } = usePageSection('visit', 'faq', {});
   const { section: eventsHeader } = usePageSection('home', 'eventsHeader', {});
   const { items: allEvents } = usePageListSection('home', 'events');
-  const { groupTickets } = useContent();
+  const groupTickets = GROUP_TICKET_TYPES;
 
   /** Only events with a resolvable date can be placed on the calendar. */
   const datedEvents = useMemo(() => allEvents.filter((event) => toEventDate(event)), [allEvents]);

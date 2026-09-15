@@ -25,62 +25,64 @@ npx supabase functions deploy
 
 ## Frontend CMS
 
-### Content precedence
+### Static vs. dynamic content
 
-Public pages load content in this order:
+Most of the site is **static**: it ships in the bundle and is edited in code.
 
-1. **Published Supabase rows** (site settings, page sections, content entries, catalog, curriculum)
-2. **Local fallbacks** in `src/lib/content/fallbacks.js` (offline-safe defaults)
-3. **Intentional empty state** when both are absent
+| Static (edit in code, redeploy) | File |
+|---|---|
+| Site settings: brand, nav, footer, contact, hours, donation presets | `src/lib/content/staticContent.js` (`DEFAULT_SITE_SETTINGS`) |
+| All page copy | `src/lib/content/staticContent.js` (`DEFAULT_PAGE_SECTIONS`) |
+| Ticket events, membership tiers, group prices | `src/data/ticketing.js` |
 
-Staff signed into `/admin` can preview draft content via RLS (`is_staff()` policies).
+Only what the **Content CMS tabs** manage is read from Supabase at runtime:
 
-### Editing site copy
+| CMS tab | Table |
+|---|---|
+| Stories | `content_entries` (`camp_story`) |
+| Archives | `content_entries` (`photograph`) |
+| Upcoming Events | `page_sections` row `home` / `events` |
+| Event Pages | `custom_pages` |
+| News & Announcements | `content_entries` (`news`) |
+| Careers | `content_entries` (`career`) |
+| Curriculum | `curriculum_modules` / `curriculum_checkpoints` |
 
-`src/lib/content/fallbacks.js` is the authoring source of truth for editorial
-copy. Edit it, then regenerate the SQL:
+If Supabase is unreachable, those fall back to the lists in `staticContent.js`.
+Staff signed into `/admin` can preview draft CMS content via RLS (`is_staff()` policies).
 
-```bash
-node scripts/sync-home-about-seed.mjs     # rewrites supabase/seed_cms.sql (fresh databases)
-node scripts/generate-copy-migration.mjs  # emits a migration that updates a LIVE database
-```
+The `site_settings` table, the other `page_sections` rows and `group_ticket_types` are
+no longer read by the site. `node scripts/export-static-content.mjs` reports how the
+linked database differs from the static files.
 
-Both read the same rows. The distinction matters: `seed_cms.sql` inserts
-page sections with `on conflict do nothing`, so it only ever populates an empty
-database — it cannot change a row that already exists. To push changed copy to
-a database that is already seeded, apply the generated migration, which upserts
-with `do update`.
+**Prices:** the `create-booking` / `create-membership` edge functions still price from
+`ticket_types` and `membership_tiers` (matched by slug). A price or ticket change must be
+made in `src/data/ticketing.js` **and** in a migration.
 
-The migration deliberately **excludes admin-owned record lists** (events, news,
-careers, timeline, leadership, testimonials, partners — see
-`ADMIN_DATA_SECTIONS` in `scripts/lib/cmsSeedRows.mjs`). Those rows hold real
-entries created by staff in `/admin`; overwriting them with code defaults would
-be data loss rather than a copy change. Everything else it does overwrite, so
-confirm no pending CMS edits before applying.
-
-Page titles and meta descriptions are **not** part of this pipeline — each page
-sets its own via the `<SEO>` component.
+Page titles and meta descriptions are set per page via the `<SEO>` component.
 
 ### Data model
 
 | Table | Purpose |
 |-------|---------|
-| `site_settings` | Brand, nav, footer, contact, hours, hero, SEO, donation presets |
-| `page_sections` | Fixed page copy (seeded / fallback; not edited in admin) |
-| `content_entries` | Admin-managed items: `camp_story`, `news`, `career` |
-| `events` / `ticket_types` | Ticket catalog (authoritative pricing) |
-| `group_ticket_types` / `tour_time_slots` | Group pricing and tour schedules |
-| `membership_tiers` | Steward membership catalog |
+| `site_settings` | Legacy; not read by the site (settings are static) |
+| `page_sections` | Only `home` / `events` is read (Upcoming Events tab); other rows are legacy |
+| `content_entries` | Admin-managed items: `camp_story`, `photograph`, `news`, `career` |
+| `custom_pages` | CMS-built event pages |
+| `events` / `ticket_types` | Server-side pricing for `create-booking` (display data is static) |
+| `group_ticket_types` / `tour_time_slots` | Legacy; not read by the site |
+| `membership_tiers` | Server-side pricing for `create-membership` (display data is static) |
 | `curriculum_modules` / `curriculum_checkpoints` | Learn modules, videos, quizzes |
 | `media_assets` + `cms-media` Storage bucket | Uploaded images/audio/video with alt text |
 
-### Admin authoring (`/admin` → Content / Page Editor)
+### Admin authoring (`/admin` → Content)
 
 - **Stories** — add / edit / delete camp stories (oral history audio)
+- **Archives** — add / edit / delete photographs
+- **Upcoming Events** — Home / Visit / Events page event list
+- **Event Pages** — build custom pages for events
 - **News & Announcements** — add / edit / delete About-page news
 - **Careers** — add / edit / delete job postings
 - **Curriculum** — modules and checkpoints (archive/deactivate to remove from public)
-- **Community Programs** — Home page Upcoming Community Programs events (`Page Editor` → Home)
 - **Media uploads** — `MediaUploadField` / `AudioUploadField` / `VideoUploadField` upload to `cms-media`
 
 Contact, career, field trip, student program, and workshop forms submit via the `submit-inquiry` edge function and email staff at `INQUIRY_TO_EMAIL` (with an auto-reply to the submitter).
@@ -89,10 +91,11 @@ Publishing sets `status = 'published'` and `published_at`. Delete permanently re
 
 ### Public content layer
 
-- `src/context/ContentProvider.jsx` — global fetch + cache
+- `src/context/ContentProvider.jsx` — static content + fetch/cache of CMS-managed data
 - `src/lib/content/cmsApi.js` — Supabase readers and Storage upload
 - `src/lib/content/mappers.js` — row → UI shape
-- `src/lib/content/fallbacks.js` — offline defaults
+- `src/lib/content/staticContent.js` — static site copy and CMS offline fallbacks
+- `src/data/ticketing.js` — static ticketing and membership data
 
 Hooks: `useSiteSettings`, `usePageSection`, `usePageListSection`, `useContentCollection` (stories, news, careers), `useCurriculumModules`, `useContent`.
 
@@ -105,14 +108,8 @@ Hooks: `useSiteSettings`, `usePageSection`, `usePageListSection`, `useContentCol
 
 ## Recovery
 
-- If Supabase is unreachable, the site renders fallback content from `src/lib/content/fallbacks.js`.
+- If Supabase is unreachable, static copy still renders and CMS lists fall back to `src/lib/content/staticContent.js`.
 - Re-run `supabase/seed_cms.sql` to restore default published content after schema changes.
-- **`site_settings` returning `42703: column site_settings.payload does not exist`**
-  means a leftover Payload CMS table of the same name is squatting the name, so
-  `create table if not exists` in `20260714100000_cms_full.sql` silently did
-  nothing. Every settings read then 400s and the site falls back to code for
-  nav, hero, footer and SEO. The generated copy migration detects and repairs
-  this before upserting.
 - Abandoned Storage uploads can be removed from the `cms-media` bucket and `media_assets` table manually.
 
 See `.env.example` and `supabase/` for deployment details.

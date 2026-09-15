@@ -8,7 +8,7 @@ import {
   usePageSection,
   usePageListSection,
 } from '../../context/ContentProvider.jsx';
-import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
+import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/staticContent.js';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
 

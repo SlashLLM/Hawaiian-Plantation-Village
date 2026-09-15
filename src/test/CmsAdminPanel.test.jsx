@@ -24,13 +24,11 @@ vi.mock('../hooks/useAuth.js', () => ({
 vi.mock('../lib/content/cmsAdminApi.js', () => ({
   fetchAllContentEntries: vi.fn(() => Promise.resolve([])),
   fetchAllPageSections: vi.fn(() => Promise.resolve([])),
-  saveSiteSettings: vi.fn(),
   saveContentEntry: vi.fn(),
   savePageSection: vi.fn(),
   setContentEntryStatus: vi.fn(),
   setPageSectionStatus: vi.fn(),
   deleteContentEntry: vi.fn(),
-  fetchCatalogData: vi.fn(() => Promise.resolve({ events: [], tiers: [], groupTickets: [], tourSlots: [] })),
   fetchCurriculumModulesAdmin: vi.fn(() => Promise.resolve([])),
 }));
 
