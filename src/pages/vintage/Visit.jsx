@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone, CalendarDays } from 'lucide-react';
+import { Clock, MapPin, Ticket, ParkingCircle, Footprints, ShieldAlert, ArrowRight, Users, Check, Building, Phone, CalendarDays, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
@@ -8,6 +8,7 @@ import { usePageSection, usePageListSection } from '../../context/ContentProvide
 import { VISIT_FAQS } from '../../lib/content/staticContent.js';
 import { GROUP_TICKET_TYPES } from '../../data/ticketing.js';
 import SEO from '../../components/SEO.jsx';
+import { submitInquiry } from '../../lib/api.js';
 import EventsCalendar from '../../components/EventsCalendar.jsx';
 import { toEventDate } from '../../lib/timeFormat.js';
 import { TOUR_NOTE, TOUR_SLOTS, VISIT_DIRECTIONS } from '../../data/brochureContent.js';
@@ -39,15 +40,35 @@ export default function Visit() {
   const [groupDate, setGroupDate] = useState('');
   const [groupEmail, setGroupEmail] = useState('');
   const [groupPhone, setGroupPhone] = useState('');
+  const [groupSubmitting, setGroupSubmitting] = useState(false);
+  const [groupError, setGroupError] = useState('');
 
-  const handleGroupSubmit = (e) => {
+  const handleGroupSubmit = async (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 80,
-      spread: 50,
-      origin: { y: 0.8 }
-    });
-    setGroupComplete(true);
+    setGroupSubmitting(true);
+    setGroupError('');
+    try {
+      await submitInquiry({
+        type: 'group_visit',
+        groupName,
+        contactName,
+        groupSize,
+        groupType,
+        preferredDate: groupDate,
+        email: groupEmail,
+        phone: groupPhone,
+      });
+      confetti({
+        particleCount: 80,
+        spread: 50,
+        origin: { y: 0.8 }
+      });
+      setGroupComplete(true);
+    } catch (err) {
+      setGroupError(err.message ?? 'Failed to submit. Please try again.');
+    } finally {
+      setGroupSubmitting(false);
+    }
   };
 
   return (
@@ -332,8 +353,14 @@ export default function Visit() {
                       />
                     </div>
 
-                    <button type="submit" className="btn-primary" style={{ width: '100%' }}>
-                      Send inquiry <ArrowRight size={16} />
+                    {groupError && (
+                      <p role="alert" style={styles.formError}>
+                        <AlertCircle size={16} /> {groupError}
+                      </p>
+                    )}
+
+                    <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={groupSubmitting}>
+                      {groupSubmitting ? 'Sending…' : <>Send inquiry <ArrowRight size={16} /></>}
                     </button>
                   </form>
                 ) : (
@@ -680,6 +707,13 @@ const styles = {
     outline: 'none',
     fontSize: '0.95rem',
     backgroundColor: 'var(--sugarcane-cream)'
+  },
+  formError: {
+    color: 'var(--tin-rust)',
+    marginBottom: '0.75rem',
+    display: 'flex',
+    gap: 8,
+    alignItems: 'center',
   },
   groupSuccessBlock: {
     marginTop: '2rem',

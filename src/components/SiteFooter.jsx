@@ -1,7 +1,8 @@
-import React from 'react';
-import { Mail } from 'lucide-react';
+import React, { useState } from 'react';
+import { AlertCircle, Check, Mail } from 'lucide-react';
 import { useAppNavigate } from '../hooks/useAppNavigate.js';
 import { useSiteSettings } from '../context/ContentProvider.jsx';
+import { submitInquiry } from '../lib/api.js';
 
 /**
  * The site-wide footer. It used to live inline in the Home page, which meant the
@@ -14,6 +15,22 @@ export default function SiteFooter() {
   const { settings } = useSiteSettings();
   const footer = settings?.footer ?? {};
   const contact = settings?.contact ?? {};
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const [newsletterStatus, setNewsletterStatus] = useState('idle'); // 'idle' | 'submitting' | 'done'
+  const [newsletterError, setNewsletterError] = useState('');
+
+  const handleNewsletterSubmit = async (event) => {
+    event.preventDefault();
+    setNewsletterStatus('submitting');
+    setNewsletterError('');
+    try {
+      await submitInquiry({ type: 'newsletter', email: newsletterEmail });
+      setNewsletterStatus('done');
+    } catch (err) {
+      setNewsletterError(err.message ?? 'Failed to sign up. Please try again.');
+      setNewsletterStatus('idle');
+    }
+  };
 
   const goTo = (page) => {
     setActivePage(page);
@@ -67,21 +84,35 @@ export default function SiteFooter() {
           <div>
             <h4 style={styles.footerHeader}>{footer.newsletter?.heading}</h4>
             <p style={styles.footerText}>{footer.newsletter?.description}</p>
-            <form
-              style={styles.newsletterForm}
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label htmlFor="newsletter-email" style={styles.srOnly}>Email address</label>
-              <input
-                id="newsletter-email"
-                type="email"
-                placeholder={footer.newsletter?.placeholder}
-                style={styles.newsletterInput}
-              />
-              <button className="btn-accent" type="submit">
-                <Mail size={16} /> {footer.newsletter?.buttonLabel ?? 'Join'}
-              </button>
-            </form>
+            {newsletterStatus === 'done' ? (
+              <p role="status" style={styles.newsletterMessage}>
+                <Check size={16} /> Mahalo! You&apos;re on the list.
+              </p>
+            ) : (
+              <form
+                style={styles.newsletterForm}
+                onSubmit={handleNewsletterSubmit}
+              >
+                <label htmlFor="newsletter-email" style={styles.srOnly}>Email address</label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  required
+                  value={newsletterEmail}
+                  onChange={(e) => setNewsletterEmail(e.target.value)}
+                  placeholder={footer.newsletter?.placeholder}
+                  style={styles.newsletterInput}
+                />
+                <button className="btn-accent" type="submit" disabled={newsletterStatus === 'submitting'}>
+                  <Mail size={16} /> {newsletterStatus === 'submitting' ? 'Joining…' : (footer.newsletter?.buttonLabel ?? 'Join')}
+                </button>
+              </form>
+            )}
+            {newsletterError && (
+              <p role="alert" style={styles.newsletterMessage}>
+                <AlertCircle size={16} /> {newsletterError}
+              </p>
+            )}
           </div>
         </div>
 
@@ -162,6 +193,14 @@ const styles = {
     gap: '0.5rem',
     flexWrap: 'wrap',
     maxWidth: '420px',
+  },
+  newsletterMessage: {
+    display: 'flex',
+    gap: '0.5rem',
+    alignItems: 'center',
+    marginTop: '0.5rem',
+    color: 'var(--sugarcane-cream)',
+    fontSize: '0.95rem',
   },
   newsletterInput: {
     flex: '1 1 200px',

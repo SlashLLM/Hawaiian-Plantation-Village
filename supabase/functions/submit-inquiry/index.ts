@@ -11,7 +11,9 @@ type InquiryType =
   | 'field_trip'
   | 'youth_program'
   | 'workshop_rsvp'
-  | 'volunteer';
+  | 'volunteer'
+  | 'group_visit'
+  | 'newsletter';
 
 const TYPE_LABELS: Record<InquiryType, string> = {
   contact: 'Contact Inquiry',
@@ -20,6 +22,8 @@ const TYPE_LABELS: Record<InquiryType, string> = {
   youth_program: 'Student Program Inquiry',
   workshop_rsvp: 'Workshop RSVP',
   volunteer: 'Volunteer Inquiry',
+  group_visit: 'Group Reservation Inquiry',
+  newsletter: 'Newsletter Signup',
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -211,6 +215,47 @@ Deno.serve(async (req) => {
       ]);
       summaryLines = buildFields([
         ['Interest Area', trim(body.interest)],
+      ]);
+    } else if (type === 'group_visit') {
+      const missing = requireFields(body, [
+        'groupName',
+        'contactName',
+        'groupSize',
+        'preferredDate',
+        'email',
+        'phone',
+      ]);
+      if (missing) return jsonResponse({ error: missing }, 400);
+      const email = trim(body.email).toLowerCase();
+      const emailErr = validateEmail(email);
+      if (emailErr) return jsonResponse({ error: emailErr }, 400);
+
+      submitterEmail = email;
+      recipientName = trim(body.contactName);
+      fields = buildFields([
+        ['Organization / Group', trim(body.groupName)],
+        ['Group Type', trim(body.groupType)],
+        ['Group Size', trim(body.groupSize)],
+        ['Preferred Date', trim(body.preferredDate)],
+        ['Contact Name', recipientName],
+        ['Contact Email', email],
+        ['Contact Phone', trim(body.phone)],
+      ]);
+      summaryLines = buildFields([
+        ['Group', trim(body.groupName)],
+        ['Group Size', `${trim(body.groupSize)} visitors`],
+        ['Preferred Date', trim(body.preferredDate)],
+      ]);
+    } else if (type === 'newsletter') {
+      const missing = requireFields(body, ['email']);
+      if (missing) return jsonResponse({ error: missing }, 400);
+      const email = trim(body.email).toLowerCase();
+      const emailErr = validateEmail(email);
+      if (emailErr) return jsonResponse({ error: emailErr }, 400);
+
+      submitterEmail = email;
+      fields = buildFields([
+        ['Email', email],
       ]);
     }
 
