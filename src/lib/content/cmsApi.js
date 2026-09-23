@@ -98,7 +98,7 @@ export async function fetchCurriculumModule(slug) {
 
 const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
 const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
-const VIDEO_MAX_BYTES = 100 * 1024 * 1024;
+const VIDEO_MAX_BYTES = 50 * 1024 * 1024;
 
 /**
  * Upload a file to cms-media and record it in media_assets.

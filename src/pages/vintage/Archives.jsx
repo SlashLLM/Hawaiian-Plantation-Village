@@ -11,6 +11,10 @@ import {
 import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/staticContent.js';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
+import Pagination from '../../components/archives/Pagination.jsx';
+import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
+
+const PAGE_SIZE = 24;
 
 const collectionName = (id) =>
   PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? id ?? 'Archives';
@@ -45,6 +49,20 @@ export default function Archives() {
     'resources',
   );
   const [activeCollection, setActiveCollection] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleCollectionChange = (collectionId) => {
+    setActiveCollection(collectionId);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const browseEl = document.getElementById('browse');
+    if (browseEl) {
+      scrollIntoViewIfSupported(browseEl, { behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const allCollections = useMemo(() => {
     const known = new Set(collections.map((collection) => collection.id));
@@ -75,6 +93,13 @@ export default function Archives() {
     ? photographs
     : photographs.filter((photo) => photo.collection === activeCollection);
 
+  const totalPages = Math.ceil(visible.length / PAGE_SIZE) || 1;
+
+  const paginatedPhotos = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return visible.slice(start, start + PAGE_SIZE);
+  }, [visible, currentPage]);
+
   const lead = photographs[0];
 
   return (
@@ -101,7 +126,7 @@ export default function Archives() {
                 key={collection.id}
                 type="button"
                 className="door"
-                onClick={() => setActiveCollection(collection.id)}
+                onClick={() => handleCollectionChange(collection.id)}
               >
                 <span className="door-title">{collection.name}</span>
                 <span className="door-note">{collection.blurb}</span>
@@ -128,7 +153,7 @@ export default function Archives() {
                 type="button"
                 className="archive-filter"
                 aria-pressed={activeCollection === option.id}
-                onClick={() => setActiveCollection(option.id)}
+                onClick={() => handleCollectionChange(option.id)}
               >
                 {option.name} ({counts[option.id] ?? 0})
               </button>
@@ -136,7 +161,7 @@ export default function Archives() {
           </div>
 
           <div className="archive-grid">
-            {visible.map((photo) => (
+            {paginatedPhotos.map((photo) => (
               <button
                 key={photo.arkId}
                 type="button"
@@ -152,6 +177,15 @@ export default function Archives() {
               </button>
             ))}
           </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={visible.length}
+            pageSize={PAGE_SIZE}
+            onPageChange={handlePageChange}
+            itemName="photographs"
+          />
 
           {visible.length === 0 && (
             <p className="editorial-lede">No photographs from this collection are digitized yet.</p>

@@ -136,7 +136,7 @@ export default function VideoUploadField({
         aria-label="Video URL"
       />
       <p style={{ margin: '0.35rem 0 0', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-        MP4 or WebM recommended. Max 100MB.
+        MP4 or WebM recommended. Max 50MB.
       </p>
       {withDuration && value?.lengthFormatted && (
         <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem', color: 'var(--text-muted)' }}>

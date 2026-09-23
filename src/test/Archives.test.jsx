@@ -35,12 +35,22 @@ describe('Archives hub', () => {
     window.localStorage.clear();
   });
 
-  it('lists every digitized photograph and filters by collection', async () => {
+  it('lists every digitized photograph, paginates them, and filters by collection', async () => {
     const user = userEvent.setup();
     const { container } = renderArchives();
 
     const gridCards = () => container.querySelectorAll('.archive-grid .archive-card');
-    expect(gridCards()).toHaveLength(PHOTOGRAPHS.length);
+    // First page displays up to 24 photos
+    expect(gridCards()).toHaveLength(Math.min(24, PHOTOGRAPHS.length));
+
+    // Pagination info is displayed
+    expect(screen.getByText(/Showing/)).toBeInTheDocument();
+    expect(screen.getByRole('navigation', { name: 'Photographs pagination' })).toBeInTheDocument();
+
+    // Clicking Next page advances to page 2
+    const nextBtn = screen.getByRole('button', { name: 'Next page' });
+    await user.click(nextBtn);
+    expect(gridCards()).toHaveLength(Math.min(24, PHOTOGRAPHS.length - 24));
 
     const murakoshiCount = PHOTOGRAPHS.filter((p) => p.collection === 'murakoshi').length;
     await user.click(

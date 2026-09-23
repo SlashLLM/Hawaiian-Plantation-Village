@@ -132,6 +132,30 @@ export const PHOTOGRAPH_COLLECTIONS = [
     blurb:
       'The largest collection in the HPV Photograph Archives: individual donations of family, work culture, WWII induction, group photos, education and recreation from plantation life. There is some overlap with Lodge, Malterre, and Nobunosuke Murakoshi. Includes panoramic class pictures, graduations, recognition and awards, and funeral photos.',
   },
+  {
+    id: 'cny_2018',
+    name: 'Chinese New Year Festival (2018)',
+    blurb:
+      'Lion dance blessings, martial arts demonstrations, traditional costumes, and festive community celebrations welcoming the Year of the Dog at Hawaii\'s Plantation Village.',
+  },
+  {
+    id: 'rice_fest_2018',
+    name: 'Rice Festival (2018)',
+    blurb:
+      'Traditional rice harvesting demonstrations, mochi pounding, cultural cooking, crafts, and multi-ethnic community celebrations honoring Hawaii\'s agricultural roots.',
+  },
+  {
+    id: 'cny_2020',
+    name: 'Lunar New Year Celebration (2020)',
+    blurb:
+      'Lunar New Year festivities, cultural performances, village docents in historical attire, and family gatherings across the village grounds in February 2020.',
+  },
+  {
+    id: 'hpv_dedication',
+    name: 'Village Dedication & Cultural Blessing (2019)',
+    blurb:
+      'Ceremonial village dedication, cultural blessings, and gatherings of Micronesian and multicultural community leaders on November 2, 2019.',
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -674,7 +698,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         'Photographs tucked into albums. Letters carried across oceans. Work tools worn smooth by use. Clothing saved for decades. Objects from kitchens, bedrooms and places of worship. Individually, they may seem ordinary. Together, they tell an extraordinary story.',
     },
     collections: {
-      eyebrow: 'Three collections',
+      eyebrow: 'Featured collections',
       title: 'Photograph collections',
       description:
         'Hawaii\'s Plantation Village cares for photographs, documents, artifacts and oral histories that preserve the experiences of plantation communities across generations. Knowing who kept an image, and why, changes how you read it.',
@@ -1044,358 +1068,10 @@ export const newsArticles = [];
 export const careersList = [];
 
 /**
- * Photograph archives seed.
- *
- * Curated subset of the digitized village photographs in
- * public/digitized-photos. Descriptions are working descriptions written from
- * the images themselves, not catalog records: `provisional: true` tells the UI
- * to say so rather than present them as archive fact. Staff replace them from
- * the accession cards in the CMS.
+ * Complete photograph archives catalog.
+ * Curated historical village photographs and newly digitized event collections.
  */
-export const PHOTOGRAPHS = [
-  {
-    arkId: 'img_6805',
-    title: 'Village path between camp houses and palms',
-    imageUrl: '/digitized-photos/IMG_6805.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6805.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Paved path lined with restored cottages, palms, and tropical plantings',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A paved walkway curves through the village between white camp cottages, a croton bush, and tall palm trunks under an overcast sky.',
-    relatedArkIds: ['img_6115', 'img_6820'],
-    studyNotes:
-      'Site paths and plantings date this as museum-era documentation of the living village rather than a plantation-era street scene.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6115',
-    title: 'Dark camp cottage with white porch',
-    imageUrl: '/digitized-photos/IMG_6115.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6115.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Single-wall camp cottage with dark siding, white porch railings, and an interpretive plaque',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A dark board-and-batten cottage with a white porch and railing sits on a sunny lawn; a small metal plaque marks it as an interpreted exhibit.',
-    relatedArkIds: ['img_6122', 'img_6330'],
-    studyNotes:
-      'The plaque in the foreground is museum evidence: this structure is being read as heritage, not as occupied housing.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6122',
-    title: 'Sunlit porch along a white camp house',
-    imageUrl: '/digitized-photos/IMG_6122.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6122.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Long porch with lace curtains, screen door, and horseshoe above the doorway',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Looking down a white camp-house porch: lace curtains in a multi-pane window, a screen door ajar, and a horseshoe mounted above the frame.',
-    relatedArkIds: ['img_6115', 'img_6365'],
-    studyNotes:
-      'Porch depth, rail detail, and door hardware are the kind of construction clues the study guide asks viewers to inventory before guessing date or culture.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6330',
-    title: 'Furnished camp interior opening to the lanai',
-    imageUrl: '/digitized-photos/IMG_6330.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6330.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Camp house interior with open double doors, woven hats, and a historical group photograph',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Inside a furnished camp house: open double doors look onto a lanai with red railings; woven hats hang on the wall beside a framed black-and-white group photograph.',
-    relatedArkIds: ['img_6115', 'img_6365'],
-    studyNotes:
-      'Pair this interior with the cottage exterior to practice reading what one frame confirms or complicates about the other.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6365',
-    title: 'Camp room with trunks, stool, and books',
-    imageUrl: '/digitized-photos/IMG_6365.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6365.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Corner of a furnished camp room with trunks, a three-legged stool, and open books',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A bright camp-house corner: tied lace curtains, stacked trunks with quilts, a low green table holding open books, and a framed group photograph on the wall.',
-    relatedArkIds: ['img_6330', 'img_6122'],
-    studyNotes:
-      'Domestic objects — trunks, quilts, books — are clues to how ethnic historical groups chose to furnish these exhibits.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6400',
-    title: 'Household altar between sewing room and kitchen',
-    imageUrl: '/digitized-photos/IMG_6400.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6400.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Religious altar with Virgin Mary statue flanked by doorways into adjoining rooms',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A lace-covered altar with a Virgin Mary statue stands against pale green plank walls; doorways open to a sewing machine on one side and a wood stove kitchen on the other.',
-    relatedArkIds: ['img_6330', 'img_6350'],
-    studyNotes:
-      'Faith objects and room adjacencies help identify which ethnic home this exhibit represents and how family life was organized in a small footprint.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6350',
-    title: 'Worktable sink in a dark wooden kitchen',
-    imageUrl: '/digitized-photos/IMG_6350.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6350.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Historic kitchen or workroom with ceramic sink, enamel bowls, and woven baskets',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Daylight falls across a timber worktable with a white ceramic sink and enamel bowls; woven baskets and a round mat hang against dark plank walls.',
-    relatedArkIds: ['img_6310', 'img_6400'],
-    studyNotes:
-      'Work surfaces and containers are evidence of daily labor inside the home — cooking, washing, food storage — not only ceremonial display.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6310',
-    title: 'Blue shed with watering cans and jars',
-    imageUrl: '/digitized-photos/IMG_6310.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6310.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Utility shed interior with long-spout watering cans, glass jars, and a washboard',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A charcoal-blue shed corner holds shelves of jars, a workbench sink, a straw broom, and four long-spout metal watering cans under the bench.',
-    relatedArkIds: ['img_6350', 'img_6380'],
-    studyNotes:
-      'Garden and wash tools document the outdoor labor that supported camp households as much as furniture does indoors.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6380',
-    title: 'White outbuilding with packed-earth floor',
-    imageUrl: '/digitized-photos/IMG_6380.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6380.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'White-painted wooden outbuilding with dirt floor and open cubby shelving',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A bright white interior with exposed rafters, a packed reddish earth floor, and an open cubby shelf unit beside an open door.',
-    relatedArkIds: ['img_6310', 'img_6820'],
-    studyNotes:
-      'Floor material and roof structure are dating and use clues: packed earth and corrugated roofing point to utility space, not a furnished parlor.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6820',
-    title: 'Green cottage with red corrugated roof',
-    imageUrl: '/digitized-photos/IMG_6820.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6820.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Small green wooden building with red metal roof and white porch steps under a shade tree',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A forest-green cottage with a bright red corrugated roof and white porch railings sits on a lawn, framed by a large shade tree.',
-    relatedArkIds: ['img_6805', 'img_6420'],
-    studyNotes:
-      'Paint color and roof material help distinguish structures when matching exteriors to interiors across related frames.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6420',
-    title: 'Shiroma Saimin stand exhibit',
-    imageUrl: '/digitized-photos/IMG_6420.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6420.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Interior exhibit for Shiroma Saimin 1932–1954 with noodle machine and family photographs',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Looking through glass into the Shiroma Saimin exhibit: a wall sign dated 1932–1954, framed family photographs, ceramic bowls, and a vintage noodle-making machine.',
-    relatedArkIds: ['img_6820', 'img_6810'],
-    studyNotes:
-      'Named businesses and date ranges on exhibit signage are explicit captions — rare in undated field photographs, common in museum interpretation.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6810',
-    title: 'Plantation clinic with dental chair',
-    imageUrl: '/digitized-photos/IMG_6810.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6810.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Restored medical or dental office with vintage chair, amber bottles, and white cabinets',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A white board-and-batten clinic room holds a purple-upholstered dental chair, amber glass bottles on open shelves, and a window onto a large tree trunk.',
-    relatedArkIds: ['img_6420', 'img_6350'],
-    studyNotes:
-      'Medical equipment and pharmacy bottles document plantation company services — housing was only one part of camp infrastructure.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6103',
-    title: 'Red temple porch under blue sky',
-    imageUrl: '/digitized-photos/IMG_6103.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6103.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Bright red wooden temple or shrine porch with geometric railing',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Looking up at a saturated red wooden porch and railing against a clear blue sky, with green foliage framing the structure.',
-    relatedArkIds: ['img_6066', 'img_6222'],
-    studyNotes:
-      'Architectural style and paint color are primary clues when identifying which ethnic community\'s sacred or communal building this is.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6066',
-    title: 'Stone memorial markers under a shade tree',
-    imageUrl: '/digitized-photos/IMG_6066.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6066.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Upright memorial stones on concrete plinths beneath a leafy tree',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Dark standing stones on angled concrete bases sit in deep shade beneath a large tree; a wooden fence corner enters the foreground.',
-    relatedArkIds: ['img_6103', 'img_6222'],
-    studyNotes:
-      'Memorial landscapes ask different questions than furnished homes: whose names are present, who is absent, and when the markers were installed.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6222',
-    title: 'Camp yard with lamp post and fence',
-    imageUrl: '/digitized-photos/IMG_6222.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6222.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Outdoor yard between camp buildings with lamp post, fence, and grassy patch',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'Sunlit asphalt between white and pale-green camp buildings; a plantation-style lamp post stands by a brown fence under a large tree.',
-    relatedArkIds: ['img_6805', 'img_6103'],
-    studyNotes:
-      'Yard spaces between houses are where work, play, and neighbor life happened — look for fences, lamps, and shared open ground.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6271',
-    title: 'Timber frame under repair',
-    imageUrl: '/digitized-photos/IMG_6271.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6271.webp',
-    collection: 'oahu_sugar',
-    filingCategory: 'Village site documentation',
-    subject: 'Open timber frame of a small building with debris and a stepladder',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A weathered open timber frame with a slanted roof sits on bare earth among construction debris; a stepladder corner enters the foreground.',
-    relatedArkIds: ['img_6298'],
-    studyNotes:
-      'Repair and reconstruction frames document the museum as a working site — preservation is ongoing, not finished.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6298',
-    title: 'Elevated wooden frame under construction',
-    imageUrl: '/digitized-photos/IMG_6298.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6298.webp',
-    collection: 'oahu_sugar',
-    filingCategory: 'Village site documentation',
-    subject: 'Elevated lumber frame with partial corrugated roofing',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'An elevated wooden frame with diagonal bracing and a partially sheeted roof stands on dirt among dry leaves.',
-    relatedArkIds: ['img_6271'],
-    studyNotes:
-      'Compare framing stages across related construction photos to see how quickly plantation-style structures go up.',
-    provisional: true,
-  },
-  {
-    arkId: 'img_6435',
-    title: 'Village garden path detail',
-    imageUrl: '/digitized-photos/IMG_6435.webp',
-    thumbnailUrl: '/digitized-photos/thumbs/IMG_6435.webp',
-    collection: 'fwcgp',
-    filingCategory: 'Village site documentation',
-    subject: 'Garden and path documentation within the village grounds',
-    donor: 'Friends of Waipahu Cultural Garden Park',
-    accessionNumber: '',
-    circaDate: 'ca. 2020s',
-    photographer: '',
-    caption:
-      'A digitized village photograph from the current site documentation set — working title pending staff catalog review.',
-    relatedArkIds: ['img_6805', 'img_6222'],
-    studyNotes:
-      'Use this frame with the path and yard photographs to map how plantings and circulation connect the ethnic homes.',
-    provisional: true,
-  },
-];
+export { PHOTOGRAPHS } from './photographsData.js';
 
 export const CAMPS_DATA = [
   {

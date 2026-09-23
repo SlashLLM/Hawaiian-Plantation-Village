@@ -1409,6 +1409,109 @@ button.events-calendar-day:focus-visible {
   padding-left: 0.75rem;
 }
 
+.archive-pagination-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 3.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.archive-pagination-info {
+  font-size: 0.9rem;
+  color: var(--muted-sage);
+  letter-spacing: 0.02em;
+}
+
+.archive-pagination-info strong {
+  color: var(--plantation-ink);
+  font-weight: 600;
+}
+
+.archive-pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.archive-page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.65rem;
+  background: var(--sand);
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--border-radius-sm);
+  color: var(--plantation-ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.archive-page-btn:hover:not(:disabled) {
+  background: var(--warm-sand);
+  border-color: var(--plantation-ink);
+  color: var(--plantation-ink);
+}
+
+.archive-page-btn:focus-visible {
+  outline: 2px solid var(--heritage-gold);
+  outline-offset: 2px;
+}
+
+.archive-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--hairline);
+}
+
+.archive-page-btn.is-active {
+  background: var(--plantation-ink);
+  border-color: var(--plantation-ink);
+  color: var(--sugarcane-cream);
+  font-weight: 600;
+}
+
+.archive-page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.archive-page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 2.5rem;
+  color: var(--muted-sage);
+  font-size: 1rem;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .archive-pagination-wrap {
+    margin-top: 2.5rem;
+    gap: 1rem;
+  }
+  .archive-page-btn {
+    min-width: 2.25rem;
+    height: 2.25rem;
+    padding: 0 0.5rem;
+    font-size: 0.85rem;
+  }
+}
+
 .archive-detail-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr);

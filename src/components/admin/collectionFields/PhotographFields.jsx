@@ -6,6 +6,10 @@ export const PHOTOGRAPH_COLLECTION_OPTIONS = [
   { value: 'oahu_sugar', label: 'Oahu Sugar Company' },
   { value: 'murakoshi', label: 'Murakoshi Collection' },
   { value: 'fwcgp', label: 'Friends of Waipahu Cultural Garden Park' },
+  { value: 'cny_2018', label: 'Chinese New Year Festival (2018)' },
+  { value: 'rice_fest_2018', label: 'Rice Festival (2018)' },
+  { value: 'cny_2020', label: 'Lunar New Year Celebration (2020)' },
+  { value: 'hpv_dedication', label: 'Village Dedication & Cultural Blessing (2019)' },
 ];
 
 export default function PhotographFields({ form, setForm, extraCollections = [] }) {
