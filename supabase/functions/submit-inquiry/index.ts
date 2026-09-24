@@ -26,6 +26,26 @@ const TYPE_LABELS: Record<InquiryType, string> = {
   newsletter: 'Newsletter Signup',
 };
 
+// Each inquiry goes to the inbox that owns it. Anything unrouted (general
+// contact, careers, group visits) falls back to INQUIRY_TO_EMAIL.
+const TYPE_RECIPIENT_ENV: Partial<Record<InquiryType, string>> = {
+  field_trip: 'INQUIRY_TO_EMAIL_EDUCATION',
+  youth_program: 'INQUIRY_TO_EMAIL_EDUCATION',
+  workshop_rsvp: 'INQUIRY_TO_EMAIL_EDUCATION',
+  volunteer: 'INQUIRY_TO_EMAIL_VOLUNTEER',
+  newsletter: 'INQUIRY_TO_EMAIL_NEWSLETTER',
+};
+
+// Contact-form subjects about sponsorship, media, collaborations or donations
+const SUPPORT_SUBJECT_RE = /sponsor|donat|media|press|collab|partner/i;
+
+function recipientEnvVar(type: InquiryType, body: Record<string, unknown>): string | undefined {
+  if (type === 'contact' && SUPPORT_SUBJECT_RE.test(trim(body.subject))) {
+    return 'INQUIRY_TO_EMAIL_SUPPORT';
+  }
+  return TYPE_RECIPIENT_ENV[type];
+}
+
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function trim(value: unknown): string {
@@ -268,6 +288,7 @@ Deno.serve(async (req) => {
       referenceId,
       fields,
       submitterEmail: submitterEmail || undefined,
+      recipientEnvVar: recipientEnvVar(type, body),
     });
 
     if (!notifyResult.ok) {

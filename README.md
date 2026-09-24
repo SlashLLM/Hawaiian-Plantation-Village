@@ -85,7 +85,7 @@ Page titles and meta descriptions are set per page via the `<SEO>` component.
 - **Curriculum** — modules and checkpoints (archive/deactivate to remove from public)
 - **Media uploads** — `MediaUploadField` / `AudioUploadField` / `VideoUploadField` upload to `cms-media`
 
-Contact, career, field trip, student program, workshop, volunteer, group visit, and footer newsletter forms submit via the `submit-inquiry` edge function and email staff at `INQUIRY_TO_EMAIL` (with an auto-reply to the submitter).
+Contact, career, field trip, student program, workshop, volunteer, group visit, and footer newsletter forms submit via the `submit-inquiry` edge function and email staff (with an auto-reply to the submitter). Education forms go to `INQUIRY_TO_EMAIL_EDUCATION`, volunteer to `INQUIRY_TO_EMAIL_VOLUNTEER`, newsletter to `INQUIRY_TO_EMAIL_NEWSLETTER`, contact-form sponsorship/donation/media/collaboration subjects to `INQUIRY_TO_EMAIL_SUPPORT`; everything else (and any unset one) falls back to `INQUIRY_TO_EMAIL`.
 
 Publishing sets `status = 'published'` and `published_at`. Delete permanently removes content entry rows. Public pages refresh on next fetch (no rebuild required).
 

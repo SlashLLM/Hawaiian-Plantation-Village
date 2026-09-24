@@ -19,6 +19,8 @@ type InquiryNotificationInput = {
   referenceId: string;
   fields: InquiryField[];
   submitterEmail?: string;
+  /** Name of the env var holding the staff inbox for this inquiry; falls back to INQUIRY_TO_EMAIL. */
+  recipientEnvVar?: string;
 };
 
 type InquiryAutoReplyInput = {
@@ -151,7 +153,8 @@ export async function sendPassEmail(details: PassDetails) {
 }
 
 export async function sendInquiryNotification(input: InquiryNotificationInput) {
-  const to = Deno.env.get('INQUIRY_TO_EMAIL');
+  const to = (input.recipientEnvVar && Deno.env.get(input.recipientEnvVar)) ||
+    Deno.env.get('INQUIRY_TO_EMAIL');
   if (!to) {
     return { ok: false, error: 'INQUIRY_TO_EMAIL is not configured' };
   }

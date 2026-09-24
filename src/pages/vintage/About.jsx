@@ -39,6 +39,7 @@ export default function About({ activeTab: propActiveTab, setActiveTab: propSetA
     'Educational Tours',
     'Private Events',
     'Donation/Sponsorship',
+    'Media/Collaboration',
     'Volunteering',
   ];
   const newsCategories = useMemo(

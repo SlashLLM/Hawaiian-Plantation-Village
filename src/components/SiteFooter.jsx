@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AlertCircle, Check, Mail } from 'lucide-react';
 import { useAppNavigate } from '../hooks/useAppNavigate.js';
 import { useSiteSettings } from '../context/ContentProvider.jsx';
 import { submitInquiry } from '../lib/api.js';
+
+// Pages whose inquiries belong to a dedicated inbox show that address in the
+// footer instead of the general settings.contact email. Most specific path first.
+const PAGE_CONTACT_EMAILS = [
+  { prefix: '/archives/newsletters', email: import.meta.env.VITE_CONTACT_EMAIL_NEWSLETTER },
+  { prefix: '/learn', email: import.meta.env.VITE_CONTACT_EMAIL_EDUCATION },
+  { prefix: '/volunteer', email: import.meta.env.VITE_CONTACT_EMAIL_VOLUNTEER },
+  { prefix: '/support', email: import.meta.env.VITE_CONTACT_EMAIL_SUPPORT },
+  { prefix: '/give-aloha', email: import.meta.env.VITE_CONTACT_EMAIL_SUPPORT },
+];
+
+function pageContactEmail(pathname) {
+  return PAGE_CONTACT_EMAILS.find(({ prefix }) => pathname === prefix || pathname.startsWith(`${prefix}/`))?.email;
+}
 
 /**
  * The site-wide footer. It used to live inline in the Home page, which meant the
@@ -15,6 +30,8 @@ export default function SiteFooter() {
   const { settings } = useSiteSettings();
   const footer = settings?.footer ?? {};
   const contact = settings?.contact ?? {};
+  const { pathname } = useLocation();
+  const contactEmail = pageContactEmail(pathname) || contact.email;
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterStatus, setNewsletterStatus] = useState('idle'); // 'idle' | 'submitting' | 'done'
   const [newsletterError, setNewsletterError] = useState('');
@@ -64,7 +81,7 @@ export default function SiteFooter() {
             <p style={styles.footerContact}>
               {contact.phone}
               <br />
-              {contact.email}
+              {contactEmail}
             </p>
           </div>
 

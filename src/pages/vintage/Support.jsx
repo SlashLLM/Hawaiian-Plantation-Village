@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle, HandHeart } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
@@ -11,6 +11,27 @@ import { useSiteSettings, usePageSection } from '../../context/ContentProvider.j
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
+
+// Volunteering has its own page but no nav entry, so Support — where visitors
+// look for ways to help — is how people find it.
+function VolunteerCallout({ onVolunteer }) {
+  return (
+    <section className="paper-card" style={styles.volunteerCallout} aria-labelledby="volunteer-heading">
+      <div style={styles.volunteerIcon} aria-hidden="true">
+        <HandHeart size={26} />
+      </div>
+      <div style={styles.volunteerText}>
+        <h2 id="volunteer-heading" style={styles.volunteerTitle}>Give your time.</h2>
+        <p style={styles.volunteerBody}>
+          The Village exists because people showed up. Lead tours, tend the gardens, help in the archives, or pitch in at festivals.
+        </p>
+      </div>
+      <button type="button" className="btn-accent" onClick={onVolunteer} style={styles.volunteerBtn}>
+        Volunteer With Us <ArrowRight size={16} />
+      </button>
+    </section>
+  );
+}
 
 export default function Support() {
   const setActivePage = useAppNavigate();
@@ -154,10 +175,9 @@ export default function Support() {
             <button type="button" className="btn-accent" onClick={() => setActivePage('give-aloha')}>
               Give through Give Aloha
             </button>
-            <button type="button" className="btn-secondary" onClick={() => setActivePage('volunteer')}>
-              Volunteer With Us
-            </button>
           </ComingSoon>
+
+          <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
         </div>
       </div>
     );
@@ -422,12 +442,54 @@ export default function Support() {
             )}
           </div>
         )}
+
+        <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
       </div>
     </div>
   );
 }
 
 const styles = {
+  volunteerCallout: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '1.25rem 1.75rem',
+    maxWidth: '1000px',
+    margin: 'clamp(3rem, 6vw, 4.5rem) auto 0',
+    padding: 'clamp(1.5rem, 4vw, 2.25rem)',
+    borderLeft: '4px solid var(--terracotta-clay)',
+  },
+  volunteerIcon: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '0 0 auto',
+    width: '56px',
+    height: '56px',
+    borderRadius: '50%',
+    backgroundColor: 'var(--sand)',
+    border: '1px solid var(--hairline)',
+    color: 'var(--terracotta-clay)',
+  },
+  volunteerText: {
+    flex: '1 1 320px',
+  },
+  volunteerTitle: {
+    fontSize: '1.6rem',
+    fontWeight: 500,
+    margin: '0 0 0.4rem',
+  },
+  volunteerBody: {
+    fontSize: '1rem',
+    lineHeight: 1.65,
+    color: 'var(--muted-sage)',
+    margin: 0,
+    maxWidth: '60ch',
+  },
+  volunteerBtn: {
+    flex: '0 0 auto',
+  },
   pageContainer: {
     paddingBottom: '5rem'
   },
