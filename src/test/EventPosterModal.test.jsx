@@ -82,7 +82,7 @@ describe('event poster popup', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     await openPoster();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
-    expect(screen.getByRole('img', { name: /Give Aloha/i })).toHaveAttribute(
+    expect(screen.getByRole('img', { name: /Harvest Moon/i })).toHaveAttribute(
       'src',
       ACTIVE_POSTER.src,
     );
@@ -145,8 +145,8 @@ describe('event poster popup', () => {
 describe('isPosterCurrent', () => {
   it('covers the day of the event and stops the day after', () => {
     expect(isPosterCurrent(ACTIVE_POSTER, '2026-09-11')).toBe(true);
-    expect(isPosterCurrent(ACTIVE_POSTER, '2026-09-30')).toBe(true);
-    expect(isPosterCurrent(ACTIVE_POSTER, '2026-10-01')).toBe(false);
+    expect(isPosterCurrent(ACTIVE_POSTER, '2026-09-26')).toBe(true);
+    expect(isPosterCurrent(ACTIVE_POSTER, '2026-09-27')).toBe(false);
   });
 
   it('treats a missing poster as nothing to show', () => {
