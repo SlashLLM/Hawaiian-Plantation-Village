@@ -1,27 +1,45 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import { useAppNavigate } from '../hooks/useAppNavigate.js';
+import { useNavigate } from 'react-router-dom';
+import { fetchSitePopup } from '../lib/content/cmsApi.js';
 import {
-  ACTIVE_POSTER,
+  DEFAULT_POSTER_PAYLOAD,
   hasSeenPoster,
   isPosterCurrent,
   markPosterSeen,
+  normalizePoster,
 } from '../lib/eventPoster.js';
 
 /** Let the page's entrance animation finish before the poster interrupts. */
 const OPEN_DELAY_MS = 900;
 
 /**
+ * Where the popup config comes from. No published row yet → the built-in
+ * default. A failed request → nothing, so an outage never resurrects a poster
+ * an admin has switched off.
+ */
+async function loadPoster() {
+  try {
+    const payload = await fetchSitePopup();
+    return normalizePoster(payload === undefined ? DEFAULT_POSTER_PAYLOAD : payload);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Shows the current event poster once to each first-time visitor. Mounted from
- * PublicLayout, so it never appears on admin routes.
+ * PublicLayout, so it never appears on admin routes. Configured from
+ * Admin → Content → Site Popup.
  *
- * The poster is loaded by URL from `public/` rather than imported, so a missing
- * or not-yet-uploaded file degrades to "no popup" instead of breaking the build.
+ * The poster is loaded by URL rather than imported, so a missing or broken
+ * image degrades to "no popup" instead of breaking the page.
  */
 export default function EventPosterModal() {
-  const setActivePage = useAppNavigate();
+  const navigate = useNavigate();
   const shouldReduceMotion = useReducedMotion();
+  const [poster, setPoster] = useState(null);
   const [open, setOpen] = useState(false);
   const closeRef = useRef(null);
   const lastFocusedRef = useRef(null);
@@ -29,22 +47,22 @@ export default function EventPosterModal() {
   const close = useCallback(() => setOpen(false), []);
 
   useEffect(() => {
-    if (!ACTIVE_POSTER || !isPosterCurrent() || hasSeenPoster()) return undefined;
-
     let cancelled = false;
     let loaded = false;
     let delayed = false;
+    let current = null;
+    const image = new Image();
 
     // Opens only once the artwork is decoded AND the delay has passed, so the
     // poster never flashes up empty. Marked as seen at that point and not
     // before: a visitor who was never actually shown it must still get it later.
     const openIfReady = () => {
-      if (cancelled || !loaded || !delayed) return;
-      markPosterSeen();
+      if (cancelled || !current || !loaded || !delayed) return;
+      markPosterSeen(current);
+      setPoster(current);
       setOpen(true);
     };
 
-    const image = new Image();
     image.onload = () => {
       loaded = true;
       openIfReady();
@@ -53,7 +71,12 @@ export default function EventPosterModal() {
     image.onerror = () => {
       cancelled = true;
     };
-    image.src = ACTIVE_POSTER.src;
+
+    loadPoster().then((next) => {
+      if (cancelled || !next || !isPosterCurrent(next) || hasSeenPoster(next)) return;
+      current = next;
+      image.src = next.src;
+    });
 
     const timer = setTimeout(() => {
       delayed = true;
@@ -89,11 +112,18 @@ export default function EventPosterModal() {
     };
   }, [open, close]);
 
-  if (!ACTIVE_POSTER) return null;
+  if (!poster) return null;
 
+  const { link } = poster;
   const handleCta = () => {
+    if (!link) return;
     close();
-    setActivePage(ACTIVE_POSTER.ctaPage);
+    if (link.external) {
+      window.open(link.href, '_blank', 'noopener,noreferrer');
+      return;
+    }
+    navigate(link.href);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -130,22 +160,24 @@ export default function EventPosterModal() {
 
             {/* Already decoded by the preload above, so this renders from cache. */}
             <img
-              src={ACTIVE_POSTER.src}
-              alt={ACTIVE_POSTER.alt}
-              style={styles.poster}
+              src={poster.src}
+              alt={poster.alt}
+              style={link ? styles.poster : { ...styles.poster, cursor: 'default' }}
               onClick={handleCta}
             />
 
             <div style={styles.footer}>
-              {ACTIVE_POSTER.caption && (
-                <p style={styles.caption}>{ACTIVE_POSTER.caption}</p>
+              {poster.caption && (
+                <p style={styles.caption}>{poster.caption}</p>
               )}
               <div style={styles.actions}>
-                <button type="button" className="btn-accent" onClick={handleCta}>
-                  {ACTIVE_POSTER.ctaLabel}
-                </button>
+                {link && (
+                  <button type="button" className="btn-accent" onClick={handleCta}>
+                    {link.label}
+                  </button>
+                )}
                 <button type="button" className="btn-secondary" onClick={close}>
-                  Maybe later
+                  {link ? 'Maybe later' : 'Close'}
                 </button>
               </div>
             </div>

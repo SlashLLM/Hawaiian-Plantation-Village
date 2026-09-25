@@ -3,11 +3,24 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import EventPosterModal from '../components/EventPosterModal.jsx';
-import { ACTIVE_POSTER, isPosterCurrent, todayISO } from '../lib/eventPoster.js';
+import {
+  DEFAULT_POSTER_PAYLOAD,
+  isPosterCurrent,
+  normalizePoster,
+  todayISO,
+} from '../lib/eventPoster.js';
+import { fetchSitePopup } from '../lib/content/cmsApi.js';
+
+const ACTIVE_POSTER = normalizePoster(DEFAULT_POSTER_PAYLOAD);
 
 const navigate = vi.fn();
-vi.mock('../hooks/useAppNavigate.js', () => ({
-  useAppNavigate: () => navigate,
+vi.mock('react-router-dom', () => ({
+  useNavigate: () => navigate,
+}));
+
+// No published row by default — the modal falls back to the built-in poster.
+vi.mock('../lib/content/cmsApi.js', () => ({
+  fetchSitePopup: vi.fn(() => Promise.resolve(undefined)),
 }));
 
 // Render motion elements as plain DOM and drop the exit animation, so these
@@ -37,10 +50,13 @@ vi.mock('framer-motion', () => {
   };
 });
 
-/** The modal opens on a timer; this fast-forwards past it. */
+/**
+ * The modal loads its config, then opens on a timer; this fast-forwards past
+ * both, flushing the promises in between.
+ */
 async function openPoster() {
   await act(async () => {
-    vi.advanceTimersByTime(2000);
+    await vi.advanceTimersByTimeAsync(2000);
   });
 }
 
@@ -68,6 +84,9 @@ describe('event poster popup', () => {
     vi.setSystemTime(new Date('2026-09-11T09:00:00'));
     window.localStorage.clear();
     navigate.mockClear();
+    fetchSitePopup.mockReset();
+    fetchSitePopup.mockResolvedValue(undefined);
+    window.scrollTo = vi.fn();
     imageLoads.ok = true;
     stubImageLoading();
   });
@@ -115,8 +134,8 @@ describe('event poster popup', () => {
     render(<EventPosterModal />);
     await openPoster();
 
-    await user.click(screen.getByRole('button', { name: ACTIVE_POSTER.ctaLabel }));
-    expect(navigate).toHaveBeenCalledWith(ACTIVE_POSTER.ctaPage);
+    await user.click(screen.getByRole('button', { name: ACTIVE_POSTER.link.label }));
+    expect(navigate).toHaveBeenCalledWith('/events');
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
@@ -139,6 +158,85 @@ describe('event poster popup', () => {
     render(<EventPosterModal />);
     await openPoster();
     expect(screen.getByRole('dialog')).toBeInTheDocument();
+  });
+});
+
+describe('event poster popup — CMS configured', () => {
+  const CMS_PAYLOAD = {
+    enabled: true,
+    id: 'popup-123',
+    image: 'https://cdn.example.test/obon.jpg',
+    alt: 'Obon Festival poster',
+    caption: 'August 15',
+    showUntil: '2026-12-31',
+    link: { enabled: true, label: 'Obon details', kind: 'page', pageSlug: 'obon-festival' },
+  };
+
+  beforeEach(() => {
+    vi.useFakeTimers({ shouldAdvanceTime: true });
+    vi.setSystemTime(new Date('2026-09-11T09:00:00'));
+    window.localStorage.clear();
+    navigate.mockClear();
+    fetchSitePopup.mockReset();
+    window.scrollTo = vi.fn();
+    imageLoads.ok = true;
+    stubImageLoading();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.unstubAllGlobals();
+  });
+
+  it('shows the CMS poster and opens the chosen event page', async () => {
+    fetchSitePopup.mockResolvedValue(CMS_PAYLOAD);
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<EventPosterModal />);
+    await openPoster();
+
+    expect(screen.getByRole('img', { name: 'Obon Festival poster' })).toHaveAttribute(
+      'src',
+      CMS_PAYLOAD.image,
+    );
+    await user.click(screen.getByRole('button', { name: 'Obon details' }));
+    expect(navigate).toHaveBeenCalledWith('/events/obon-festival');
+  });
+
+  it('can send visitors to another site page', async () => {
+    fetchSitePopup.mockResolvedValue({
+      ...CMS_PAYLOAD,
+      link: { label: 'Plan a visit', kind: 'site', sitePage: 'visit' },
+    });
+    const user = userEvent.setup({ advanceTimers: vi.advanceTimersByTime });
+    render(<EventPosterModal />);
+    await openPoster();
+
+    await user.click(screen.getByRole('button', { name: 'Plan a visit' }));
+    expect(navigate).toHaveBeenCalledWith('/visit');
+  });
+
+  it('shows no call to action when the link target is missing', async () => {
+    fetchSitePopup.mockResolvedValue({ ...CMS_PAYLOAD, link: { kind: 'page', pageSlug: '' } });
+    render(<EventPosterModal />);
+    await openPoster();
+
+    expect(screen.getByRole('dialog')).toBeInTheDocument();
+    expect(screen.queryByRole('button', { name: /details|learn more/i })).not.toBeInTheDocument();
+    expect(screen.getAllByRole('button', { name: 'Close' })).toHaveLength(2);
+  });
+
+  it('stays hidden when an admin switched it off', async () => {
+    fetchSitePopup.mockResolvedValue({ ...CMS_PAYLOAD, enabled: false });
+    render(<EventPosterModal />);
+    await openPoster();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  });
+
+  it('stays hidden when the popup config cannot be loaded', async () => {
+    fetchSitePopup.mockRejectedValue(new Error('network down'));
+    render(<EventPosterModal />);
+    await openPoster();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 });
 

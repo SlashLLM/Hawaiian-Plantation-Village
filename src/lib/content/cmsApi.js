@@ -19,6 +19,24 @@ export async function fetchHomeEventsSection({ preview = false } = {}) {
   return data ?? null;
 }
 
+/**
+ * The site popup row (Site Popup tab). Returns the published payload, or
+ * `undefined` when there is no published row, so the caller can tell
+ * "never configured" apart from a stored payload.
+ */
+export async function fetchSitePopup() {
+  if (!supabase) return undefined;
+  const { data, error } = await supabase
+    .from('page_sections')
+    .select('payload')
+    .eq('page_key', 'site')
+    .eq('section_key', 'popup')
+    .eq('status', 'published')
+    .maybeSingle();
+  if (error) throw error;
+  return data?.payload ?? undefined;
+}
+
 export async function fetchPublishedContent(type, { pageKey } = {}) {
   if (!supabase) return [];
   let query = supabase

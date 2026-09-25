@@ -6,12 +6,14 @@ import CustomPagesPanel from './CustomPagesPanel.jsx';
 import NewsPanel from './NewsPanel.jsx';
 import CareersPanel from './CareersPanel.jsx';
 import CurriculumPanel from './CurriculumPanel.jsx';
+import SitePopupPanel from './SitePopupPanel.jsx';
 
 const TABS = [
   { id: 'stories', label: 'Stories' },
   { id: 'photographs', label: 'Archives' },
   { id: 'events', label: 'Upcoming Events' },
   { id: 'pages', label: 'Event Pages' },
+  { id: 'popup', label: 'Site Popup' },
   { id: 'news', label: 'News & Announcements' },
   { id: 'careers', label: 'Careers' },
   { id: 'curriculum', label: 'Curriculum' },
@@ -49,6 +51,7 @@ export default function CmsAdminPanel() {
       {tab === 'pages' && (
         <CustomPagesPanel seed={pageSeed} onSeedConsumed={() => setPageSeed(null)} />
       )}
+      {tab === 'popup' && <SitePopupPanel />}
       {tab === 'news' && <NewsPanel />}
       {tab === 'careers' && <CareersPanel />}
       {tab === 'curriculum' && <CurriculumPanel />}
