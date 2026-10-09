@@ -35,14 +35,14 @@ export const SITE_PHOTOS = {
 const HEADER_FOCUS = {
   [SITE_PHOTOS.headers.play]: 'center 48%',
   [SITE_PHOTOS.headers.learn]: 'center 62%',
-  [SITE_PHOTOS.headers.visit]: 'center 50%',
-  [SITE_PHOTOS.headers.explore]: 'center 50%',
-  [SITE_PHOTOS.headers.stories]: 'center 55%',
-  [SITE_PHOTOS.headers.events]: 'center 50%',
-  [SITE_PHOTOS.headers.support]: 'center 40%',
-  [SITE_PHOTOS.headers.volunteer]: 'center 45%',
-  [SITE_PHOTOS.headers.about]: 'center 22%',
-  [SITE_PHOTOS.headers.archives]: 'center 38%',
+  [SITE_PHOTOS.headers.visit]: 'center 55%',
+  [SITE_PHOTOS.headers.explore]: 'center 60%',
+  [SITE_PHOTOS.headers.stories]: 'center 35%',
+  [SITE_PHOTOS.headers.events]: 'center 45%',
+  [SITE_PHOTOS.headers.support]: 'center 35%',
+  [SITE_PHOTOS.headers.volunteer]: 'center 55%',
+  [SITE_PHOTOS.headers.about]: 'center 30%',
+  [SITE_PHOTOS.headers.archives]: 'center 40%',
 };
 
 export const headerImagePosition = (src) => HEADER_FOCUS[src] ?? 'center';

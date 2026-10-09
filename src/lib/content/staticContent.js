@@ -542,11 +542,6 @@ export const DEFAULT_PAGE_SECTIONS = {
     staff: {
       items: [
         {
-          slug: 'loretta-chen',
-          name: 'Dr. Loretta Chen',
-          role: 'Executive Director',
-        },
-        {
           slug: 'derrick-iwata',
           name: 'Derrick Iwata',
           role: 'Education & Programs Manager',
@@ -572,6 +567,7 @@ export const DEFAULT_PAGE_SECTIONS = {
       items: [
         { slug: 'kats-gustafson', name: 'Dr. Kats Gustafson', role: 'Board President' },
         { slug: 'steven-yuen', name: 'Steven Yuen', role: 'Board Vice President' },
+        { slug: 'paul-nishimura', name: 'Paul Nishimura', role: 'Board Secretary' },
         { slug: 'clement-bautista', name: 'Clement Bautista', role: 'Board Treasurer' },
         { slug: 'william-rol', name: 'William Rol', role: 'Board Member' },
         { slug: 'john-shockley', name: 'John Shockley', role: 'Board Member' },
@@ -581,7 +577,6 @@ export const DEFAULT_PAGE_SECTIONS = {
           name: 'Yoshiko Yamauchi',
           role: 'Board Member',
         },
-        { slug: 'paul-nishimura', name: 'Paul Nishimura', role: 'Board Member' },
       ],
     },
     newsIntro: {
