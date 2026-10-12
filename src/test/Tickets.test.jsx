@@ -123,4 +123,12 @@ describe('Tickets while payments are not connected', () => {
     render(<Tickets />);
     expect(screen.getByRole('link', { name: /\(808\) 677-0110/ })).toHaveAttribute('href', 'tel:8086770110');
   });
+
+  it('links the morning tour button to the Zeffy checkout', () => {
+    render(<Tickets />);
+    expect(screen.getByRole('link', { name: 'Book the Morning Tour' })).toHaveAttribute(
+      'href',
+      'https://www.zeffy.com/en-US/ticketing/morning-tour',
+    );
+  });
 });

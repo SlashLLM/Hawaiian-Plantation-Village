@@ -6,6 +6,9 @@
  * or slug change must be made here AND in a Supabase migration.
  */
 
+/** External Zeffy checkout for the 10:00 AM morning guided tour. */
+export const MORNING_TOUR_BOOKING_URL = 'https://www.zeffy.com/en-US/ticketing/morning-tour';
+
 /** Bookable events with their ticket types and tour times (Tickets page). */
 export const EVENTS = [
   {

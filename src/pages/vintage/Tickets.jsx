@@ -3,7 +3,7 @@ import { ChevronRight, Check, ArrowLeft, ShieldAlert, AlertCircle } from 'lucide
 import confetti from 'canvas-confetti';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
 import { createBooking, formatCents } from '../../lib/api.js';
-import { EVENTS } from '../../data/ticketing.js';
+import { EVENTS, MORNING_TOUR_BOOKING_URL } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
 import ComingSoon from '../../components/ComingSoon.jsx';
 import { usePageSection, useSiteSettings } from '../../context/ContentProvider.jsx';
@@ -182,6 +182,14 @@ export default function Tickets() {
 
         <div style={styles.container}>
           <ComingSoon {...COMING_SOON_COPY.tickets}>
+            <a
+              className="btn-primary"
+              href={MORNING_TOUR_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Book the Morning Tour
+            </a>
             <button type="button" className="btn-secondary" onClick={() => setActivePage('visit')}>
               Plan Your Visit
             </button>
