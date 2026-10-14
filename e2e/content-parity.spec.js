@@ -32,7 +32,7 @@ const ROUTES = [
   ['/archives/newsletters', []],
   ['/archives/img_6115', []],
   ['/play', []],
-  ['/learn', ['School & Group Visits', 'Youth Internships & Volunteering', 'Family Learning']],
+  ['/learn', []],
   ['/learn/elementary', []],
   ['/learn/middle', []],
   ['/learn/high', []],
@@ -41,7 +41,6 @@ const ROUTES = [
   ['/volunteer', []],
   ['/about', ['History and mission', 'Team', 'News', 'Careers', 'Contact']],
   ['/tickets', []],
-  ['/give-aloha', ['Interactive Steps', 'Original Cashier Sheet']],
 ];
 
 /**

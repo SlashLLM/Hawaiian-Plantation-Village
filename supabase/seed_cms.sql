@@ -32,7 +32,7 @@ values
   ('home', 'volunteer', 'published', 9, '{"stamp":"Volunteer","stampClass":"gold","title":"History needs people – YOU.","paragraphs":["The Village exists because people showed up.","They preserved buildings, donated family photographs, planted gardens, recorded memories, led tours, made repairs and shared traditions.","This spirit continues today.","Whether you love history, gardening, education, archives, cultural programs or simply working with the community, there is a place for you at Hawaii''s Plantation Village.","You do not need to be a historian. You just need to care that these stories survive."],"cta":{"label":"Volunteer With Us","page":"volunteer"}}'::jsonb, now()),
   ('home', 'eventsHeader', 'published', 10, '{"stamp":"Events at the Village","stampClass":"gold","title":"Come explore our culture with us.","description":"Throughout the year, Hawaii''s Plantation Village comes alive with music, food, dance, storytelling, cultural traditions and community celebrations. Come experience traditions passed from one generation to the next and make some memories of your own.","cta":{"label":"See All Events","page":"events"}}'::jsonb, now()),
   ('home', 'testimonialsHeader', 'published', 11, '{"stamp":"From our visitors","stampClass":"rust","title":"What people say after they walk it","description":"Teachers, neighbors, and travelers who have spent a morning in the camps."}'::jsonb, now()),
-  ('home', 'events', 'published', 12, '{"items":[{"slug":"lunar-new-year","startDate":"","endDate":"","date":"Seasonal","title":"Multi-ethnic Lunar New Year Celebration","time":"","desc":"A free village festival with cultural entertainment, food, games, and displays — including Chinese lion blessings and student performers.","image":""},{"slug":"obon-in-the-village","startDate":"","endDate":"","date":"Seasonal","title":"Opening of Hawaiʻi''s Obon season","time":"Late afternoon","desc":"Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.","image":""},{"slug":"portuguese-festa","startDate":"","endDate":"","date":"Seasonal","title":"Portuguese Festa","time":"","desc":"A free community festa with entertainment on the village stage, food tasting, and cultural displays.","image":""},{"slug":"harvest-festival","startDate":"","endDate":"","date":"Seasonal","title":"Harvest Festival","time":"","desc":"A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.","image":""}]}'::jsonb, now()),
+  ('home', 'events', 'published', 12, '{"items":[{"slug":"lunar-new-year","startDate":"","endDate":"","date":"Seasonal","title":"Multi-ethnic Lunar New Year Celebration","time":"","desc":"A free village festival with cultural entertainment, food, games, and displays — including Chinese lion blessings and student performers.","image":""},{"slug":"obon-in-the-village","startDate":"","endDate":"","date":"Seasonal","title":"Opening of Hawaiʻi''s Obon season","time":"Late afternoon","desc":"Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.","image":""},{"slug":"harvest-festival","startDate":"","endDate":"","date":"Seasonal","title":"Harvest Festival","time":"","desc":"A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.","image":""}]}'::jsonb, now()),
   ('home', 'testimonials', 'published', 13, '{"items":[]}'::jsonb, now()),
   ('home', 'partners', 'published', 14, '{"items":[]}'::jsonb, now()),
   ('visit', 'header', 'published', 1, '{"stamp":"Plan your visit","stampClass":"green","title":"Come walk through history with us.","subtitle":"Take your time. Breathe as you step inside the homes. Wander our lush gardens. Be curious and ask questions. Hear the stories from the people who lived them."}'::jsonb, now()),
@@ -92,7 +92,7 @@ on conflict (page_key, section_key) do nothing;
 -- ---------------------------------------------------------------------------
 
 -- ---------------------------------------------------------------------------
--- Content entries: programs (4) — free village festivals from study guide
+-- Content entries: programs (3) — free village festivals from study guide
 -- ---------------------------------------------------------------------------
 
 insert into public.content_entries (slug, content_type, status, title, summary, body, category, event_date_label, sort_order, metadata, published_at)
@@ -124,19 +124,6 @@ values
     now()
   ),
   (
-    'portuguese-festa',
-    'program',
-    'published',
-    'Portuguese Festa',
-    'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
-    'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
-    'Community',
-    'Seasonal',
-    3,
-    '{"time": "", "date": "Seasonal"}'::jsonb,
-    now()
-  ),
-  (
     'harvest-festival',
     'program',
     'published',
@@ -145,7 +132,7 @@ values
     'A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.',
     'Community',
     'Seasonal',
-    4,
+    3,
     '{"time": "", "date": "Seasonal"}'::jsonb,
     now()
   )

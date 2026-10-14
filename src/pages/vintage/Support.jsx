@@ -168,14 +168,7 @@ export default function Support() {
             </div>
           </section>
 
-          <ComingSoon
-            {...COMING_SOON_COPY.support}
-            note="In the meantime, you can still give through Foodland’s Give Aloha program — donations made at the register are matched, no online payment needed."
-          >
-            <button type="button" className="btn-accent" onClick={() => setActivePage('give-aloha')}>
-              Give through Give Aloha
-            </button>
-          </ComingSoon>
+          <ComingSoon {...COMING_SOON_COPY.support} />
 
           <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
         </div>

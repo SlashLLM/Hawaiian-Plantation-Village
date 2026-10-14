@@ -12,7 +12,6 @@ const PAGE_CONTACT_EMAILS = [
   { prefix: '/learn', email: import.meta.env.VITE_CONTACT_EMAIL_EDUCATION },
   { prefix: '/volunteer', email: import.meta.env.VITE_CONTACT_EMAIL_VOLUNTEER },
   { prefix: '/support', email: import.meta.env.VITE_CONTACT_EMAIL_SUPPORT },
-  { prefix: '/give-aloha', email: import.meta.env.VITE_CONTACT_EMAIL_SUPPORT },
 ];
 
 function pageContactEmail(pathname) {

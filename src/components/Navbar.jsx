@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import logo from '../assets/logo.webp';
 import { Menu, X, Ticket, Heart, ChevronDown } from 'lucide-react';
 import { pathFromPageId } from '../lib/navigation.js';
 import { useSiteSettings } from '../context/ContentProvider.jsx';
@@ -80,7 +79,6 @@ export default function Navbar({ activePage }) {
     <nav style={styles.navContainer}>
       <div style={styles.navWrapper}>
         <div className="nav-logo-group" style={styles.logoGroup} onClick={() => handleNavClick('home')}>
-          <img src={logo} alt="Hawaii's Plantation Village Logo" style={styles.logoImg} />
           <div style={styles.logoText}>
             <span className="nav-brand-title" style={styles.brandTitle}>{brand.title ?? 'Hawaii\'s Plantation Village'}</span>
             <span className="nav-brand-subtitle" style={styles.brandSubtitle}>{brand.subtitle ?? 'Waipahu, Oʻahu, Hawaiʻi'}</span>
@@ -260,12 +258,6 @@ const styles = {
     // flex/min-width live in index.css (.nav-logo-group): rigid in desktop mode
     // so the brand never gets crushed by the nav row, shrinkable in mobile mode
     // so it cannot push the menu toggle off a narrow screen.
-  },
-  logoImg: {
-    height: '42px',
-    width: '42px',
-    objectFit: 'contain',
-    flexShrink: 0
   },
   logoText: {
     display: 'flex',

@@ -354,15 +354,6 @@ export const DEFAULT_PAGE_SECTIONS = {
           image: '',
         },
         {
-          slug: 'portuguese-festa',
-          date: 'Seasonal',
-          title: 'Portuguese Festa',
-          time: '',
-          desc: 'Sweet bread from the forno, music on the Village stage and a community celebration everyone is welcome to join.',
-          ctaLabel: 'Festival Details',
-          image: '',
-        },
-        {
           slug: 'harvest-festival',
           date: 'Seasonal',
           title: 'Harvest Festival',
@@ -1230,15 +1221,6 @@ export const HOME_EVENTS = [
     title: 'Opening of Hawaiʻi\'s Obon season',
     time: 'Late afternoon',
     desc: 'Obon in the village begins in late afternoon, when lanterns light the dancing area with drum accompaniment.',
-  },
-  {
-    slug: 'portuguese-festa',
-    startDate: '',
-    endDate: '',
-    date: 'Seasonal',
-    title: 'Portuguese Festa',
-    time: '',
-    desc: 'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
   },
   {
     slug: 'harvest-festival',
