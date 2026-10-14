@@ -57,8 +57,8 @@ export const BLOCK_TYPES = {
   },
   twoColumn: {
     label: 'Text + image',
-    hint: 'Copy beside a picture.',
-    blank: { imageSide: 'left', image: '', imageAlt: '', eyebrow: '', title: '', paragraphs: [''] },
+    hint: 'Copy beside a picture or event details.',
+    blank: { imageSide: 'left', image: '', imageAlt: '', eyebrow: '', title: '', paragraphs: [''], items: [] },
     fields: [
       image('image', 'Image', 'imageAlt'),
       select('imageSide', 'Image on the', [
@@ -68,6 +68,13 @@ export const BLOCK_TYPES = {
       text('eyebrow', 'Eyebrow'),
       text('title', 'Heading', { full: true }),
       paragraphs(),
+      objectList(
+        'items',
+        'Event details (optional)',
+        'Detail',
+        { label: '', value: '' },
+        [text('label', 'Label'), text('value', 'Value')],
+      ),
     ],
   },
   image: {

@@ -4,12 +4,6 @@ import {
   GraduationCap, 
   ChevronRight, 
   Check,
-  Users,
-  Award,
-  Sprout,
-  Download,
-  Map,
-  HeartHandshake,
   AlertCircle
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -23,10 +17,7 @@ import SEO from '../../components/SEO.jsx';
 export default function Learn() {
   const setActivePage = useAppNavigate();
   const { section: schoolSection } = usePageSection('learn', 'school', {});
-  const { section: youthSection } = usePageSection('learn', 'youth', {});
-  const { section: familySection } = usePageSection('learn', 'family', {});
   const { modules } = useCurriculumModules();
-  const [activeTab, setActiveTab] = useState('school'); // 'school' | 'youth' | 'family'
 
   // School Booking Form State
   const [complete, setComplete] = useState(false);
@@ -39,26 +30,6 @@ export default function Learn() {
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');
   const [contactPhone, setContactPhone] = useState('');
-
-  // Youth Program Form State
-  const [youthComplete, setYouthComplete] = useState(false);
-  const [youthSubmitting, setYouthSubmitting] = useState(false);
-  const [youthSubmitError, setYouthSubmitError] = useState('');
-  const [youthName, setYouthName] = useState('');
-  const [youthEmail, setYouthEmail] = useState('');
-  const [youthSchool, setYouthSchool] = useState('');
-  const [youthGrade, setYouthGrade] = useState('10th Grade');
-  const [youthInterest, setYouthInterest] = useState('Internship');
-  const [youthMessage, setYouthMessage] = useState('');
-
-  // Family RSVP Form State
-  const [familyComplete, setFamilyComplete] = useState(false);
-  const [familySubmitting, setFamilySubmitting] = useState(false);
-  const [familySubmitError, setFamilySubmitError] = useState('');
-  const [familyContactName, setFamilyContactName] = useState('');
-  const [familyEmail, setFamilyEmail] = useState('');
-  const [familyWorkshop, setFamilyWorkshop] = useState('Talk Story Saturdays');
-  const [familyCount, setFamilyCount] = useState('2');
 
   const moduleList = useMemo(
     () => (Array.isArray(modules) ? modules : Object.values(modules ?? {})),
@@ -73,15 +44,6 @@ export default function Learn() {
     })),
     [moduleList],
   );
-  const familyWorkshops = useMemo(
-    () => (Array.isArray(familySection?.workshops) ? familySection.workshops : []),
-    [familySection],
-  );
-  const youthWorkshops = useMemo(
-    () => (Array.isArray(youthSection?.programs) ? youthSection.programs : []),
-    [youthSection],
-  );
-
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     setSchoolSubmitting(true);
@@ -110,69 +72,15 @@ export default function Learn() {
     }
   };
 
-  const handleYouthSubmit = async (e) => {
-    e.preventDefault();
-    setYouthSubmitting(true);
-    setYouthSubmitError('');
-    try {
-      await submitInquiry({
-        type: 'youth_program',
-        name: youthName,
-        email: youthEmail,
-        school: youthSchool,
-        grade: youthGrade,
-        interest: youthInterest,
-        message: youthMessage,
-      });
-      confetti({
-        particleCount: 80,
-        spread: 50,
-        origin: { y: 0.8 },
-      });
-      setYouthComplete(true);
-    } catch (err) {
-      setYouthSubmitError(err.message ?? 'Failed to submit inquiry. Please try again.');
-    } finally {
-      setYouthSubmitting(false);
-    }
-  };
-
-  const handleFamilySubmit = async (e) => {
-    e.preventDefault();
-    setFamilySubmitting(true);
-    setFamilySubmitError('');
-    try {
-      await submitInquiry({
-        type: 'workshop_rsvp',
-        contactName: familyContactName,
-        email: familyEmail,
-        workshop: familyWorkshop,
-        attendeeCount: familyCount,
-      });
-      confetti({
-        particleCount: 80,
-        spread: 50,
-        origin: { y: 0.8 },
-      });
-      setFamilyComplete(true);
-    } catch (err) {
-      setFamilySubmitError(err.message ?? 'Failed to reserve spot. Please try again.');
-    } finally {
-      setFamilySubmitting(false);
-    }
-  };
-
-  const tabSections = { school: schoolSection, youth: youthSection, family: familySection };
   const headerDetails = {
-    stampText: tabSections[activeTab]?.stamp ?? 'Educator Experience',
-    stampColorClass: `ink-stamp ${tabSections[activeTab]?.stampClass ?? 'green'}`,
-    title: tabSections[activeTab]?.title ?? 'Education & Field Trips',
-    subtitle: tabSections[activeTab]?.subtitle ?? 'Bring history to life. Explore educational packages and request school visits below.',
+    stampText: schoolSection?.stamp ?? 'Educator Experience',
+    title: schoolSection?.title ?? 'Education & Field Trips',
+    subtitle: schoolSection?.subtitle ?? 'Bring history to life. Explore educational packages and request school visits below.',
   };
 
   return (
     <div style={styles.pageContainer}>
-      <SEO title="Education" description="History feels different when you can experience it. Field trips, curriculum resources and youth programs at Hawaii's Plantation Village." />
+      <SEO title="Education" description="History feels different when you experience it. Field trips and curriculum resources at Hawaii's Plantation Village." />
       <PageHeaderParallax
         image={SITE_PHOTOS.headers.learn}
         stamp={headerDetails.stampText}
@@ -184,32 +92,8 @@ export default function Learn() {
       <div style={styles.tabContainer}>
         <div style={styles.container}>
           <div style={styles.tabWrapper}>
-            <button
-              onClick={() => setActiveTab('school')}
-              style={{
-                ...styles.tabButton,
-                ...(activeTab === 'school' ? styles.activeTabButton : {})
-              }}
-            >
+            <button type="button" style={{ ...styles.tabButton, ...styles.activeTabButton }}>
               School & Group Visits
-            </button>
-            <button
-              onClick={() => setActiveTab('youth')}
-              style={{
-                ...styles.tabButton,
-                ...(activeTab === 'youth' ? styles.activeTabButton : {})
-              }}
-            >
-              Youth Internships & Volunteering
-            </button>
-            <button
-              onClick={() => setActiveTab('family')}
-              style={{
-                ...styles.tabButton,
-                ...(activeTab === 'family' ? styles.activeTabButton : {})
-              }}
-            >
-              Family Learning
             </button>
           </div>
         </div>
@@ -217,461 +101,171 @@ export default function Learn() {
 
       <div style={styles.container}>
         {/* TAB: SCHOOL & GROUP VISITS */}
-        {activeTab === 'school' && (
-          <div className="content-sidebar-grid">
-            {/* Left Col: Resources download */}
-            <div style={styles.leftCol}>
-              <h2 style={styles.sectionHeaderTitle}>Curriculum Resources</h2>
-              <p style={styles.bodyText}>
-                {schoolSection?.resourcesIntro ?? 'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:'}
-              </p>
+        <div className="content-sidebar-grid">
+          {/* Left Col: Resources download */}
+          <div style={styles.leftCol}>
+            <h2 style={styles.sectionHeaderTitle}>Curriculum Resources</h2>
+            <p style={styles.bodyText}>
+              {schoolSection?.resourcesIntro ?? 'Start our HIDOE standard-aligned interactive lessons. Each package includes videos, guided reading, quizzes, and hands-on activities:'}
+            </p>
 
-              <div style={styles.resourcesList}>
-                {resources.map((res) => (
-                  <div key={res.id} className="paper-card" style={styles.resCard}>
-                    <div style={styles.resHeader}>
-                      <GraduationCap size={20} color="var(--cane-green)" />
-                      <span style={styles.resType}>{res.type}</span>
-                    </div>
-                    <h3 style={styles.resTitle}>{res.title}</h3>
-                    <p style={styles.resDesc}>{res.desc}</p>
-                    <button
-                      type="button"
-                      className="btn-secondary"
-                      style={styles.downloadBtn}
-                      onClick={() => setActivePage('learn-module', { moduleId: res.id })}
-                    >
-                      <Compass size={16} /> Start Interactive Lesson
-                    </button>
+            <div style={styles.resourcesList}>
+              {resources.map((res) => (
+                <div key={res.id} className="paper-card" style={styles.resCard}>
+                  <div style={styles.resHeader}>
+                    <GraduationCap size={20} color="var(--cane-green)" />
+                    <span style={styles.resType}>{res.type}</span>
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Col: Request Form */}
-            <div style={styles.rightCol}>
-              {!complete ? (
-                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleBookingSubmit}>
-                  <h3 style={styles.requestCardTitle}>Request a Field Trip</h3>
-                  <p style={styles.requestCardText}>
-                    We host educational groups Tuesday through Friday. Please fill out details to submit a tour slot reservation inquiry.
-                  </p>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>School Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={schoolName}
-                      onChange={(e) => setSchoolName(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Grade Level</label>
-                    <select
-                      value={gradeLevel}
-                      onChange={(e) => setGradeLevel(e.target.value)}
-                      style={styles.formInput}
-                    >
-                      <option value="Elementary (K-2)">Elementary (K-2)</option>
-                      <option value="3rd Grade">3rd Grade</option>
-                      <option value="4th Grade">4th Grade</option>
-                      <option value="5th Grade">5th Grade</option>
-                      <option value="Middle School (6-8)">Middle School (6-8)</option>
-                      <option value="High School (9-12)">High School (9-12)</option>
-                    </select>
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Estimated Student Count</label>
-                    <input
-                      type="number"
-                      required
-                      placeholder="e.g. 35"
-                      value={studentCount}
-                      onChange={(e) => setStudentCount(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Preferred Date</label>
-                    <input
-                      type="date"
-                      required
-                      value={preferredDate}
-                      onChange={(e) => setPreferredDate(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Teacher / Contact Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={contactName}
-                      onChange={(e) => setContactName(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Contact Email</label>
-                    <input
-                      type="email"
-                      required
-                      value={contactEmail}
-                      onChange={(e) => setContactEmail(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Contact Phone</label>
-                    <input
-                      type="tel"
-                      required
-                      value={contactPhone}
-                      onChange={(e) => setContactPhone(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.helpfulAlert}>
-                    <Compass size={18} color="var(--tin-rust)" />
-                    <p style={styles.alertText}>
-                      {schoolSection?.fieldTripNote ?? 'Field trips require a minimum of 10 students and at least one adult chaperone per 10 children.'}
-                    </p>
-                  </div>
-
-                  {schoolSubmitError && (
-                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
-                      <AlertCircle size={16} /> {schoolSubmitError}
-                    </p>
-                  )}
-
-                  <button type="submit" className="btn-primary" style={styles.submitBtn} disabled={schoolSubmitting}>
-                    {schoolSubmitting ? 'Submitting…' : 'Submit Booking Inquiry'} <ChevronRight size={16} />
-                  </button>
-                </form>
-              ) : (
-                // Inquiry Success State
-                <div className="paper-card animate-fade-in" style={styles.successCard}>
-                  <div style={styles.successIcon}>
-                    <Check size={36} color="white" />
-                  </div>
-                  <h3 style={styles.successTitle}>Inquiry Submitted!</h3>
-                  <p style={styles.successText}>
-                    Thank you. Our educational coordinator will review your request and contact your school within 2 business days.
-                  </p>
-                  
-                  <div style={styles.receiptSummary}>
-                    <div className="ledger-header" style={{ marginBottom: '0.75rem' }}>INQUIRY SUMMARY</div>
-                    <div style={styles.receiptRow}><span>School:</span><strong>{schoolName}</strong></div>
-                    <div style={styles.receiptRow}><span>Grade / Count:</span><strong>{gradeLevel} ({studentCount} students)</strong></div>
-                    <div style={styles.receiptRow}><span>Requested Date:</span><strong>{preferredDate}</strong></div>
-                    <div style={styles.receiptRow}><span>Contact:</span><strong>{contactName}</strong></div>
-                  </div>
-
-                  <button className="btn-primary" onClick={() => { setComplete(false); setSchoolSubmitError(''); }}>
-                    Submit New Request
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* TAB: YOUTH INTERNSHIPS & VOLUNTEERING */}
-        {activeTab === 'youth' && (
-          <div className="content-sidebar-grid">
-            {/* Left Col: Details */}
-            <div style={styles.leftCol}>
-              <h2 style={styles.sectionHeaderTitle}>Student Pathways</h2>
-              <p style={styles.bodyText}>
-                We offer unique opportunities for high school and college students to connect with plantation-era heritage, develop leadership skills, and earn educational credit or stipends.
-              </p>
-
-              <div style={styles.resourcesList}>
-                {youthWorkshops.map((program) => (
-                  <div key={program.slug} className="paper-card" style={styles.resCard}>
-                    <div style={styles.resHeader}>
-                      {program.slug === 'docent-internship' ? (
-                        <Award size={20} color="var(--tin-rust)" />
-                      ) : (
-                        <HeartHandshake size={20} color="var(--tin-rust)" />
-                      )}
-                      <span style={{ ...styles.resType, color: 'var(--tin-rust)' }}>{program.type}</span>
-                    </div>
-                    <h3 style={styles.resTitle}>{program.title}</h3>
-                    <p style={styles.resDesc}>{program.desc}</p>
-                    {program.schedule && (
-                      <div style={styles.highlightBadge}>
-                        <strong>Schedule:</strong> {program.schedule}
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Col: Inquiry Form */}
-            <div style={styles.rightCol}>
-              {!youthComplete ? (
-                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleYouthSubmit}>
-                  <h3 style={{ ...styles.requestCardTitle, color: 'var(--tin-rust)' }}>Join Student Programs</h3>
-                  <p style={styles.requestCardText}>
-                    Are you a student interested in making a difference? Apply or request more information about our internship and volunteer pathways.
-                  </p>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Your Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={youthName}
-                      onChange={(e) => setYouthName(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Email Address</label>
-                    <input
-                      type="email"
-                      required
-                      value={youthEmail}
-                      onChange={(e) => setYouthEmail(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>School or Organization</label>
-                    <input
-                      type="text"
-                      required
-                      value={youthSchool}
-                      onChange={(e) => setYouthSchool(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div className="form-row-responsive" style={styles.formRowGrid}>
-                    <div style={styles.formCol}>
-                      <label style={styles.formLabel}>Current Grade</label>
-                      <select
-                        value={youthGrade}
-                        onChange={(e) => setYouthGrade(e.target.value)}
-                        style={styles.formInput}
-                      >
-                        <option value="9th Grade">9th Grade</option>
-                        <option value="10th Grade">10th Grade</option>
-                        <option value="11th Grade">11th Grade</option>
-                        <option value="12th Grade">12th Grade</option>
-                        <option value="College">College / Other</option>
-                      </select>
-                    </div>
-
-                    <div style={styles.formCol}>
-                      <label style={styles.formLabel}>Interested In</label>
-                      <select
-                        value={youthInterest}
-                        onChange={(e) => setYouthInterest(e.target.value)}
-                        style={styles.formInput}
-                      >
-                        <option value="Internship">Docent Internship</option>
-                        <option value="Volunteering">Volunteer Guild</option>
-                        <option value="Both">Both Programs</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Why are you interested in plantation history?</label>
-                    <textarea
-                      required
-                      rows={3}
-                      value={youthMessage}
-                      onChange={(e) => setYouthMessage(e.target.value)}
-                      style={{ ...styles.formInput, resize: 'vertical', fontFamily: 'inherit' }}
-                    />
-                  </div>
-
-                  {youthSubmitError && (
-                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
-                      <AlertCircle size={16} /> {youthSubmitError}
-                    </p>
-                  )}
-
-                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--tin-rust)' }} disabled={youthSubmitting}>
-                    {youthSubmitting ? 'Submitting…' : 'Submit Inquiry'} <ChevronRight size={16} />
-                  </button>
-                </form>
-              ) : (
-                // Youth Success State
-                <div className="paper-card animate-fade-in" style={styles.successCard}>
-                  <div style={{ ...styles.successIcon, backgroundColor: 'var(--tin-rust)' }}>
-                    <Check size={36} color="white" />
-                  </div>
-                  <h3 style={{ ...styles.successTitle, color: 'var(--tin-rust)' }}>Inquiry Received!</h3>
-                  <p style={styles.successText}>
-                    Mahalo! Our student program coordinator will review your statement and contact you within 3 business days.
-                  </p>
-                  
-                  <div style={styles.receiptSummary}>
-                    <div className="ledger-header" style={{ marginBottom: '0.75rem' }}>APPLICATION RECEIPT</div>
-                    <div style={styles.receiptRow}><span>Name:</span><strong>{youthName}</strong></div>
-                    <div style={styles.receiptRow}><span>School / Grade:</span><strong>{youthSchool} ({youthGrade})</strong></div>
-                    <div style={styles.receiptRow}><span>Interest Area:</span><strong>{youthInterest}</strong></div>
-                  </div>
-
-                  <button className="btn-primary" style={{ backgroundColor: 'var(--tin-rust)' }} onClick={() => { setYouthComplete(false); setYouthSubmitError(''); }}>
-                    Submit New Inquiry
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* TAB: FAMILY LEARNING */}
-        {activeTab === 'family' && (
-          <div className="content-sidebar-grid">
-            {/* Left Col: Activities */}
-            <div style={styles.leftCol}>
-              <h2 style={styles.sectionHeaderTitle}>Family Learning & Activities</h2>
-              <p style={styles.bodyText}>
-                Learning at Hawaii's Plantation Village is an intergenerational journey. Bring your children, parents, and kupuna (elders) to learn, craft, and garden together.
-              </p>
-
-              <div style={styles.resourcesList}>
-                {familyWorkshops.map((workshop) => (
-                  <div
-                    key={workshop.slug}
-                    className="paper-card"
-                    style={workshop.slug === 'village-scavenger-hunt'
-                      ? { ...styles.resCard, border: '2.5px dashed var(--ocean-teal)', backgroundColor: 'rgba(34, 100, 109, 0.02)' }
-                      : styles.resCard}
+                  <h3 style={styles.resTitle}>{res.title}</h3>
+                  <p style={styles.resDesc}>{res.desc}</p>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    style={styles.downloadBtn}
+                    onClick={() => setActivePage('learn-module', { moduleId: res.id })}
                   >
-                    <div style={styles.resHeader}>
-                      {workshop.slug === 'talk-story-saturdays' && <Users size={20} color="var(--ocean-teal)" />}
-                      {workshop.slug === 'ohana-heritage-gardening' && <Sprout size={20} color="var(--ocean-teal)" />}
-                      {workshop.slug === 'village-scavenger-hunt' && <Map size={20} color="var(--ocean-teal)" />}
-                      <span style={{ ...styles.resType, color: 'var(--ocean-teal)' }}>{workshop.type}</span>
-                    </div>
-                    <h3 style={styles.resTitle}>{workshop.title}</h3>
-                    <p style={styles.resDesc}>{workshop.desc}</p>
-                    {workshop.slug === 'village-scavenger-hunt' ? (
-                      <button className="btn-secondary" style={{ ...styles.downloadBtn, borderColor: 'var(--ocean-teal)', color: 'var(--ocean-teal)' }}>
-                        <Download size={16} /> Download Scavenger Hunt (PDF)
-                      </button>
-                    ) : workshop.schedule ? (
-                      <div style={styles.highlightBadge}>
-                        <strong>Schedule:</strong> {workshop.schedule}
-                      </div>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right Col: RSVP Form */}
-            <div style={styles.rightCol}>
-              {!familyComplete ? (
-                <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleFamilySubmit}>
-                  <h3 style={{ ...styles.requestCardTitle, color: 'var(--ocean-teal)' }}>Reserve Workshop Spots</h3>
-                  <p style={styles.requestCardText}>
-                    Space in our Talk Story sessions and gardening workshops is limited to ensure a high-quality hands-on experience. Reserve your family's free spot today.
-                  </p>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Family Contact Name</label>
-                    <input
-                      type="text"
-                      required
-                      value={familyContactName}
-                      onChange={(e) => setFamilyContactName(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Email Address</label>
-                    <input
-                      type="email"
-                      required
-                      value={familyEmail}
-                      onChange={(e) => setFamilyEmail(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Select Workshop</label>
-                    <select
-                      value={familyWorkshop}
-                      onChange={(e) => setFamilyWorkshop(e.target.value)}
-                      style={styles.formInput}
-                    >
-                      {familyWorkshops.filter((w) => w.slug !== 'village-scavenger-hunt').map((w) => (
-                        <option key={w.slug} value={w.title}>{w.title}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div style={styles.formCol}>
-                    <label style={styles.formLabel}>Number of Attendees (All Ages)</label>
-                    <input
-                      type="number"
-                      required
-                      min="1"
-                      max="10"
-                      value={familyCount}
-                      onChange={(e) => setFamilyCount(e.target.value)}
-                      style={styles.formInput}
-                    />
-                  </div>
-
-                  {familySubmitError && (
-                    <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
-                      <AlertCircle size={16} /> {familySubmitError}
-                    </p>
-                  )}
-
-                  <button type="submit" className="btn-primary" style={{ ...styles.submitBtn, backgroundColor: 'var(--ocean-teal)' }} disabled={familySubmitting}>
-                    {familySubmitting ? 'Reserving…' : 'Reserve Free Spot'} <ChevronRight size={16} />
-                  </button>
-                </form>
-              ) : (
-                // Family Success State
-                <div className="paper-card animate-fade-in" style={styles.successCard}>
-                  <div style={{ ...styles.successIcon, backgroundColor: 'var(--ocean-teal)' }}>
-                    <Check size={36} color="white" />
-                  </div>
-                  <h3 style={{ ...styles.successTitle, color: 'var(--ocean-teal)' }}>RSVP Confirmed!</h3>
-                  <p style={styles.successText}>
-                    We look forward to seeing your family! A confirmation email has been sent with workshop details and parking instructions.
-                  </p>
-                  
-                  <div style={styles.receiptSummary}>
-                    <div className="ledger-header" style={{ marginBottom: '0.75rem' }}>RESERVATION CONFIRMATION</div>
-                    <div style={styles.receiptRow}><span>Contact:</span><strong>{familyContactName}</strong></div>
-                    <div style={styles.receiptRow}><span>Workshop:</span><strong>{familyWorkshop}</strong></div>
-                    <div style={styles.receiptRow}><span>Attendees:</span><strong>{familyCount} spots</strong></div>
-                  </div>
-
-                  <button className="btn-primary" style={{ backgroundColor: 'var(--ocean-teal)' }} onClick={() => { setFamilyComplete(false); setFamilySubmitError(''); }}>
-                    Reserve Another Spot
+                    <Compass size={16} /> Start Interactive Lesson
                   </button>
                 </div>
-              )}
+              ))}
             </div>
           </div>
-        )}
+
+          {/* Right Col: Request Form */}
+          <div style={styles.rightCol}>
+            {!complete ? (
+              <form className="paper-card sticky-sidebar-form" style={styles.requestCard} onSubmit={handleBookingSubmit}>
+                <h3 style={styles.requestCardTitle}>Request a Field Trip</h3>
+                <p style={styles.requestCardText}>
+                  We host educational groups Tuesday through Friday. Please fill out details to submit a tour slot reservation inquiry.
+                </p>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>School Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={schoolName}
+                    onChange={(e) => setSchoolName(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Grade Level</label>
+                  <select
+                    value={gradeLevel}
+                    onChange={(e) => setGradeLevel(e.target.value)}
+                    style={styles.formInput}
+                  >
+                    <option value="Elementary (K-2)">Elementary (K-2)</option>
+                    <option value="3rd Grade">3rd Grade</option>
+                    <option value="4th Grade">4th Grade</option>
+                    <option value="5th Grade">5th Grade</option>
+                    <option value="Middle School (6-8)">Middle School (6-8)</option>
+                    <option value="High School (9-12)">High School (9-12)</option>
+                  </select>
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Estimated Student Count</label>
+                  <input
+                    type="number"
+                    required
+                    placeholder="e.g. 35"
+                    value={studentCount}
+                    onChange={(e) => setStudentCount(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Preferred Date</label>
+                  <input
+                    type="date"
+                    required
+                    value={preferredDate}
+                    onChange={(e) => setPreferredDate(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Teacher / Contact Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={contactName}
+                    onChange={(e) => setContactName(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Contact Email</label>
+                  <input
+                    type="email"
+                    required
+                    value={contactEmail}
+                    onChange={(e) => setContactEmail(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.formCol}>
+                  <label style={styles.formLabel}>Contact Phone</label>
+                  <input
+                    type="tel"
+                    required
+                    value={contactPhone}
+                    onChange={(e) => setContactPhone(e.target.value)}
+                    style={styles.formInput}
+                  />
+                </div>
+
+                <div style={styles.helpfulAlert}>
+                  <Compass size={18} color="var(--tin-rust)" />
+                  <p style={styles.alertText}>
+                    {schoolSection?.fieldTripNote ?? 'Field trips require a minimum of 10 students and at least one adult chaperone per 10 children.'}
+                  </p>
+                </div>
+
+                {schoolSubmitError && (
+                  <p role="alert" style={{ color: 'var(--tin-rust)', marginBottom: '0.75rem', display: 'flex', gap: 8, alignItems: 'center' }}>
+                    <AlertCircle size={16} /> {schoolSubmitError}
+                  </p>
+                )}
+
+                <button type="submit" className="btn-primary" style={styles.submitBtn} disabled={schoolSubmitting}>
+                  {schoolSubmitting ? 'Submitting…' : 'Submit Booking Inquiry'} <ChevronRight size={16} />
+                </button>
+              </form>
+            ) : (
+              // Inquiry Success State
+              <div className="paper-card animate-fade-in" style={styles.successCard}>
+                <div style={styles.successIcon}>
+                  <Check size={36} color="white" />
+                </div>
+                <h3 style={styles.successTitle}>Inquiry Submitted!</h3>
+                <p style={styles.successText}>
+                  Thank you. Our educational coordinator will review your request and contact your school within 2 business days.
+                </p>
+                
+                <div style={styles.receiptSummary}>
+                  <div className="ledger-header" style={{ marginBottom: '0.75rem' }}>INQUIRY SUMMARY</div>
+                  <div style={styles.receiptRow}><span>School:</span><strong>{schoolName}</strong></div>
+                  <div style={styles.receiptRow}><span>Grade / Count:</span><strong>{gradeLevel} ({studentCount} students)</strong></div>
+                  <div style={styles.receiptRow}><span>Requested Date:</span><strong>{preferredDate}</strong></div>
+                  <div style={styles.receiptRow}><span>Contact:</span><strong>{contactName}</strong></div>
+                </div>
+
+                <button className="btn-primary" onClick={() => { setComplete(false); setSchoolSubmitError(''); }}>
+                  Submit New Request
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

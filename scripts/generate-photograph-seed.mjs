@@ -6,7 +6,7 @@
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { DEFAULT_PAGE_SECTIONS, PHOTOGRAPHS } from '../src/lib/content/fallbacks.js';
+import { DEFAULT_PAGE_SECTIONS, PHOTOGRAPHS } from '../src/lib/content/staticContent.js';
 
 const SEED_PATH = fileURLToPath(new URL('../supabase/seed_cms.sql', import.meta.url));
 const BLOCK_MARKER = '-- Archives: page sections and photographs';

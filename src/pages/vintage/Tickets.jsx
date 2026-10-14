@@ -2,11 +2,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronRight, Check, ArrowLeft, ShieldAlert, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { createBooking, fetchEventsWithTickets, formatCents } from '../../lib/api.js';
-import { isSupabaseConfigured } from '../../lib/supabase.js';
+import { createBooking, formatCents } from '../../lib/api.js';
+import { EVENTS } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
+import ComingSoon from '../../components/ComingSoon.jsx';
 import { usePageSection, useSiteSettings } from '../../context/ContentProvider.jsx';
 import { formatEventSchedule } from '../../lib/timeFormat.js';
+import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
 
 const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
@@ -19,47 +21,6 @@ const todayISO = () => {
   return `${y}-${m}-${day}`;
 };
 
-const FALLBACK_EVENTS = [
-  {
-    slug: 'guided-tour',
-    title: 'Daily Guided Tour',
-    description: 'Walk the village trails with a resident guide.',
-    is_special: false,
-    start_time: '10:00 AM',
-    end_time: '12:00 PM',
-    ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
-      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
-      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
-    ],
-    tour_time_slots: [
-      { id: 'slot-am', label: '10:00 AM', sort_order: 1 },
-      { id: 'slot-noon', label: '12:00 PM', sort_order: 2 },
-    ],
-  },
-  {
-    slug: 'obon-festival',
-    title: 'Obon Festival & Bon Dance (August 15)',
-    description: 'Special event entry with performances and food vouchers.',
-    is_special: true,
-    event_date: '2026-08-15',
-    start_time: '5:00 PM',
-    end_time: '9:00 PM',
-    ticket_types: [
-      { id: 'adult', slug: 'adult', label: 'General Admission', price_cents: 2500 },
-      { id: 'local', slug: 'local', label: 'Senior 62+ / Kamaʻāina / Military (Active/Retired)', price_cents: 2000, requires_id: true },
-      { id: 'youth', slug: 'youth', label: 'Youth (11 – 17)', price_cents: 1200 },
-      { id: 'children', slug: 'children', label: 'Children (5 – 10)', price_cents: 800 },
-      { id: 'child', slug: 'child', label: 'Children (4 & under)', price_cents: 0 },
-    ],
-    tour_time_slots: [
-      { id: 'slot-obon', label: '5:00 PM', sort_order: 1 },
-    ],
-  },
-];
-
 const emptyQuantities = (types) =>
   Object.fromEntries((types ?? []).map((t) => [t.slug, 0]));
 
@@ -68,7 +29,7 @@ export default function Tickets() {
   const { section: header } = usePageSection('tickets', 'header', {
     stamp: 'REVENUE PLATFORM',
     title: 'Book Tickets',
-    subtitle: 'Register your visit — payment is recorded as pending until Stripe or Zeffy is connected.',
+    subtitle: 'Reserve your guided tour of the Village.',
   });
   const { settings } = useSiteSettings();
   const donationPresets = settings?.donationPresets ?? [];
@@ -77,11 +38,11 @@ export default function Tickets() {
     [donationPresets],
   );
   const [step, setStep] = useState(1);
-  const [events, setEvents] = useState(FALLBACK_EVENTS);
+  const events = EVENTS;
   const [eventSlug, setEventSlug] = useState('guided-tour');
   const [selectedDate, setSelectedDate] = useState(todayISO);
-  const [selectedTime, setSelectedTime] = useState(() => slotLabel(FALLBACK_EVENTS[0].tour_time_slots[0]));
-  const [quantities, setQuantities] = useState(() => emptyQuantities(FALLBACK_EVENTS[0].ticket_types));
+  const [selectedTime, setSelectedTime] = useState(() => slotLabel(EVENTS[0].tour_time_slots[0]));
+  const [quantities, setQuantities] = useState(() => emptyQuantities(EVENTS[0].ticket_types));
   const [addDonation, setAddDonation] = useState(false);
   const [donationAmount, setDonationAmount] = useState(10);
   const [joinMembership, setJoinMembership] = useState(false);
@@ -91,13 +52,6 @@ export default function Tickets() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [confirmation, setConfirmation] = useState(null);
-
-  useEffect(() => {
-    if (!isSupabaseConfigured) return;
-    fetchEventsWithTickets()
-      .then((data) => { if (data?.length) setEvents(data); })
-      .catch(() => {});
-  }, []);
 
   const selectedEvent = useMemo(
     () => events.find((e) => e.slug === eventSlug) ?? events[0],
@@ -140,7 +94,7 @@ export default function Tickets() {
   const hasSelectedTickets = ticketTypes.some((tt) => (quantities[tt.slug] || 0) > 0);
 
   const donationCents = addDonation ? Math.round(Number(donationAmount) * 100) : 0;
-  const membershipCents = joinMembership ? 4500 : 0;
+  const membershipCents = joinMembership ? 3500 : 0;
   const totalCents = subtotalCents + donationCents + membershipCents;
 
   const setQty = (key, val) => setQuantities((q) => ({ ...q, [key]: Math.max(0, val) }));
@@ -179,7 +133,7 @@ export default function Tickets() {
       const items = ticketTypes
         .filter((tt) => (quantities[tt.slug] || 0) > 0)
         .map((tt) => ({
-          ticketTypeId: tt.id,
+          ticketTypeSlug: tt.slug,
           quantity: quantities[tt.slug],
         }));
 
@@ -209,6 +163,37 @@ export default function Tickets() {
 
   const booking = confirmation?.booking;
 
+  // Online payments are not connected yet — the wizard below stays intact and
+  // comes back when PAYMENTS_ENABLED flips. See src/lib/paymentsConfig.js.
+  if (!PAYMENTS_ENABLED) {
+    return (
+      <div style={styles.pageContainer}>
+        <SEO
+          title="Tickets"
+          description="Tickets for Hawaii's Plantation Village. Online booking is coming soon — call (808) 677-0110 to reserve your guided tour."
+        />
+        <div style={styles.headerBlock}>
+          <div style={styles.container}>
+            <span className={`ink-stamp ${header?.stampClass ?? 'gold'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'Tickets'}</span>
+            <h1 style={styles.pageTitle}>{header?.title ?? 'Book Tickets'}</h1>
+            <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Reserve your guided tour of the Village.'}</p>
+          </div>
+        </div>
+
+        <div style={styles.container}>
+          <ComingSoon {...COMING_SOON_COPY.tickets}>
+            <button type="button" className="btn-secondary" onClick={() => setActivePage('visit')}>
+              Plan Your Visit
+            </button>
+            <button type="button" className="btn-secondary" onClick={() => setActivePage('events')}>
+              See Upcoming Events
+            </button>
+          </ComingSoon>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.pageContainer}>
       <SEO title="Book Tickets" description="Register your visit to Hawaii's Plantation Village." />
@@ -216,7 +201,7 @@ export default function Tickets() {
         <div style={styles.container}>
           <span className={`ink-stamp ${header?.stampClass ?? 'gold'}`} style={{ marginBottom: '0.5rem' }}>{header?.stamp ?? 'REVENUE PLATFORM'}</span>
           <h1 style={styles.pageTitle}>{header?.title ?? 'Book Tickets'}</h1>
-          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Register your visit — payment is recorded as pending until Stripe or Zeffy is connected.'}</p>
+          <p style={styles.pageSubtitle}>{header?.subtitle ?? 'Reserve your guided tour of the Village.'}</p>
         </div>
       </div>
 
@@ -341,7 +326,7 @@ export default function Tickets() {
                     <label style={styles.checkboxLabel}>
                       <input type="checkbox" checked={joinMembership} onChange={(e) => setJoinMembership(e.target.checked)} style={styles.checkboxInput} />
                       <div>
-                        <strong style={{ color: 'var(--koa-wood)' }}>Become a Member (+$45.00)</strong>
+                        <strong style={{ color: 'var(--koa-wood)' }}>Become a Member (+$35.00)</strong>
                         <p style={styles.optionText}>Individual level — free admission for 1 year and gift shop discount.</p>
                       </div>
                     </label>
@@ -453,7 +438,7 @@ export default function Tickets() {
                         <span>{formatCents(tt.price_cents * quantities[tt.slug])}</span>
                       </div>
                     ))}
-                    {joinMembership && <div style={styles.summaryRow}><span>Individual Membership (1yr)</span><strong>$45.00</strong></div>}
+                    {joinMembership && <div style={styles.summaryRow}><span>Individual Membership (1yr)</span><strong>$35.00</strong></div>}
                     {addDonation && <div style={styles.summaryRow}><span>Mission Donation</span><strong>{formatCents(donationCents)}</strong></div>}
                   </div>
                   <div className="ledger-divider" style={{ margin: '1rem 0' }} />

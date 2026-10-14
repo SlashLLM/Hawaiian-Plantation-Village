@@ -11,7 +11,9 @@ type InquiryType =
   | 'field_trip'
   | 'youth_program'
   | 'workshop_rsvp'
-  | 'volunteer';
+  | 'volunteer'
+  | 'group_visit'
+  | 'newsletter';
 
 const TYPE_LABELS: Record<InquiryType, string> = {
   contact: 'Contact Inquiry',
@@ -20,7 +22,29 @@ const TYPE_LABELS: Record<InquiryType, string> = {
   youth_program: 'Student Program Inquiry',
   workshop_rsvp: 'Workshop RSVP',
   volunteer: 'Volunteer Inquiry',
+  group_visit: 'Group Reservation Inquiry',
+  newsletter: 'Newsletter Signup',
 };
+
+// Each inquiry goes to the inbox that owns it. Anything unrouted (general
+// contact, careers, group visits) falls back to INQUIRY_TO_EMAIL.
+const TYPE_RECIPIENT_ENV: Partial<Record<InquiryType, string>> = {
+  field_trip: 'INQUIRY_TO_EMAIL_EDUCATION',
+  youth_program: 'INQUIRY_TO_EMAIL_EDUCATION',
+  workshop_rsvp: 'INQUIRY_TO_EMAIL_EDUCATION',
+  volunteer: 'INQUIRY_TO_EMAIL_VOLUNTEER',
+  newsletter: 'INQUIRY_TO_EMAIL_NEWSLETTER',
+};
+
+// Contact-form subjects about sponsorship, media, collaborations or donations
+const SUPPORT_SUBJECT_RE = /sponsor|donat|media|press|collab|partner/i;
+
+function recipientEnvVar(type: InquiryType, body: Record<string, unknown>): string | undefined {
+  if (type === 'contact' && SUPPORT_SUBJECT_RE.test(trim(body.subject))) {
+    return 'INQUIRY_TO_EMAIL_SUPPORT';
+  }
+  return TYPE_RECIPIENT_ENV[type];
+}
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -212,6 +236,47 @@ Deno.serve(async (req) => {
       summaryLines = buildFields([
         ['Interest Area', trim(body.interest)],
       ]);
+    } else if (type === 'group_visit') {
+      const missing = requireFields(body, [
+        'groupName',
+        'contactName',
+        'groupSize',
+        'preferredDate',
+        'email',
+        'phone',
+      ]);
+      if (missing) return jsonResponse({ error: missing }, 400);
+      const email = trim(body.email).toLowerCase();
+      const emailErr = validateEmail(email);
+      if (emailErr) return jsonResponse({ error: emailErr }, 400);
+
+      submitterEmail = email;
+      recipientName = trim(body.contactName);
+      fields = buildFields([
+        ['Organization / Group', trim(body.groupName)],
+        ['Group Type', trim(body.groupType)],
+        ['Group Size', trim(body.groupSize)],
+        ['Preferred Date', trim(body.preferredDate)],
+        ['Contact Name', recipientName],
+        ['Contact Email', email],
+        ['Contact Phone', trim(body.phone)],
+      ]);
+      summaryLines = buildFields([
+        ['Group', trim(body.groupName)],
+        ['Group Size', `${trim(body.groupSize)} visitors`],
+        ['Preferred Date', trim(body.preferredDate)],
+      ]);
+    } else if (type === 'newsletter') {
+      const missing = requireFields(body, ['email']);
+      if (missing) return jsonResponse({ error: missing }, 400);
+      const email = trim(body.email).toLowerCase();
+      const emailErr = validateEmail(email);
+      if (emailErr) return jsonResponse({ error: emailErr }, 400);
+
+      submitterEmail = email;
+      fields = buildFields([
+        ['Email', email],
+      ]);
     }
 
     const referenceId = generateReference('HPV-INQ');
@@ -223,6 +288,7 @@ Deno.serve(async (req) => {
       referenceId,
       fields,
       submitterEmail: submitterEmail || undefined,
+      recipientEnvVar: recipientEnvVar(type, body),
     });
 
     if (!notifyResult.ok) {

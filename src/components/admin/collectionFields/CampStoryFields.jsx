@@ -75,6 +75,17 @@ export default function CampStoryFields({ form, setForm, entries = [] }) {
         />
       </div>
       <div className="admin-form-field full">
+        <label style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem' }}>
+          <input
+            type="checkbox"
+            aria-label="Mark as Coming Soon"
+            checked={Boolean(getMetadataAt(meta, 'isPlaceholder', false))}
+            onChange={(e) => setMeta('isPlaceholder', e.target.checked)}
+          />
+          Mark as Coming Soon (placeholder story; disables opening the side panel)
+        </label>
+      </div>
+      <div className="admin-form-field full">
         <label className="admin-form-label">Card description</label>
         <textarea
           className="admin-form-textarea"

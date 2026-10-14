@@ -10,7 +10,9 @@ import {
 import { sendPassEmail } from '../_shared/email.ts';
 import { qrToDataUrl } from '../_shared/qr.ts';
 
-type ItemInput = { ticketTypeId: string; quantity: number };
+// The site sends ticketTypeSlug (ticket data is static in the frontend);
+// ticketTypeId is still accepted from older clients.
+type ItemInput = { ticketTypeSlug?: string; ticketTypeId?: string; quantity: number };
 
 type BookingInput = {
   eventSlug: string;
@@ -74,6 +76,7 @@ Deno.serve(async (req) => {
     }
 
     const typeMap = Object.fromEntries(ticketTypes.map((t) => [t.id, t]));
+    const slugMap = Object.fromEntries(ticketTypes.map((t) => [t.slug, t]));
     let subtotalCents = 0;
     const lineItems: Array<{
       ticket_type_id: string;
@@ -84,9 +87,9 @@ Deno.serve(async (req) => {
 
     for (const item of body.items ?? []) {
       if (!item.quantity || item.quantity < 1) continue;
-      const tt = typeMap[item.ticketTypeId];
+      const tt = item.ticketTypeSlug ? slugMap[item.ticketTypeSlug] : typeMap[item.ticketTypeId ?? ''];
       if (!tt) {
-        return jsonResponse({ error: `Invalid ticket type: ${item.ticketTypeId}` }, 400);
+        return jsonResponse({ error: `Invalid ticket type: ${item.ticketTypeSlug ?? item.ticketTypeId}` }, 400);
       }
       const lineTotal = tt.price_cents * item.quantity;
       subtotalCents += lineTotal;

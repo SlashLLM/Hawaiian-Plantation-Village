@@ -2,25 +2,39 @@ import { supabase, isSupabaseConfigured } from '../supabase.js';
 
 const CMS_BUCKET = 'cms-media';
 
-export async function fetchSiteSettings() {
+/**
+ * The home.events section row (Upcoming Events tab). It is the only
+ * page_sections row still read at runtime; all other page copy is static.
+ */
+export async function fetchHomeEventsSection({ preview = false } = {}) {
   if (!supabase) return null;
-  const { data, error } = await supabase.from('site_settings').select('payload').eq('id', 'default').maybeSingle();
-  if (error) throw error;
-  return data?.payload ?? null;
-}
-
-export async function fetchPageSections(pageKey, { preview = false } = {}) {
-  if (!supabase) return [];
-  let query = supabase.from('page_sections').select('*').order('sort_order');
-  if (pageKey) query = query.eq('page_key', pageKey);
+  let query = supabase
+    .from('page_sections')
+    .select('*')
+    .eq('page_key', 'home')
+    .eq('section_key', 'events');
   if (!preview) query = query.eq('status', 'published');
-  const { data, error } = await query;
+  const { data, error } = await query.maybeSingle();
   if (error) throw error;
-  return data ?? [];
+  return data ?? null;
 }
 
-export async function fetchAllPageSections({ preview = false } = {}) {
-  return fetchPageSections(null, { preview });
+/**
+ * The site popup row (Site Popup tab). Returns the published payload, or
+ * `undefined` when there is no published row, so the caller can tell
+ * "never configured" apart from a stored payload.
+ */
+export async function fetchSitePopup() {
+  if (!supabase) return undefined;
+  const { data, error } = await supabase
+    .from('page_sections')
+    .select('payload')
+    .eq('page_key', 'site')
+    .eq('section_key', 'popup')
+    .eq('status', 'published')
+    .maybeSingle();
+  if (error) throw error;
+  return data?.payload ?? undefined;
 }
 
 export async function fetchPublishedContent(type, { pageKey } = {}) {
@@ -70,27 +84,6 @@ export async function fetchPublishedCustomPages() {
   return data ?? [];
 }
 
-export async function fetchGroupTicketTypes() {
-  if (!supabase) return [];
-  const { data, error } = await supabase.from('group_ticket_types').select('*').eq('is_active', true).order('sort_order');
-  if (error) throw error;
-  return data ?? [];
-}
-
-export async function fetchTourTimeSlots(eventSlug = 'guided-tour') {
-  if (!supabase) return [];
-  const { data: event } = await supabase.from('events').select('id').eq('slug', eventSlug).maybeSingle();
-  if (!event) return [];
-  const { data, error } = await supabase
-    .from('tour_time_slots')
-    .select('*')
-    .eq('event_id', event.id)
-    .eq('is_active', true)
-    .order('sort_order');
-  if (error) throw error;
-  return data ?? [];
-}
-
 export async function fetchCurriculumModules() {
   if (!supabase) return [];
   const { data: modules, error } = await supabase
@@ -123,7 +116,7 @@ export async function fetchCurriculumModule(slug) {
 
 const IMAGE_MAX_BYTES = 5 * 1024 * 1024;
 const AUDIO_MAX_BYTES = 25 * 1024 * 1024;
-const VIDEO_MAX_BYTES = 100 * 1024 * 1024;
+const VIDEO_MAX_BYTES = 50 * 1024 * 1024;
 
 /**
  * Upload a file to cms-media and record it in media_assets.

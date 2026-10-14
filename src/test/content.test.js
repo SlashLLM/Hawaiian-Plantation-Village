@@ -12,7 +12,7 @@ import {
 import { getSectionChoices, PAGE_KEYS } from '../lib/content/sectionKeys.js';
 import { mergeWithFallback, mergeSectionPayload, isValidSlug, normalizeSlug } from '../lib/content/validators.js';
 import { formatAudioLength, collectCampCultureOptions } from '../lib/content/collectionFormUtils.js';
-import { newsArticles, DEFAULT_PAGE_SECTIONS } from '../lib/content/fallbacks.js';
+import { newsArticles, DEFAULT_PAGE_SECTIONS } from '../lib/content/staticContent.js';
 
 describe('content mappers', () => {
   it('maps news article rows', () => {

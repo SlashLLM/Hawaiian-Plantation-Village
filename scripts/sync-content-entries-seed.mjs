@@ -1,7 +1,7 @@
 /**
  * Clears invented news/careers/partners/testimonials content_entries and
  * updates programs, timeline, and leadership to match study-guide fallbacks.
- * Run after sync-home-about-seed.mjs
+ * One-off seed cleanup; page copy itself is static (src/lib/content/staticContent.js).
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -23,7 +23,7 @@ const midReplacement = `-- Partner logos / social proof (cleared — no verified
 -- ---------------------------------------------------------------------------
 
 -- ---------------------------------------------------------------------------
--- Content entries: programs (4) — free village festivals from study guide
+-- Content entries: programs (3) — free village festivals from study guide
 -- ---------------------------------------------------------------------------
 
 insert into public.content_entries (slug, content_type, status, title, summary, body, category, event_date_label, sort_order, metadata, published_at)
@@ -55,19 +55,6 @@ values
     now()
   ),
   (
-    'portuguese-festa',
-    'program',
-    'published',
-    'Portuguese Festa',
-    'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
-    'A free community festa with entertainment on the village stage, food tasting, and cultural displays.',
-    'Community',
-    'Seasonal',
-    3,
-    '{"time": "", "date": "Seasonal"}'::jsonb,
-    now()
-  ),
-  (
     'harvest-festival',
     'program',
     'published',
@@ -76,7 +63,7 @@ values
     'A free harvest celebration with cultural entertainment, food tasting at the homes, and cooking demonstrations.',
     'Community',
     'Seasonal',
-    4,
+    3,
     '{"time": "", "date": "Seasonal"}'::jsonb,
     now()
   )

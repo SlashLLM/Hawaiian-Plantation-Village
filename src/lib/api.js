@@ -62,39 +62,8 @@ export async function resendConfirmation(payload) {
   return invokeFunction('resend-confirmation', payload, { auth: true });
 }
 
-export async function fetchEventsWithTickets() {
-  if (!supabase) return [];
-  const { data, error } = await supabase
-    .from('events')
-    .select('id, slug, title, description, event_date, start_time, end_time, is_special, ticket_types(id, slug, label, price_cents, requires_id, sort_order), tour_time_slots(id, label, sort_order)')
-    .eq('is_active', true)
-    .order('is_special', { ascending: true });
-  if (error) throw error;
-  return (data ?? []).map((e) => ({
-    ...e,
-    ticket_types: (e.ticket_types ?? []).sort((a, b) => a.sort_order - b.sort_order),
-    tour_time_slots: (e.tour_time_slots ?? []).sort((a, b) => a.sort_order - b.sort_order),
-  }));
-}
-
-export async function fetchMembershipTiers() {
-  if (!supabase) return [];
-  const { data, error } = await supabase
-    .from('membership_tiers')
-    .select('*')
-    .eq('is_active', true)
-    .order('sort_order');
-  if (error) throw error;
-  return data ?? [];
-}
-
-export { fetchPublishedContent } from './content/cmsApi.js';
 export {
-  fetchSiteSettings,
-  fetchPageSections,
-  fetchAllPageSections,
-  fetchGroupTicketTypes,
-  fetchTourTimeSlots,
+  fetchPublishedContent,
   fetchCurriculumModules,
   fetchCurriculumModule,
   uploadCmsImage,

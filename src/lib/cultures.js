@@ -29,3 +29,34 @@ export function findCampBySlug(camps, slug) {
       cultureSlug(camp.name) === target,
   );
 }
+
+export const CHRONOLOGICAL_CULTURES = [
+  'hawaiian',
+  'chinese',
+  'portuguese',
+  'japanese',
+  'okinawan',
+  'puerto_rican',
+  'korean',
+  'filipino',
+];
+
+export function parseArrivalYear(arrival) {
+  if (!arrival) return 9999;
+  const str = String(arrival).toLowerCase();
+  if (str.includes('before')) return -1;
+  const match = str.match(/\d{4}/);
+  return match ? parseInt(match[0], 10) : 9999;
+}
+
+export function sortCampsChronologically(camps = []) {
+  return [...camps].sort((a, b) => {
+    const yearA = parseArrivalYear(a.arrival);
+    const yearB = parseArrivalYear(b.arrival);
+    if (yearA !== yearB) return yearA - yearB;
+    const indexA = CHRONOLOGICAL_CULTURES.indexOf(cultureSlug(a));
+    const indexB = CHRONOLOGICAL_CULTURES.indexOf(cultureSlug(b));
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    return 0;
+  });
+}

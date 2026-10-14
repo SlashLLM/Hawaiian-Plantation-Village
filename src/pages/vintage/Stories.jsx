@@ -1,10 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Pause, Volume2, X, BookOpen, FileText, ChevronRight, Maximize, Video } from 'lucide-react';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { useContentCollection, usePageSection } from '../../context/ContentProvider.jsx';
-import { formatAudioLength, resolveOralMediaType } from '../../lib/content/collectionFormUtils.js';
+import { formatAudioLength, isCampStoryPlaceholder, resolveOralMediaType } from '../../lib/content/collectionFormUtils.js';
+import { sortCampsChronologically } from '../../lib/cultures.js';
 import SEO from '../../components/SEO.jsx';
 
 const parseLengthToSeconds = (lengthStr) => {
@@ -67,6 +68,8 @@ export default function Stories() {
   const [totalDuration, setTotalDuration] = useState(120);
   const [filter, setFilter] = useState('all');
 
+  const sortedCamps = useMemo(() => sortCampsChronologically(camps), [camps]);
+
   const oralHistory = selectedCamp?.oralHistory ?? null;
   const mediaType = resolveOralMediaType(oralHistory);
   const videoUrl = oralHistory?.video_url || '';
@@ -80,8 +83,8 @@ export default function Stories() {
     || SITE_PHOTOS.storiesFallback;
 
   const filteredCamps = filter === 'all'
-    ? camps
-    : camps.filter(c => c.culture.toLowerCase() === filter.toLowerCase());
+    ? sortedCamps
+    : sortedCamps.filter(c => c.culture.toLowerCase() === filter.toLowerCase());
 
   const seekTo = useCallback((seconds) => {
     const next = Math.max(0, Math.min(totalDuration, seconds));
@@ -119,6 +122,7 @@ export default function Stories() {
   };
 
   const handleOpenCamp = (camp) => {
+    if (isCampStoryPlaceholder(camp)) return;
     stopMedia();
     setSelectedCamp(camp);
     setIsPlaying(false);
@@ -228,7 +232,7 @@ export default function Stories() {
         <div style={styles.filterBar}>
           <span style={styles.filterLabel}>FILTER BY CAMP SECTION:</span>
           <div style={styles.filterBtns}>
-            {['all', ...new Set(camps.map((c) => c.culture.toLowerCase()))].map((item) => (
+            {['all', ...new Set(sortedCamps.map((c) => c.culture.toLowerCase()))].map((item) => (
               <button
                 key={item}
                 onClick={() => setFilter(item)}
@@ -245,20 +249,52 @@ export default function Stories() {
 
         {/* Camps Grid */}
         <div style={styles.campsGrid}>
-          {filteredCamps.map((camp) => (
-            <div key={camp.id} className="paper-card" style={styles.campCard}>
-              <div style={styles.cardHeader}>
-                <span className="ink-stamp green" style={styles.arrivalBadge}>ARRIVED {camp.arrival}</span>
-                <span style={styles.cultureName}>{camp.culture}</span>
+          {filteredCamps.map((camp) => {
+            const isPlaceholder = isCampStoryPlaceholder(camp);
+            return (
+              <div
+                key={camp.id}
+                className="paper-card"
+                style={{
+                  ...styles.campCard,
+                  ...(isPlaceholder ? styles.campCardPlaceholder : {}),
+                }}
+              >
+                <div style={styles.cardHeader}>
+                  <div style={styles.badgeGroup}>
+                    <span className="ink-stamp green" style={styles.arrivalBadge}>ARRIVED {camp.arrival}</span>
+                    {isPlaceholder && (
+                      <span className="ink-stamp rust" style={styles.comingSoonBadge}>COMING SOON</span>
+                    )}
+                  </div>
+                  <span style={styles.cultureName}>{camp.culture}</span>
+                </div>
+                <h3 style={styles.cardTitle}>{camp.title}</h3>
+                <p style={styles.cardDesc}>{camp.shortDesc}</p>
+                
+                {isPlaceholder ? (
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    disabled
+                    aria-disabled="true"
+                    style={styles.exploreBtnDisabled}
+                  >
+                    Oral history coming soon
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => handleOpenCamp(camp)}
+                    style={styles.exploreBtn}
+                  >
+                    Explore camp & oral histories <ChevronRight size={16} />
+                  </button>
+                )}
               </div>
-              <h3 style={styles.cardTitle}>{camp.title}</h3>
-              <p style={styles.cardDesc}>{camp.shortDesc}</p>
-              
-              <button className="btn-secondary" onClick={() => handleOpenCamp(camp)} style={styles.exploreBtn}>
-                Explore camp & oral histories <ChevronRight size={16} />
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -482,11 +518,26 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between'
   },
+  campCardPlaceholder: {
+    opacity: 0.95,
+  },
   cardHeader: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: '1rem'
+  },
+  badgeGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px',
+    flexWrap: 'wrap'
+  },
+  comingSoonBadge: {
+    fontSize: '0.65rem',
+    backgroundColor: 'rgba(180, 83, 9, 0.08)',
+    padding: '2px 6px',
+    letterSpacing: '0.08em'
   },
   arrivalBadge: {
     fontSize: '0.65rem',
@@ -513,6 +564,16 @@ const styles = {
   exploreBtn: {
     width: '100%',
     justifyContent: 'center'
+  },
+  exploreBtnDisabled: {
+    width: '100%',
+    justifyContent: 'center',
+    opacity: 0.65,
+    cursor: 'not-allowed',
+    backgroundColor: 'transparent',
+    borderColor: 'var(--kraft-tan-dark)',
+    color: 'var(--text-muted)',
+    boxShadow: 'none'
   },
   // Drawer Styles
   backdrop: {

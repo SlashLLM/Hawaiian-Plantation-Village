@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
+import { headerImagePosition } from '../lib/sitePhotos';
 
-export default function PageHeaderParallax({ image, stamp, title, subtitle }) {
+export default function PageHeaderParallax({ image, imagePosition, stamp, title, subtitle }) {
   const targetRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
 
@@ -17,7 +18,11 @@ export default function PageHeaderParallax({ image, stamp, title, subtitle }) {
             y: shouldReduceMotion ? 0 : yImage,
           }}
         >
-          <img src={image} alt="" style={styles.layerImage} />
+          <img
+            src={image}
+            alt=""
+            style={{ ...styles.layerImage, objectPosition: imagePosition ?? headerImagePosition(image) }}
+          />
         </motion.div>
 
         <div style={styles.gradientOverlay} />

@@ -35,6 +35,7 @@ export function mapCampStory(row) {
     fullHistory: row.body ?? '',
     image_url: row.image_url ?? null,
     oralHistory: meta.oralHistory ?? null,
+    isPlaceholder: Boolean(meta.isPlaceholder ?? meta.comingSoon),
   };
 }
 

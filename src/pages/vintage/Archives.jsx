@@ -8,9 +8,13 @@ import {
   usePageSection,
   usePageListSection,
 } from '../../context/ContentProvider.jsx';
-import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/fallbacks.js';
+import { PHOTOGRAPH_COLLECTIONS } from '../../lib/content/staticContent.js';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import SEO from '../../components/SEO.jsx';
+import Pagination from '../../components/archives/Pagination.jsx';
+import { scrollIntoViewIfSupported } from '../../lib/scrollIntoViewIfSupported.js';
+
+const PAGE_SIZE = 24;
 
 const collectionName = (id) =>
   PHOTOGRAPH_COLLECTIONS.find((collection) => collection.id === id)?.name ?? id ?? 'Archives';
@@ -45,6 +49,20 @@ export default function Archives() {
     'resources',
   );
   const [activeCollection, setActiveCollection] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleCollectionChange = (collectionId) => {
+    setActiveCollection(collectionId);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const browseEl = document.getElementById('browse');
+    if (browseEl) {
+      scrollIntoViewIfSupported(browseEl, { behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const allCollections = useMemo(() => {
     const known = new Set(collections.map((collection) => collection.id));
@@ -66,9 +84,21 @@ export default function Archives() {
     return tally;
   }, [photographs]);
 
+  const photosByArkId = useMemo(
+    () => new Map(photographs.map((photo) => [photo.arkId, photo])),
+    [photographs],
+  );
+
   const visible = activeCollection === 'all'
     ? photographs
     : photographs.filter((photo) => photo.collection === activeCollection);
+
+  const totalPages = Math.ceil(visible.length / PAGE_SIZE) || 1;
+
+  const paginatedPhotos = useMemo(() => {
+    const start = (currentPage - 1) * PAGE_SIZE;
+    return visible.slice(start, start + PAGE_SIZE);
+  }, [visible, currentPage]);
 
   const lead = photographs[0];
 
@@ -76,7 +106,7 @@ export default function Archives() {
     <div>
       <SEO title="Collections & Archives" description="Photographs, documents, artifacts and oral histories that preserve the experiences of Hawaii's plantation communities across generations." />
       <PageHeaderParallax
-        image={lead?.imageUrl || SITE_PHOTOS.headers.visit}
+        image={SITE_PHOTOS.headers.archives}
         stamp={header?.stamp ?? 'Collections & archives'}
         title={header?.title ?? 'What families saved, Hawaiʻi remembers.'}
         subtitle={header?.subtitle}
@@ -96,7 +126,7 @@ export default function Archives() {
                 key={collection.id}
                 type="button"
                 className="door"
-                onClick={() => setActiveCollection(collection.id)}
+                onClick={() => handleCollectionChange(collection.id)}
               >
                 <span className="door-title">{collection.name}</span>
                 <span className="door-note">{collection.blurb}</span>
@@ -123,7 +153,7 @@ export default function Archives() {
                 type="button"
                 className="archive-filter"
                 aria-pressed={activeCollection === option.id}
-                onClick={() => setActiveCollection(option.id)}
+                onClick={() => handleCollectionChange(option.id)}
               >
                 {option.name} ({counts[option.id] ?? 0})
               </button>
@@ -131,7 +161,7 @@ export default function Archives() {
           </div>
 
           <div className="archive-grid">
-            {visible.map((photo) => (
+            {paginatedPhotos.map((photo) => (
               <button
                 key={photo.arkId}
                 type="button"
@@ -139,7 +169,7 @@ export default function Archives() {
                 onClick={() => navigate(`/archives/${photo.arkId}`)}
               >
                 <span className="archive-figure">
-                  <img src={photo.thumbnailUrl || photo.imageUrl} alt={photo.title} loading="lazy" />
+                  <img src={photo.thumbnailUrl || photo.imageUrl} alt={photo.title} loading="lazy" decoding="async" />
                 </span>
                 <span className="archive-card-meta">{collectionName(photo.collection)}</span>
                 <span className="archive-card-title">{photo.title}</span>
@@ -147,6 +177,15 @@ export default function Archives() {
               </button>
             ))}
           </div>
+
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalItems={visible.length}
+            pageSize={PAGE_SIZE}
+            onPageChange={handlePageChange}
+            itemName="photographs"
+          />
 
           {visible.length === 0 && (
             <p className="editorial-lede">No photographs from this collection are digitized yet.</p>
@@ -195,7 +234,7 @@ export default function Archives() {
 
           {samples.map((sample, index) => {
             const frames = (sample.arkIds ?? [])
-              .map((id) => photographs.find((photo) => photo.arkId === id))
+              .map((id) => photosByArkId.get(id))
               .filter(Boolean);
             return (
               <Reveal key={sample.label} delay={index * 0.08}>
@@ -215,7 +254,7 @@ export default function Archives() {
                         onClick={() => navigate(`/archives/${frame.arkId}`)}
                       >
                         <span className="archive-figure">
-                          <img src={frame.thumbnailUrl || frame.imageUrl} alt={frame.title} loading="lazy" />
+                          <img src={frame.thumbnailUrl || frame.imageUrl} alt={frame.title} loading="lazy" decoding="async" />
                         </span>
                         <span className="archive-card-title" style={{ color: 'var(--sugarcane-cream)' }}>
                           {frame.title}

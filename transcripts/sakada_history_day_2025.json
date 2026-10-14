@@ -1,0 +1,4233 @@
+{
+  "source_video": "C:\\Users\\poyil\\Downloads\\vidssave.com 2025 Sakada History Day 720P.mp4",
+  "language": "en",
+  "duration": 366.71275,
+  "segments": [
+    {
+      "id": 1,
+      "start": 10.45,
+      "end": 17.25,
+      "text": "We're so excited about our second annual Cicada Day because it brings together so many different groups.",
+      "words": [
+        {
+          "word": " We're",
+          "start": 10.45,
+          "end": 10.59,
+          "probability": 0.7690381407737732
+        },
+        {
+          "word": " so",
+          "start": 10.59,
+          "end": 10.95,
+          "probability": 0.9952086806297302
+        },
+        {
+          "word": " excited",
+          "start": 10.95,
+          "end": 11.59,
+          "probability": 0.9985889792442322
+        },
+        {
+          "word": " about",
+          "start": 11.59,
+          "end": 11.91,
+          "probability": 0.9965174198150635
+        },
+        {
+          "word": " our",
+          "start": 11.91,
+          "end": 12.13,
+          "probability": 0.9972144961357117
+        },
+        {
+          "word": " second",
+          "start": 12.13,
+          "end": 12.65,
+          "probability": 0.8952229619026184
+        },
+        {
+          "word": " annual",
+          "start": 12.65,
+          "end": 13.35,
+          "probability": 0.9578394889831543
+        },
+        {
+          "word": " Cicada",
+          "start": 13.35,
+          "end": 14.05,
+          "probability": 0.5955284635225931
+        },
+        {
+          "word": " Day",
+          "start": 14.05,
+          "end": 14.49,
+          "probability": 0.6418535709381104
+        },
+        {
+          "word": " because",
+          "start": 14.49,
+          "end": 14.85,
+          "probability": 0.7148789167404175
+        },
+        {
+          "word": " it",
+          "start": 14.85,
+          "end": 14.99,
+          "probability": 0.998095691204071
+        },
+        {
+          "word": " brings",
+          "start": 14.99,
+          "end": 15.27,
+          "probability": 0.9980011582374573
+        },
+        {
+          "word": " together",
+          "start": 15.27,
+          "end": 15.59,
+          "probability": 0.9977574944496155
+        },
+        {
+          "word": " so",
+          "start": 15.59,
+          "end": 16.05,
+          "probability": 0.9979405999183655
+        },
+        {
+          "word": " many",
+          "start": 16.05,
+          "end": 16.29,
+          "probability": 0.9991101622581482
+        },
+        {
+          "word": " different",
+          "start": 16.29,
+          "end": 16.69,
+          "probability": 0.9943668246269226
+        },
+        {
+          "word": " groups.",
+          "start": 16.69,
+          "end": 17.25,
+          "probability": 0.9991757273674011
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "start": 17.71,
+      "end": 27.27,
+      "text": "Thank you all very much for coming and also for those of you who have worked so hard, and the teachers particularly, we owe a lot to you.",
+      "words": [
+        {
+          "word": " Thank",
+          "start": 17.71,
+          "end": 18.27,
+          "probability": 0.9721357226371765
+        },
+        {
+          "word": " you",
+          "start": 18.27,
+          "end": 18.53,
+          "probability": 0.9992302656173706
+        },
+        {
+          "word": " all",
+          "start": 18.53,
+          "end": 18.83,
+          "probability": 0.9939171671867371
+        },
+        {
+          "word": " very",
+          "start": 18.83,
+          "end": 19.13,
+          "probability": 0.9933606386184692
+        },
+        {
+          "word": " much",
+          "start": 19.13,
+          "end": 19.33,
+          "probability": 0.9992882609367371
+        },
+        {
+          "word": " for",
+          "start": 19.33,
+          "end": 19.49,
+          "probability": 0.9988106489181519
+        },
+        {
+          "word": " coming",
+          "start": 19.49,
+          "end": 19.79,
+          "probability": 0.9994999170303345
+        },
+        {
+          "word": " and",
+          "start": 19.79,
+          "end": 20.13,
+          "probability": 0.4856107532978058
+        },
+        {
+          "word": " also",
+          "start": 20.13,
+          "end": 20.59,
+          "probability": 0.9877459406852722
+        },
+        {
+          "word": " for",
+          "start": 20.59,
+          "end": 21.01,
+          "probability": 0.9121016263961792
+        },
+        {
+          "word": " those",
+          "start": 21.01,
+          "end": 21.29,
+          "probability": 0.9976142644882202
+        },
+        {
+          "word": " of",
+          "start": 21.29,
+          "end": 21.51,
+          "probability": 0.9462184906005859
+        },
+        {
+          "word": " you",
+          "start": 21.51,
+          "end": 21.73,
+          "probability": 0.9928725957870483
+        },
+        {
+          "word": " who",
+          "start": 21.73,
+          "end": 21.95,
+          "probability": 0.8878921866416931
+        },
+        {
+          "word": " have",
+          "start": 21.95,
+          "end": 22.07,
+          "probability": 0.9047571420669556
+        },
+        {
+          "word": " worked",
+          "start": 22.07,
+          "end": 22.37,
+          "probability": 0.993171215057373
+        },
+        {
+          "word": " so",
+          "start": 22.37,
+          "end": 22.61,
+          "probability": 0.9889124631881714
+        },
+        {
+          "word": " hard,",
+          "start": 22.61,
+          "end": 23.01,
+          "probability": 0.9982518553733826
+        },
+        {
+          "word": " and",
+          "start": 23.51,
+          "end": 23.59,
+          "probability": 0.991638720035553
+        },
+        {
+          "word": " the",
+          "start": 23.59,
+          "end": 23.73,
+          "probability": 0.9924662709236145
+        },
+        {
+          "word": " teachers",
+          "start": 23.73,
+          "end": 24.13,
+          "probability": 0.9959700107574463
+        },
+        {
+          "word": " particularly,",
+          "start": 24.13,
+          "end": 24.79,
+          "probability": 0.9683724641799927
+        },
+        {
+          "word": " we",
+          "start": 25.43,
+          "end": 25.87,
+          "probability": 0.976471483707428
+        },
+        {
+          "word": " owe",
+          "start": 25.87,
+          "end": 26.21,
+          "probability": 0.9874722957611084
+        },
+        {
+          "word": " a",
+          "start": 26.21,
+          "end": 26.59,
+          "probability": 0.9960737228393555
+        },
+        {
+          "word": " lot",
+          "start": 26.59,
+          "end": 26.77,
+          "probability": 0.9996415376663208
+        },
+        {
+          "word": " to",
+          "start": 26.77,
+          "end": 26.99,
+          "probability": 0.9982105493545532
+        },
+        {
+          "word": " you.",
+          "start": 26.99,
+          "end": 27.27,
+          "probability": 0.995658278465271
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "start": 36.14,
+      "end": 39.08,
+      "text": "My name is Kay Clemente. I'm from Mypaw High School.",
+      "words": [
+        {
+          "word": " My",
+          "start": 36.14,
+          "end": 36.52,
+          "probability": 0.8393017053604126
+        },
+        {
+          "word": " name",
+          "start": 36.52,
+          "end": 36.74,
+          "probability": 0.998736560344696
+        },
+        {
+          "word": " is",
+          "start": 36.74,
+          "end": 36.92,
+          "probability": 0.9949210286140442
+        },
+        {
+          "word": " Kay",
+          "start": 36.92,
+          "end": 37.08,
+          "probability": 0.7491902112960815
+        },
+        {
+          "word": " Clemente.",
+          "start": 37.08,
+          "end": 37.7,
+          "probability": 0.8814243674278259
+        },
+        {
+          "word": " I'm",
+          "start": 37.82,
+          "end": 37.88,
+          "probability": 0.9905313551425934
+        },
+        {
+          "word": " from",
+          "start": 37.88,
+          "end": 38.1,
+          "probability": 0.9980192184448242
+        },
+        {
+          "word": " Mypaw",
+          "start": 38.1,
+          "end": 38.5,
+          "probability": 0.24299820760885874
+        },
+        {
+          "word": " High",
+          "start": 38.5,
+          "end": 38.72,
+          "probability": 0.9030946493148804
+        },
+        {
+          "word": " School.",
+          "start": 38.72,
+          "end": 39.08,
+          "probability": 0.9816274046897888
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "start": 39.9,
+      "end": 46.46,
+      "text": "Okay, so my project is this one. It's about my classmate's great-great-grandfather who was a former Cicada worker.",
+      "words": [
+        {
+          "word": " Okay,",
+          "start": 39.9,
+          "end": 40.06,
+          "probability": 0.7617932558059692
+        },
+        {
+          "word": " so",
+          "start": 40.24,
+          "end": 40.32,
+          "probability": 0.9952919483184814
+        },
+        {
+          "word": " my",
+          "start": 40.32,
+          "end": 40.58,
+          "probability": 0.9700731635093689
+        },
+        {
+          "word": " project",
+          "start": 40.58,
+          "end": 41.02,
+          "probability": 0.9987819790840149
+        },
+        {
+          "word": " is",
+          "start": 41.02,
+          "end": 41.26,
+          "probability": 0.997246503829956
+        },
+        {
+          "word": " this",
+          "start": 41.26,
+          "end": 41.5,
+          "probability": 0.9988446235656738
+        },
+        {
+          "word": " one.",
+          "start": 41.5,
+          "end": 41.76,
+          "probability": 0.998356282711029
+        },
+        {
+          "word": " It's",
+          "start": 41.92,
+          "end": 42.08,
+          "probability": 0.9956709146499634
+        },
+        {
+          "word": " about",
+          "start": 42.08,
+          "end": 42.3,
+          "probability": 0.9991211295127869
+        },
+        {
+          "word": " my",
+          "start": 42.3,
+          "end": 42.54,
+          "probability": 0.9994465708732605
+        },
+        {
+          "word": " classmate's",
+          "start": 42.54,
+          "end": 43.48,
+          "probability": 0.8526901801427206
+        },
+        {
+          "word": " great",
+          "start": 43.48,
+          "end": 44.06,
+          "probability": 0.9635213613510132
+        },
+        {
+          "word": "-great",
+          "start": 44.06,
+          "end": 44.26,
+          "probability": 0.8796511292457581
+        },
+        {
+          "word": "-grandfather",
+          "start": 44.26,
+          "end": 44.9,
+          "probability": 0.9172556598981222
+        },
+        {
+          "word": " who",
+          "start": 44.9,
+          "end": 45.12,
+          "probability": 0.7824332118034363
+        },
+        {
+          "word": " was",
+          "start": 45.12,
+          "end": 45.26,
+          "probability": 0.9147964119911194
+        },
+        {
+          "word": " a",
+          "start": 45.26,
+          "end": 45.36,
+          "probability": 0.9980929493904114
+        },
+        {
+          "word": " former",
+          "start": 45.36,
+          "end": 45.64,
+          "probability": 0.9970888495445251
+        },
+        {
+          "word": " Cicada",
+          "start": 45.64,
+          "end": 46.08,
+          "probability": 0.9784952799479166
+        },
+        {
+          "word": " worker.",
+          "start": 46.08,
+          "end": 46.46,
+          "probability": 0.9932108521461487
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "start": 46.46,
+      "end": 58.3,
+      "text": "He came here in 1946 after World War II, and their sacrifices helped to build a community and understanding of hard work.",
+      "words": [
+        {
+          "word": " He",
+          "start": 46.46,
+          "end": 47.22,
+          "probability": 0.7720971703529358
+        },
+        {
+          "word": " came",
+          "start": 47.22,
+          "end": 47.52,
+          "probability": 0.9960820078849792
+        },
+        {
+          "word": " here",
+          "start": 47.52,
+          "end": 47.8,
+          "probability": 0.99649977684021
+        },
+        {
+          "word": " in",
+          "start": 47.8,
+          "end": 48.0,
+          "probability": 0.9940060377120972
+        },
+        {
+          "word": " 1946",
+          "start": 48.0,
+          "end": 48.66,
+          "probability": 0.9957757592201233
+        },
+        {
+          "word": " after",
+          "start": 48.66,
+          "end": 49.34,
+          "probability": 0.8767628073692322
+        },
+        {
+          "word": " World",
+          "start": 49.34,
+          "end": 49.6,
+          "probability": 0.9307412505149841
+        },
+        {
+          "word": " War",
+          "start": 49.6,
+          "end": 49.82,
+          "probability": 0.9981489181518555
+        },
+        {
+          "word": " II,",
+          "start": 49.82,
+          "end": 50.12,
+          "probability": 0.865607738494873
+        },
+        {
+          "word": " and",
+          "start": 50.32,
+          "end": 50.78,
+          "probability": 0.9897472858428955
+        },
+        {
+          "word": " their",
+          "start": 50.78,
+          "end": 51.06,
+          "probability": 0.9941197633743286
+        },
+        {
+          "word": " sacrifices",
+          "start": 51.06,
+          "end": 51.76,
+          "probability": 0.9903751015663147
+        },
+        {
+          "word": " helped",
+          "start": 51.76,
+          "end": 52.3,
+          "probability": 0.8171145915985107
+        },
+        {
+          "word": " to",
+          "start": 52.3,
+          "end": 52.76,
+          "probability": 0.9752584099769592
+        },
+        {
+          "word": " build",
+          "start": 52.76,
+          "end": 53.18,
+          "probability": 0.9975595474243164
+        },
+        {
+          "word": " a",
+          "start": 53.18,
+          "end": 53.72,
+          "probability": 0.9922642707824707
+        },
+        {
+          "word": " community",
+          "start": 53.72,
+          "end": 54.24,
+          "probability": 0.9985748529434204
+        },
+        {
+          "word": " and",
+          "start": 54.24,
+          "end": 55.16,
+          "probability": 0.9489707350730896
+        },
+        {
+          "word": " understanding",
+          "start": 55.16,
+          "end": 55.98,
+          "probability": 0.9469795227050781
+        },
+        {
+          "word": " of",
+          "start": 55.98,
+          "end": 56.42,
+          "probability": 0.9932618737220764
+        },
+        {
+          "word": " hard",
+          "start": 56.42,
+          "end": 58.0,
+          "probability": 0.9296636581420898
+        },
+        {
+          "word": " work.",
+          "start": 58.0,
+          "end": 58.3,
+          "probability": 0.9907810091972351
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "start": 58.7,
+      "end": 62.58,
+      "text": "My name is Elaine Beltran. I'm from Mypaw High School. I'm a senior.",
+      "words": [
+        {
+          "word": " My",
+          "start": 58.7,
+          "end": 59.14,
+          "probability": 0.9718209505081177
+        },
+        {
+          "word": " name",
+          "start": 59.14,
+          "end": 59.3,
+          "probability": 0.9987035989761353
+        },
+        {
+          "word": " is",
+          "start": 59.3,
+          "end": 59.56,
+          "probability": 0.9953536987304688
+        },
+        {
+          "word": " Elaine",
+          "start": 59.56,
+          "end": 59.88,
+          "probability": 0.15091337263584137
+        },
+        {
+          "word": " Beltran.",
+          "start": 59.88,
+          "end": 60.42,
+          "probability": 0.6830490231513977
+        },
+        {
+          "word": " I'm",
+          "start": 60.52,
+          "end": 60.68,
+          "probability": 0.9823128581047058
+        },
+        {
+          "word": " from",
+          "start": 60.68,
+          "end": 60.92,
+          "probability": 0.9933547973632812
+        },
+        {
+          "word": " Mypaw",
+          "start": 60.92,
+          "end": 61.3,
+          "probability": 0.19412259482002506
+        },
+        {
+          "word": " High",
+          "start": 61.3,
+          "end": 61.52,
+          "probability": 0.5834162831306458
+        },
+        {
+          "word": " School.",
+          "start": 61.52,
+          "end": 61.8,
+          "probability": 0.9770973920822144
+        },
+        {
+          "word": " I'm",
+          "start": 61.98,
+          "end": 62.08,
+          "probability": 0.9947454929351807
+        },
+        {
+          "word": " a",
+          "start": 62.08,
+          "end": 62.28,
+          "probability": 0.9897631406784058
+        },
+        {
+          "word": " senior.",
+          "start": 62.28,
+          "end": 62.58,
+          "probability": 0.9818665385246277
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "start": 63.1,
+      "end": 73.38,
+      "text": "It's important to honor our Cicada legacy because without them, we wouldn't have better opportunities here, like better immigrant rights.",
+      "words": [
+        {
+          "word": " It's",
+          "start": 63.1,
+          "end": 63.74,
+          "probability": 0.9773928821086884
+        },
+        {
+          "word": " important",
+          "start": 63.74,
+          "end": 64.06,
+          "probability": 0.9987457990646362
+        },
+        {
+          "word": " to",
+          "start": 64.06,
+          "end": 64.3,
+          "probability": 0.9957661628723145
+        },
+        {
+          "word": " honor",
+          "start": 64.3,
+          "end": 64.52,
+          "probability": 0.9804913997650146
+        },
+        {
+          "word": " our",
+          "start": 64.52,
+          "end": 64.88,
+          "probability": 0.9943681359291077
+        },
+        {
+          "word": " Cicada",
+          "start": 64.88,
+          "end": 65.44,
+          "probability": 0.3444155401860674
+        },
+        {
+          "word": " legacy",
+          "start": 65.44,
+          "end": 65.84,
+          "probability": 0.8275616765022278
+        },
+        {
+          "word": " because",
+          "start": 65.84,
+          "end": 66.52,
+          "probability": 0.8857895731925964
+        },
+        {
+          "word": " without",
+          "start": 66.52,
+          "end": 68.0,
+          "probability": 0.5198373198509216
+        },
+        {
+          "word": " them,",
+          "start": 68.0,
+          "end": 68.32,
+          "probability": 0.9956381916999817
+        },
+        {
+          "word": " we",
+          "start": 68.36,
+          "end": 68.6,
+          "probability": 0.9972288012504578
+        },
+        {
+          "word": " wouldn't",
+          "start": 68.6,
+          "end": 68.88,
+          "probability": 0.9978714287281036
+        },
+        {
+          "word": " have",
+          "start": 68.88,
+          "end": 69.14,
+          "probability": 0.9995218515396118
+        },
+        {
+          "word": " better",
+          "start": 69.14,
+          "end": 69.74,
+          "probability": 0.9365712404251099
+        },
+        {
+          "word": " opportunities",
+          "start": 69.74,
+          "end": 70.98,
+          "probability": 0.9842635989189148
+        },
+        {
+          "word": " here,",
+          "start": 70.98,
+          "end": 71.38,
+          "probability": 0.9911866784095764
+        },
+        {
+          "word": " like",
+          "start": 71.54,
+          "end": 71.66,
+          "probability": 0.8647294640541077
+        },
+        {
+          "word": " better",
+          "start": 71.66,
+          "end": 72.3,
+          "probability": 0.9820070862770081
+        },
+        {
+          "word": " immigrant",
+          "start": 72.3,
+          "end": 72.92,
+          "probability": 0.918300986289978
+        },
+        {
+          "word": " rights.",
+          "start": 72.92,
+          "end": 73.38,
+          "probability": 0.9963745474815369
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "start": 73.38,
+      "end": 80.62,
+      "text": "As someone as an immigrant too, I'm very thankful that they fight for our rights for today, and yeah.",
+      "words": [
+        {
+          "word": " As",
+          "start": 73.38,
+          "end": 74.24,
+          "probability": 0.2689456045627594
+        },
+        {
+          "word": " someone",
+          "start": 74.24,
+          "end": 74.78,
+          "probability": 0.8619644641876221
+        },
+        {
+          "word": " as",
+          "start": 74.78,
+          "end": 74.98,
+          "probability": 0.3945739269256592
+        },
+        {
+          "word": " an",
+          "start": 74.98,
+          "end": 75.08,
+          "probability": 0.6888956427574158
+        },
+        {
+          "word": " immigrant",
+          "start": 75.08,
+          "end": 75.36,
+          "probability": 0.9898724555969238
+        },
+        {
+          "word": " too,",
+          "start": 75.36,
+          "end": 75.72,
+          "probability": 0.6097841858863831
+        },
+        {
+          "word": " I'm",
+          "start": 76.34,
+          "end": 76.6,
+          "probability": 0.9567130506038666
+        },
+        {
+          "word": " very",
+          "start": 76.6,
+          "end": 76.86,
+          "probability": 0.9906918406486511
+        },
+        {
+          "word": " thankful",
+          "start": 76.86,
+          "end": 77.26,
+          "probability": 0.9981529116630554
+        },
+        {
+          "word": " that",
+          "start": 77.26,
+          "end": 77.58,
+          "probability": 0.9882683157920837
+        },
+        {
+          "word": " they",
+          "start": 77.58,
+          "end": 77.92,
+          "probability": 0.9954224228858948
+        },
+        {
+          "word": " fight",
+          "start": 77.92,
+          "end": 78.18,
+          "probability": 0.9777211546897888
+        },
+        {
+          "word": " for",
+          "start": 78.18,
+          "end": 78.36,
+          "probability": 0.9943010807037354
+        },
+        {
+          "word": " our",
+          "start": 78.36,
+          "end": 78.52,
+          "probability": 0.9971117973327637
+        },
+        {
+          "word": " rights",
+          "start": 78.52,
+          "end": 78.88,
+          "probability": 0.9933843016624451
+        },
+        {
+          "word": " for",
+          "start": 78.88,
+          "end": 79.26,
+          "probability": 0.9444923400878906
+        },
+        {
+          "word": " today,",
+          "start": 79.26,
+          "end": 79.62,
+          "probability": 0.9983878135681152
+        },
+        {
+          "word": " and",
+          "start": 79.84,
+          "end": 80.4,
+          "probability": 0.9194731116294861
+        },
+        {
+          "word": " yeah.",
+          "start": 80.4,
+          "end": 80.62,
+          "probability": 0.8930892944335938
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "start": 81.36,
+      "end": 84.96,
+      "text": "My name is Maydel Antonio. My husband Jamel.",
+      "words": [
+        {
+          "word": " My",
+          "start": 81.36,
+          "end": 81.74,
+          "probability": 0.9486595988273621
+        },
+        {
+          "word": " name",
+          "start": 81.74,
+          "end": 81.92,
+          "probability": 0.9986817240715027
+        },
+        {
+          "word": " is",
+          "start": 81.92,
+          "end": 82.16,
+          "probability": 0.9966427087783813
+        },
+        {
+          "word": " Maydel",
+          "start": 82.16,
+          "end": 82.66,
+          "probability": 0.48397092521190643
+        },
+        {
+          "word": " Antonio.",
+          "start": 82.66,
+          "end": 83.26,
+          "probability": 0.9689627289772034
+        },
+        {
+          "word": " My",
+          "start": 83.74,
+          "end": 84.08,
+          "probability": 0.9890613555908203
+        },
+        {
+          "word": " husband",
+          "start": 84.08,
+          "end": 84.4,
+          "probability": 0.9979375600814819
+        },
+        {
+          "word": " Jamel.",
+          "start": 84.4,
+          "end": 84.96,
+          "probability": 0.6824547648429871
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "start": 85.1,
+      "end": 87.16,
+      "text": "And I am Marcus Mizraq Antonio.",
+      "words": [
+        {
+          "word": " And",
+          "start": 85.1,
+          "end": 85.2,
+          "probability": 0.9261624217033386
+        },
+        {
+          "word": " I",
+          "start": 85.2,
+          "end": 85.42,
+          "probability": 0.9879966378211975
+        },
+        {
+          "word": " am",
+          "start": 85.42,
+          "end": 85.56,
+          "probability": 0.9340170621871948
+        },
+        {
+          "word": " Marcus",
+          "start": 85.56,
+          "end": 85.88,
+          "probability": 0.5960220098495483
+        },
+        {
+          "word": " Mizraq",
+          "start": 85.88,
+          "end": 86.54,
+          "probability": 0.5159469942251841
+        },
+        {
+          "word": " Antonio.",
+          "start": 86.54,
+          "end": 87.16,
+          "probability": 0.9696350693702698
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "start": 87.16,
+      "end": 91.18,
+      "text": "Antonio, and he goes to Dream House, Ebba Beach.",
+      "words": [
+        {
+          "word": " Antonio,",
+          "start": 87.16,
+          "end": 87.88,
+          "probability": 0.4363454282283783
+        },
+        {
+          "word": " and",
+          "start": 88.24,
+          "end": 88.24,
+          "probability": 0.7864094376564026
+        },
+        {
+          "word": " he",
+          "start": 88.24,
+          "end": 88.8,
+          "probability": 0.8903709053993225
+        },
+        {
+          "word": " goes",
+          "start": 88.8,
+          "end": 89.06,
+          "probability": 0.9848142266273499
+        },
+        {
+          "word": " to",
+          "start": 89.06,
+          "end": 89.28,
+          "probability": 0.9943510293960571
+        },
+        {
+          "word": " Dream",
+          "start": 89.28,
+          "end": 89.58,
+          "probability": 0.681705892086029
+        },
+        {
+          "word": " House,",
+          "start": 89.58,
+          "end": 89.98,
+          "probability": 0.5370871424674988
+        },
+        {
+          "word": " Ebba",
+          "start": 90.22,
+          "end": 90.84,
+          "probability": 0.4996749609708786
+        },
+        {
+          "word": " Beach.",
+          "start": 90.84,
+          "end": 91.18,
+          "probability": 0.9750687479972839
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "start": 91.4,
+      "end": 91.56,
+      "text": "Hello.",
+      "words": [
+        {
+          "word": " Hello.",
+          "start": 91.4,
+          "end": 91.56,
+          "probability": 0.04753052443265915
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "start": 93.78,
+      "end": 102.78,
+      "text": "He's one of the senior, and actually, we're very excited to support him here in this event.",
+      "words": [
+        {
+          "word": " He's",
+          "start": 93.78,
+          "end": 94.5,
+          "probability": 0.8770653009414673
+        },
+        {
+          "word": " one",
+          "start": 94.5,
+          "end": 95.22,
+          "probability": 0.9779669046401978
+        },
+        {
+          "word": " of",
+          "start": 95.22,
+          "end": 95.36,
+          "probability": 0.9984564781188965
+        },
+        {
+          "word": " the",
+          "start": 95.36,
+          "end": 95.52,
+          "probability": 0.9886376261711121
+        },
+        {
+          "word": " senior,",
+          "start": 95.52,
+          "end": 95.88,
+          "probability": 0.5348342657089233
+        },
+        {
+          "word": " and",
+          "start": 96.2,
+          "end": 96.8,
+          "probability": 0.9902994632720947
+        },
+        {
+          "word": " actually,",
+          "start": 96.8,
+          "end": 98.14,
+          "probability": 0.9211015105247498
+        },
+        {
+          "word": " we're",
+          "start": 98.68,
+          "end": 99.36,
+          "probability": 0.9852433800697327
+        },
+        {
+          "word": " very",
+          "start": 99.36,
+          "end": 99.7,
+          "probability": 0.9984197616577148
+        },
+        {
+          "word": " excited",
+          "start": 99.7,
+          "end": 100.44,
+          "probability": 0.9985588192939758
+        },
+        {
+          "word": " to",
+          "start": 100.44,
+          "end": 100.7,
+          "probability": 0.9994493126869202
+        },
+        {
+          "word": " support",
+          "start": 100.7,
+          "end": 101.06,
+          "probability": 0.9987969398498535
+        },
+        {
+          "word": " him",
+          "start": 101.06,
+          "end": 101.38,
+          "probability": 0.9992325305938721
+        },
+        {
+          "word": " here",
+          "start": 101.38,
+          "end": 101.92,
+          "probability": 0.9751454591751099
+        },
+        {
+          "word": " in",
+          "start": 101.92,
+          "end": 102.16,
+          "probability": 0.8687302470207214
+        },
+        {
+          "word": " this",
+          "start": 102.16,
+          "end": 102.38,
+          "probability": 0.99934321641922
+        },
+        {
+          "word": " event.",
+          "start": 102.38,
+          "end": 102.78,
+          "probability": 0.9990925788879395
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "start": 102.78,
+      "end": 108.16,
+      "text": "So, it's very good to go back to your roots and learn about it.",
+      "words": [
+        {
+          "word": " So,",
+          "start": 102.78,
+          "end": 103.4,
+          "probability": 0.32646292448043823
+        },
+        {
+          "word": " it's",
+          "start": 103.66,
+          "end": 103.88,
+          "probability": 0.9542651176452637
+        },
+        {
+          "word": " very",
+          "start": 103.88,
+          "end": 104.28,
+          "probability": 0.9043251872062683
+        },
+        {
+          "word": " good",
+          "start": 104.28,
+          "end": 104.64,
+          "probability": 0.9989264607429504
+        },
+        {
+          "word": " to",
+          "start": 104.64,
+          "end": 104.96,
+          "probability": 0.9936019778251648
+        },
+        {
+          "word": " go",
+          "start": 104.96,
+          "end": 105.16,
+          "probability": 0.9930537343025208
+        },
+        {
+          "word": " back",
+          "start": 105.16,
+          "end": 105.42,
+          "probability": 0.9983333945274353
+        },
+        {
+          "word": " to",
+          "start": 105.42,
+          "end": 105.62,
+          "probability": 0.9860143661499023
+        },
+        {
+          "word": " your",
+          "start": 105.62,
+          "end": 105.84,
+          "probability": 0.9896858334541321
+        },
+        {
+          "word": " roots",
+          "start": 105.84,
+          "end": 106.22,
+          "probability": 0.9942821264266968
+        },
+        {
+          "word": " and",
+          "start": 106.22,
+          "end": 106.9,
+          "probability": 0.9113077521324158
+        },
+        {
+          "word": " learn",
+          "start": 106.9,
+          "end": 107.36,
+          "probability": 0.9878766536712646
+        },
+        {
+          "word": " about",
+          "start": 107.36,
+          "end": 107.68,
+          "probability": 0.9968127608299255
+        },
+        {
+          "word": " it.",
+          "start": 107.68,
+          "end": 108.16,
+          "probability": 0.9961852431297302
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "start": 108.54,
+      "end": 122.53,
+      "text": "To see all of you here today, it's really a great feeling.",
+      "words": [
+        {
+          "word": " To",
+          "start": 108.54,
+          "end": 109.1,
+          "probability": 0.8729045391082764
+        },
+        {
+          "word": " see",
+          "start": 119.79,
+          "end": 119.99,
+          "probability": 0.9937762022018433
+        },
+        {
+          "word": " all",
+          "start": 119.99,
+          "end": 120.19,
+          "probability": 0.993591845035553
+        },
+        {
+          "word": " of",
+          "start": 120.19,
+          "end": 120.35,
+          "probability": 0.9914615154266357
+        },
+        {
+          "word": " you",
+          "start": 120.35,
+          "end": 120.43,
+          "probability": 0.9982172846794128
+        },
+        {
+          "word": " here",
+          "start": 120.43,
+          "end": 120.61,
+          "probability": 0.9909449815750122
+        },
+        {
+          "word": " today,",
+          "start": 120.61,
+          "end": 120.95,
+          "probability": 0.9856841564178467
+        },
+        {
+          "word": " it's",
+          "start": 121.19,
+          "end": 121.45,
+          "probability": 0.970882385969162
+        },
+        {
+          "word": " really",
+          "start": 121.45,
+          "end": 121.69,
+          "probability": 0.9734717011451721
+        },
+        {
+          "word": " a",
+          "start": 121.69,
+          "end": 121.87,
+          "probability": 0.9916712045669556
+        },
+        {
+          "word": " great",
+          "start": 121.87,
+          "end": 122.09,
+          "probability": 0.995907187461853
+        },
+        {
+          "word": " feeling.",
+          "start": 122.09,
+          "end": 122.53,
+          "probability": 0.9948785305023193
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "start": 123.23,
+      "end": 128.71,
+      "text": "And the Filipino history and culture is huge here in Hawaii.",
+      "words": [
+        {
+          "word": " And",
+          "start": 123.23,
+          "end": 123.27,
+          "probability": 0.8326988220214844
+        },
+        {
+          "word": " the",
+          "start": 123.27,
+          "end": 123.47,
+          "probability": 0.9408555626869202
+        },
+        {
+          "word": " Filipino",
+          "start": 123.47,
+          "end": 123.85,
+          "probability": 0.9498810172080994
+        },
+        {
+          "word": " history",
+          "start": 123.85,
+          "end": 124.63,
+          "probability": 0.9379470348358154
+        },
+        {
+          "word": " and",
+          "start": 124.63,
+          "end": 124.91,
+          "probability": 0.9892834424972534
+        },
+        {
+          "word": " culture",
+          "start": 124.91,
+          "end": 125.27,
+          "probability": 0.9962661862373352
+        },
+        {
+          "word": " is",
+          "start": 125.27,
+          "end": 126.13,
+          "probability": 0.9651259183883667
+        },
+        {
+          "word": " huge",
+          "start": 126.13,
+          "end": 127.81,
+          "probability": 0.8940473794937134
+        },
+        {
+          "word": " here",
+          "start": 127.81,
+          "end": 128.33,
+          "probability": 0.9749014973640442
+        },
+        {
+          "word": " in",
+          "start": 128.33,
+          "end": 128.43,
+          "probability": 0.9916155934333801
+        },
+        {
+          "word": " Hawaii.",
+          "start": 128.43,
+          "end": 128.71,
+          "probability": 0.7345786690711975
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "start": 128.71,
+      "end": 135.13,
+      "text": "So, I just want to thank you all very much for all the work that you do, for the event coordinators,",
+      "words": [
+        {
+          "word": " So,",
+          "start": 128.71,
+          "end": 129.45,
+          "probability": 0.38442742824554443
+        },
+        {
+          "word": " I",
+          "start": 129.45,
+          "end": 130.09,
+          "probability": 0.9747428894042969
+        },
+        {
+          "word": " just",
+          "start": 130.09,
+          "end": 130.21,
+          "probability": 0.9546452164649963
+        },
+        {
+          "word": " want",
+          "start": 130.21,
+          "end": 130.29,
+          "probability": 0.7151707410812378
+        },
+        {
+          "word": " to",
+          "start": 130.29,
+          "end": 130.37,
+          "probability": 0.9954402446746826
+        },
+        {
+          "word": " thank",
+          "start": 130.37,
+          "end": 130.59,
+          "probability": 0.9972706437110901
+        },
+        {
+          "word": " you",
+          "start": 130.59,
+          "end": 130.77,
+          "probability": 0.988899290561676
+        },
+        {
+          "word": " all",
+          "start": 130.77,
+          "end": 130.91,
+          "probability": 0.9754399657249451
+        },
+        {
+          "word": " very",
+          "start": 130.91,
+          "end": 131.11,
+          "probability": 0.9841707348823547
+        },
+        {
+          "word": " much",
+          "start": 131.11,
+          "end": 131.47,
+          "probability": 0.9989533424377441
+        },
+        {
+          "word": " for",
+          "start": 131.47,
+          "end": 132.41,
+          "probability": 0.8891252875328064
+        },
+        {
+          "word": " all",
+          "start": 132.41,
+          "end": 132.63,
+          "probability": 0.9763497710227966
+        },
+        {
+          "word": " the",
+          "start": 132.63,
+          "end": 132.77,
+          "probability": 0.9774656295776367
+        },
+        {
+          "word": " work",
+          "start": 132.77,
+          "end": 132.95,
+          "probability": 0.9988559484481812
+        },
+        {
+          "word": " that",
+          "start": 132.95,
+          "end": 133.15,
+          "probability": 0.9646229147911072
+        },
+        {
+          "word": " you",
+          "start": 133.15,
+          "end": 133.33,
+          "probability": 0.9600591659545898
+        },
+        {
+          "word": " do,",
+          "start": 133.33,
+          "end": 133.57,
+          "probability": 0.9977826476097107
+        },
+        {
+          "word": " for",
+          "start": 133.81,
+          "end": 133.89,
+          "probability": 0.9641238451004028
+        },
+        {
+          "word": " the",
+          "start": 133.89,
+          "end": 134.05,
+          "probability": 0.9850785732269287
+        },
+        {
+          "word": " event",
+          "start": 134.05,
+          "end": 134.39,
+          "probability": 0.9746505618095398
+        },
+        {
+          "word": " coordinators,",
+          "start": 134.39,
+          "end": 135.13,
+          "probability": 0.9759814441204071
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "start": 135.13,
+      "end": 141.87,
+      "text": "for helping to celebrate a wonderful Filipino culture and history at Sakada Day,",
+      "words": [
+        {
+          "word": " for",
+          "start": 135.13,
+          "end": 135.33,
+          "probability": 0.9517344236373901
+        },
+        {
+          "word": " helping",
+          "start": 135.33,
+          "end": 135.51,
+          "probability": 0.9805437922477722
+        },
+        {
+          "word": " to",
+          "start": 135.51,
+          "end": 135.71,
+          "probability": 0.9803909063339233
+        },
+        {
+          "word": " celebrate",
+          "start": 135.71,
+          "end": 136.27,
+          "probability": 0.9979391694068909
+        },
+        {
+          "word": " a",
+          "start": 136.27,
+          "end": 137.19,
+          "probability": 0.35824868083000183
+        },
+        {
+          "word": " wonderful",
+          "start": 137.19,
+          "end": 138.03,
+          "probability": 0.997204601764679
+        },
+        {
+          "word": " Filipino",
+          "start": 138.03,
+          "end": 138.93,
+          "probability": 0.9709571003913879
+        },
+        {
+          "word": " culture",
+          "start": 138.93,
+          "end": 139.27,
+          "probability": 0.9400482773780823
+        },
+        {
+          "word": " and",
+          "start": 139.27,
+          "end": 139.49,
+          "probability": 0.8543382287025452
+        },
+        {
+          "word": " history",
+          "start": 139.49,
+          "end": 139.81,
+          "probability": 0.9920370578765869
+        },
+        {
+          "word": " at",
+          "start": 139.81,
+          "end": 140.23,
+          "probability": 0.49000251293182373
+        },
+        {
+          "word": " Sakada",
+          "start": 140.23,
+          "end": 141.59,
+          "probability": 0.4501967579126358
+        },
+        {
+          "word": " Day,",
+          "start": 141.59,
+          "end": 141.87,
+          "probability": 0.9498313069343567
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "start": 142.11,
+      "end": 145.01,
+      "text": "and honoring the initial immigrants that came here to Hawaii.",
+      "words": [
+        {
+          "word": " and",
+          "start": 142.11,
+          "end": 142.23,
+          "probability": 0.4930018484592438
+        },
+        {
+          "word": " honoring",
+          "start": 142.23,
+          "end": 142.65,
+          "probability": 0.9866846203804016
+        },
+        {
+          "word": " the",
+          "start": 142.65,
+          "end": 143.25,
+          "probability": 0.990908145904541
+        },
+        {
+          "word": " initial",
+          "start": 143.25,
+          "end": 143.57,
+          "probability": 0.6767910718917847
+        },
+        {
+          "word": " immigrants",
+          "start": 143.57,
+          "end": 144.03,
+          "probability": 0.9951261281967163
+        },
+        {
+          "word": " that",
+          "start": 144.03,
+          "end": 144.25,
+          "probability": 0.9225224256515503
+        },
+        {
+          "word": " came",
+          "start": 144.25,
+          "end": 144.41,
+          "probability": 0.9927852153778076
+        },
+        {
+          "word": " here",
+          "start": 144.41,
+          "end": 144.55,
+          "probability": 0.958134114742279
+        },
+        {
+          "word": " to",
+          "start": 144.55,
+          "end": 144.71,
+          "probability": 0.9718313217163086
+        },
+        {
+          "word": " Hawaii.",
+          "start": 144.71,
+          "end": 145.01,
+          "probability": 0.9712117314338684
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "start": 145.01,
+      "end": 153.79,
+      "text": "Our game is inspired by reality, like hope, Sakadas, like who, like Philippines.",
+      "words": [
+        {
+          "word": " Our",
+          "start": 145.01,
+          "end": 146.07,
+          "probability": 0.6256909370422363
+        },
+        {
+          "word": " game",
+          "start": 146.07,
+          "end": 146.31,
+          "probability": 0.867087185382843
+        },
+        {
+          "word": " is",
+          "start": 146.31,
+          "end": 146.49,
+          "probability": 0.9933567643165588
+        },
+        {
+          "word": " inspired",
+          "start": 146.49,
+          "end": 146.91,
+          "probability": 0.9964060187339783
+        },
+        {
+          "word": " by",
+          "start": 146.91,
+          "end": 147.23,
+          "probability": 0.998022198677063
+        },
+        {
+          "word": " reality,",
+          "start": 147.23,
+          "end": 148.73,
+          "probability": 0.8876230716705322
+        },
+        {
+          "word": " like",
+          "start": 148.93,
+          "end": 149.17,
+          "probability": 0.6796823143959045
+        },
+        {
+          "word": " hope,",
+          "start": 149.17,
+          "end": 149.49,
+          "probability": 0.7559915781021118
+        },
+        {
+          "word": " Sakadas,",
+          "start": 149.75,
+          "end": 150.21,
+          "probability": 0.32252177596092224
+        },
+        {
+          "word": " like",
+          "start": 150.61,
+          "end": 152.15,
+          "probability": 0.983900785446167
+        },
+        {
+          "word": " who,",
+          "start": 152.15,
+          "end": 152.49,
+          "probability": 0.2755025029182434
+        },
+        {
+          "word": " like",
+          "start": 152.97,
+          "end": 153.43,
+          "probability": 0.9951202273368835
+        },
+        {
+          "word": " Philippines.",
+          "start": 153.43,
+          "end": 153.79,
+          "probability": 0.8562250733375549
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "start": 164.1,
+      "end": 171.92,
+      "text": "As we reflect to the Sakadas legacy, let us remember the words of Dr. Osirisal,",
+      "words": [
+        {
+          "word": " As",
+          "start": 164.1,
+          "end": 164.82,
+          "probability": 0.975200891494751
+        },
+        {
+          "word": " we",
+          "start": 164.82,
+          "end": 165.04,
+          "probability": 0.9986862540245056
+        },
+        {
+          "word": " reflect",
+          "start": 165.04,
+          "end": 165.68,
+          "probability": 0.9125651121139526
+        },
+        {
+          "word": " to",
+          "start": 165.68,
+          "end": 166.52,
+          "probability": 0.825416088104248
+        },
+        {
+          "word": " the",
+          "start": 166.52,
+          "end": 166.64,
+          "probability": 0.7724868059158325
+        },
+        {
+          "word": " Sakadas",
+          "start": 166.64,
+          "end": 167.14,
+          "probability": 0.995024561882019
+        },
+        {
+          "word": " legacy,",
+          "start": 167.14,
+          "end": 167.68,
+          "probability": 0.9017879962921143
+        },
+        {
+          "word": " let",
+          "start": 168.4,
+          "end": 168.52,
+          "probability": 0.9953076243400574
+        },
+        {
+          "word": " us",
+          "start": 168.52,
+          "end": 168.92,
+          "probability": 0.9993314743041992
+        },
+        {
+          "word": " remember",
+          "start": 168.92,
+          "end": 169.66,
+          "probability": 0.9986390471458435
+        },
+        {
+          "word": " the",
+          "start": 169.66,
+          "end": 169.88,
+          "probability": 0.9991886019706726
+        },
+        {
+          "word": " words",
+          "start": 169.88,
+          "end": 170.26,
+          "probability": 0.9995449185371399
+        },
+        {
+          "word": " of",
+          "start": 170.26,
+          "end": 170.48,
+          "probability": 0.9987200498580933
+        },
+        {
+          "word": " Dr.",
+          "start": 170.48,
+          "end": 170.8,
+          "probability": 0.9831446409225464
+        },
+        {
+          "word": " Osirisal,",
+          "start": 171.2,
+          "end": 171.92,
+          "probability": 0.6208267286419868
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "start": 172.3,
+      "end": 175.42,
+      "text": "that you are the hope of the fatherland.",
+      "words": [
+        {
+          "word": " that",
+          "start": 172.3,
+          "end": 172.54,
+          "probability": 0.8636808395385742
+        },
+        {
+          "word": " you",
+          "start": 172.54,
+          "end": 172.88,
+          "probability": 0.9591069221496582
+        },
+        {
+          "word": " are",
+          "start": 172.88,
+          "end": 173.66,
+          "probability": 0.9992485642433167
+        },
+        {
+          "word": " the",
+          "start": 173.66,
+          "end": 173.86,
+          "probability": 0.9997032284736633
+        },
+        {
+          "word": " hope",
+          "start": 173.86,
+          "end": 174.28,
+          "probability": 0.9868060350418091
+        },
+        {
+          "word": " of",
+          "start": 174.28,
+          "end": 174.66,
+          "probability": 0.9994433522224426
+        },
+        {
+          "word": " the",
+          "start": 174.66,
+          "end": 174.78,
+          "probability": 0.6409843564033508
+        },
+        {
+          "word": " fatherland.",
+          "start": 174.78,
+          "end": 175.42,
+          "probability": 0.8931497037410736
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "start": 176.14,
+      "end": 181.7,
+      "text": "That hope shines brightly in the faces of the young people with us today.",
+      "words": [
+        {
+          "word": " That",
+          "start": 176.14,
+          "end": 176.42,
+          "probability": 0.9973135590553284
+        },
+        {
+          "word": " hope",
+          "start": 176.42,
+          "end": 176.72,
+          "probability": 0.9939985275268555
+        },
+        {
+          "word": " shines",
+          "start": 176.72,
+          "end": 177.34,
+          "probability": 0.9992638230323792
+        },
+        {
+          "word": " brightly",
+          "start": 177.34,
+          "end": 178.22,
+          "probability": 0.9973926544189453
+        },
+        {
+          "word": " in",
+          "start": 178.22,
+          "end": 178.54,
+          "probability": 0.997992992401123
+        },
+        {
+          "word": " the",
+          "start": 178.54,
+          "end": 178.64,
+          "probability": 0.9995681643486023
+        },
+        {
+          "word": " faces",
+          "start": 178.64,
+          "end": 179.0,
+          "probability": 0.9983774423599243
+        },
+        {
+          "word": " of",
+          "start": 179.0,
+          "end": 179.3,
+          "probability": 0.9998388290405273
+        },
+        {
+          "word": " the",
+          "start": 179.3,
+          "end": 179.42,
+          "probability": 0.9963016510009766
+        },
+        {
+          "word": " young",
+          "start": 179.42,
+          "end": 179.64,
+          "probability": 0.999481737613678
+        },
+        {
+          "word": " people",
+          "start": 179.64,
+          "end": 180.2,
+          "probability": 0.9997852444648743
+        },
+        {
+          "word": " with",
+          "start": 180.2,
+          "end": 181.1,
+          "probability": 0.8846111297607422
+        },
+        {
+          "word": " us",
+          "start": 181.1,
+          "end": 181.38,
+          "probability": 0.9997532963752747
+        },
+        {
+          "word": " today.",
+          "start": 181.38,
+          "end": 181.7,
+          "probability": 0.9992330074310303
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "start": 181.7,
+      "end": 185.22,
+      "text": "We embody the living legacy of the Sakadas,",
+      "words": [
+        {
+          "word": " We",
+          "start": 181.7,
+          "end": 182.44,
+          "probability": 0.2862788438796997
+        },
+        {
+          "word": " embody",
+          "start": 182.44,
+          "end": 182.96,
+          "probability": 0.9768010377883911
+        },
+        {
+          "word": " the",
+          "start": 182.96,
+          "end": 183.26,
+          "probability": 0.9894475936889648
+        },
+        {
+          "word": " living",
+          "start": 183.26,
+          "end": 183.56,
+          "probability": 0.9281834959983826
+        },
+        {
+          "word": " legacy",
+          "start": 183.56,
+          "end": 184.12,
+          "probability": 0.9862685799598694
+        },
+        {
+          "word": " of",
+          "start": 184.12,
+          "end": 184.54,
+          "probability": 0.9966572523117065
+        },
+        {
+          "word": " the",
+          "start": 184.54,
+          "end": 184.62,
+          "probability": 0.9257031679153442
+        },
+        {
+          "word": " Sakadas,",
+          "start": 184.62,
+          "end": 185.22,
+          "probability": 0.650532141327858
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "start": 185.46,
+      "end": 189.88,
+      "text": "breaching the struggles of the past with the promise of tomorrow.",
+      "words": [
+        {
+          "word": " breaching",
+          "start": 185.46,
+          "end": 186.38,
+          "probability": 0.6394698172807693
+        },
+        {
+          "word": " the",
+          "start": 186.38,
+          "end": 186.64,
+          "probability": 0.8764273524284363
+        },
+        {
+          "word": " struggles",
+          "start": 186.64,
+          "end": 187.2,
+          "probability": 0.9836302399635315
+        },
+        {
+          "word": " of",
+          "start": 187.2,
+          "end": 187.5,
+          "probability": 0.9924135804176331
+        },
+        {
+          "word": " the",
+          "start": 187.5,
+          "end": 187.62,
+          "probability": 0.9914776682853699
+        },
+        {
+          "word": " past",
+          "start": 187.62,
+          "end": 188.14,
+          "probability": 0.9976425766944885
+        },
+        {
+          "word": " with",
+          "start": 188.14,
+          "end": 188.48,
+          "probability": 0.9625102281570435
+        },
+        {
+          "word": " the",
+          "start": 188.48,
+          "end": 188.6,
+          "probability": 0.9479338526725769
+        },
+        {
+          "word": " promise",
+          "start": 188.6,
+          "end": 189.04,
+          "probability": 0.9914225935935974
+        },
+        {
+          "word": " of",
+          "start": 189.04,
+          "end": 189.38,
+          "probability": 0.9986770749092102
+        },
+        {
+          "word": " tomorrow.",
+          "start": 189.38,
+          "end": 189.88,
+          "probability": 0.992594301700592
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "start": 190.62,
+      "end": 195.48,
+      "text": "We know that education is so, so empowering and important for students.",
+      "words": [
+        {
+          "word": " We",
+          "start": 190.62,
+          "end": 191.18,
+          "probability": 0.9222818613052368
+        },
+        {
+          "word": " know",
+          "start": 191.18,
+          "end": 191.38,
+          "probability": 0.9989964365959167
+        },
+        {
+          "word": " that",
+          "start": 191.38,
+          "end": 191.58,
+          "probability": 0.9723328351974487
+        },
+        {
+          "word": " education",
+          "start": 191.58,
+          "end": 192.1,
+          "probability": 0.9881524443626404
+        },
+        {
+          "word": " is",
+          "start": 192.1,
+          "end": 192.4,
+          "probability": 0.9987622499465942
+        },
+        {
+          "word": " so,",
+          "start": 192.4,
+          "end": 192.64,
+          "probability": 0.9944227337837219
+        },
+        {
+          "word": " so",
+          "start": 192.82,
+          "end": 192.94,
+          "probability": 0.9917152523994446
+        },
+        {
+          "word": " empowering",
+          "start": 192.94,
+          "end": 194.0,
+          "probability": 0.952025830745697
+        },
+        {
+          "word": " and",
+          "start": 194.0,
+          "end": 194.26,
+          "probability": 0.9953835606575012
+        },
+        {
+          "word": " important",
+          "start": 194.26,
+          "end": 194.68,
+          "probability": 0.9987346529960632
+        },
+        {
+          "word": " for",
+          "start": 194.68,
+          "end": 195.0,
+          "probability": 0.9954084753990173
+        },
+        {
+          "word": " students.",
+          "start": 195.0,
+          "end": 195.48,
+          "probability": 0.9967768788337708
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "start": 196.04,
+      "end": 198.68,
+      "text": "As Filipinos, we are so, so strong together.",
+      "words": [
+        {
+          "word": " As",
+          "start": 196.04,
+          "end": 196.24,
+          "probability": 0.9831510782241821
+        },
+        {
+          "word": " Filipinos,",
+          "start": 196.24,
+          "end": 196.72,
+          "probability": 0.9826588928699493
+        },
+        {
+          "word": " we",
+          "start": 196.76,
+          "end": 196.96,
+          "probability": 0.996042013168335
+        },
+        {
+          "word": " are",
+          "start": 196.96,
+          "end": 197.08,
+          "probability": 0.9807726144790649
+        },
+        {
+          "word": " so,",
+          "start": 197.08,
+          "end": 197.32,
+          "probability": 0.9973194003105164
+        },
+        {
+          "word": " so",
+          "start": 197.48,
+          "end": 197.54,
+          "probability": 0.9996460676193237
+        },
+        {
+          "word": " strong",
+          "start": 197.54,
+          "end": 198.0,
+          "probability": 0.9942485094070435
+        },
+        {
+          "word": " together.",
+          "start": 198.0,
+          "end": 198.68,
+          "probability": 0.9953052997589111
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "start": 199.04,
+      "end": 205.82,
+      "text": "And it's important to look at history to understand that we have always been a people who are resilient.",
+      "words": [
+        {
+          "word": " And",
+          "start": 199.04,
+          "end": 199.68,
+          "probability": 0.9219967722892761
+        },
+        {
+          "word": " it's",
+          "start": 199.68,
+          "end": 199.92,
+          "probability": 0.9782856404781342
+        },
+        {
+          "word": " important",
+          "start": 199.92,
+          "end": 200.24,
+          "probability": 0.9997758269309998
+        },
+        {
+          "word": " to",
+          "start": 200.24,
+          "end": 200.42,
+          "probability": 0.9992117881774902
+        },
+        {
+          "word": " look",
+          "start": 200.42,
+          "end": 200.6,
+          "probability": 0.9987239241600037
+        },
+        {
+          "word": " at",
+          "start": 200.6,
+          "end": 200.72,
+          "probability": 0.9983863830566406
+        },
+        {
+          "word": " history",
+          "start": 200.72,
+          "end": 201.1,
+          "probability": 0.9954996705055237
+        },
+        {
+          "word": " to",
+          "start": 201.1,
+          "end": 201.42,
+          "probability": 0.9786806106567383
+        },
+        {
+          "word": " understand",
+          "start": 201.42,
+          "end": 202.18,
+          "probability": 0.9987058639526367
+        },
+        {
+          "word": " that",
+          "start": 202.18,
+          "end": 202.48,
+          "probability": 0.9969145059585571
+        },
+        {
+          "word": " we",
+          "start": 202.48,
+          "end": 202.64,
+          "probability": 0.9983782768249512
+        },
+        {
+          "word": " have",
+          "start": 202.64,
+          "end": 202.78,
+          "probability": 0.9795941114425659
+        },
+        {
+          "word": " always",
+          "start": 202.78,
+          "end": 203.06,
+          "probability": 0.9978684186935425
+        },
+        {
+          "word": " been",
+          "start": 203.06,
+          "end": 203.38,
+          "probability": 0.997946560382843
+        },
+        {
+          "word": " a",
+          "start": 203.38,
+          "end": 203.88,
+          "probability": 0.9934819340705872
+        },
+        {
+          "word": " people",
+          "start": 203.88,
+          "end": 204.2,
+          "probability": 0.9987340569496155
+        },
+        {
+          "word": " who",
+          "start": 204.2,
+          "end": 204.5,
+          "probability": 0.9974097609519958
+        },
+        {
+          "word": " are",
+          "start": 204.5,
+          "end": 205.1,
+          "probability": 0.9990977048873901
+        },
+        {
+          "word": " resilient.",
+          "start": 205.1,
+          "end": 205.82,
+          "probability": 0.998677670955658
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "start": 216.36,
+      "end": 222.76,
+      "text": "My grandfather and the Sakadas, they left the Philippines with so much hope,",
+      "words": [
+        {
+          "word": " My",
+          "start": 216.36,
+          "end": 217.18,
+          "probability": 0.5139832496643066
+        },
+        {
+          "word": " grandfather",
+          "start": 217.18,
+          "end": 217.72,
+          "probability": 0.6845545768737793
+        },
+        {
+          "word": " and",
+          "start": 217.72,
+          "end": 218.56,
+          "probability": 0.9107330441474915
+        },
+        {
+          "word": " the",
+          "start": 218.56,
+          "end": 218.76,
+          "probability": 0.8883860111236572
+        },
+        {
+          "word": " Sakadas,",
+          "start": 218.76,
+          "end": 219.22,
+          "probability": 0.437698096036911
+        },
+        {
+          "word": " they",
+          "start": 219.3,
+          "end": 219.82,
+          "probability": 0.9785610437393188
+        },
+        {
+          "word": " left",
+          "start": 219.82,
+          "end": 220.24,
+          "probability": 0.9866014122962952
+        },
+        {
+          "word": " the",
+          "start": 220.24,
+          "end": 220.64,
+          "probability": 0.9946756362915039
+        },
+        {
+          "word": " Philippines",
+          "start": 220.64,
+          "end": 221.1,
+          "probability": 0.9825040698051453
+        },
+        {
+          "word": " with",
+          "start": 221.1,
+          "end": 221.58,
+          "probability": 0.9900868535041809
+        },
+        {
+          "word": " so",
+          "start": 221.58,
+          "end": 222.0,
+          "probability": 0.9960281848907471
+        },
+        {
+          "word": " much",
+          "start": 222.0,
+          "end": 222.3,
+          "probability": 0.9990360736846924
+        },
+        {
+          "word": " hope,",
+          "start": 222.3,
+          "end": 222.76,
+          "probability": 0.9942745566368103
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "start": 223.79,
+      "end": 227.72,
+      "text": "with a sense of adventure event, to come here.",
+      "words": [
+        {
+          "word": " with",
+          "start": 223.79,
+          "end": 223.85,
+          "probability": 0.985768735408783
+        },
+        {
+          "word": " a",
+          "start": 223.85,
+          "end": 224.03,
+          "probability": 0.9784053564071655
+        },
+        {
+          "word": " sense",
+          "start": 224.03,
+          "end": 224.33,
+          "probability": 0.9839010834693909
+        },
+        {
+          "word": " of",
+          "start": 224.33,
+          "end": 224.61,
+          "probability": 0.9933786392211914
+        },
+        {
+          "word": " adventure",
+          "start": 224.61,
+          "end": 225.11,
+          "probability": 0.9858588576316833
+        },
+        {
+          "word": " event,",
+          "start": 225.11,
+          "end": 225.75,
+          "probability": 0.5676154494285583
+        },
+        {
+          "word": " to",
+          "start": 226.6,
+          "end": 227.16,
+          "probability": 0.9905984997749329
+        },
+        {
+          "word": " come",
+          "start": 227.16,
+          "end": 227.34,
+          "probability": 0.9993340373039246
+        },
+        {
+          "word": " here.",
+          "start": 227.34,
+          "end": 227.72,
+          "probability": 0.9985188841819763
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "start": 228.43,
+      "end": 230.75,
+      "text": "And what did they do? What did they achieve?",
+      "words": [
+        {
+          "word": " And",
+          "start": 228.43,
+          "end": 228.95,
+          "probability": 0.9357941150665283
+        },
+        {
+          "word": " what",
+          "start": 228.95,
+          "end": 229.15,
+          "probability": 0.9919556379318237
+        },
+        {
+          "word": " did",
+          "start": 229.15,
+          "end": 229.35,
+          "probability": 0.9912660717964172
+        },
+        {
+          "word": " they",
+          "start": 229.35,
+          "end": 229.47,
+          "probability": 0.9992049336433411
+        },
+        {
+          "word": " do?",
+          "start": 229.47,
+          "end": 229.65,
+          "probability": 0.9799485802650452
+        },
+        {
+          "word": " What",
+          "start": 229.75,
+          "end": 229.87,
+          "probability": 0.9923722743988037
+        },
+        {
+          "word": " did",
+          "start": 229.87,
+          "end": 230.07,
+          "probability": 0.9968296885490417
+        },
+        {
+          "word": " they",
+          "start": 230.07,
+          "end": 230.27,
+          "probability": 0.9985597729682922
+        },
+        {
+          "word": " achieve?",
+          "start": 230.27,
+          "end": 230.75,
+          "probability": 0.9893803596496582
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "start": 231.11,
+      "end": 233.43,
+      "text": "They achieved, they established us.",
+      "words": [
+        {
+          "word": " They",
+          "start": 231.11,
+          "end": 231.47,
+          "probability": 0.9694070816040039
+        },
+        {
+          "word": " achieved,",
+          "start": 231.47,
+          "end": 231.97,
+          "probability": 0.7702896595001221
+        },
+        {
+          "word": " they",
+          "start": 232.21,
+          "end": 232.27,
+          "probability": 0.819200336933136
+        },
+        {
+          "word": " established",
+          "start": 232.27,
+          "end": 232.79,
+          "probability": 0.987434446811676
+        },
+        {
+          "word": " us.",
+          "start": 232.79,
+          "end": 233.43,
+          "probability": 0.9449443221092224
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "start": 235.51,
+      "end": 239.17,
+      "text": "They established a generation of Filipino Americans.",
+      "words": [
+        {
+          "word": " They",
+          "start": 235.51,
+          "end": 236.31,
+          "probability": 0.9853188991546631
+        },
+        {
+          "word": " established",
+          "start": 236.31,
+          "end": 236.85,
+          "probability": 0.9930340051651001
+        },
+        {
+          "word": " a",
+          "start": 236.85,
+          "end": 237.13,
+          "probability": 0.9987686276435852
+        },
+        {
+          "word": " generation",
+          "start": 237.13,
+          "end": 237.75,
+          "probability": 0.9983188509941101
+        },
+        {
+          "word": " of",
+          "start": 237.75,
+          "end": 238.11,
+          "probability": 0.9987502098083496
+        },
+        {
+          "word": " Filipino",
+          "start": 238.11,
+          "end": 238.55,
+          "probability": 0.9932311773300171
+        },
+        {
+          "word": " Americans.",
+          "start": 238.55,
+          "end": 239.17,
+          "probability": 0.5087466239929199
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "start": 239.17,
+      "end": 247.04,
+      "text": "One in every four persons here in Hawaii is of Filipino American descent.",
+      "words": [
+        {
+          "word": " One",
+          "start": 239.17,
+          "end": 240.59,
+          "probability": 0.23413488268852234
+        },
+        {
+          "word": " in",
+          "start": 240.78,
+          "end": 241.18,
+          "probability": 0.980258584022522
+        },
+        {
+          "word": " every",
+          "start": 241.18,
+          "end": 241.6,
+          "probability": 0.9865671992301941
+        },
+        {
+          "word": " four",
+          "start": 241.6,
+          "end": 242.04,
+          "probability": 0.9159393906593323
+        },
+        {
+          "word": " persons",
+          "start": 242.04,
+          "end": 243.12,
+          "probability": 0.48602867126464844
+        },
+        {
+          "word": " here",
+          "start": 243.12,
+          "end": 243.46,
+          "probability": 0.9589934349060059
+        },
+        {
+          "word": " in",
+          "start": 243.46,
+          "end": 243.62,
+          "probability": 0.9799362421035767
+        },
+        {
+          "word": " Hawaii",
+          "start": 243.62,
+          "end": 243.92,
+          "probability": 0.9596394896507263
+        },
+        {
+          "word": " is",
+          "start": 243.92,
+          "end": 244.56,
+          "probability": 0.9010801911354065
+        },
+        {
+          "word": " of",
+          "start": 244.56,
+          "end": 244.86,
+          "probability": 0.9416149854660034
+        },
+        {
+          "word": " Filipino",
+          "start": 244.86,
+          "end": 245.72,
+          "probability": 0.9079045057296753
+        },
+        {
+          "word": " American",
+          "start": 245.72,
+          "end": 246.18,
+          "probability": 0.22916357219219208
+        },
+        {
+          "word": " descent.",
+          "start": 246.18,
+          "end": 247.04,
+          "probability": 0.992324948310852
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "start": 247.82,
+      "end": 249.8,
+      "text": "So that you get the Omelan.",
+      "words": [
+        {
+          "word": " So",
+          "start": 247.82,
+          "end": 248.28,
+          "probability": 0.9041443467140198
+        },
+        {
+          "word": " that",
+          "start": 248.28,
+          "end": 248.48,
+          "probability": 0.939306378364563
+        },
+        {
+          "word": " you",
+          "start": 248.48,
+          "end": 248.66,
+          "probability": 0.7624190449714661
+        },
+        {
+          "word": " get",
+          "start": 248.66,
+          "end": 248.96,
+          "probability": 0.9628819227218628
+        },
+        {
+          "word": " the",
+          "start": 248.96,
+          "end": 249.42,
+          "probability": 0.9480986595153809
+        },
+        {
+          "word": " Omelan.",
+          "start": 249.42,
+          "end": 249.8,
+          "probability": 0.4825540582338969
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "start": 251.03,
+      "end": 256.29,
+      "text": "Young people, friends, kukabayan, the hope of our country, break the end.",
+      "words": [
+        {
+          "word": " Young",
+          "start": 251.03,
+          "end": 251.27,
+          "probability": 0.9295914173126221
+        },
+        {
+          "word": " people,",
+          "start": 251.27,
+          "end": 251.61,
+          "probability": 0.9508145451545715
+        },
+        {
+          "word": " friends,",
+          "start": 251.79,
+          "end": 252.21,
+          "probability": 0.9516961574554443
+        },
+        {
+          "word": " kukabayan,",
+          "start": 252.43,
+          "end": 252.87,
+          "probability": 0.6808664835989475
+        },
+        {
+          "word": " the",
+          "start": 253.39,
+          "end": 253.55,
+          "probability": 0.9745203852653503
+        },
+        {
+          "word": " hope",
+          "start": 253.55,
+          "end": 253.85,
+          "probability": 0.9328441023826599
+        },
+        {
+          "word": " of",
+          "start": 253.85,
+          "end": 254.09,
+          "probability": 0.9816902279853821
+        },
+        {
+          "word": " our",
+          "start": 254.09,
+          "end": 254.31,
+          "probability": 0.9976600408554077
+        },
+        {
+          "word": " country,",
+          "start": 254.31,
+          "end": 254.77,
+          "probability": 0.9913783073425293
+        },
+        {
+          "word": " break",
+          "start": 255.23,
+          "end": 255.93,
+          "probability": 0.891096830368042
+        },
+        {
+          "word": " the",
+          "start": 255.93,
+          "end": 256.11,
+          "probability": 0.9779982566833496
+        },
+        {
+          "word": " end.",
+          "start": 256.11,
+          "end": 256.29,
+          "probability": 0.7673729658126831
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "start": 257.26,
+      "end": 262.14,
+      "text": "Through the page. Write your story. What is it, Kanadi?",
+      "words": [
+        {
+          "word": " Through",
+          "start": 257.26,
+          "end": 257.36,
+          "probability": 0.3757449984550476
+        },
+        {
+          "word": " the",
+          "start": 257.36,
+          "end": 257.48,
+          "probability": 0.9881771206855774
+        },
+        {
+          "word": " page.",
+          "start": 257.48,
+          "end": 257.88,
+          "probability": 0.9827286601066589
+        },
+        {
+          "word": " Write",
+          "start": 258.66,
+          "end": 258.96,
+          "probability": 0.9933606386184692
+        },
+        {
+          "word": " your",
+          "start": 258.96,
+          "end": 259.16,
+          "probability": 0.9941124320030212
+        },
+        {
+          "word": " story.",
+          "start": 259.16,
+          "end": 259.6,
+          "probability": 0.9985449314117432
+        },
+        {
+          "word": " What",
+          "start": 260.62,
+          "end": 261.0,
+          "probability": 0.975385844707489
+        },
+        {
+          "word": " is",
+          "start": 261.0,
+          "end": 261.18,
+          "probability": 0.9929342269897461
+        },
+        {
+          "word": " it,",
+          "start": 261.18,
+          "end": 261.44,
+          "probability": 0.9844410419464111
+        },
+        {
+          "word": " Kanadi?",
+          "start": 261.88,
+          "end": 262.14,
+          "probability": 0.2873104214668274
+        }
+      ]
+    },
+    {
+      "id": 38,
+      "start": 262.14,
+      "end": 265.52,
+      "text": "The event overall, this is the first time I'm attending it.",
+      "words": [
+        {
+          "word": " The",
+          "start": 262.14,
+          "end": 262.66,
+          "probability": 0.2446068674325943
+        },
+        {
+          "word": " event",
+          "start": 262.66,
+          "end": 263.08,
+          "probability": 0.9844910502433777
+        },
+        {
+          "word": " overall,",
+          "start": 263.08,
+          "end": 263.48,
+          "probability": 0.9397783279418945
+        },
+        {
+          "word": " this",
+          "start": 263.74,
+          "end": 264.12,
+          "probability": 0.9451477527618408
+        },
+        {
+          "word": " is",
+          "start": 264.12,
+          "end": 264.22,
+          "probability": 0.97958904504776
+        },
+        {
+          "word": " the",
+          "start": 264.22,
+          "end": 264.26,
+          "probability": 0.9967330694198608
+        },
+        {
+          "word": " first",
+          "start": 264.26,
+          "end": 264.42,
+          "probability": 0.9987836480140686
+        },
+        {
+          "word": " time",
+          "start": 264.42,
+          "end": 264.66,
+          "probability": 0.9988566637039185
+        },
+        {
+          "word": " I'm",
+          "start": 264.66,
+          "end": 264.96,
+          "probability": 0.976965993642807
+        },
+        {
+          "word": " attending",
+          "start": 264.96,
+          "end": 265.26,
+          "probability": 0.9981548190116882
+        },
+        {
+          "word": " it.",
+          "start": 265.26,
+          "end": 265.52,
+          "probability": 0.9685751795768738
+        }
+      ]
+    },
+    {
+      "id": 39,
+      "start": 265.74,
+      "end": 268.54,
+      "text": "And I think it's really awesome that the student groups,",
+      "words": [
+        {
+          "word": " And",
+          "start": 265.74,
+          "end": 265.82,
+          "probability": 0.6269007921218872
+        },
+        {
+          "word": " I",
+          "start": 265.82,
+          "end": 266.22,
+          "probability": 0.9862610697746277
+        },
+        {
+          "word": " think",
+          "start": 266.22,
+          "end": 266.32,
+          "probability": 0.9985440969467163
+        },
+        {
+          "word": " it's",
+          "start": 266.32,
+          "end": 266.46,
+          "probability": 0.996210902929306
+        },
+        {
+          "word": " really",
+          "start": 266.46,
+          "end": 266.6,
+          "probability": 0.9963789582252502
+        },
+        {
+          "word": " awesome",
+          "start": 266.6,
+          "end": 266.94,
+          "probability": 0.9993770718574524
+        },
+        {
+          "word": " that",
+          "start": 266.94,
+          "end": 267.26,
+          "probability": 0.9503756761550903
+        },
+        {
+          "word": " the",
+          "start": 267.26,
+          "end": 267.62,
+          "probability": 0.957697331905365
+        },
+        {
+          "word": " student",
+          "start": 267.62,
+          "end": 268.12,
+          "probability": 0.9872388243675232
+        },
+        {
+          "word": " groups,",
+          "start": 268.12,
+          "end": 268.54,
+          "probability": 0.9946435689926147
+        }
+      ]
+    },
+    {
+      "id": 40,
+      "start": 268.62,
+      "end": 271.58,
+      "text": "and I'm interested and curious about that stuff.",
+      "words": [
+        {
+          "word": " and",
+          "start": 268.62,
+          "end": 268.88,
+          "probability": 0.8876383900642395
+        },
+        {
+          "word": " I'm",
+          "start": 268.88,
+          "end": 269.9,
+          "probability": 0.9179751574993134
+        },
+        {
+          "word": " interested",
+          "start": 269.9,
+          "end": 270.32,
+          "probability": 0.9977026581764221
+        },
+        {
+          "word": " and",
+          "start": 270.32,
+          "end": 270.52,
+          "probability": 0.9484984874725342
+        },
+        {
+          "word": " curious",
+          "start": 270.52,
+          "end": 270.86,
+          "probability": 0.9994456171989441
+        },
+        {
+          "word": " about",
+          "start": 270.86,
+          "end": 271.12,
+          "probability": 0.9992538094520569
+        },
+        {
+          "word": " that",
+          "start": 271.12,
+          "end": 271.38,
+          "probability": 0.9930925369262695
+        },
+        {
+          "word": " stuff.",
+          "start": 271.38,
+          "end": 271.58,
+          "probability": 0.9915237426757812
+        }
+      ]
+    },
+    {
+      "id": 41,
+      "start": 271.76,
+      "end": 273.66,
+      "text": "So it was cool to learn from the students.",
+      "words": [
+        {
+          "word": " So",
+          "start": 271.76,
+          "end": 271.82,
+          "probability": 0.9900466799736023
+        },
+        {
+          "word": " it",
+          "start": 271.82,
+          "end": 272.1,
+          "probability": 0.8771655559539795
+        },
+        {
+          "word": " was",
+          "start": 272.1,
+          "end": 272.38,
+          "probability": 0.9983643889427185
+        },
+        {
+          "word": " cool",
+          "start": 272.38,
+          "end": 272.6,
+          "probability": 0.9994294047355652
+        },
+        {
+          "word": " to",
+          "start": 272.6,
+          "end": 272.74,
+          "probability": 0.9997208714485168
+        },
+        {
+          "word": " learn",
+          "start": 272.74,
+          "end": 272.94,
+          "probability": 0.9996273517608643
+        },
+        {
+          "word": " from",
+          "start": 272.94,
+          "end": 273.22,
+          "probability": 0.9994254112243652
+        },
+        {
+          "word": " the",
+          "start": 273.22,
+          "end": 273.34,
+          "probability": 0.999164342880249
+        },
+        {
+          "word": " students.",
+          "start": 273.34,
+          "end": 273.66,
+          "probability": 0.9985629916191101
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "start": 273.78,
+      "end": 277.18,
+      "text": "It wasn't me teaching them, it was the students teaching us.",
+      "words": [
+        {
+          "word": " It",
+          "start": 273.78,
+          "end": 274.08,
+          "probability": 0.5616347193717957
+        },
+        {
+          "word": " wasn't",
+          "start": 274.08,
+          "end": 274.38,
+          "probability": 0.9988402724266052
+        },
+        {
+          "word": " me",
+          "start": 274.38,
+          "end": 274.56,
+          "probability": 0.9979439377784729
+        },
+        {
+          "word": " teaching",
+          "start": 274.56,
+          "end": 274.98,
+          "probability": 0.9996412992477417
+        },
+        {
+          "word": " them,",
+          "start": 274.98,
+          "end": 275.24,
+          "probability": 0.9998210072517395
+        },
+        {
+          "word": " it",
+          "start": 275.4,
+          "end": 275.62,
+          "probability": 0.991482138633728
+        },
+        {
+          "word": " was",
+          "start": 275.62,
+          "end": 275.74,
+          "probability": 0.9997217059135437
+        },
+        {
+          "word": " the",
+          "start": 275.74,
+          "end": 275.86,
+          "probability": 0.9642255306243896
+        },
+        {
+          "word": " students",
+          "start": 275.86,
+          "end": 276.28,
+          "probability": 0.9863461852073669
+        },
+        {
+          "word": " teaching",
+          "start": 276.28,
+          "end": 276.86,
+          "probability": 0.8642080426216125
+        },
+        {
+          "word": " us.",
+          "start": 276.86,
+          "end": 277.18,
+          "probability": 0.8705261945724487
+        }
+      ]
+    },
+    {
+      "id": 43,
+      "start": 277.58,
+      "end": 285.05,
+      "text": "I wanted to incorporate the hardships and strength, determination that the Sakadas face.",
+      "words": [
+        {
+          "word": " I",
+          "start": 277.58,
+          "end": 277.96,
+          "probability": 0.8980868458747864
+        },
+        {
+          "word": " wanted",
+          "start": 278.89,
+          "end": 279.19,
+          "probability": 0.9943249821662903
+        },
+        {
+          "word": " to",
+          "start": 279.19,
+          "end": 279.47,
+          "probability": 0.9991976618766785
+        },
+        {
+          "word": " incorporate",
+          "start": 279.47,
+          "end": 280.31,
+          "probability": 0.8949339389801025
+        },
+        {
+          "word": " the",
+          "start": 280.31,
+          "end": 281.09,
+          "probability": 0.9534931778907776
+        },
+        {
+          "word": " hardships",
+          "start": 281.09,
+          "end": 281.69,
+          "probability": 0.9905745387077332
+        },
+        {
+          "word": " and",
+          "start": 281.69,
+          "end": 282.39,
+          "probability": 0.634755551815033
+        },
+        {
+          "word": " strength,",
+          "start": 282.39,
+          "end": 283.03,
+          "probability": 0.9033111333847046
+        },
+        {
+          "word": " determination",
+          "start": 283.23,
+          "end": 283.81,
+          "probability": 0.9572885036468506
+        },
+        {
+          "word": " that",
+          "start": 283.81,
+          "end": 284.17,
+          "probability": 0.8596241474151611
+        },
+        {
+          "word": " the",
+          "start": 284.17,
+          "end": 284.31,
+          "probability": 0.8672499060630798
+        },
+        {
+          "word": " Sakadas",
+          "start": 284.31,
+          "end": 284.79,
+          "probability": 0.000780953632784076
+        },
+        {
+          "word": " face.",
+          "start": 284.79,
+          "end": 285.05,
+          "probability": 0.7181278467178345
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "start": 285.21,
+      "end": 286.49,
+      "text": "There was a lot of cool things.",
+      "words": [
+        {
+          "word": " There",
+          "start": 285.21,
+          "end": 285.45,
+          "probability": 0.991298496723175
+        },
+        {
+          "word": " was",
+          "start": 285.45,
+          "end": 285.59,
+          "probability": 0.9636790156364441
+        },
+        {
+          "word": " a",
+          "start": 285.59,
+          "end": 285.71,
+          "probability": 0.9998574256896973
+        },
+        {
+          "word": " lot",
+          "start": 285.71,
+          "end": 285.81,
+          "probability": 0.9998331069946289
+        },
+        {
+          "word": " of",
+          "start": 285.81,
+          "end": 285.91,
+          "probability": 0.9996131062507629
+        },
+        {
+          "word": " cool",
+          "start": 285.91,
+          "end": 286.11,
+          "probability": 0.9995217323303223
+        },
+        {
+          "word": " things.",
+          "start": 286.11,
+          "end": 286.49,
+          "probability": 0.9996658563613892
+        }
+      ]
+    },
+    {
+      "id": 45,
+      "start": 286.49,
+      "end": 292.73,
+      "text": "One of the coolest things I saw was a comic book, which was created with AI,",
+      "words": [
+        {
+          "word": " One",
+          "start": 286.49,
+          "end": 287.31,
+          "probability": 0.5023996829986572
+        },
+        {
+          "word": " of",
+          "start": 287.31,
+          "end": 287.43,
+          "probability": 0.9985489249229431
+        },
+        {
+          "word": " the",
+          "start": 287.43,
+          "end": 287.53,
+          "probability": 0.9984455704689026
+        },
+        {
+          "word": " coolest",
+          "start": 287.53,
+          "end": 287.79,
+          "probability": 0.9739680886268616
+        },
+        {
+          "word": " things",
+          "start": 287.79,
+          "end": 287.99,
+          "probability": 0.9884642958641052
+        },
+        {
+          "word": " I",
+          "start": 287.99,
+          "end": 288.13,
+          "probability": 0.9664416313171387
+        },
+        {
+          "word": " saw",
+          "start": 288.13,
+          "end": 288.35,
+          "probability": 0.9982353448867798
+        },
+        {
+          "word": " was",
+          "start": 288.35,
+          "end": 288.75,
+          "probability": 0.9913679957389832
+        },
+        {
+          "word": " a",
+          "start": 288.75,
+          "end": 289.05,
+          "probability": 0.9937122464179993
+        },
+        {
+          "word": " comic",
+          "start": 289.05,
+          "end": 289.43,
+          "probability": 0.9941486120223999
+        },
+        {
+          "word": " book,",
+          "start": 289.43,
+          "end": 289.85,
+          "probability": 0.998432457447052
+        },
+        {
+          "word": " which",
+          "start": 290.31,
+          "end": 291.07,
+          "probability": 0.9768585562705994
+        },
+        {
+          "word": " was",
+          "start": 291.07,
+          "end": 291.41,
+          "probability": 0.9987046718597412
+        },
+        {
+          "word": " created",
+          "start": 291.41,
+          "end": 292.21,
+          "probability": 0.983913779258728
+        },
+        {
+          "word": " with",
+          "start": 292.21,
+          "end": 292.43,
+          "probability": 0.9950975775718689
+        },
+        {
+          "word": " AI,",
+          "start": 292.43,
+          "end": 292.73,
+          "probability": 0.8565452694892883
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "start": 293.13,
+      "end": 295.37,
+      "text": "but it told the story so perfectly.",
+      "words": [
+        {
+          "word": " but",
+          "start": 293.13,
+          "end": 293.47,
+          "probability": 0.9952097535133362
+        },
+        {
+          "word": " it",
+          "start": 293.47,
+          "end": 293.75,
+          "probability": 0.9868730902671814
+        },
+        {
+          "word": " told",
+          "start": 293.75,
+          "end": 293.93,
+          "probability": 0.991309404373169
+        },
+        {
+          "word": " the",
+          "start": 293.93,
+          "end": 294.07,
+          "probability": 0.9959127306938171
+        },
+        {
+          "word": " story",
+          "start": 294.07,
+          "end": 294.43,
+          "probability": 0.9984530210494995
+        },
+        {
+          "word": " so",
+          "start": 294.43,
+          "end": 294.87,
+          "probability": 0.9960588216781616
+        },
+        {
+          "word": " perfectly.",
+          "start": 294.87,
+          "end": 295.37,
+          "probability": 0.9994344115257263
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "start": 296.01,
+      "end": 302.59,
+      "text": "And just learning about the legacy of where Sakada came from and where your ancestry came from.",
+      "words": [
+        {
+          "word": " And",
+          "start": 296.01,
+          "end": 296.15,
+          "probability": 0.9199047684669495
+        },
+        {
+          "word": " just",
+          "start": 296.15,
+          "end": 296.49,
+          "probability": 0.989147961139679
+        },
+        {
+          "word": " learning",
+          "start": 296.49,
+          "end": 296.81,
+          "probability": 0.9993876218795776
+        },
+        {
+          "word": " about",
+          "start": 296.81,
+          "end": 297.13,
+          "probability": 0.9991525411605835
+        },
+        {
+          "word": " the",
+          "start": 297.13,
+          "end": 297.47,
+          "probability": 0.9992228746414185
+        },
+        {
+          "word": " legacy",
+          "start": 297.47,
+          "end": 297.95,
+          "probability": 0.9991111159324646
+        },
+        {
+          "word": " of",
+          "start": 297.95,
+          "end": 298.67,
+          "probability": 0.9985768795013428
+        },
+        {
+          "word": " where",
+          "start": 298.67,
+          "end": 299.75,
+          "probability": 0.9960902333259583
+        },
+        {
+          "word": " Sakada",
+          "start": 299.75,
+          "end": 300.37,
+          "probability": 0.38921190798282623
+        },
+        {
+          "word": " came",
+          "start": 300.37,
+          "end": 300.61,
+          "probability": 0.9984670281410217
+        },
+        {
+          "word": " from",
+          "start": 300.61,
+          "end": 301.01,
+          "probability": 0.9995341300964355
+        },
+        {
+          "word": " and",
+          "start": 301.01,
+          "end": 301.33,
+          "probability": 0.9101654291152954
+        },
+        {
+          "word": " where",
+          "start": 301.33,
+          "end": 301.49,
+          "probability": 0.9986026883125305
+        },
+        {
+          "word": " your",
+          "start": 301.49,
+          "end": 301.61,
+          "probability": 0.9946104288101196
+        },
+        {
+          "word": " ancestry",
+          "start": 301.61,
+          "end": 302.01,
+          "probability": 0.9900257587432861
+        },
+        {
+          "word": " came",
+          "start": 302.01,
+          "end": 302.29,
+          "probability": 0.9987894892692566
+        },
+        {
+          "word": " from.",
+          "start": 302.29,
+          "end": 302.59,
+          "probability": 0.9995219707489014
+        }
+      ]
+    },
+    {
+      "id": 48,
+      "start": 302.79,
+      "end": 306.55,
+      "text": "It's very important to lead on into the future and to tell your grandkids and,",
+      "words": [
+        {
+          "word": " It's",
+          "start": 302.79,
+          "end": 303.17,
+          "probability": 0.9958910048007965
+        },
+        {
+          "word": " very",
+          "start": 303.17,
+          "end": 303.39,
+          "probability": 0.9992758631706238
+        },
+        {
+          "word": " important",
+          "start": 303.39,
+          "end": 303.77,
+          "probability": 0.9998680353164673
+        },
+        {
+          "word": " to",
+          "start": 303.77,
+          "end": 304.01,
+          "probability": 0.998601496219635
+        },
+        {
+          "word": " lead",
+          "start": 304.01,
+          "end": 304.19,
+          "probability": 0.9840452671051025
+        },
+        {
+          "word": " on",
+          "start": 304.19,
+          "end": 304.33,
+          "probability": 0.9930611252784729
+        },
+        {
+          "word": " into",
+          "start": 304.33,
+          "end": 304.53,
+          "probability": 0.9960615038871765
+        },
+        {
+          "word": " the",
+          "start": 304.53,
+          "end": 304.67,
+          "probability": 0.9994296431541443
+        },
+        {
+          "word": " future",
+          "start": 304.67,
+          "end": 305.01,
+          "probability": 0.9998219609260559
+        },
+        {
+          "word": " and",
+          "start": 305.01,
+          "end": 305.29,
+          "probability": 0.9220308661460876
+        },
+        {
+          "word": " to",
+          "start": 305.29,
+          "end": 305.41,
+          "probability": 0.9913222789764404
+        },
+        {
+          "word": " tell",
+          "start": 305.41,
+          "end": 305.55,
+          "probability": 0.9930456280708313
+        },
+        {
+          "word": " your",
+          "start": 305.55,
+          "end": 305.67,
+          "probability": 0.9961143732070923
+        },
+        {
+          "word": " grandkids",
+          "start": 305.67,
+          "end": 306.23,
+          "probability": 0.99689781665802
+        },
+        {
+          "word": " and,",
+          "start": 306.23,
+          "end": 306.55,
+          "probability": 0.6286360621452332
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "start": 306.57,
+      "end": 309.71,
+      "text": "you know, just the foundation of where you came from.",
+      "words": [
+        {
+          "word": " you",
+          "start": 306.57,
+          "end": 307.09,
+          "probability": 0.9973129630088806
+        },
+        {
+          "word": " know,",
+          "start": 307.09,
+          "end": 307.17,
+          "probability": 0.999895453453064
+        },
+        {
+          "word": " just",
+          "start": 307.25,
+          "end": 307.47,
+          "probability": 0.9901800155639648
+        },
+        {
+          "word": " the",
+          "start": 307.47,
+          "end": 307.75,
+          "probability": 0.9992030262947083
+        },
+        {
+          "word": " foundation",
+          "start": 307.75,
+          "end": 308.69,
+          "probability": 0.9536775946617126
+        },
+        {
+          "word": " of",
+          "start": 308.69,
+          "end": 309.03,
+          "probability": 0.999790370464325
+        },
+        {
+          "word": " where",
+          "start": 309.03,
+          "end": 309.15,
+          "probability": 0.9999285936355591
+        },
+        {
+          "word": " you",
+          "start": 309.15,
+          "end": 309.27,
+          "probability": 0.9989660978317261
+        },
+        {
+          "word": " came",
+          "start": 309.27,
+          "end": 309.43,
+          "probability": 0.9991812109947205
+        },
+        {
+          "word": " from.",
+          "start": 309.43,
+          "end": 309.71,
+          "probability": 0.9992043375968933
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "start": 315.03,
+      "end": 315.91,
+      "text": "And the leader.",
+      "words": [
+        {
+          "word": " And",
+          "start": 315.03,
+          "end": 315.39,
+          "probability": 0.7751489877700806
+        },
+        {
+          "word": " the",
+          "start": 315.39,
+          "end": 315.65,
+          "probability": 0.9548490047454834
+        },
+        {
+          "word": " leader.",
+          "start": 315.65,
+          "end": 315.91,
+          "probability": 0.6980156302452087
+        }
+      ]
+    },
+    {
+      "id": 51,
+      "start": 316.82,
+      "end": 323.17,
+      "text": "Okay, the name is Tiang, Ray, and Daya.",
+      "words": [
+        {
+          "word": " Okay,",
+          "start": 316.82,
+          "end": 317.3,
+          "probability": 0.10360497981309891
+        },
+        {
+          "word": " the",
+          "start": 318.0,
+          "end": 318.06,
+          "probability": 0.9530826210975647
+        },
+        {
+          "word": " name",
+          "start": 318.06,
+          "end": 318.46,
+          "probability": 0.9957931041717529
+        },
+        {
+          "word": " is",
+          "start": 318.46,
+          "end": 319.22,
+          "probability": 0.9962235689163208
+        },
+        {
+          "word": " Tiang,",
+          "start": 320.37,
+          "end": 321.65,
+          "probability": 0.6610570698976517
+        },
+        {
+          "word": " Ray,",
+          "start": 321.75,
+          "end": 322.19,
+          "probability": 0.5032148361206055
+        },
+        {
+          "word": " and",
+          "start": 322.57,
+          "end": 322.69,
+          "probability": 0.9340906143188477
+        },
+        {
+          "word": " Daya.",
+          "start": 322.69,
+          "end": 323.17,
+          "probability": 0.7691117525100708
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "start": 324.38,
+      "end": 325.54,
+      "text": "Ray and Daya.",
+      "words": [
+        {
+          "word": " Ray",
+          "start": 324.38,
+          "end": 324.86,
+          "probability": 0.4096372723579407
+        },
+        {
+          "word": " and",
+          "start": 324.86,
+          "end": 325.14,
+          "probability": 0.8135432004928589
+        },
+        {
+          "word": " Daya.",
+          "start": 325.14,
+          "end": 325.54,
+          "probability": 0.9856881499290466
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "start": 329.62,
+      "end": 330.84,
+      "text": "When do you go to the Philippines?",
+      "words": [
+        {
+          "word": " When",
+          "start": 329.62,
+          "end": 329.92,
+          "probability": 0.4998796284198761
+        },
+        {
+          "word": " do",
+          "start": 329.92,
+          "end": 330.0,
+          "probability": 0.3262484669685364
+        },
+        {
+          "word": " you",
+          "start": 330.0,
+          "end": 330.02,
+          "probability": 0.9957666397094727
+        },
+        {
+          "word": " go",
+          "start": 330.02,
+          "end": 330.18,
+          "probability": 0.9981904625892639
+        },
+        {
+          "word": " to",
+          "start": 330.18,
+          "end": 330.32,
+          "probability": 0.9964469075202942
+        },
+        {
+          "word": " the",
+          "start": 330.32,
+          "end": 330.42,
+          "probability": 0.9897832274436951
+        },
+        {
+          "word": " Philippines?",
+          "start": 330.42,
+          "end": 330.84,
+          "probability": 0.9785675406455994
+        }
+      ]
+    },
+    {
+      "id": 54,
+      "start": 331.86,
+      "end": 334.5,
+      "text": "Oh, visit my family there. I've never been there to walk in.",
+      "words": [
+        {
+          "word": " Oh,",
+          "start": 331.86,
+          "end": 332.14,
+          "probability": 0.2692069709300995
+        },
+        {
+          "word": " visit",
+          "start": 332.24,
+          "end": 332.46,
+          "probability": 0.6890486478805542
+        },
+        {
+          "word": " my",
+          "start": 332.46,
+          "end": 332.7,
+          "probability": 0.992708683013916
+        },
+        {
+          "word": " family",
+          "start": 332.7,
+          "end": 333.02,
+          "probability": 0.9970706701278687
+        },
+        {
+          "word": " there.",
+          "start": 333.02,
+          "end": 333.24,
+          "probability": 0.9584670662879944
+        },
+        {
+          "word": " I've",
+          "start": 333.34,
+          "end": 333.42,
+          "probability": 0.9785905182361603
+        },
+        {
+          "word": " never",
+          "start": 333.42,
+          "end": 333.6,
+          "probability": 0.998969554901123
+        },
+        {
+          "word": " been",
+          "start": 333.6,
+          "end": 333.86,
+          "probability": 0.9939166903495789
+        },
+        {
+          "word": " there",
+          "start": 333.86,
+          "end": 333.98,
+          "probability": 0.4426650404930115
+        },
+        {
+          "word": " to",
+          "start": 333.98,
+          "end": 334.16,
+          "probability": 0.6953760981559753
+        },
+        {
+          "word": " walk",
+          "start": 334.16,
+          "end": 334.36,
+          "probability": 0.17591223120689392
+        },
+        {
+          "word": " in.",
+          "start": 334.36,
+          "end": 334.5,
+          "probability": 0.5088207721710205
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "start": 334.66,
+      "end": 335.04,
+      "text": "Oh!",
+      "words": [
+        {
+          "word": " Oh!",
+          "start": 334.66,
+          "end": 335.04,
+          "probability": 0.3763245940208435
+        }
+      ]
+    }
+  ]
+}

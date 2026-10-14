@@ -52,33 +52,9 @@ on conflict (event_id, slug) do nothing;
 
 insert into public.membership_tiers (slug, level, price_cents, period_label, benefits, accent_color, sort_order)
 values
-  (
-    'individual',
-    'Individual',
-    4500,
-    'per year',
-    '["Free admission for one named adult member","10% discount on all gift shop items","Invitations to annual meetings and archives showcase","Subscription to the print Ledger journal"]'::jsonb,
-    '#1b3823',
-    1
-  ),
-  (
-    'household',
-    'Household',
-    7500,
-    'per year',
-    '["Free admission for two named adults and up to four children","2 complimentary guest passes per year","10% discount on all gift shop items","Exclusive advance tour bookings for festivals"]'::jsonb,
-    '#22646d',
-    2
-  ),
-  (
-    'steward',
-    'Steward',
-    15000,
-    'per year',
-    '["All Household membership benefits","Invitation to private reception with the Museum Director","1 hour private research archive consultation","4 complimentary guest passes per year"]'::jsonb,
-    '#b24e2c',
-    3
-  )
+  ('individual', 'Individual', 3500, 'per year', '["Membership for one adult","Free admission and guided tours for one year","Members-only invitations to special events, exhibits & cultural heritage celebrations","10% off at the gift shop"]'::jsonb, '#1b3823', 1),
+  ('senior', 'Senior', 3000, 'per year', '["For members age 62 & above","Free admission and guided tours for one year","Members-only invitations to special events, exhibits & cultural heritage celebrations","10% off at the gift shop"]'::jsonb, '#22646d', 2),
+  ('family', 'Family', 6000, 'per year', '["Two adults & children under 18","Free admission and guided tours for one year","Members-only invitations to special events, exhibits & cultural heritage celebrations","10% off at the gift shop"]'::jsonb, '#b24e2c', 3)
 on conflict (slug) do nothing;
 
 insert into public.content_entries (slug, content_type, status, title, summary, body, category, event_date_label, image_url, published_at)

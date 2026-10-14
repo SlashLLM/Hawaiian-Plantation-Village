@@ -84,7 +84,7 @@ export default function Events() {
             </div>
           ) : (
             <p className="editorial-lede" style={{ marginTop: '2rem' }}>
-              No events are scheduled right now. Check back soon — or plan a visit any Tuesday
+              No events are scheduled right now. Check back soon — or plan a visit any Monday
               through Saturday.
             </p>
           )}

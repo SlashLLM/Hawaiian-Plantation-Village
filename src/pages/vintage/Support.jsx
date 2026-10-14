@@ -1,21 +1,46 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import { Heart, Award, ArrowRight, ShieldCheck, AlertCircle, HandHeart } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import PageHeaderParallax from '../../components/PageHeaderParallax';
 import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
-import { createMembership, fetchMembershipTiers, formatCents } from '../../lib/api.js';
-import { isSupabaseConfigured } from '../../lib/supabase.js';
+import { createMembership } from '../../lib/api.js';
+import { MEMBERSHIP_TIERS } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
+import ComingSoon from '../../components/ComingSoon.jsx';
 import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
+import { useAppNavigate } from '../../hooks/useAppNavigate.js';
+import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
 
+// Volunteering has its own page but no nav entry, so Support — where visitors
+// look for ways to help — is how people find it.
+function VolunteerCallout({ onVolunteer }) {
+  return (
+    <section className="paper-card" style={styles.volunteerCallout} aria-labelledby="volunteer-heading">
+      <div style={styles.volunteerIcon} aria-hidden="true">
+        <HandHeart size={26} />
+      </div>
+      <div style={styles.volunteerText}>
+        <h2 id="volunteer-heading" style={styles.volunteerTitle}>Give your time.</h2>
+        <p style={styles.volunteerBody}>
+          The Village exists because people showed up. Lead tours, tend the gardens, help in the archives, or pitch in at festivals.
+        </p>
+      </div>
+      <button type="button" className="btn-accent" onClick={onVolunteer} style={styles.volunteerBtn}>
+        Volunteer With Us <ArrowRight size={16} />
+      </button>
+    </section>
+  );
+}
+
 export default function Support() {
+  const setActivePage = useAppNavigate();
   const { settings } = useSiteSettings();
   const { section: header } = usePageSection('support', 'header', {
     stamp: 'Help us keep our stories alive',
     stampClass: 'green',
     title: 'What we preserve today becomes tomorrow’s legacy.',
-    subtitle: 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.',
+    subtitle: 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.',
   });
   const { section: donateSection } = usePageSection('support', 'donate', {
     title: 'Make a gift',
@@ -49,66 +74,7 @@ export default function Support() {
   const [memSubmitting, setMemSubmitting] = useState(false);
   const [memError, setMemError] = useState('');
   const [memConfirmation, setMemConfirmation] = useState(null);
-  const [tiersFromDb, setTiersFromDb] = useState([]);
-
-  const FALLBACK_TIERS = [
-    {
-      slug: 'individual',
-      level: 'Individual',
-      price: '$45',
-      period: 'per year',
-      color: 'var(--cane-green)',
-      benefits: [
-        'Free admission for one named adult member',
-        '10% discount on all gift shop items',
-        'Invitations to annual meetings and archives showcase',
-        'Subscription to the print Ledger journal'
-      ]
-    },
-    {
-      slug: 'household',
-      level: 'Household',
-      price: '$75',
-      period: 'per year',
-      color: 'var(--ocean-teal)',
-      benefits: [
-        'Free admission for two named adults and up to four children',
-        '2 complimentary guest passes per year',
-        '10% discount on all gift shop items',
-        'Exclusive advance tour bookings for festivals'
-      ]
-    },
-    {
-      slug: 'steward',
-      level: 'Steward',
-      price: '$150',
-      period: 'per year',
-      color: 'var(--tin-rust)',
-      benefits: [
-        'All Household membership benefits',
-        'Invitation to private reception with the Museum Director',
-        '1 hour private research archive consultation',
-        '4 complimentary guest passes per year'
-      ]
-    }
-  ];
-
-  useEffect(() => {
-    if (!isSupabaseConfigured) return;
-    fetchMembershipTiers()
-      .then((data) => { if (data?.length) setTiersFromDb(data); })
-      .catch(() => {});
-  }, []);
-
-  const memberships = (tiersFromDb.length ? tiersFromDb : FALLBACK_TIERS).map((t) => ({
-    slug: t.slug,
-    level: t.level,
-    price: t.price_cents != null ? formatCents(t.price_cents) : t.price,
-    priceCents: t.price_cents ?? parseInt(String(t.price).replace(/\D/g, ''), 10),
-    period: t.period_label ?? t.period ?? 'per year',
-    color: t.accent_color ?? t.color ?? 'var(--cane-green)',
-    benefits: Array.isArray(t.benefits) ? t.benefits : t.benefits,
-  }));
+  const memberships = MEMBERSHIP_TIERS;
 
   const handleSupportSubmit = (e) => {
     e.preventDefault();
@@ -127,7 +93,7 @@ export default function Support() {
         firstName: memFirstName,
         lastName: memLastName,
         email: memEmail,
-        householdNote: selectedTier.slug === 'household' || selectedTier.slug === 'steward' ? householdNote : undefined,
+        householdNote: ['family', 'household', 'steward'].includes(selectedTier.slug) ? householdNote : undefined,
       });
       confetti({ particleCount: 100, spread: 60, origin: { y: 0.8 } });
       setMemConfirmation(result);
@@ -149,6 +115,67 @@ export default function Support() {
     return donateAmount === 'custom' ? customAmount : donateAmount;
   };
 
+  // Online payments are not connected yet — the gift and membership flows below
+  // stay intact and come back when PAYMENTS_ENABLED flips.
+  // See src/lib/paymentsConfig.js.
+  if (!PAYMENTS_ENABLED) {
+    return (
+      <div style={styles.pageContainer}>
+        <SEO
+          title="Support Us"
+          description="Support Hawaii's Plantation Village. Online giving is coming soon — call (808) 677-0110 to make a gift or join as a member."
+        />
+        <PageHeaderParallax
+          image={SITE_PHOTOS.headers.support}
+          stamp={header?.stamp ?? 'Help us keep our stories alive'}
+          title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
+          subtitle={header?.subtitle ?? 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.'}
+        />
+
+        <div style={styles.container}>
+          <section style={styles.membershipSection} aria-labelledby="membership-heading">
+            <div style={styles.membershipIntro}>
+              <h2 id="membership-heading" style={styles.subHeadingTitle}>{membershipIntro?.title ?? 'Belong to the Village.'}</h2>
+              <p style={styles.bodyText}>
+                {membershipIntro?.description ?? 'Membership is more than admission. It’s a way to stand behind a place that keeps Hawaiʻi’s stories alive.'}
+              </p>
+            </div>
+            <div className="tiers-grid-responsive">
+              {memberships.map((m) => (
+                <div key={m.slug ?? m.level} className="paper-card" style={styles.tierCard}>
+                  <div style={{ ...styles.tierHeader, borderTop: `4px solid ${m.color}` }}>
+                    <h3 style={styles.tierLevel}>{m.level}</h3>
+                    <div style={styles.priceBlock}>
+                      <span style={styles.tierPrice}>{m.price}</span>
+                      <span style={styles.tierPeriod}>{m.period}</span>
+                    </div>
+                  </div>
+                  <div className="ledger-divider" />
+                  <ul style={{ ...styles.benefitsList, marginBottom: 0 }}>
+                    {m.benefits.map((b, bIdx) => (
+                      <li key={bIdx} style={styles.benefitItem}><span>✓</span> {b}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+            <div style={styles.joinNote}>
+              <p style={styles.noteTitle}>How to join</p>
+              <p style={styles.noteDesc}>
+                Call or email us to sign up, or stop by the Village. Payment by check or credit card — please make checks
+                payable to <strong>Hawaii’s Plantation Village</strong>, 94-695 Waipahu St, Waipahu, HI 96797.
+              </p>
+            </div>
+          </section>
+
+          <ComingSoon {...COMING_SOON_COPY.support} />
+
+          <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={styles.pageContainer}>
       <SEO title="Support Us" description="What we preserve today becomes tomorrow's legacy. Help care for the historic homes, gardens, photographs and programs of Hawaii's Plantation Village." />
@@ -156,7 +183,7 @@ export default function Support() {
         image={SITE_PHOTOS.headers.support}
         stamp={header?.stamp ?? 'Help us keep our stories alive'}
         title={header?.title ?? 'What we preserve today becomes tomorrow’s legacy.'}
-        subtitle={header?.subtitle ?? 'Hawaiʻi’s Plantation Village exists because generations of people knew these stories mattered.'}
+        subtitle={header?.subtitle ?? 'Hawaii\'s Plantation Village exists because generations of people knew these stories mattered.'}
       />
 
       <div style={styles.container}>
@@ -364,7 +391,7 @@ export default function Support() {
                   <label style={styles.formLabel}>Email</label>
                   <input className="admin-form-input" type="email" required value={memEmail} onChange={(e) => setMemEmail(e.target.value)} />
                 </div>
-                {(selectedTier.slug === 'household' || selectedTier.slug === 'steward') && (
+                {(['family', 'household', 'steward'].includes(selectedTier.slug)) && (
                   <div style={styles.formCol}>
                     <label style={styles.formLabel}>Household members (optional note)</label>
                     <textarea className="admin-form-textarea" value={householdNote} onChange={(e) => setHouseholdNote(e.target.value)} placeholder="Names of adults and children covered" />
@@ -408,12 +435,54 @@ export default function Support() {
             )}
           </div>
         )}
+
+        <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
       </div>
     </div>
   );
 }
 
 const styles = {
+  volunteerCallout: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    gap: '1.25rem 1.75rem',
+    maxWidth: '1000px',
+    margin: 'clamp(3rem, 6vw, 4.5rem) auto 0',
+    padding: 'clamp(1.5rem, 4vw, 2.25rem)',
+    borderLeft: '4px solid var(--terracotta-clay)',
+  },
+  volunteerIcon: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: '0 0 auto',
+    width: '56px',
+    height: '56px',
+    borderRadius: '50%',
+    backgroundColor: 'var(--sand)',
+    border: '1px solid var(--hairline)',
+    color: 'var(--terracotta-clay)',
+  },
+  volunteerText: {
+    flex: '1 1 320px',
+  },
+  volunteerTitle: {
+    fontSize: '1.6rem',
+    fontWeight: 500,
+    margin: '0 0 0.4rem',
+  },
+  volunteerBody: {
+    fontSize: '1rem',
+    lineHeight: 1.65,
+    color: 'var(--muted-sage)',
+    margin: 0,
+    maxWidth: '60ch',
+  },
+  volunteerBtn: {
+    flex: '0 0 auto',
+  },
   pageContainer: {
     paddingBottom: '5rem'
   },
@@ -656,6 +725,21 @@ const styles = {
   membershipIntro: {
     textAlign: 'center',
     marginBottom: '3rem'
+  },
+  bodyText: {
+    fontSize: '1rem',
+    lineHeight: 1.7,
+    color: 'var(--muted-sage)',
+    maxWidth: '56ch',
+    margin: '0 auto'
+  },
+  joinNote: {
+    backgroundColor: 'var(--sand)',
+    borderLeft: '2px solid var(--terracotta-clay)',
+    borderRadius: 'var(--border-radius-md)',
+    padding: '1rem 1.25rem',
+    maxWidth: '640px',
+    margin: '2rem auto clamp(3rem, 6vw, 4rem)'
   },
   subHeadingTitle: {
     fontSize: '1.9rem',
