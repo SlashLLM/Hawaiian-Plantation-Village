@@ -6,11 +6,12 @@ import { SITE_PHOTOS } from '../../lib/sitePhotos.js';
 import { createMembership } from '../../lib/api.js';
 import { MEMBERSHIP_TIERS } from '../../data/ticketing.js';
 import QRPass from '../../components/QRPass.jsx';
-import ComingSoon from '../../components/ComingSoon.jsx';
 import { useSiteSettings, usePageSection } from '../../context/ContentProvider.jsx';
 import { useAppNavigate } from '../../hooks/useAppNavigate.js';
-import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
+import { PAYMENTS_ENABLED } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
+
+const MEMBERSHIP_BOOKING_URL = 'https://www.zeffy.com/en-US/ticketing/friends-of-waipahu-cultural-garden-parks-memberships';
 
 // Volunteering has its own page but no nav entry, so Support — where visitors
 // look for ways to help — is how people find it.
@@ -123,7 +124,7 @@ export default function Support() {
       <div style={styles.pageContainer}>
         <SEO
           title="Support Us"
-          description="Support Hawaii's Plantation Village. Online giving is coming soon — call (808) 677-0110 to make a gift or join as a member."
+          description="Support Hawaii's Plantation Village. Become a member and help keep Hawaiʻi’s plantation stories alive."
         />
         <PageHeaderParallax
           image={SITE_PHOTOS.headers.support}
@@ -159,16 +160,18 @@ export default function Support() {
                 </div>
               ))}
             </div>
-            <div style={styles.joinNote}>
-              <p style={styles.noteTitle}>How to join</p>
-              <p style={styles.noteDesc}>
-                Call or email us to sign up, or stop by the Village. Payment by check or credit card — please make checks
-                payable to <strong>Hawaii’s Plantation Village</strong>, 94-695 Waipahu St, Waipahu, HI 96797.
-              </p>
+            <div style={styles.bookNowWrap}>
+              <a
+                href={MEMBERSHIP_BOOKING_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary"
+                style={styles.bookNowBtn}
+              >
+                Book now <ArrowRight size={16} />
+              </a>
             </div>
           </section>
-
-          <ComingSoon {...COMING_SOON_COPY.support} />
 
           <VolunteerCallout onVolunteer={() => setActivePage('volunteer')} />
         </div>
@@ -733,14 +736,6 @@ const styles = {
     maxWidth: '56ch',
     margin: '0 auto'
   },
-  joinNote: {
-    backgroundColor: 'var(--sand)',
-    borderLeft: '2px solid var(--terracotta-clay)',
-    borderRadius: 'var(--border-radius-md)',
-    padding: '1rem 1.25rem',
-    maxWidth: '640px',
-    margin: '2rem auto clamp(3rem, 6vw, 4rem)'
-  },
   subHeadingTitle: {
     fontSize: '1.9rem',
     fontWeight: 500,
@@ -794,5 +789,17 @@ const styles = {
   selectTierBtn: {
     width: '100%',
     marginTop: 'auto'
+  },
+  bookNowWrap: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '2rem auto clamp(3rem, 6vw, 4rem)'
+  },
+  bookNowBtn: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '6px',
+    textDecoration: 'none'
   }
 };
