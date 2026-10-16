@@ -45,7 +45,7 @@ export const DEFAULT_SITE_SETTINGS = {
     ctaLinks: [
       { label: 'Get tickets', page: 'tickets' },
       { label: 'Become a member', page: 'support' },
-      { label: 'Make a gift', page: 'support' },
+      { label: 'Make a gift', page: 'donate' },
       { label: 'Volunteer with us', page: 'volunteer' },
     ],
     newsletter: {
@@ -290,7 +290,7 @@ export const DEFAULT_PAGE_SECTIONS = {
         description: 'Every gift helps preserve a piece of Hawaiʻi\'s shared history.',
         items: DEFAULT_SITE_SETTINGS.donationPresets,
         closing: 'Every gift matters.',
-        cta: { label: 'Donate Today', page: 'support' },
+        cta: { label: 'Donate Today', page: 'donate' },
       },
       membership: {
         title: 'Belong to the Village.',

@@ -11,7 +11,9 @@ import { formatEventSchedule } from '../../lib/timeFormat.js';
 import { PAYMENTS_ENABLED, COMING_SOON_COPY } from '../../lib/paymentsConfig.js';
 import SEO from '../../components/SEO.jsx';
 
-const slotLabel = (slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
+const MORNING_TOUR_BOOKING_URL = 'https://www.zeffy.com/en-US/ticketing/morning-tour';
+
+const slotLabel =(slot) => (typeof slot === 'string' ? slot : slot?.label ?? '');
 
 const todayISO = () => {
   const d = new Date();
@@ -181,6 +183,23 @@ export default function Tickets() {
         </div>
 
         <div style={styles.container}>
+          <section className="paper-card" style={styles.dailyTourCard} aria-labelledby="daily-tour-heading">
+            <div>
+              <p style={styles.optionSchedule}>Daily · 10:00 AM</p>
+              <h2 id="daily-tour-heading" style={styles.dailyTourTitle}>Guided Daily Tour</h2>
+              <p style={styles.optionText}>Join a guide at 10:00 AM for a walk through the Village’s homes, gardens and stories.</p>
+            </div>
+            <a
+              href={MORNING_TOUR_BOOKING_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary"
+              style={styles.dailyTourBtn}
+            >
+              Book now <ChevronRight size={16} />
+            </a>
+          </section>
+
           <ComingSoon {...COMING_SOON_COPY.tickets}>
             <button type="button" className="btn-secondary" onClick={() => setActivePage('visit')}>
               Plan Your Visit
@@ -460,6 +479,9 @@ const styles = {
   pageTitle: { fontSize: 'clamp(1.75rem, 5vw, 2.8rem)', color: 'var(--koa-wood-dark)', marginBottom: '0.5rem' },
   pageSubtitle: { fontFamily: 'var(--font-body)', fontSize: '1.15rem', color: 'var(--text-muted)', maxWidth: '700px' },
   wizardLayout: { maxWidth: '1000px', margin: '0 auto' },
+  dailyTourCard: { maxWidth: '1000px', margin: '0 auto 3rem auto', padding: 'clamp(1.25rem, 4vw, 2rem)', borderRadius: '4px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: '1.5rem', boxSizing: 'border-box' },
+  dailyTourTitle: { fontSize: '1.5rem', color: 'var(--koa-wood)', marginBottom: '0.5rem' },
+  dailyTourBtn: { display: 'inline-flex', alignItems: 'center', gap: '6px', textDecoration: 'none', flexShrink: 0 },
   stepsBar: {},
   stepNode: { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', fontFamily: 'var(--font-typewriter)', fontSize: '0.85rem', fontWeight: 'bold', color: 'var(--text-muted)', flex: '0 1 auto', minWidth: 0 },
   stepNodeActive: { color: 'var(--cane-green)' },

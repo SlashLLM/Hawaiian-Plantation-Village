@@ -13,6 +13,7 @@ export const ROUTES = {
   events: '/events',
   eventPage: '/events/:slug',
   support: '/support',
+  donate: '/donate',
   volunteer: '/volunteer',
   about: '/about',
   tickets: '/tickets',
@@ -30,6 +31,7 @@ export const PAGE_IDS = {
   '/learn': 'learn',
   '/events': 'events',
   '/support': 'support',
+  '/donate': 'donate',
   '/volunteer': 'volunteer',
   '/about': 'about',
   '/tickets': 'tickets',
@@ -60,6 +62,7 @@ export function pathFromPageId(pageId, params = {}) {
     case 'events': return '/events';
     case 'event-page': return `/events/${params.slug ?? ''}`;
     case 'support': return '/support';
+    case 'donate': return '/donate';
     case 'volunteer': return '/volunteer';
     case 'about': return '/about';
     case 'tickets': return '/tickets';

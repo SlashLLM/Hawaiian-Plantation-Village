@@ -15,6 +15,7 @@ const VintagePhotographDetail = React.lazy(() => import('./pages/vintage/Photogr
 const VintageLearn = React.lazy(() => import('./pages/vintage/Learn.jsx'));
 const CurriculumModule = React.lazy(() => import('./pages/vintage/CurriculumModule.jsx'));
 const VintageSupport = React.lazy(() => import('./pages/vintage/Support.jsx'));
+const VintageDonate = React.lazy(() => import('./pages/vintage/Donate.jsx'));
 const VintageAbout = React.lazy(() => import('./pages/vintage/About.jsx'));
 const VintageTickets = React.lazy(() => import('./pages/vintage/Tickets.jsx'));
 const VintagePlay = React.lazy(() => import('./pages/vintage/Play.jsx'));
@@ -56,6 +57,7 @@ export default function App() {
             <Route path="events" element={<VintageEvents />} />
             <Route path="events/:slug" element={<CustomEventPage />} />
             <Route path="support" element={<VintageSupport />} />
+            <Route path="donate" element={<VintageDonate />} />
             <Route path="volunteer" element={<VintageVolunteer />} />
             <Route path="about" element={<VintageAbout />} />
             <Route path="tickets" element={<VintageTickets />} />

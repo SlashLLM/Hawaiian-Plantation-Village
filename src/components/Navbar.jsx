@@ -156,7 +156,7 @@ export default function Navbar({ activePage }) {
         </ul>
 
         <div className="nav-desktop-ctas" style={styles.ctaGroup}>
-          <button onClick={() => handleNavClick('support')} style={styles.donateLink}>
+          <button onClick={() => handleNavClick('donate')} style={styles.donateLink}>
             <Heart size={15} /> Donate
           </button>
           <button onClick={() => handleNavClick('tickets')} className="btn-accent" style={styles.ticketBtn}>
@@ -213,7 +213,7 @@ export default function Navbar({ activePage }) {
               );
             })}
             <li style={styles.mobileLinkItem}>
-              <button onClick={() => handleNavClick('support')} style={{ ...styles.mobileNavButton, color: 'var(--terracotta-clay-deep)' }}>
+              <button onClick={() => handleNavClick('donate')} style={{ ...styles.mobileNavButton, color: 'var(--terracotta-clay-deep)' }}>
                 Donate
               </button>
             </li>
